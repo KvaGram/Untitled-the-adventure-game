@@ -216,10 +216,11 @@ def onReactorCTime(save):
         return "safe"
     if time <= 0:
         showtext("Placeholder - something something you just died due to a reactor meltdown!")
-        save.setdata("GAME OVER", "You wasted too much time! You're kinda dead now")
+        setGameover(save, "You wasted too much time! You're kinda dead now")
         return "death"
     return "safe"
-
+def setGameover(save, reason):
+    save.setdata("GAME OVER", reason)
 #common data
 def hasGender(save):
     return save.getData("gender") != None

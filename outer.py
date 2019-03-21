@@ -125,29 +125,54 @@ Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
         #Idea:
         # The reactor may have one day been a marvel of tachyon engineering.
         #A machine that could beat entropy to a pulp, now dieing to it.
-        gender = game.getGender(save)
+        g = game.getGender(save)
+        p1 = "man" if g == "male" else "woman"
+        p2 = "he" if g == "male" else "she"
+        #reason why this shutdwn could not be done remotly: temperal bleeding corrupted all data packages, repeating the signals randomly.
         game.rolltext("""
 Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
+As you enter the room you instinctivly step aside to let a oddly familiar {0} out of the room.
+Suprisingly, {1} looked oddly familiar. The {0} looked as shocked as you did.
+But as suddenly as {1} appeared, {1} suddenly dissappeard.
 
+What was {1}? A ghost?
 
-.
-.
-.
+You sit down on the chair in front of the controls.
+You look around at all the virtual knobs and dials on the control-screen.
+
+Looking to your left, you find a manua.. wait.
 ..
-..
-...
-....
-.......
-...........
-.......
-....
-...
-..
-..
-.
-.
-.
+it's gone.
+no, now it's there again.
+..and it's gone!
         """)
+        c = game.choose2(("try to snatch the manual next time it appears", "randomly enter data into the control-screen"), "What will you do?")
+        if(c == 1):
+            game.setGameover(save, "You got yourself trapped in a timeloop")
+            game.rolltext("""
+Not knowing what to do, you start hammering on the controls.
+You tried adjesting that sqiggly thing, you tried to increase that number, you tried to stop that ticking..
+you tried any little thing you could think of..
+then you, without knowing what to do, start hammering on the controls.
+you tried adjusting that sq..
+
+you realized you were now doing what you did a minute ago. are you stu..
+tried adjusting that little sqiggly..
+
+uh no, you realize, as you got your thinking stright again.
+you try to undo what you did when.. you try adjusting that sqiggly thi..
+
+'shit' you managed to think as you suddenly find yourself trying to adjust that squigg..
+and again.. at shorter and shorter intervals.
+
+The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
+And you soon realied why.
+
+Aside from your little looping bobble, everything was gone.
+You aren't dead. Not really. But by now, you wish you were.
+            """)
+
 
     def goto(room):
         nav.running = False
