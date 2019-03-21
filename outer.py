@@ -125,8 +125,10 @@ Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
         #Idea:
         # The reactor may have one day been a marvel of tachyon engineering.
         #A machine that could beat entropy to a pulp, now dieing to it.
+        gender = game.getGender(save)
         game.rolltext("""
 Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
+
 
 .
 .

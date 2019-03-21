@@ -392,10 +392,9 @@ You hear two voices from the com system.
         game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
         
 
-        save.randIfNotSet(("name", "gender", "klara"))
-        name = save.getdata("name")
-        gender = save.getdata("gender")
-        klara = save.getdata("klara")
+        name = game.getName(save)
+        gender = game.getGender(save)
+        klara =  game.getKlara(save)
         #TODO
 
         if False:

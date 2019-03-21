@@ -3,6 +3,8 @@ import sys
 import tkinter as tk
 from tkinter import filedialog
 import time
+import random
+
 def RunGeneral(save, call):
     if call == "onReactorCTime":
         return onReactorCTime(save)
@@ -217,6 +219,44 @@ def onReactorCTime(save):
         save.setdata("GAME OVER", "You wasted too much time! You're kinda dead now")
         return "death"
     return "safe"
+
+#common data
+def hasGender(save):
+    return save.getData("gender") != None
+def hasName(save):
+    return save.getData("name") != None
+def hasKlara(save):
+    return save.getData("klara") != None
+def hasJeff(save):
+    return save.getData("jeff") != None
+
+#get common data, randomize if not defined.
+def getGender(save):
+    if hasName(save):
+        return save.getData("gender")
+    else:
+        return save.getdata("gender", random.choice(("male", "female")))
+def getName(save):
+    return save.getdata("name", "The nameless one")
+def getKlara(save, gendered = False):
+    if gendered:
+        return getGenderedTerm(getKlara(save, False), "female")
+    if hasKlara(save):
+        return save.getData("klara")
+    elif hasJeff(save):
+        return save.getData("klara", termCounterpart(getJeff(save)))
+    else:
+        return save.getdata("klara", random.choice(("spouse", "sibling")))
+    
+def getJeff(save, gendered = False):
+    if gendered:
+        return getGenderedTerm(getJeff(save, False), "male")
+    if hasJeff(save):
+        return save.getData("jeff")
+    elif hasKlara(save):
+        return save.getData("jeff", termCounterpart(getKlara(save)))
+    else:
+        return save.getdata("jeff", random.choice(("spouse", "sibling")))
 
 
 if __name__ == "__main__":
