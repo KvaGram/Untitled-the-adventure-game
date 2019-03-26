@@ -1,14 +1,13 @@
 import game_utilities as game
 import random
 
-class roomdata:
-    ind = 0 #current location, index
+class middleRoomdata(game.liniarRoomData):
     sec = "A" #current location, section
-    running = True #run-status on local game-loop
+    
 def main(save):
     sectionA = []
     sectionB = []
-    nav = roomdata()
+    nav = middleRoomdata()
     intro = "place holder corridor intro text (should not show up in the game)"
     def sectionDdoor():
         game.rolltext("""

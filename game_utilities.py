@@ -43,6 +43,8 @@ def choose(list, message = "enter choice number"):
     #showtext("you chose {0}".format(list[inp-1]))
     return inp
 
+
+
 #choose2 documentation
 #pList is a list of option for the user to selct from.
 #   Items of pList may be a string, a None, or a list/tuple of options
@@ -266,6 +268,78 @@ def getJeff(save, gendered = False):
         return save.getData("jeff", termCounterpart(getKlara(save)))
     else:
         return save.getdata("jeff", random.choice(("spouse", "sibling")))
+
+class liniarRoomdata:
+    ind = 0 #current location, index
+    running = True #run-status on local game-loop
+    places = []
+    termPlus = "GO LEFT"
+    termMinus = "GO RIGHT"
+    onSelect = None
+    def getPlace(self):
+        try:
+            return (places[ind])
+        except:
+            return (None, None, None)
+    def __init__(self, onSelect = None, termPlus = "GO LEFT", termMinus = "GO RIGHT"):
+        self.onSelect = onSelect
+        self.termPlus = termPlus
+        self.termMinus = termMinus
+    def openPlace(self):
+        placedata = self.getPlace()
+        try:
+            #running on select function (should be set)
+            onSelect(placedata)
+        except:
+            #Fallback driver:
+            try:
+                placedata[0]()
+            except:
+                #If failed, just ignore.
+                pass
+        
+
+    
+
+def liniarNav(save, nav, numPlaces, currentIndex):
+    while nav.running:
+        disp = "ERROR"
+        action = " - "
+        canRight = False
+        canLeft = False
+        try:
+            place, disp, action = nav.getPlace()
+            canRight = nav.ind > 0
+            canLeft = nav.ind < len(nav.places)-1
+        except:
+            pass
+        
+        message = "You are now next to {0}, what will you do?".format(disp)
+        choices = [canLeft and "GO LEFT" or "GO LEFT({0})".format(action), action, canRight and "GO RIGHT" or "GO RIGHT({0})".format(action)]
+        i, desc = choose2(choices, message)
+        if i == 0:
+            if canLeft:
+                nav.ind += 1
+            else:
+                i = 1
+        elif i == 2:
+            if canRight:
+                nav.ind -= 1
+            else:
+                i = 1
+        if i == 1:
+            nav.openPlace()
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

@@ -1,5 +1,10 @@
 import game_utilities as game
 
+#The Ladder
+def emergencyLadder(save):
+    pass
+
+
 #barebones placeholder for chapter 1: Wheel C
 
 def ladder(save):
