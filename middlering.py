@@ -389,7 +389,9 @@ You hear two voices from the com system.
         #Note: Whatever the dialoge, it is up to the player what to do afterwards.
         # Only change is the information they are given.
         # From here, or the ladder if the player skips this, a counter is enabled that gives the player 10 'time units' before game over.
-        game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+        if not game.getCounter(save, "reactorC")[0]: #counter not enabled
+            game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+
         
 
         name = game.getName(save)
@@ -480,6 +482,8 @@ You need to hurry! Get back and contact us again once you have done it!
 
         game.showtext("Aux com dialoge placeholder.\nimagine you just learned just how fucked you are.\nAnd yeah, you are. Keywords: emergency ladder, climb up, minutes to live. Run fool! RUN!")
     def ladder():
+        if not game.getCounter(save, "reactorC")[0]: #if counter reactorC is not enabled
+            game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
         text = """
 The corridor gives way to a large column, splitting the corridor to go around it on both sides.
 On two sides of the column you find large hatches with a colored engraving

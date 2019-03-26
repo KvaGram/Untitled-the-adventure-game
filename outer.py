@@ -352,11 +352,59 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
                     """)
                     cooledDown = True
             elif val == "INFO":
+                textFlow =""
+                textTemp="SAFE" if cooledDown else: "VERY HIGH!" if slowedDown else: "HIGH!"
+                textFireAlert=""
+                if slowedDown:
+                    for i in range(random.randint(3, 10))
+                    textFireAlert += "\n\tALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {0}{1}".format(random.choice(("A", "B", "C", "D")), random.randint(1,12))
+                textFirsttime="" if warnedOfLoops else """
+It did not take long for you to realize that the 'human operator' is you.
+This might explain the anomolies.
+You should be extra careful of what you do here.
+                """
                 game.rolltext("""
-                ((PLEACEHOLDER))
-                """) #Lots TODO here...
+You followed the instructions to initiate a diognastic of the reactor.
+...
+    STATUS: CRITICAL
+    TACHEON EMITTERS: ONLINE
+    TACHEON FLOW: {0} ((IRREGULAR))
+    TEMPERATURE: {1} ((HIGH!))
+    STRUCTURE INTEGRETY: COMPROMISED!
+    TEMPERAL INTEGRETY: COMPROMISED!
+
+    {2}
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A06 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A12 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B04 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B08 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B12 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C01 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C02 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C06 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C09 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C11 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D01 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D02 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D03 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D04 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D07 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D08 - POTENTIAL TACHEON LEAK
+    ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D09 - POTENTIAL TACHEON LEAK
+
+    WARNING: REACTOR BREACH(ES) DETECTED!
+    WARNING: MELTDOWN IMMINENT!
+    WARNING: HUMAN OPERATOR DETECTED IN COMPROMIZED SUBSECTION B04! EVACUATION IS ADVICED!
+
+{3}
+                """.format(textFlow, textTemp, textFireAlert, textFirsttime)) #Lots TODO here...
                 warnedOfLoops = True
-        
+        #end of loop
+        if cooledDown and slowedDown:
+            game.endCounter("reactorC")
+            save.setdata("reactorC:fixed", True)
+
+
 
 
     def goto(room):

@@ -5,6 +5,7 @@ from tkinter import filedialog
 import time
 import random
 
+#This is a map of functions that can be called at any time.
 def RunGeneral(save, call):
     if call == "onReactorCTime":
         return onReactorCTime(save)
@@ -208,6 +209,13 @@ def updateCounter(save, counterName, val):
             save.setdata(counterName + ":value", value + val)
             return RunGeneral(save, call)
         return "inactive"
+def endCounter(save, counterName):
+    enabled, call, _ = getCounter(save, counterName)
+    save.setdata(counterName + ":enabled", False)
+    # run the call function if the counter was previusly disabled.
+    if enabled:
+        return RunGeneral(save, call)
+    
 
 #TODO consider moving general functions to its own module
 def onReactorCTime(save):
