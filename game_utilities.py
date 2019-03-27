@@ -269,76 +269,56 @@ def getJeff(save, gendered = False):
     else:
         return save.getdata("jeff", random.choice(("spouse", "sibling")))
 
-class liniarRoomdata:
+# 1-dimentional navigation (liniar to and from)
+class RoomNav1D:
     ind = 0 #current location, index
     running = True #run-status on local game-loop
     places = []
-    termPlus = "GO LEFT"
-    termMinus = "GO RIGHT"
+    termPlus = "GO PLUS"
+    termMinus = "GO MINUS"
     onSelect = None
     def getPlace(self):
         try:
             return (places[ind])
         except:
             return (None, None, None)
-    def __init__(self, onSelect = None, termPlus = "GO LEFT", termMinus = "GO RIGHT"):
-        self.onSelect = onSelect
+    def __init__(self, termPlus = "GO PLUS", termMinus = "GO MINUS"):
         self.termPlus = termPlus
         self.termMinus = termMinus
-    def openPlace(self):
-        placedata = self.getPlace()
-        try:
-            #running on select function (should be set)
-            onSelect(placedata)
-        except:
-            #Fallback driver:
+    #runPlace is expected to be overitten by child classes
+    def runAction(self):
+        self.getPlace()[0]()
+    def loop(self):
+        while self.running:
+            disp = "ERROR"
+            action = " - "
+            canPlus = False
+            canMinus = False
             try:
-                placedata[0]()
+                _, disp, action = self.getPlace()
+                canMinus = self.ind > 0
+                canPlus = self.ind < len(self.places)-1
             except:
-                #If failed, just ignore.
                 pass
-        
-
-    
-
-def liniarNav(save, nav, numPlaces, currentIndex):
-    while nav.running:
-        disp = "ERROR"
-        action = " - "
-        canRight = False
-        canLeft = False
-        try:
-            place, disp, action = nav.getPlace()
-            canRight = nav.ind > 0
-            canLeft = nav.ind < len(nav.places)-1
-        except:
-            pass
-        
-        message = "You are now next to {0}, what will you do?".format(disp)
-        choices = [canLeft and "GO LEFT" or "GO LEFT({0})".format(action), action, canRight and "GO RIGHT" or "GO RIGHT({0})".format(action)]
-        i, desc = choose2(choices, message)
-        if i == 0:
-            if canLeft:
-                nav.ind += 1
+            message = "You are now next to {0}, what will you do?".format(disp)
+            choices = (
+                ("PLUS", self.termPlus, "{0}({1})".format(self.termPlus, action), 1 if canPlus else 2),
+                ("ACT", action, 1),
+                ("MINUS", self.termMinus, "{0}({1})".format(self.termMinus, action), 1 if canMinus else 2)
+                )
+            _, choice = choose2(choices, message)
+            if choice == "PLUS":
+                if canPlus:
+                    self.ind += 1
+                else:
+                    self.runAction()
+            elif choice == "MINUS":
+                if canMinus:
+                    self.ind -= 1
+                else:
+                    self.runAction()
             else:
-                i = 1
-        elif i == 2:
-            if canRight:
-                nav.ind -= 1
-            else:
-                i = 1
-        if i == 1:
-            nav.openPlace()
-
-
-
-
-
-
-
-
-
-
+                self.runAction()
 
 
 

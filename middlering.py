@@ -1,14 +1,40 @@
 import game_utilities as game
 import random
 
-class middleRoomdata(game.liniarRoomData):
-    sec = "A" #current location, section
-    
+
+
 def main(save):
     sectionA = []
     sectionB = []
-    nav = middleRoomdata()
+    class middleRoomNAV(game.RoomNav1D):
+        def __init__(self):
+            super().__init__(termPlus= "GO LEFT", termMinus= "GO RIGHT")
+
+        sec = "A" #current location, section
+        #Override
+        def runAction(self):
+            act,_,_ = self.getPlace()
+            #note: ticks the reactorC counter if enabled.
+            status = game.updateCounter(save, "reactorC", -1)
+            if status == "death": #if reactor counter reach 0, and the game ends.
+                self.running = False
+            else:
+                act()
+        def setSection(self, newSec, newInd):
+            if newSec == "A":
+                self.places = sectionA
+            elif newSec == "B":
+                self.places = sectionB
+            else:
+                raise("INVALID ROOM SECTION LABEL")
+            self.sec = newSec
+            self.ind = newInd
+        
+
+    nav = middleRoomNAV()
     intro = "place holder corridor intro text (should not show up in the game)"
+    #----------------------------
+    #region places and actions
     def sectionDdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
@@ -530,6 +556,8 @@ They go on for a bit over a meter, then abruptly ends in uneven bent metal.
 And you see some small faint light far back in the darknes, moving.
 Stars, you realize. Stars flying upwards. You are staring into space!
     """, 0.3)
+    #endregion places and actions
+    #----------------------------
     #local shorthand.
     #Stops loop and sets next room in the save.
     def goto(room):
@@ -550,9 +578,7 @@ Stars, you realize. Stars flying upwards. You are staring into space!
 
     prevroom = save.getdata("prevroom")
     if prevroom == "apartment":
-        
-        nav.ind = 2
-        nav.sec = "A"
+        nav.setSection("A", 2)
         intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
         if save.getdata("middlering:visited") == None:
             intro += """
@@ -565,6 +591,7 @@ As the door closes, you note the number-plate on your door.
 There is an uneasy silence.
         """
     elif prevroom == "laddershaft":
+        nav.setSection("B", 2)
         nav.ind = 2
         nav.sec = "B"
         intro = """
@@ -572,55 +599,13 @@ You close the emergency ladder's hatch.
 You are now at the middle level ring.
         """
     else:
-        nav.ind = 3
-        nav.sec = "B"
+        nav.setSection("B", 3)
         intro = """
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
         """
     game.rolltext(intro, 0.3)
-    while nav.running:
-        place = None
-        disp = "ERROR"
-        action = " - "
-        canRight = False
-        canLeft = False
-        places = []
-        if nav.sec == "A":
-            places = sectionA
-        elif nav.sec == "B":
-            places = sectionB
-        try:
-            place = places[nav.ind][0]
-            disp =  places[nav.ind][1]
-            action =  places[nav.ind][2]
-            canRight = nav.ind > 0
-            canLeft = nav.ind < len(places)-1
-        except:
-            pass
-        
-        message = "You are now next to {0}, what will you do?".format(disp)
-        choices = [canLeft and "GO LEFT" or "GO LEFT({0})".format(action), action, canRight and "GO RIGHT" or "GO RIGHT({0})".format(action)]
-#        a = -1
-#        while a == -1:
-        a = game.choose(choices, message)
-        if a == 0:
-            if canLeft:
-                nav.ind += 1
-            else:
-                a = 1
-        elif a == 2:
-            if canRight:
-                nav.ind -= 1
-            else:
-                a = 1
-        if a == 1: #note: uses if instead of elsif, as the value of a can be changed in above conditions.
-            #note: ticks the reactorC counter if enabled.
-            status = game.updateCounter(save, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                nav.running = False
-            else:
-                place()
+    nav.loop()
 
 #TODO: move this to its own module
 def bathrooms(save):
