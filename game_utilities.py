@@ -323,5 +323,6 @@ class RoomNav1D:
 
 
 if __name__ == "__main__":
-    showtext("PLEASE RUN GAME FROM main.py INSTEAD!")
-    pass #testing-code
+    #testers, feel free to enter your testcode here.
+    #if your only change is in this code-block, feel free to commit.
+    game.showtext("Testcode for this utilities/common code is not written yet.\nPlease run from main.py instead.")

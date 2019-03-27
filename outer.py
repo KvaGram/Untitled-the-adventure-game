@@ -1,15 +1,36 @@
 import game_utilities as game
 import random
 
-class roomdata:
-    ind = 0 #current location, index
-    sec = "A" #current location, section
-    running = True #run-status on local game-loop
 def main(save):
     sectionA = []
     sectionB = []
-    nav = roomdata()
+    class outerRoomNAV(game.RoomNav1D):
+        def __init__(self):
+            super().__init__(termPlus= "GO LEFT", termMinus= "GO RIGHT")
+
+        sec = "A" #current location, section
+        #Override
+        def runAction(self):
+            act,_,_ = self.getPlace()
+            #note: ticks the reactorC counter if enabled.
+            status = game.updateCounter(save, "reactorC", -1)
+            if status == "death": #if reactor counter reach 0, and the game ends.
+                self.running = False
+            else:
+                act()
+        def setSection(self, newSec, newInd):
+            if newSec == "A":
+                self.places = sectionA
+            elif newSec == "B":
+                self.places = sectionB
+            else:
+                raise("INVALID ROOM SECTION LABEL")
+            self.sec = newSec
+            self.ind = newInd
+    nav = outerRoomNAV()
     intro = "place holder corridor intro text (should not show up in the game)"
+    #---------------------------
+    #region actions and places
     def sectionDdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
@@ -406,7 +427,8 @@ You followed the instructions to initiate a diognastic of the reactor.
 
 
 
-
+    #endregion actions and places
+    #---------------------------
     def goto(room):
         nav.running = False
         save.goto(room)
@@ -423,62 +445,21 @@ You followed the instructions to initiate a diognastic of the reactor.
 
     prevroom = save.getdata("prevroom")
     if prevroom == "laddershaft":
-        nav.ind = 2
-        nav.sec = "B"
+        nav.setSection("B", 2)
         intro = """
 You close the emergency ladder's hatch.
 You are now at the outer level ring.
         """
     else:
-        nav.ind = 0
-        nav.sec = "A"
+        nav.setSection("A", 0)
         intro = """
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
         """
     game.rolltext(intro, 0.3)
-    while nav.running:
-        place = None
-        disp = "ERROR"
-        action = " - "
-        canRight = False
-        canLeft = False
-        places = []
-        if nav.sec == "A":
-            places = sectionA
-        elif nav.sec == "B":
-            places = sectionB
-        try:
-            place = places[nav.ind][0]
-            disp =  places[nav.ind][1]
-            action =  places[nav.ind][2]
-            canRight = nav.ind > 0
-            canLeft = nav.ind < len(places)-1
-        except:
-            pass
-        
-        message = "You are now next to {0}, what will you do?".format(disp)
-        choices = [canLeft and "GO LEFT" or "GO LEFT({0})".format(action), action, canRight and "GO RIGHT" or "GO RIGHT({0})".format(action)]
-#        a = -1
-#        while a == -1:
-        a = game.choose(choices, message)
-        if a == 0:
-            if canLeft:
-                nav.ind += 1
-            else:
-                a = 1
-        elif a == 2:
-            if canRight:
-                nav.ind -= 1
-            else:
-                a = 1
-        if a == 1: #note: uses if instead of elsif, as the value of a can be changed in above conditions.
-            #note: ticks the reactorC counter if enabled.
-            status = game.updateCounter(save, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                nav.running = False
-            else:
-                place()
-
+    nav.loop()
+    
 if __name__ == "__main__":
-    game.showtext("testcode for outer ring module not written yet.\nPlease run from main.py instead.")
+    #testers, feel free to enter your testcode here.
+    #if your only change is in this code-block, feel free to commit.
+    game.showtext("Testcode for this room is not written yet.\nPlease run from main.py instead.")

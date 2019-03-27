@@ -639,6 +639,8 @@ One door with a depiction of a man, one depicting a woman.
         game.showtext("PLACEHOLDER ladysroom")
 
 if __name__ == "__main__":
+    #testers, feel free to enter your testcode here.
+    #if your only change is in this code-block, feel free to commit.
     game.showtext("--- Welcome to the middle ring test code. For a regular playthugh, please run main.py instead. ---")
     #testing-code
     from main import savadata

@@ -63,5 +63,6 @@ def wheelCAirlock(save):
     save.setdata("GAME OVER", "End of the story, so far!")
 
 if __name__ == "__main__":
-    game.showtext("PLEASE RUN GAME FROM main.py INSTEAD!")
-    pass #testing-code
+    #testers, feel free to enter your testcode here.
+    #if your only change is in this code-block, feel free to commit.
+    game.showtext("Testcode for this room is not written yet.\nPlease run from main.py instead.")
