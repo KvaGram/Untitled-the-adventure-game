@@ -285,7 +285,11 @@ class RoomNav1D:
     def __init__(self, termPlus = "GO PLUS", termMinus = "GO MINUS"):
         self.termPlus = termPlus
         self.termMinus = termMinus
-    #runPlace is expected to be overitten by child classes
+    #runPlace, plus and minus can be overritten for flavor text and aditional function calls.
+    def plus(self):
+        self.ind += 1
+    def minus(self):
+        self.ind -= 1
     def runAction(self):
         self.getPlace()[0]()
     def loop(self):
@@ -309,12 +313,12 @@ class RoomNav1D:
             _, choice = choose2(choices, message)
             if choice == "PLUS":
                 if canPlus:
-                    self.ind += 1
+                    self.plus()
                 else:
                     self.runAction()
             elif choice == "MINUS":
                 if canMinus:
-                    self.ind -= 1
+                    self.minus()
                 else:
                     self.runAction()
             else:
@@ -325,4 +329,4 @@ class RoomNav1D:
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.
     #if your only change is in this code-block, feel free to commit.
-    game.showtext("Testcode for this utilities/common code is not written yet.\nPlease run from main.py instead.")
+    showtext("Testcode for this utilities/common code is not written yet.\nPlease run from main.py instead.")

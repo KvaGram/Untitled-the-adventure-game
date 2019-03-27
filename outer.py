@@ -374,11 +374,11 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
                     cooledDown = True
             elif val == "INFO":
                 textFlow =""
-                textTemp="SAFE" if cooledDown else: "VERY HIGH!" if slowedDown else: "HIGH!"
+                textTemp="SAFE" if cooledDown else "VERY HIGH!" if slowedDown else "HIGH!"
                 textFireAlert=""
                 if slowedDown:
-                    for i in range(random.randint(3, 10))
-                    textFireAlert += "\n\tALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {0}{1}".format(random.choice(("A", "B", "C", "D")), random.randint(1,12))
+                    for i in range(random.randint(3, 10)):
+                        textFireAlert += "\n\tALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {0}{1}".format(random.choice(("A", "B", "C", "D")), random.randint(1,12))
                 textFirsttime="" if warnedOfLoops else """
 It did not take long for you to realize that the 'human operator' is you.
 This might explain the anomolies.
@@ -422,7 +422,7 @@ You followed the instructions to initiate a diognastic of the reactor.
                 warnedOfLoops = True
         #end of loop
         if cooledDown and slowedDown:
-            game.endCounter("reactorC")
+            game.endCounter(save, "reactorC")
             save.setdata("reactorC:fixed", True)
 
 

@@ -32,7 +32,7 @@ def build_world():
     world["innerB"] = wheel.innerB # then remove this
     world["middle"] = middlering.main
     world["outer"] = outer.main
-    world["ladder"] = wheel.ladder #TODO: add proper module for the emergency ladder
+    world["ladder"] = wheel.emergencyLadder #TODO: move ladder to seperate module
     world["Airlock"] = wheel.wheelCAirlock #TODO: add proper module for airlock
     world["bathrooms"] = middlering.bathrooms #TODO: move bathrooms to its own module, and update this list.
 
@@ -155,7 +155,7 @@ class savadata:
         #comparing version
         major  = lversion[0] - self.version[0]
         minor  = lversion[1] - self.version[1]
-        hotfix = lversion[2] - self.version[2]
+        #hotfix = lversion[2] - self.version[2]
         if major == 0:
             if minor == 0:
                 #not worth comparing a hotfix
