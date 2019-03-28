@@ -11,15 +11,6 @@ def RunGeneral(save, call):
         return onReactorCTime(save)
     return "NOT FOUND"
 
-def loadGame():
-    root = tk.Tk()
-    root.withdraw()
-
-    file_path = filedialog.askopenfilename()
-    showtext(file_path)
-    #TODO try convert textfile to save-file, and load latest room
-    return {}
-
 def choose(list, message = "enter choice number"):
     valid = False
     inp = 0 #placeholder value
@@ -219,7 +210,7 @@ def endCounter(save, counterName):
         return RunGeneral(save, call)
     
 
-#TODO consider moving general functions to its own module
+#NOTE consider moving general functions to its own module
 def onReactorCTime(save):
     enabled, time = save.getCounter("reactorC")
     if not enabled:
