@@ -80,7 +80,6 @@ def auxcom_cargo(save):
     name = game.getName(save)
     gender = game.getGender(save)
     klara =  game.getKlara(save)
-    #TODO
 
     if prevcontact:
         #TODO: alternate contact for returning to auxcom
