@@ -234,7 +234,7 @@ def hasJeff(save):
 
 #get common data, randomize if not defined.
 def getGender(save):
-    if hasName(save):
+    if hasGender(save):
         return save.getData("gender")
     else:
         return save.getdata("gender", random.choice(("male", "female")))

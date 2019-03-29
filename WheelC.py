@@ -82,7 +82,7 @@ As the room spins around you, you take note of the clearly labled entry points a
         ("LADDER_SEC_B", "Section B emergency access ladder"),
         ("ELEVATOR_SEC_C", "Section C transport elevator"),
         ("LADDER_SEC_D", "Section D emergency access ladder"),
-        ("AIRLOCK")
+        ("AIRLOCK", "Module primary airlock and dock")
     )
     running = True
     while running:
