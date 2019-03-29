@@ -414,8 +414,6 @@ And oof! You just walked streight into a large closed door.
 
 #TODO: move this to its own module
 def bathrooms(save):
-
-
     while True:
         game.rolltext("""
 You stand in front of the bathrooms. There are two doors in front of you.
@@ -587,7 +585,11 @@ You take it with you."""
                     keepsake = True
                 else:
                     text = "\nThere was not much to see."
-                save.savedata("spouse:keepsake", keepsake) 
+                save.savedata("spouse:keepsake", keepsake)
+                game.rolltext(text)
+            status = game.updateCounter(save, "reactorC", -1)
+            if status == "death": #if reactor counter reach 0, and the game ends.
+                break
         #end of loop
 
 if __name__ == "__main__":

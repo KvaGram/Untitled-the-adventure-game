@@ -3,8 +3,6 @@ import time
 import random
 import json
 
-#TODO: fix stupid encoding error in strings from saved game
-
 #from tkinter import *
 import tkinter as TK
 from tkinter import filedialog
@@ -28,7 +26,7 @@ def build_world():
     world['apartment'] = room_apartment.main
     world['about'] = about.main
     world["core"] = wheel.core #TODO: add proper module for core
-    world["inner"] = wheel.inner #TODO: combine inner a and b
+    world["inner"] = wheel.inner
     world["middle"] = middlering.main
     world["outer"] = outer.main
     world["ladder"] = wheel.emergencyLadder #TODO: move ladder to seperate module
