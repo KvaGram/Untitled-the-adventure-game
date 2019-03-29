@@ -1,6 +1,6 @@
 import game_utilities as game
 import random
-
+import dialoges
 def main(save):
     sectionA = []
     sectionB = []
@@ -44,47 +44,15 @@ You look though the window.
 On the other side you see a corridor much like the one you are in
 except, its on fire!
 What happend here?
-        """, 0.3)
+        """)
     def elevator():
-        game.rolltext("""
-The elevators breaks up the corridor, as the corridor splits to around a large round column you learn is the elevator shaft,
-the walls around bending outwards giving way for the path around the shaft until they hit flat outer walls.
-You find six elevator doors in pairs of two around the large cylinder.
-You also locate a set of call-buttons for up and cargo, whatever that cargo one means.
-        """, 0.4)
-        choices = ["Press UP call button", "Press CARGO call button", "Leave"]
-        a = game.choose(choices)
-        if a < 3:
-            if(save.getdata("WheelC_elevator") == "dead"):
-                text = """
-You press the button.
-...
-Nothing happened.
-                """
-            else:
-                text = """
-You press the button.
-The button flash on.
-...
-You hear an odd clang
-...         """
-                if a == 2:
-                    text += "\nTwo of the elevator doors open in a very slight crack."
-                else:
-                    text += "\nOne of the elevator doors open in a very slight crack."
-                text += "\nThen you hear a fizzeling sound, and everything stops working"
-                save.setdata("WheelC_elevator", "dead")
-            game.rolltext(text)
-        else:
-            game.showtext("You left the elevators alone")
+        dialoges.elevator(save)
     def sectionBdoor():
         game.showtext("You pass though the open door seperating the two sectors")
-        nav.ind = 0
-        nav.sec = "B"
+        nav.setSection("B", 0)
     def sectionAdoor():
         game.showtext("You pass though the open door seperating the two sectors")
-        nav.ind = 5
-        nav.sec = "A"
+        nav.setSection("A", 2)
     def auxcom():
         game.showtext("This auxillary comunication system on this level is broken.")
         #TODO: idea: attempt to connect to this from middle level to activiate this one
@@ -434,18 +402,18 @@ You followed the instructions to initiate a diognastic of the reactor.
         save.goto(room)
 
     sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-    sectionA.append((elevator, "Elevator C2A", "use"))                  #A 1
+    sectionA.append((elevator, "Elevator C3A", "use"))                  #A 1
     sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 2
 
     sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-    sectionB.append((auxcom, "Auxillary communications", "use"))        #B 1
-    sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
-    sectionB.append((reactNode, "Reactor-ring access node", "enter"))   #B 3
-    sectionB.append((sectionCdoor, "Section C", "examine"))             #B 4
+    #sectionB.append((auxcom, "Auxillary communications", "use"))       #(removed)
+    sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 1 (entry and exit to and from other rings in the wheel)
+    sectionB.append((reactNode, "Reactor-ring access node", "enter"))   #B 2
+    sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
 
     prevroom = save.getdata("prevroom")
     if prevroom == "laddershaft":
-        nav.setSection("B", 2)
+        nav.setSection("B", 1)
         intro = """
 You close the emergency ladder's hatch.
 You are now at the outer level ring.

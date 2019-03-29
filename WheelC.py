@@ -221,6 +221,7 @@ def Cargobay(save):
 
 #TODO: 
 def inner(save):
+    
     game.showtext("Welcome to the placeholder for inner ring.\nThere is nothing for you to do here yet.\nLater you will be able to save some people currently frozen in here.")
     if game.yesno("return to the emergency ladder?"):
         return save.goto("ladder")
