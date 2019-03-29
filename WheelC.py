@@ -200,7 +200,7 @@ As you were floating though, you were greeted by someone who suddenly floated in
 def Cargobay(save):
     #TODO: write the ending, mention if reactor was fixed, and if the people in stasis was saved. end with being told to go to the infirmary. END OF CHAPTER!
     reactorFixed = save.getdata("reactorC:fixed", False)
-    peopleSaved = save.getdata("wheelC:peopleSaved", 0)
+    peopleSaved = save.getdata("stasis:peopleSaved", 0)
     prevcontact = save.getdata("auxcom:cargo", False)
 
     if prevcontact:
@@ -221,7 +221,7 @@ def Cargobay(save):
 
 #TODO: 
 def inner(save):
-    
+
     game.showtext("Welcome to the placeholder for inner ring.\nThere is nothing for you to do here yet.\nLater you will be able to save some people currently frozen in here.")
     if game.yesno("return to the emergency ladder?"):
         return save.goto("ladder")
