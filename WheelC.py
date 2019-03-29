@@ -74,7 +74,11 @@ That being said, had you turned yourself the other way, it would be the other wa
 As the room spins around you, you take note of the clearly labled entry points around you.
         """
     else:
-        pass #TODO: make fallback intro-test in core for playtest and unexpected cases
+        intro = """
+You float mindlessly around in the huge sphere untill you get a hold on a spinning pole in center.
+Soon the pole seemed to stop rotating, and the room started rotating around you.
+As the room spins around you, you take note of the clearly labled entry points around you.
+        """
 
     choices = (
         ("WINDOW", "Core window"),
