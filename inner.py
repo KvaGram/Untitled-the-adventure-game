@@ -105,13 +105,18 @@ You locate the panel as indicated on the engraving.
 
     #groups that can be saved.
     #126 people can be saved.
-    #TODO: write scenario for all chambers.
-    #NOTE: some of them can be identical to save time
     def tubes(num):
         def chamberRoom():
+            key = save.getdata("auxcom:stasispasskey", False)
             visited = save.getdata("inner:stasisroom:"+str(num), False)
             peopleSaved = save.getdata("stasis:peopleSaved", 0)
-            if visited:
+            if key == False:
+                game.rolltext("""
+A panel of the door indicates the chamber is closed down by emergency lockdown.
+You would need an override key to open it.""")
+                game.updateCounter(save, "reactorC", 1) #refunded time cost.
+                return
+            elif visited:
                 game.showtext("You have already cleared this chamber.")
                 game.updateCounter(save, "reactorC", 1) #refunded time cost.
             else:

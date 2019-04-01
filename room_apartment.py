@@ -18,7 +18,7 @@ suddenly you are in a vintage open cokpit biplane flying over the same lands...
 Your eyes shook open! Out the window you see the landscape you pictured in your dream.
 It seems so nice, yet something seems off. Everything seems off.
 You even struggle to remeber your own name.. What.. was.. what was your name?
-    """, 0.5)
+    """)
 
         nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remeber my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think thats my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
 
@@ -41,7 +41,7 @@ At the head end of the bed there is a window.
 Towards the end of the room there is a sink with a mirror.
 At the end is a door, probobly the exit by the looks of it.
 
-        """.format(save.getdata("name")), 0.5)
+        """.format(save.getdata("name")))
         #endregion NEW GAME
     def sink():
         #region Sink()
@@ -55,7 +55,7 @@ You see glass shards in the sink.
 The mirror is broken.
 What little of yourself you can see looks like a mess.
 You might want to find a proper bathroom and freshen up a bit.
-            """, 1)
+            """)
         #endregion Sink
     def window():
         #region window()
@@ -67,7 +67,7 @@ You enjoy the holographic nature outside the window.
 a holographic deer just walked past.
 ....
 Time to go.
-        """, 1)
+        """)
         else:
             save.setdata("apartment:window", True)
             game.rolltext("""
@@ -87,7 +87,7 @@ Only that you had a class 5 back..
 back home...
 ..had.. back home...
 so this isen't home then...?
-    """, 1)
+    """)
         #endregion window() 
     def table():
         #region table()
@@ -111,7 +111,7 @@ You look at the nightstand table.
 You see {0}{1}
 and two framed pictures.
 One with a cyan frame, one with a golden frame.
-        """.format(glassText(), pillsText()), 0.3)
+        """.format(glassText(), pillsText()))
         a = game.choose(["Glass", "Cyan framed picture", "Golden framed picture", "back off"])
         if a == 0:
             g = save.getdata("apartment:glass")
@@ -147,7 +147,7 @@ You seem to remeber he insisted you did not need some expensive frame for his pi
 You study his features closly.
 suddenly it clicks in your mind.
 You recognize him now. It is Jeff, your {0}.
-                """.format(game.getGenderedTerm(j, "male")), 1)
+                """.format(game.getGenderedTerm(j, "male")))
             else:
                 game.showtext("It is Jeff, your {0}".format(game.getGenderedTerm(j, "male")))
         elif a == 2:
@@ -164,7 +164,7 @@ You study her close, trying to rember who she is
 As you are looking in her eyes when you realize who she is.
 Her name is Klara, you seem to remeber.
 Klara.. she is your {0}! 'How could you forget that?', you wonder.
-                """.format(game.getGenderedTerm(k, "female")), 1)
+                """.format(game.getGenderedTerm(k, "female")))
             else:
                 game.showtext("It is Klara, your {0}".format(game.getGenderedTerm(k, "female")))
         else:
@@ -178,14 +178,14 @@ Klara.. she is your {0}! 'How could you forget that?', you wonder.
 You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
-            """, 1)
+            """)
             return True
         else:
             game.rolltext("""
 You walk towards the door.
 Suddenly there is a sharp spike of pain in your head.
 When it is over you are back on the bed, panting.
-            """, 1)
+            """)
         return False
         #endregion door()
 

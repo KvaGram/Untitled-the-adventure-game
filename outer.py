@@ -53,9 +53,9 @@ What happend here?
     def sectionAdoor():
         game.showtext("You pass though the open door seperating the two sectors")
         nav.setSection("A", 2)
-    def auxcom():
-        game.showtext("This auxillary comunication system on this level is broken.")
-        #TODO: idea: attempt to connect to this from middle level to activiate this one
+    #def auxcom():
+    #    game.showtext("This auxillary comunication system on this level is broken.")
+    #    #TODO: idea: attempt to connect to this from middle level to activiate this one
     def ladder():
         text = """
 The corridor gives way to a large column, splitting the corridor to go around it on both sides.
@@ -119,11 +119,12 @@ Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
         g = game.getGender(save)
         p1 = "man" if g == "male" else "woman"
         p2 = "he" if g == "male" else "she"
+        p3 = "his" if g == "male" else "her"
         #reason why this shutdwn could not be done remotly: temperal bleeding corrupted all data packages, repeating the signals randomly.
         game.rolltext("""
 Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
 As you enter the room you instinctivly step aside to let a oddly familiar {0} out of the room.
-Suprisingly, {1} looked oddly familiar. Looking up from {1} hands and at you, the {0} looks as shocked as you.
+Suprisingly, {1} looked oddly familiar. Looking up from {2} hands and at you, the {0} looks as shocked as you.
 But as suddenly as {1} appeared, the {0} suddenly dissappeard.
 
 What was {1}? A ghost?
@@ -136,7 +137,7 @@ Looking to your left, you find a manua.. wait.
 it's gone.
 no, now it's there again.
 ..and it's gone!
-        """)
+        """.format(p1, p2, p3))
         ind, val = game.choose2(("try to snatch the manual next time it appears", "randomly enter data into the control-screen"), "What will you do?")
         #stupid choice resulting in a game over:
         if(ind == 1):
@@ -198,9 +199,9 @@ Browsing the manual you find instructions for a number of emergency procedures.
         random.shuffle(choices)
         cooledDown = False # must be done first
         slowedDown = False # will cause a fire if done before cooldown
-        fireSuppressed_1 = False # will have no effect if there are no fire
+        #fireSuppressed_1 = False # will have no effect if there are no fire ### unused ###
         warnedOfLoops = False #unlocks with the INFO option, enables some alternate text.
-        depolorized = False #unlocks with the reversed option, it adds more time loops.
+        #depolorized = False #unlocks with the reversed option, it adds more time loops. ### unused ###
 
         fixing_reactor_loop = True
 
@@ -234,7 +235,7 @@ A hole just appeared in the side of the wall, then seemed to reassamle into a wa
 Whatever you just did, you are pretty sure you just made it all worse.
 You decided not to try that again.
                 """)
-                depolorized = True
+                #depolorized = True
                 choices.pop(ind)
             elif val == "INSTADEATH":
                 nav.running = False
@@ -345,7 +346,7 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
                 textTemp="SAFE" if cooledDown else "VERY HIGH!" if slowedDown else "HIGH!"
                 textFireAlert=""
                 if slowedDown:
-                    for i in range(random.randint(3, 10)):
+                    for _ in range(random.randint(3, 10)):
                         textFireAlert += "\n\tALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {0}{1}".format(random.choice(("A", "B", "C", "D")), random.randint(1,12))
                 textFirsttime="" if warnedOfLoops else """
 It did not take long for you to realize that the 'human operator' is you.
@@ -392,7 +393,13 @@ You followed the instructions to initiate a diognastic of the reactor.
         if cooledDown and slowedDown:
             game.endCounter(save, "reactorC")
             save.setdata("reactorC:fixed", True)
-
+        game.rolltext("""
+        Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
+        Suddenly you notice something.. someone in front of you.
+        You look up at the stranger.
+        It took you a bit by suprise, but then you remebered what happened when you first came in.
+        And as before, the other person suddenly disappeared.
+        You leave the room content you have done what you could to fix it up.""")
 
 
     #endregion actions and places

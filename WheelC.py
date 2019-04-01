@@ -30,8 +30,8 @@ def emergencyLadder(save):
 #        """)
         goto("core")
     def inner():
-        #goto("inner")
-        game.showtext(" - Sorry, this section is not written yet. - ")
+        game.showtext("You open the hatch for the inner ring")
+        goto("inner")
     def middle():
         game.showtext("You open the hatch for the middle ring")
         goto("middle")
@@ -79,7 +79,7 @@ You float mindlessly around in the huge sphere untill you get a hold on a spinni
 Soon the pole seemed to stop rotating, and the room started rotating around you.
 As the room spins around you, you take note of the clearly labled entry points around you.
         """
-
+    game.rolltext(intro)
     choices = (
         ("WINDOW", "Core window"),
         ("ELEVATOR_SEC_A", "Section A transport elevator"),
@@ -169,6 +169,7 @@ You look "down" towards the huge door "below".
 Taking in the details, you see the pole ending a bit before it, splitting into 4 aches around the doorway.
 Like the pole itself, the doorway was fixed, and not rotating with the room.
 On a closer look, there is a secund doorway past it, and two more again, with only some small gap of room between them.
+The inner-most door are closed, but has some large windows where you can see the area past it, clearly.
             """)
             if not game.yesno("Take off towards the doorway?"):
                 continue
@@ -179,7 +180,7 @@ You take off, pushing and dragging along the pole untill you reach the doorway.
             if not game.yesno("enter the doorway?"):
                 game.rolltext("""
 For whatever reason, you decide to drag yourself back to the pole.
-As you turned around, you noticed some people float into view, with confused looks.
+As you turned around, you noticed some people float into view on the, with confused looks.
                 """)
                 continue
             game.rolltext("""
@@ -202,29 +203,92 @@ def Cargobay(save):
     reactorFixed = save.getdata("reactorC:fixed", False)
     peopleSaved = save.getdata("stasis:peopleSaved", 0)
     prevcontact = save.getdata("auxcom:cargo", False)
+    name = game.getName(save)
+    gender = game.getGender(save)
+    pronoun = "him" if gender == "male" else "her"
+    gendernoun = "sir" if gender == "male" else "miss"
+    jeff = game.getJeff(save, True)
+    klara = game.getKlara(save, True)
+
+
+    intro = "As you appreach the innermost door, you hear a muffled barely audiable voice from the other side."
+    introA = "Hey, you must be {0}!".format(name)
+    introB = "What the? A survivor! Quick, let's open the door and get {0} inside!".format(pronoun)
+
+    p = name if prevcontact else gendernoun
+    instruct = "Are you alright there {0}? The door is a bit broken, so I need you to hold down that lever there while we open the door".format(p)
+
+    reaction = ""
+    reactionA = """Well, you saved a few people, {0} by last count, that would otherwise die.
+    I suppose that's something we can be thankfull for. Sad there are still so many more stuck down there.""".format(peopleSaved)
+    reactionB = """Thank you {1}. We never expected you to evacuate so many people on your lonesome. Sorry we could not help.
+    By our last count, we're at {0}, excluding you.""".format(peopleSaved, name)
+    reactionC = """What happened? You fixed the reactor. Was there something wrong with the stasis chambers? Why haven't you evacuated anyone, {0}?""".format(name)
+    reactionD = "Well, at least we got you out of there in time."
+
+    followup = ""
+    followupA = "Well, proper congratulations will have to wait. You should join the others in the infirmary. And we need to detatch the module now! Hurry on now!"
+    followupB = """Wish we could get more people out of there, but it's too late now. Without that improvised dead-man switch on the other side there, this door is locked for good.
+    You best head to the infirmary. We need to detach the module before it's too late."""
+
+    ending = ""
+    endingA = """You push and drag your way following the signs to the infirmary in wheel A section A1
+You try not to think about how maybe you could have saved some of the people stuck in stasis.
+You excuse it in your mind by saying to yourself that there was nothing you could have done for them.
+Though in a way, you know that's a lie."""
+    endingB = """You push and drag your way following the signs to the infirmary in wheel A section A1
+You try not to think about all the people you left behind, focusing instead on the few you did save"""
+    endingC = """You join the last group of surviors you saved on the way to the infirmary.
+Pushing and dragging your ways to wheel A, you meet a crew-member.
+You get told that the wheel A infirmary is full, so you change course to Wheel D.
+As if from nowhere, Jeff, your {0} pokes you on your shoulder.
+Apperently, he was in the last group, and you had not even noticed.
+Neither had he. Stasis sickness being what it is.
+Passing the computer core on the way, you got reaquiented with your {1} Klara too, who pushed out of the room below you and hugged you.
+putting both of you in a real awkward spin in the microgravity, untill she got a hold on the railing, stopping you both.
+    """.format(jeff, klara)
+    endingD = """Hearing that comment, you got an odd feeling. How could you have known there were more people missing?
+And that you could have helped them? As you push and drag your way to the infirmary in wheel A,
+you conclude there was no way you could have known.
+...
+It is of little comfort."""
+
 
     if prevcontact:
-        pass
+        intro += introA
+        if(peopleSaved > 120):
+            reaction = reactionB
+            followup = followupA
+            ending = endingC
+        elif(peopleSaved > 0):
+            reaction = reactionA
+            followup = followupA
+            ending = endingB
+        elif(reactorFixed):
+            followup = followupB
+            reaction = reactionC
+            ending = endingA
+        else:
+            followup = followupB
+            reaction = reactionD
+            ending = endingA
     else:
-        pass
-    if peopleSaved > 0:
-        pass
-    if reactorFixed:
-        pass
-    else:
-        pass
+        intro += introB
+        reaction = reactionD
+        followup = followupB
+        ending = endingD
+
+    game.rolltext("""{0}
+    {1}
+    {2}
+    {3}
+    {4}
     
+    END OF CHAPTER 1""".format(intro, instruct, reaction, followup, ending))
+    save.setdata("GAME OVER", "End of the story, so far!")
 
     game.showtext("PLACEHOLDER! Welcome to end of chapter 1")
     save.setdata("GAME OVER", "End of the story, so far!")
-#barebones placeholder for chapter 1: Wheel C
-
-#TODO: 
-def inner(save):
-
-    game.showtext("Welcome to the placeholder for inner ring.\nThere is nothing for you to do here yet.\nLater you will be able to save some people currently frozen in here.")
-    if game.yesno("return to the emergency ladder?"):
-        return save.goto("ladder")
 
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.

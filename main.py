@@ -14,19 +14,20 @@ import game_utilities as game
 import room_apartment 
 import middlering
 import outer
+import inner
 import about
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
-VERSION = [0, 4, 0]
+VERSION = [0, 5, 1]
 
 
 def build_world():
     world = {}
     world['apartment'] = room_apartment.main
     world['about'] = about.main
-    world["core"] = wheel.core #TODO: add proper module for core
-    world["inner"] = wheel.inner
+    world["core"] = wheel.core #TODO: add proper module for core 
+    world["inner"] = inner.main
     world["middle"] = middlering.main
     world["outer"] = outer.main
     world["ladder"] = wheel.emergencyLadder #TODO: move ladder to seperate module

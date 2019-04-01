@@ -47,7 +47,7 @@ There is a small reinforced window on the door, you look though it.
 On the other side you see a corridor much like the one you are in
 except, the lights are all off, and a number of dead bodies litter the floor.
 What happend here?
-        """, 0.3)
+        """)
     def bathrooms():
         goto("bathrooms")
     def door_2A68():
@@ -336,11 +336,11 @@ You locate the panel as indicated on the engraving.
             text += "\nFOR EMERGENCIES ONLY.\nSECURITY WILL BE ALERTED TO MISUSE!"
             enterText = "You smash the glass, and pull the lever.\nThe hatch opens and you go inside."
             openText = "Smash the glass?"
-        game.rolltext(text, 0.3)
+        game.rolltext(text)
         if(game.yesno(openText)):
             if save.getdata("WheelCMiddleLadder") == None:
                 save.setdata("WheelCMiddleLadder", "open")
-            game.rolltext(enterText,0.5)
+            game.rolltext(enterText)
             goto("ladder")
 
     def sectionCdoor():
@@ -358,7 +358,7 @@ you see the walls on the other side of the door.
 They go on for a bit over a meter, then abruptly ends in uneven bent metal.
 And you see some small faint light far back in the darknes, moving.
 Stars, you realize. Stars flying upwards. You are staring into space!
-    """, 0.3)
+    """)
     def elevator():
         return dialoges.elevator(save)
     #endregion places and actions
@@ -409,7 +409,7 @@ You are now at the middle level ring.
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
         """
-    game.rolltext(intro, 0.3)
+    game.rolltext(intro)
     nav.loop()
 
 #TODO: move this to its own module
@@ -420,7 +420,7 @@ You stand in front of the bathrooms. There are two doors in front of you.
 One door with a depiction of a man, one depicting a woman.
         """)
         choices = [("MALE", "Enter mens room"), ("FEMALE", "Enter ladies room"), ("EXIT", "Leave")]
-        ind, val = game.choose2(choices, "What door do you enter")
+        _, val = game.choose2(choices, "What door do you enter")
         if val == "MALE":
             bathrooms2("mens")
         elif val == "FEMALE":
