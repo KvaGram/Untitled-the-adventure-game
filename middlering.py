@@ -401,6 +401,11 @@ There is an uneasy silence.
 You close the emergency ladder's hatch.
 You are now at the middle level ring.
         """
+    elif prevroom == "bathrooms":
+        nav.setSection("A", 1)
+        intro = """
+You exit the bathrooms and returned to the corridor.
+        """
     else:
         nav.setSection("B", 3)
         intro = """
