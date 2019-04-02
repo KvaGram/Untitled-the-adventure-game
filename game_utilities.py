@@ -95,7 +95,7 @@ def choose2(pList, message = "enter choice number", onSelect = None):
     valid = False
     inp = 0 #placeholder value
     length = len(pList)
-    dispList = (None,) * length #initiate fixed length list with empty elements
+    dispList = [None,] * length #initiate list with empty elements
     for i in range (length):
         choice = pList[i]
         if choice == None:
