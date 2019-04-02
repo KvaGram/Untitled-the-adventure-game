@@ -270,7 +270,7 @@ class RoomNav1D:
     onSelect = None
     def getPlace(self):
         try:
-            return (places[ind])
+            return self.places[self.ind]
         except:
             return (None, None, None)
     def __init__(self, termPlus = "GO PLUS", termMinus = "GO MINUS"):

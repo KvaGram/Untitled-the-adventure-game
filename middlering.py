@@ -54,7 +54,7 @@ What happend here?
         game.showtext("You open the door to your apartment go inside.")
         goto("apartment")
     def cafeteria():
-        game.showtext("cafeteria placeholder")
+        game.showtext("The Cafeteria is closed!")
     def sectionBdoor():
         game.showtext("You pass though the open door seperating the two sectors")
         nav.ind = 0
