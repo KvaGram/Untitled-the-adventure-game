@@ -57,12 +57,10 @@ What happend here?
         game.showtext("The Cafeteria is closed!")
     def sectionBdoor():
         game.showtext("You pass though the open door seperating the two sectors")
-        nav.ind = 0
-        nav.sec = "B"
+        nav.setSection("B", 0)
     def sectionAdoor():
         game.showtext("You pass though the open door seperating the two sectors")
-        nav.ind = 5
-        nav.sec = "A"
+        nav.setSection("A", 5)
     def auxcom_repair():
         #grabbing some data from save
         #redwhiteblue = save.getdata("auxcom:redwhiteinblue")
@@ -414,22 +412,23 @@ And oof! You just walked streight into a large closed door.
 
 #TODO: move this to its own module
 def bathrooms(save):
-    while True:
-        game.rolltext("""
+    def bathrooms1():
+        while True:
+            game.rolltext("""
 You stand in front of the bathrooms. There are two doors in front of you.
 One door with a depiction of a man, one depicting a woman.
-        """)
-        choices = [("MALE", "Enter mens room"), ("FEMALE", "Enter ladies room"), ("EXIT", "Leave")]
-        _, val = game.choose2(choices, "What door do you enter")
-        if val == "MALE":
-            bathrooms2("mens")
-        elif val == "FEMALE":
-            bathrooms2("ladies")
-        else:
-            save.goto("middle")
-            break
-        if(save.getdata("GAME OVER")):
-            return
+            """)
+            choices = [("MALE", "Enter mens room"), ("FEMALE", "Enter ladies room"), ("EXIT", "Leave")]
+            _, val = game.choose2(choices, "What door do you enter")
+            if val == "MALE":
+                bathrooms2("mens")
+            elif val == "FEMALE":
+                bathrooms2("ladies")
+            else:
+                save.goto("middle")
+                break
+            if(save.getdata("GAME OVER")):
+                return
 
     def bathrooms2(subroom):
         gender = None 
@@ -591,6 +590,7 @@ You take it with you."""
             if status == "death": #if reactor counter reach 0, and the game ends.
                 break
         #end of loop
+    bathrooms1() #Starts the room.
 
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.
@@ -601,5 +601,6 @@ if __name__ == "__main__":
     from main import VERSION
     testsave1 = savadata(VERSION)
     testsave1.setdata("name","Tester")
+    testsave1.goto("middle")
 
     main(testsave1)
