@@ -19,7 +19,7 @@ import about
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
-VERSION = [0, 5, 4]
+VERSION = [0, 5, 5]
 
 
 def build_world():
@@ -98,7 +98,7 @@ _________________________________________________
             game_loop()
             continue
         if(choice == 2):
-            world['about']()#starts credits roll
+            world['about'](save)#starts credits roll
             continue
         if(choice == 3):
             return

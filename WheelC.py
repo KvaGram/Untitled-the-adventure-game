@@ -52,6 +52,16 @@ def emergencyLadder(save):
         nav.running = False
         save.goto(room)
 
+    prevroom = save.getdata("prevroom")
+    if prevroom == "core":
+        nav.ind = 0
+    elif prevroom == "inner":
+        nav.ind = 1
+    elif prevroom == "middle":
+        nav.ind = 2
+    elif prevroom == "outer":
+        nav.ind = 3
+
     nav.loop()
     
 

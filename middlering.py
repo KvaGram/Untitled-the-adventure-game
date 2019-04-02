@@ -583,8 +583,8 @@ It feels important.
 You take it with you.""" 
                     keepsake = True
                 else:
-                    text = "\nThere was not much to see."
-                save.savedata("spouse:keepsake", keepsake)
+                    text += "\nThere was not much to see."
+                save.setdata("spouse:keepsake", keepsake)
                 game.rolltext(text)
             status = game.updateCounter(save, "reactorC", -1)
             if status == "death": #if reactor counter reach 0, and the game ends.

@@ -212,7 +212,7 @@ def endCounter(save, counterName):
 
 #NOTE consider moving general functions to its own module
 def onReactorCTime(save):
-    enabled, time = save.getCounter("reactorC")
+    enabled, _ , time = getCounter(save, "reactorC")
     if not enabled:
         return "safe"
     if time <= 0:
