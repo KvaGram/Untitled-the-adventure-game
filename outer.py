@@ -81,11 +81,11 @@ You locate the panel as indicated on the engraving.
             text += "\nFOR EMERGENCIES ONLY.\nSECURITY WILL BE ALERTED TO MISUSE!"
             enterText = "You smash the glass, and pull the lever.\nThe hatch opens and you go inside."
             openText = "Smash the glass?"
-        game.rolltext(text, 0.3)
+        game.rolltext(text)
         if(game.yesno(openText)):
             if save.getdata("WheelCOuterLadder") == None:
                 save.setdata("WheelCOuterLadder", "open")
-            game.rolltext(enterText,0.5)
+            game.rolltext(enterText)
             goto("ladder")
     def sectionCdoor():
         game.rolltext("""
@@ -103,14 +103,19 @@ They go on for a bit over a meter, then abruptly ends in uneven bent metal.
 After that, aside from what looks to be some solid tick tube, there is nothing but darkness.
 darkness and... lights. moving lights.
 Stars, you realize. Stars flying upwards. You are staring into space!
-    """, 0.3)
+    """)
 
     def reactNode():
-        game.showtext("Placeholder. Yeah, important path in the game here. Sorry it is incomplete!")
         game.rolltext("""
 The door in front of you are full of warning and hazard signs.
 Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
         """)
+        if save.getdata("reactorC:fixed", False):
+            game.rolltext("""You peek inside.
+You catch a brief glimse of yourself operating the control system.
+The reactor may not be entierly stable, but you have done what you could.
+You closed the door so not to disturb yourself.""")
+            return
         if not game.yesno("Are you sure you want to go inside?"):
             return
         #Idea:
@@ -394,12 +399,12 @@ You followed the instructions to initiate a diognastic of the reactor.
             game.endCounter(save, "reactorC")
             save.setdata("reactorC:fixed", True)
         game.rolltext("""
-        Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
-        Suddenly you notice something.. someone in front of you.
-        You look up at the stranger.
-        It took you a bit by suprise, but then you remebered what happened when you first came in.
-        And as before, the other person suddenly disappeared.
-        You leave the room content you have done what you could to fix it up.""")
+Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
+Suddenly you notice something.. someone in front of you.
+You look up at the stranger.
+It took you a bit by suprise, but then you remebered what happened when you first came in.
+And as before, the other person suddenly disappeared.
+You leave the room content you have done what you could to fix it up.""")
 
 
     #endregion actions and places
@@ -419,7 +424,7 @@ You followed the instructions to initiate a diognastic of the reactor.
     sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
 
     prevroom = save.getdata("prevroom")
-    if prevroom == "laddershaft":
+    if prevroom == "ladder":
         nav.setSection("B", 1)
         intro = """
 You close the emergency ladder's hatch.

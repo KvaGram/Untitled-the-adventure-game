@@ -19,7 +19,7 @@ import about
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
-VERSION = [0, 5, 7]
+VERSION = [0, 5, 8]
 
 
 def build_world():

@@ -16,10 +16,10 @@ def emergencyLadder(save):
             else:
                 act()
         def plus(self):
-            game.rolltext("You climb upwards, feeling yourself getting a bit lighter")
+            game.rolltext("You climb down, feeling a slight stronger pull downwards")
             self.ind += 1
         def minus(self):
-            game.rolltext("You climb down, feeling a slight stronger pull downwards")
+            game.rolltext("You climb upwards, feeling yourself getting a bit lighter")
             self.ind -= 1
     nav = ladderNAV()
     def core():
@@ -136,8 +136,8 @@ You look back, and see the shutters close.
 You hear more bangs, debris hitting the shutters.
 Might be a good idea to get out of there.
                 """
-                game.rolltext(text)
                 save.setdata("core:window", True)
+            game.rolltext(text)
         elif choice == "ELEVATOR_SEC_A":
             game.rolltext("""
 You look at the elevator access rotating around.
@@ -226,20 +226,20 @@ def Cargobay(save):
     introB = "What the? A survivor! Quick, let's open the door and get {0} inside!".format(pronoun)
 
     p = name if prevcontact else gendernoun
-    instruct = "Are you alright there {0}? The door is a bit broken, so I need you to hold down that lever there while we open the door".format(p)
+    instruct = """Are you alright there {0}? The door is a bit broken, so I need you to hold down that lever there while we open the door""".format(p)
 
     reaction = ""
     reactionA = """Well, you saved a few people, {0} by last count, that would otherwise die.
-    I suppose that's something we can be thankfull for. Sad there are still so many more stuck down there.""".format(peopleSaved)
+I suppose that's something we can be thankfull for. Sad there are still so many more stuck down there.""".format(peopleSaved)
     reactionB = """Thank you {1}. We never expected you to evacuate so many people on your lonesome. Sorry we could not help.
-    By our last count, we're at {0}, excluding you.""".format(peopleSaved, name)
+By our last count, we're at {0}, excluding you.""".format(peopleSaved, name)
     reactionC = """What happened? You fixed the reactor. Was there something wrong with the stasis chambers? Why haven't you evacuated anyone, {0}?""".format(name)
     reactionD = "Well, at least we got you out of there in time."
 
     followup = ""
     followupA = "Well, proper congratulations will have to wait. You should join the others in the infirmary. And we need to detatch the module now! Hurry on now!"
     followupB = """Wish we could get more people out of there, but it's too late now. Without that improvised dead-man switch on the other side there, this door is locked for good.
-    You best head to the infirmary. We need to detach the module before it's too late."""
+You best head to the infirmary. We need to detach the module before it's too late."""
 
     ending = ""
     endingA = """You push and drag your way following the signs to the infirmary in wheel A section A1
@@ -289,10 +289,10 @@ It is of little comfort."""
         ending = endingD
 
     game.rolltext("""{0}
-    {1}
-    {2}
-    {3}
-    {4}
+{1}
+{2}
+{3}
+{4}
     
     END OF CHAPTER 1""".format(intro, instruct, reaction, followup, ending))
     save.setdata("GAME OVER", "End of the story, so far!")

@@ -174,9 +174,9 @@ def getGenderedTerm(term, gender):
         else:
             return gender + " " + term #fallback
     if term == "sibling":
-        if(gender == "male"):
+        if gender == "male":
             return "brother"
-        elif term == "female":
+        elif gender == "female":
             return "sister"
         else:
             return gender + " " + term #fallback

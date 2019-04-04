@@ -393,7 +393,7 @@ As the door closes, you note the number-plate on your door.
     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 There is an uneasy silence.
         """
-    elif prevroom == "laddershaft":
+    elif prevroom == "ladder":
         nav.setSection("B", 2)
         nav.ind = 2
         nav.sec = "B"

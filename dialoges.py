@@ -193,7 +193,7 @@ Either fix the reactor, or get out of there!
             ("I'm {0}. I'm lost, where am I?".format(name)),
             ("Help, I don't know who or where I am!"),
             ("uhh"),
-            ("I.. I think my name is {0}. I find it hard to remember.")
+            ("I.. I think my name is {0}. I find it hard to remember.".format(name))
         ]
         ind, ans = game.choose2(choices, "What do I say?")
         game.showtext(">>"+ans)
@@ -306,7 +306,7 @@ We don't have time to go into details right now!
 I need you to either stabilize the reactor so we can save everyone, or get you safely out of there!
             """)
             choices.pop(3)
-        ind, ans = game.choose2(choices, "How do you respond?", "<< {2}")
+            ind, ans = game.choose2(choices, "How do you respond?", "<< {2}")
         
         if ind == 0:
             game.rolltext("""
