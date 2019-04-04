@@ -304,7 +304,7 @@ You decide to undo it, and never try that again, putting the black cable back in
         save.setdata("auxcom:systemstatus", systemStatus)
         if(systemStatus == "OK"):
             return dialoges.auxcom_contact(save)
-        else:
+        elif not save.getdata("GAME OVER"):
             game.showtext("You leave the AUX com alone.")
         #endregion auxcom repair
     def ladder():

@@ -224,18 +224,18 @@ def setGameover(save, reason):
     save.setdata("GAME OVER", reason)
 #common data
 def hasGender(save):
-    return save.getData("gender") != None
+    return save.getdata("gender") != None
 def hasName(save):
-    return save.getData("name") != None
+    return save.getdata("name") != None
 def hasKlara(save):
-    return save.getData("klara") != None
+    return save.getdata("klara") != None
 def hasJeff(save):
-    return save.getData("jeff") != None
+    return save.getdata("jeff") != None
 
 #get common data, randomize if not defined.
 def getGender(save):
     if hasGender(save):
-        return save.getData("gender")
+        return save.getdata("gender")
     else:
         return save.getdata("gender", random.choice(("male", "female")))
 def getName(save):
@@ -244,9 +244,9 @@ def getKlara(save, gendered = False):
     if gendered:
         return getGenderedTerm(getKlara(save, False), "female")
     if hasKlara(save):
-        return save.getData("klara")
+        return save.getdata("klara")
     elif hasJeff(save):
-        return save.getData("klara", termCounterpart(getJeff(save)))
+        return save.getdata("klara", termCounterpart(getJeff(save)))
     else:
         return save.getdata("klara", random.choice(("spouse", "sibling")))
     
@@ -254,9 +254,9 @@ def getJeff(save, gendered = False):
     if gendered:
         return getGenderedTerm(getJeff(save, False), "male")
     if hasJeff(save):
-        return save.getData("jeff")
+        return save.getdata("jeff")
     elif hasKlara(save):
-        return save.getData("jeff", termCounterpart(getKlara(save)))
+        return save.getdata("jeff", termCounterpart(getKlara(save)))
     else:
         return save.getdata("jeff", random.choice(("spouse", "sibling")))
 

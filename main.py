@@ -19,7 +19,7 @@ import about
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
-VERSION = [0, 5, 6]
+VERSION = [0, 5, 7]
 
 
 def build_world():
@@ -61,6 +61,7 @@ _________________________________________________
                 room = None
             if(room):
                 room(save)
+                game_over = save.getdata("GAME OVER")
             else:
                 game.showtext("""
 |---------------------- !!! ----------------------|
@@ -73,8 +74,9 @@ _________________________________________________
                 if(game.yesno("Save game?")):
                     save.savegame()
                 break
-            if(game.yesno("Would you like to save the game?")):
-                save.savegame()
+            if not game_over:
+                if(game.yesno("Would you like to save the game?")):
+                    save.savegame()
         #end game loop
     #end game loop function
 
