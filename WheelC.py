@@ -4,8 +4,10 @@ import dialoges
 #The Ladder
 def emergencyLadder(save):
     class ladderNAV(game.RoomNav1D):
-        def __init__(self):
-            super().__init__(termPlus= "GO DOWN", termMinus= "GO UP")
+        termPlus = "GO DOWN"#
+        termMinus = "GO UP" #
+        roomname = "ladder" #
+
         #Override
         def runAction(self):
             act,_,_ = self.getPlace()
@@ -21,7 +23,8 @@ def emergencyLadder(save):
         def minus(self):
             game.rolltext("You climb upwards, feeling yourself getting a bit lighter")
             self.ind -= 1
-    nav = ladderNAV()
+    
+    nav = ladderNAV.GET_NAV(save)
     def core():
         game.showtext("The ladder-shaft ends in a roof-hatch, you open it and stare into the huge spherical room above")
 #        game.rolltext("""
@@ -51,17 +54,19 @@ def emergencyLadder(save):
     def goto(room):
         nav.running = False
         save.goto(room)
+    def initNav():
+        prevroom = save.getdata("prevroom")
+        if prevroom == "core":
+            nav.ind = 0
+        elif prevroom == "inner":
+            nav.ind = 1
+        elif prevroom == "middle":
+            nav.ind = 2
+        elif prevroom == "outer":
+            nav.ind = 3
 
-    prevroom = save.getdata("prevroom")
-    if prevroom == "core":
-        nav.ind = 0
-    elif prevroom == "inner":
-        nav.ind = 1
-    elif prevroom == "middle":
-        nav.ind = 2
-    elif prevroom == "outer":
-        nav.ind = 3
-
+    if not nav.running:
+        initNav()
     nav.loop()
     
 

@@ -260,30 +260,56 @@ def getJeff(save, gendered = False):
     else:
         return save.getdata("jeff", random.choice(("spouse", "sibling")))
 
+def gameMenu():
+    choices = (
+        ("CONTINUE", "Continue game"),
+        ("SAVE", "Save game"),
+        ("LOAD", "Load game"),
+        ("EXIT", "Close game")
+    )
+    _, choice = choose2(choices, "Welcome to the game menu. What would you like to do?")
+    return choice
+
 # 1-dimentional navigation (liniar to and from)
 class RoomNav1D:
     ind = 0 #current location, index
-    running = True #run-status on local game-loop
+    running = False #run-status on local game-loop. Also indicates if the nav has already been initiated.
     places = []
-    termPlus = "GO PLUS"
-    termMinus = "GO MINUS"
-    onSelect = None
+    termPlus = "GO PLUS"   #Should be changed in sub-class / implementation
+    termMinus = "GO MINUS" #Should be changed in sub-class / implementation
+    roomname = "BASE" #Must be changed in sub-class / implementation
+    save = None
+    @classmethod
+    def GET_NAV(cls, save = None):
+        if save == None:
+            return cls()
+        nav = save.getNav(cls.roomname)
+        if not isinstance(nav, cls):
+            nav = cls()
+        save.setNav(nav)
+        return nav
+
+
+    def __init__(self):
+        pass
+        
     def getPlace(self):
         try:
             return self.places[self.ind]
         except:
             return (None, None, None)
-    def __init__(self, termPlus = "GO PLUS", termMinus = "GO MINUS"):
-        self.termPlus = termPlus
-        self.termMinus = termMinus
     #runPlace, plus and minus can be overritten for flavor text and aditional function calls.
     def plus(self):
         self.ind += 1
     def minus(self):
         self.ind -= 1
-    def runAction(self):
+    def runAction(self): #should be overwritten by sub-classes
         self.getPlace()[0]()
+    def openGameMenu(self): #must be overritten by sub-classes
+        showtext("Sorry, the game menu function cannot be called from here.\nPlease remind the programmer to patch it in soon,\nas this is not supposed to show for final users.")
+        return False #do not break out of look.
     def loop(self):
+        self.running = True
         while self.running:
             disp = "ERROR"
             action = " - "
@@ -299,10 +325,16 @@ class RoomNav1D:
             choices = (
                 ("PLUS", self.termPlus, "{0}({1})".format(self.termPlus, action), 1 if canPlus else 2),
                 ("ACT", action, 1),
-                ("MINUS", self.termMinus, "{0}({1})".format(self.termMinus, action), 1 if canMinus else 2)
+                ("MINUS", self.termMinus, "{0}({1})".format(self.termMinus, action), 1 if canMinus else 2),
+                ("MENU", "(open game menu)")
                 )
             _, choice = choose2(choices, message)
-            if choice == "PLUS":
+            if(choice == "MENU"):
+                if self.openGameMenu():
+                    return
+                else:
+                    continue
+            elif choice == "PLUS":
                 if canPlus:
                     self.plus()
                 else:

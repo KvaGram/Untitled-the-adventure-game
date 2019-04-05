@@ -148,7 +148,7 @@ class savadata:
             if game.yesno("The game was not loaded. Try again?"):
                 return self.loadgame()
             else:
-                return
+                return False
         f = open(path, "r")
         ldata = json.load(f)
         lversion = ldata["version"]
@@ -170,16 +170,28 @@ class savadata:
             game.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
         
         self.data = ldata
+        return True
+
+    def setNav(self, nav):
+        self.setdata("roomnav", nav)
+    def getNav(self, request = None):
+        nav = self.getdata("roomnav", None)
+        if nav == None or request == None:
+            return nav
+        if nav.roomname == request:
+            return nav
+        return None
     #sets the room save data.
     #example use
     # return save.goto("middleA")
     #return statment may be seperate as goto does not return value
-    #but it is symbolic as you usually use this to move from a room (module)
+    #but it is symbolic as you usually use this to move from a room (module
     def goto(self, room):
         if(room == None):
             return
         self.setdata("prevroom", self.getdata('room'))
         self.setdata("room", room)
+        self.setNav(None) #Cleans roomnav
     def versionText(self):
         return "v{0}.{1}.{2}".format(self.version[0], self.version[1], self.version[2])
 if __name__ == "__main__":

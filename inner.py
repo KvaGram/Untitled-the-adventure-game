@@ -5,8 +5,9 @@ def main(save):
     sectionA = []
     sectionB = []
     class outerRoomNAV(game.RoomNav1D):
-        def __init__(self):
-            super().__init__(termPlus= "GO LEFT", termMinus= "GO RIGHT")
+        termPlus = "GO LEFT"   #
+        termMinus = "GO RIGHT" #
+        roomname = "inner" #
 
         sec = "A" #current location, section
         #Override
@@ -18,6 +19,19 @@ def main(save):
                 self.running = False
             else:
                 act()
+        def openGameMenu(self):
+            req = ""
+            while True:
+                req = game.gameMenu()
+                if req == "CONTINUE":
+                    return False
+                elif req == "SAVE":
+                    save.savegame()
+                elif req == "LOAD":
+                    if game.yesno("Are you sure you wish to load a game?"):
+                        if save.loadgame():
+                            return True
+            return False #do not break out of look.
         def setSection(self, newSec, newInd):
             if newSec == "A":
                 self.places = sectionA
@@ -27,7 +41,8 @@ def main(save):
                 raise("INVALID ROOM SECTION LABEL")
             self.sec = newSec
             self.ind = newInd
-    nav = outerRoomNAV()
+
+    nav = outerRoomNAV.GET_NAV(save)
     intro = "place holder corridor intro text (should not show up in the game)"
     #region actions and places
     def sectionDdoor():
@@ -201,41 +216,43 @@ But 12 people were still alive to be revived from stasis.
     def goto(room):
         nav.running = False
         save.goto(room)
+    def initNav():
+        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
+        sectionA.append((tubes(0), "Stasis tubes 000 - 049", "enter"))      #A 1
+        sectionA.append((tubes(1), "Stasis tubes 050 - 099", "enter"))      #A 2
+        sectionA.append((tubes(2), "Stasis tubes 100 - 149", "enter"))      #A 3
+        sectionA.append((elevator, "Elevator C1A", "use"))                  #A 4
+        sectionA.append((tubes(3), "Stasis tubes 150 - 199", "enter"))      #A 5
+        sectionA.append((tubes(4), "Stasis tubes 200 - 249", "enter"))      #A 6
+        sectionA.append((tubes(5), "Stasis tubes 250 - 299", "enter"))      #A 7
+        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 8
 
-    sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-    sectionA.append((tubes(0), "Stasis tubes 000 - 049", "enter"))      #A 1
-    sectionA.append((tubes(1), "Stasis tubes 050 - 099", "enter"))      #A 2
-    sectionA.append((tubes(2), "Stasis tubes 100 - 149", "enter"))      #A 3
-    sectionA.append((elevator, "Elevator C1A", "use"))                  #A 4
-    sectionA.append((tubes(3), "Stasis tubes 150 - 199", "enter"))      #A 5
-    sectionA.append((tubes(4), "Stasis tubes 200 - 249", "enter"))      #A 6
-    sectionA.append((tubes(5), "Stasis tubes 250 - 299", "enter"))      #A 7
-    sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 8
+        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
+        sectionB.append((tubes(6), "Stasis tubes 300 - 349", "enter"))      #B 1
+        sectionB.append((tubes(7), "Stasis tubes 350 - 399", "enter"))      #B 2
+        sectionB.append((tubes(8), "Stasis tubes 400 - 449", "enter"))      #B 3
+        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 4 (entry and exit to and from other rings in the wheel)
+        sectionB.append((tubes(9), "Stasis tubes 450 - 499", "enter"))      #B 5
+        sectionB.append((tubes(10), "Stasis tubes 500 - 549", "enter"))     #B 6
+        sectionB.append((tubes(11), "Stasis tubes 650 - 699", "enter"))     #B 7
+        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 8
 
-    sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-    sectionB.append((tubes(6), "Stasis tubes 300 - 349", "enter"))      #B 1
-    sectionB.append((tubes(7), "Stasis tubes 350 - 399", "enter"))      #B 2
-    sectionB.append((tubes(8), "Stasis tubes 400 - 449", "enter"))      #B 3
-    sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 4 (entry and exit to and from other rings in the wheel)
-    sectionB.append((tubes(9), "Stasis tubes 450 - 499", "enter"))      #B 5
-    sectionB.append((tubes(10), "Stasis tubes 500 - 549", "enter"))     #B 6
-    sectionB.append((tubes(11), "Stasis tubes 650 - 699", "enter"))     #B 7
-    sectionB.append((sectionCdoor, "Section C", "examine"))             #B 8
-
-    prevroom = save.getdata("prevroom")
-    if prevroom == "laddershaft":
-        nav.setSection("B", 4)
-        intro = """
+        prevroom = save.getdata("prevroom")
+        if prevroom == "laddershaft":
+            nav.setSection("B", 4)
+            intro = """
 You close the emergency ladder's hatch.
 You are now at the inner level ring.
-        """
-    else:
-        nav.setSection("A", 0)
-        intro = """
+            """
+        else:
+            nav.setSection("A", 0)
+            intro = """
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
-        """
-    game.rolltext(intro, 0.3)
+            """
+        game.rolltext(intro, 0.3)
+    if not nav.running:
+        initNav()
     nav.loop()
     
 if __name__ == "__main__":

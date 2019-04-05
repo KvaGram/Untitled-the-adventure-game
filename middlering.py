@@ -7,8 +7,9 @@ def main(save):
     sectionA = []
     sectionB = []
     class middleRoomNAV(game.RoomNav1D):
-        def __init__(self):
-            super().__init__(termPlus= "GO LEFT", termMinus= "GO RIGHT")
+        termPlus = "GO LEFT"#
+        termMinus = "GO RIGHT" #
+        roomname = "middle" #
 
         sec = "A" #current location, section
         #Override
@@ -31,7 +32,7 @@ def main(save):
             self.ind = newInd
         
 
-    nav = middleRoomNAV()
+    nav = middleRoomNAV.GET_NAV(save)
     intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
@@ -366,53 +367,55 @@ Stars, you realize. Stars flying upwards. You are staring into space!
     def goto(room):
         nav.running = False
         save.goto(room)
+    def initNav():
+        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
+        sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
+        sectionA.append((door_2A68, "Door C2A68", "enter"))                 #A 2 (from apartment, newgame location)
+        sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
+        sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
+        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
 
-    sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-    sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
-    sectionA.append((door_2A68, "Door C2A68", "enter"))                 #A 2 (from apartment, newgame location)
-    sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
-    sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
-    sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
+        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
+        sectionB.append((auxcom_repair, "Auxillary communications", "use"))        #B 1
+        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
+        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
 
-    sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-    sectionB.append((auxcom_repair, "Auxillary communications", "use"))        #B 1
-    sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
-    sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
-
-    prevroom = save.getdata("prevroom")
-    if prevroom == "apartment":
-        nav.setSection("A", 2)
-        intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
-        if save.getdata("middlering:visited") == None:
-            intro += """
-You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
-The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
-As the door closes, you note the number-plate on your door.
-    _________________
-    |   C2A - 068   |
-    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is an uneasy silence.
-        """
-    elif prevroom == "ladder":
-        nav.setSection("B", 2)
-        nav.ind = 2
-        nav.sec = "B"
-        intro = """
-You close the emergency ladder's hatch.
-You are now at the middle level ring.
-        """
-    elif prevroom == "bathrooms":
-        nav.setSection("A", 1)
-        intro = """
-You exit the bathrooms and returned to the corridor.
-        """
-    else:
-        nav.setSection("B", 3)
-        intro = """
-You have walked around aimlessly for a bit, you don't know for how long
-And oof! You just walked streight into a large closed door.
-        """
-    game.rolltext(intro)
+        prevroom = save.getdata("prevroom")
+        if prevroom == "apartment":
+            nav.setSection("A", 2)
+            intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
+            if save.getdata("middlering:visited") == None:
+                intro += """
+    You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
+    The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
+    As the door closes, you note the number-plate on your door.
+        _________________
+        |   C2A - 068   |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    There is an uneasy silence.
+            """
+        elif prevroom == "ladder":
+            nav.setSection("B", 2)
+            nav.ind = 2
+            nav.sec = "B"
+            intro = """
+    You close the emergency ladder's hatch.
+    You are now at the middle level ring.
+            """
+        elif prevroom == "bathrooms":
+            nav.setSection("A", 1)
+            intro = """
+    You exit the bathrooms and returned to the corridor.
+            """
+        else:
+            nav.setSection("B", 3)
+            intro = """
+    You have walked around aimlessly for a bit, you don't know for how long
+    And oof! You just walked streight into a large closed door.
+            """
+        game.rolltext(intro)
+    if not nav.running:
+        initNav()
     nav.loop()
 
 #TODO: move this to its own module
