@@ -276,7 +276,7 @@ You unplug the big thick blue cable, and stuck out your touge to lick it.
 You're not sure why you just did that.
 As you somewhy put the cable in your mouth, the world goes black.
                 """
-                save.setdata("GAME OVER", "You put a live power-cable in your mouth. Yeah, you are dead.")
+                game.setGameover(save, "You put a live power-cable in your mouth. Yeah, you are dead.")
                 nav.running = False #escape outer room loop
                 cableLoop = False #escape inner loop
             elif a == "YELLOW IN BLACK":
@@ -305,7 +305,7 @@ You decide to undo it, and never try that again, putting the black cable back in
         save.setdata("auxcom:systemstatus", systemStatus)
         if(systemStatus == "OK"):
             return dialoges.auxcom_contact(save)
-        elif not save.getdata("GAME OVER"):
+        elif not game.getGameover(save):
             game.showtext("You leave the AUX com alone.")
         #endregion auxcom repair
     def ladder():
@@ -416,7 +416,7 @@ Stars, you realize. Stars flying upwards. You are staring into space!
         game.rolltext(intro)
     if not nav.running:
         initNav()
-    nav.loop()
+    nav.loop(save)
 
 #TODO: move this to its own module
 def bathrooms(save):
@@ -435,7 +435,7 @@ One door with a depiction of a man, one depicting a woman.
             else:
                 save.goto("middle")
                 break
-            if(save.getdata("GAME OVER")):
+            if(game.getGameover(save)):
                 return
 
     def bathrooms2(subroom):

@@ -4,11 +4,14 @@ import tkinter as tk
 from tkinter import filedialog
 import time
 import random
+import about
 
 #This is a map of functions that can be called at any time.
 def RunGeneral(save, call):
     if call == "onReactorCTime":
         return onReactorCTime(save)
+    if call == "about":
+        return about.main()
     return "NOT FOUND"
 
 def choose(list, message = "enter choice number"):
@@ -156,14 +159,15 @@ def truefalse(message = "Please select"):
             return True
         elif(inp[0] == "f" or inp[0] == "F"):
             return False        
-
+# Displays a multiline text on screen line by line, with an adjustable break between.
 def rolltext(txt, linepause = 0.1):
     lines = txt.splitlines()
     for l in lines:
         showtext(l)
         time.sleep(linepause)
+# Displays a text on screen. print is not used directly, so the game can be upgraded to use some alternate GUI (like pygame) if needed.
 def showtext(text = ""):
-    print(text) # placeholder, in case game upgraded to use pygame
+    print(text)
 
 def getGenderedTerm(term, gender):
     if term == "spouse":
@@ -222,6 +226,8 @@ def onReactorCTime(save):
     return "safe"
 def setGameover(save, reason):
     save.setdata("GAME OVER", reason)
+def getGameover(save):
+    return save.getdata("GAME OVER")
 #common data
 def hasGender(save):
     return save.getdata("gender") != None
@@ -259,16 +265,35 @@ def getJeff(save, gendered = False):
         return save.getdata("jeff", termCounterpart(getKlara(save)))
     else:
         return save.getdata("jeff", random.choice(("spouse", "sibling")))
-
-def gameMenu():
+#opes game menu.
+#requires save.
+#Returns True if game needs to return to main.
+def gameMenu(save):
     choices = (
         ("CONTINUE", "Continue game"),
         ("SAVE", "Save game"),
         ("LOAD", "Load game"),
+        ("ABOUT", "Credits"),
         ("EXIT", "Close game")
     )
-    _, choice = choose2(choices, "Welcome to the game menu. What would you like to do?")
-    return choice
+    while True:
+        _, choice = choose2(choices, "Welcome to the game menu. What would you like to do?")
+        if choice == "CONTINUE":
+            return False
+        elif choice == "SAVE":
+            save.savegame()
+        elif choice == "LOAD":
+            if yesno("Are you sure you wish to load a game?"):
+                if save.loadgame():
+                    return True           
+        elif choice == "EXIT":
+            if yesno("Are you sure you wish to quit?"):
+                #sys.exit("Goodbye")
+                quit(0)
+                return True
+        elif choice == "ABOUT":
+            RunGeneral(save,"about")
+    return False
 
 # 1-dimentional navigation (liniar to and from)
 class RoomNav1D:
@@ -305,10 +330,11 @@ class RoomNav1D:
         self.ind -= 1
     def runAction(self): #should be overwritten by sub-classes
         self.getPlace()[0]()
-    def openGameMenu(self): #must be overritten by sub-classes
-        showtext("Sorry, the game menu function cannot be called from here.\nPlease remind the programmer to patch it in soon,\nas this is not supposed to show for final users.")
-        return False #do not break out of look.
-    def loop(self):
+    #calls utility gameMenu. can be overritten.
+    #returns value from gameMenu
+    def openGameMenu(self, save): 
+        return gameMenu(save)
+    def loop(self, save):
         self.running = True
         while self.running:
             disp = "ERROR"
@@ -330,7 +356,7 @@ class RoomNav1D:
                 )
             _, choice = choose2(choices, message)
             if(choice == "MENU"):
-                if self.openGameMenu():
+                if self.openGameMenu(save):
                     return
                 else:
                     continue

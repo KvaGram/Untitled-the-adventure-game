@@ -67,7 +67,7 @@ def emergencyLadder(save):
 
     if not nav.running:
         initNav()
-    nav.loop()
+    nav.loop(save)
     
 
 
@@ -101,12 +101,16 @@ As the room spins around you, you take note of the clearly labled entry points a
         ("LADDER_SEC_B", "Section B emergency access ladder"),
         ("ELEVATOR_SEC_C", "Section C transport elevator"),
         ("LADDER_SEC_D", "Section D emergency access ladder"),
-        ("AIRLOCK", "Module primary airlock and dock")
+        ("AIRLOCK", "Module primary airlock and dock"),
+        ("GAMEMENU", "OPEN GAME MENU")
     )
     running = True
     while running:
         _, choice = game.choose2(choices)
-        if choice == "WINDOW":
+        if choice == "GAMEMENU":
+            if(game.gameMenu(save)):
+                break
+        elif choice == "WINDOW":
             if save.getdata("core:window", False):
                 text = """
 You look back at the window area. The window is closed by the huge metal shutter.
@@ -300,10 +304,7 @@ It is of little comfort."""
 {4}
     
     END OF CHAPTER 1""".format(intro, instruct, reaction, followup, ending))
-    save.setdata("GAME OVER", "End of the story, so far!")
-
-    game.showtext("PLACEHOLDER! Welcome to end of chapter 1")
-    save.setdata("GAME OVER", "End of the story, so far!")
+    game.setGameover(save, "End of the story, so far!")
 
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.

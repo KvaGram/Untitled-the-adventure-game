@@ -19,19 +19,6 @@ def main(save):
                 self.running = False
             else:
                 act()
-        def openGameMenu(self):
-            req = ""
-            while True:
-                req = game.gameMenu()
-                if req == "CONTINUE":
-                    return False
-                elif req == "SAVE":
-                    save.savegame()
-                elif req == "LOAD":
-                    if game.yesno("Are you sure you wish to load a game?"):
-                        if save.loadgame():
-                            return True
-            return False #do not break out of look.
         def setSection(self, newSec, newInd):
             if newSec == "A":
                 self.places = sectionA
@@ -253,7 +240,7 @@ And oof! You just walked streight into a large closed door.
         game.rolltext(intro, 0.3)
     if not nav.running:
         initNav()
-    nav.loop()
+    nav.loop(save)
     
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.

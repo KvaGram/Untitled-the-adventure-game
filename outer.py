@@ -441,7 +441,7 @@ And oof! You just walked streight into a large closed door.
         game.rolltext(intro, 0.3)
     if not nav.running:
         initNav()
-    nav.loop()
+    nav.loop(save)
     
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.

@@ -1,7 +1,7 @@
 #import time
 import game_utilities as game
 
-def main(savedata):
+def main():
     f = open("title.txt", 'r', encoding="utf-8")
     titlecard = f.read()
     game.rolltext(titlecard, 0.05)

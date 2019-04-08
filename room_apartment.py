@@ -191,7 +191,7 @@ When it is over you are back on the bed, panting.
 
     if(save.getdata("name") == None):
         newgame()
-    choices = ["look out the window", "examine the table", "examine the sink", "go to the door"]
+    choices = ["look out the window", "examine the table", "examine the sink", "go to the door", "OPEN GAME MENU"]
     end = False
     while not end:
         game.showtext("You are sitting on the side of the bed")
@@ -206,6 +206,9 @@ When it is over you are back on the bed, panting.
             if(door()):
                 return save.goto("middle")
             pass
+        elif choice == 4:
+            if(game.gameMenu(save)):
+                break
         #if room is revisited after the reactor counter has been enabled,
         #you will be wasting time here.
         status = game.updateCounter(save, "reactorC", -1)

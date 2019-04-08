@@ -15,7 +15,6 @@ import room_apartment
 import middlering
 import outer
 import inner
-import about
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
@@ -25,7 +24,7 @@ VERSION = [0, 5, 8]
 def build_world():
     world = {}
     world['apartment'] = room_apartment.main
-    world['about'] = about.main
+    #world['about'] = about.main #moved to game.RunGeneral("about")
     world["core"] = wheel.core #TODO: add proper module for core 
     world["inner"] = inner.main
     world["middle"] = middlering.main
@@ -45,7 +44,7 @@ def start():
             if(roomReq == None): #newgame location
                 roomReq = "apartment"
             #space to check for special conditions
-            game_over = save.getdata("GAME OVER")
+            game_over = game.getGameover(save)
             if(game_over):
                 game.showtext("""
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\_GAME_OVER_/‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -61,7 +60,7 @@ _________________________________________________
                 room = None
             if(room):
                 room(save)
-                game_over = save.getdata("GAME OVER")
+                game_over = game.getGameover(save)
             else:
                 game.showtext("""
 |---------------------- !!! ----------------------|
@@ -75,8 +74,8 @@ _________________________________________________
                     save.savegame()
                 break
             if not game_over:
-                if(game.yesno("Would you like to save the game?")):
-                    save.savegame()
+                if(game.yesno("Open game menu?")):
+                    game.gameMenu(save)
         #end game loop
     #end game loop function
 
@@ -93,14 +92,20 @@ _________________________________________________
         choices = ["New Game", "Load Game", "About", "End game"]
         choice = game.choose(choices)
         if(choice == 0):
-            game_loop()
+            try:
+                game_loop()
+            except SystemExit as _:
+                return
             continue
         if(choice == 1):
             save.loadgame()
-            game_loop()
+            try:
+                game_loop()
+            except SystemExit as _:
+                return
             continue
         if(choice == 2):
-            world['about'](save)#starts credits roll
+            game.RunGeneral(save,"about")#starts credits roll
             continue
         if(choice == 3):
             return
@@ -192,6 +197,7 @@ class savadata:
         self.setdata("prevroom", self.getdata('room'))
         self.setdata("room", room)
         self.setNav(None) #Cleans roomnav
+    
     def versionText(self):
         return "v{0}.{1}.{2}".format(self.version[0], self.version[1], self.version[2])
 if __name__ == "__main__":
