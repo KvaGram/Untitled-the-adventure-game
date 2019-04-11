@@ -10,9 +10,9 @@ def main(save):
         save.setdata("prevroom", "apartment")
         game.rolltext("""
 Weeeee.. you are flying though the sky!
-Below you are a beutiful forest, as green as anything you could ever imagine!
+Below you are a beautiful forest, as green as anything you could ever imagine!
 Deep down you know you are dreaming, but you can't quite get yourself to wake up.
-suddenly you are in a vintage open cokpit biplane flying over the same lands...
+suddenly you are in a vintage open cockpit biplane flying over the same lands...
                             **CRASH**
 
 Your eyes shook open! Out the window you see the landscape you pictured in your dream.
