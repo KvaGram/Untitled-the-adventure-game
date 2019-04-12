@@ -1,7 +1,5 @@
 import game_utilities as game
 import random
-# world is the dictionary list of rooms, events, special functions etc you can call/visit.
-# savedata is the save-file, with all choices and saved data so far, this also includes some temporary data.
 
 def main(save):
     def newgame():
