@@ -99,10 +99,10 @@ You locate the panel as indicated on the engraving.
 
 
     def sectionBdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass though the open door separating the two sectors")
         nav.setSection("B", 0)
     def sectionAdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass though the open door separating the two sectors")
         nav.setSection("A", 8)
 
     #groups that can be saved.

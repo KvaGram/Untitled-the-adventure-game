@@ -49,10 +49,10 @@ What happend here?
     def elevator():
         dialoges.elevator(save)
     def sectionBdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass though the open door separating the two sectors")
         nav.setSection("B", 0)
     def sectionAdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass though the open door separating the two sectors")
         nav.setSection("A", 2)
     #def auxcom():
     #    game.showtext("This auxillary comunication system on this level is broken.")
