@@ -112,7 +112,7 @@ The screen turns on and displays the text
             game.showtext("You push the panel. The panel lowers as a latch to reveal a keyboard.")
         game.rolltext("""
 The screen turns on, but displays static.
-Unseen speakers make some some of repeated beeping pattern that
+Unseen speakers make some sort of repeated beeping pattern that
 seems oddly familiar, but you cannot quite place it.
 
 You notice a handle on the side of the panel the screen is on.
@@ -370,7 +370,7 @@ Stars, you realize. Stars flying upwards. You are staring into space!
     def initNav():
         sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
         sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
-        sectionA.append((door_2A68, "Door C2A68", "enter"))                 #A 2 (from apartment, newgame location)
+        sectionA.append((door_2A68, "Door C2A - 068", "enter"))                 #A 2 (from apartment, newgame location)
         sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
         sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
         sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
