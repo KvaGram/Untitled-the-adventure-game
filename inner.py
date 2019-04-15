@@ -35,7 +35,7 @@ def main(save):
     def sectionDdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C1 SECTOR D    |
         |   EMERGENCY DOOR  |
@@ -49,7 +49,7 @@ What happend here?
     def sectionCdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C1 SECTOR C    |
         |   EMERGENCY DOOR  |

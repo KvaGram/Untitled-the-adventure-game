@@ -39,7 +39,7 @@ def main(save):
     def sectionDdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C2 SECTOR D    |
         |   EMERGENCY DOOR  |
@@ -80,7 +80,7 @@ It has the following text painted and ingraved under it
         | FOR AUTHORIZED USE    |
         |          ONLY         |
         |_______________________|
-Undert that you find a smaller panel that seem to invite you to push it.
+Under that you find a smaller panel that seem to invite you to push it.
         """)
         if not game.yesno("Push the lower panel?"):
             game.showtext("You leave the auxillary communications panel alone")
@@ -272,9 +272,9 @@ You check the screen, and find it now displays a black background with a text in
                 tblueinwhite = True
             elif a == "TASTE BLACK":
                 text = """
-You unplug the big thick blue cable, and stuck out your touge to lick it.
+You unplug the big thick blue cable, and stuck out your tongue to lick it.
 You're not sure why you just did that.
-As you somewhy put the cable in your mouth, the world goes black.
+As you somehow put the cable in your mouth, the world goes black.
                 """
                 game.setGameover(save, "You put a live power-cable in your mouth. Yeah, you are dead.")
                 nav.running = False #escape outer room loop
@@ -345,7 +345,7 @@ You locate the panel as indicated on the engraving.
     def sectionCdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C2 SECTOR C    |
         |   EMERGENCY DOOR  |

@@ -20,7 +20,7 @@ It seems so nice, yet something seems off. Everything seems off.
 You even struggle to remember your own name.. What.. was.. what was your name?
     """)
 
-        nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remeber my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think thats my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
+        nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remeber my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
 
         inp = ""
         while True:

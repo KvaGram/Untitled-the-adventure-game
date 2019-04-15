@@ -35,7 +35,7 @@ def main(save):
     def sectionDdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C3 SECTOR D    |
         |   EMERGENCY DOOR  |
@@ -91,7 +91,7 @@ You locate the panel as indicated on the engraving.
     def sectionCdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.
-There is a painted ingraving on the door, it reads
+There is a painted engraving on the door, it reads
         _____________________
         |    C3 SECTOR C    |
         |   EMERGENCY DOOR  |
