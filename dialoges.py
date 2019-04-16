@@ -127,8 +127,10 @@ Well, that's the thing. We are still investigating.
 What we know so far is that there was a glitch in the nav system.
 We don't know how that happend, nor why nobody noticed.
 Well, this glitch caused us to pass though an asteroidbelt.
+We don't know how that happened, nor why nobody noticed.
+Well, this glitch caused us to pass through an asteroidbelt.
 
-Our fine pilots got us though the worst. The ship may not be very manuverable,
+Our fine pilots got us through the worst. The ship may not be very manuverable,
 but there are still kilometers between the rocks, so at least we had a good chance.
 But alas we hit one of the smaller rocks that we somehow missed on our LIDAR.
                     """)
@@ -296,7 +298,7 @@ Look, {2}, I woulden't blame you for just making a run for the ladder to save yo
             ("Screw them! I'm out of here! I'm gonna climb down and get out of here!"), #ignorant idiot option
             ("I.. I am not gonna take that chance. I'm just gonna go meet you up the ladder!"), #reluctant selfishness
             ("Alright, how do I get to the reactor?"),
-            ("What exacly happend?")
+            ("What exacly happened?")
         ]
         ind, ans = game.choose2(choices, "How do you respond?", "<< {2}")
         if ind == 3:

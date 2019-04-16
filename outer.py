@@ -41,18 +41,18 @@ There is a painted engraving on the door, it reads
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 There is a small reinforced window on the door. There is a faint glow coming from the window.
-You look though the window.
+You look through the window.
 On the other side you see a corridor much like the one you are in
 except, its on fire!
-What happend here?
+What happened here?
         """)
     def elevator():
         dialoges.elevator(save)
     def sectionBdoor():
-        game.showtext("You pass though the open door separating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("B", 0)
     def sectionAdoor():
-        game.showtext("You pass though the open door separating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("A", 2)
     #def auxcom():
     #    game.showtext("This auxillary comunication system on this level is broken.")
@@ -96,7 +96,7 @@ There is a painted engraving on the door, it reads
         |    C3 SECTOR C    |
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look though it.
+There is a small reinforced window on the door, you look through it.
 On the other side you see.. nothing. just blackness.
 No, that's not quite right. As your eyes get used to the dark,
 you see the walls on the other side of the door.
@@ -403,7 +403,7 @@ You followed the instructions to initiate a diognastic of the reactor.
 Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
 Suddenly you notice something.. someone in front of you.
 You look up at the stranger.
-It took you a bit by suprise, but then you remebered what happened when you first came in.
+It took you a bit by surprise, but then you remembered what happened when you first came in.
 And as before, the other person suddenly disappeared.
 You leave the room content you have done what you could to fix it up.""")
 

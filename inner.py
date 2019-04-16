@@ -41,10 +41,10 @@ There is a painted engraving on the door, it reads
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 There is a small reinforced window on the door. There is a faint glow coming from the window.
-You look though the window.
+You look through the window.
 On the other side you see a corridor much like the one you are in
 except, it is littered by dead people, and remains from broken stasis chambers.
-What happend here?
+What happened here?
         """)
     def sectionCdoor():
         game.rolltext("""
@@ -54,7 +54,7 @@ There is a painted engraving on the door, it reads
         |    C1 SECTOR C    |
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look though it.
+There is a small reinforced window on the door, you look through it.
 You see the roof and most of the frame of the corridor ahead go on,
 with the occational blink from the roof light.
 Most of the corridor is blown open to darkness.
@@ -99,10 +99,10 @@ You locate the panel as indicated on the engraving.
 
 
     def sectionBdoor():
-        game.showtext("You pass though the open door separating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("B", 0)
     def sectionAdoor():
-        game.showtext("You pass though the open door separating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("A", 8)
 
     #groups that can be saved.

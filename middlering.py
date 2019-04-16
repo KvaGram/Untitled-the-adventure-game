@@ -44,23 +44,23 @@ There is a painted engraving on the door, it reads
         |    C2 SECTOR D    |
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look though it.
+There is a small reinforced window on the door, you look through it.
 On the other side you see a corridor much like the one you are in
 except, the lights are all off, and a number of dead bodies litter the floor.
-What happend here?
+What happened here?
         """)
     def bathrooms():
         goto("bathrooms")
     def door_2A68():
-        game.showtext("You open the door to your apartment go inside.")
+        game.showtext("You open the door to your apartment and go inside.")
         goto("apartment")
     def cafeteria():
         game.showtext("The Cafeteria is closed!")
     def sectionBdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("B", 0)
     def sectionAdoor():
-        game.showtext("You pass though the open door seperating the two sectors")
+        game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("A", 5)
     def auxcom_repair():
         #grabbing some data from save
@@ -73,7 +73,7 @@ What happend here?
         #region auxcom repair
         game.rolltext("""
 You find a large panel with a screen on wall next to you.
-It has the following text painted and ingraved under it
+It has the following text painted and engraved under it
         |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
         |   AUXILLARY COMS      |
         |                       |
@@ -205,7 +205,7 @@ You decide not to try that again.
             elif a == "BLUE IN BLUE":
                 blueinblue = True
                 text = """
-You inser the blue cable in the blue socket.
+You insert the blue cable in the blue socket.
 ...
 *blip*
 ....
@@ -350,7 +350,7 @@ There is a painted engraving on the door, it reads
         |    C2 SECTOR C    |
         |   EMERGENCY DOOR  |
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look though it.
+There is a small reinforced window on the door, you look through it.
 On the other side you see.. nothing. just blackness.
 No, that's not quite right. As your eyes get used to the dark,
 you see the walls on the other side of the door.
@@ -426,7 +426,7 @@ def bathrooms(save):
 You stand in front of the bathrooms. There are two doors in front of you.
 One door with a depiction of a man, one depicting a woman.
             """)
-            choices = [("MALE", "Enter mens room"), ("FEMALE", "Enter ladies room"), ("EXIT", "Leave")]
+            choices = [("MALE", "Enter men's room"), ("FEMALE", "Enter ladies' room"), ("EXIT", "Leave")]
             _, val = game.choose2(choices, "What door do you enter")
             if val == "MALE":
                 bathrooms2("mens")
@@ -459,9 +459,9 @@ One door with a depiction of a man, one depicting a woman.
             gender = save.getdata("gender", "male")
             if gender != "male":
                 wrongroom = """
-You're not exacly sure why you went into the mens room, and not the ladies room.
-Though you suppose it dosen't really matter. There is nobody here anyways."""
-            areadesc = """ a line of toiler stalls, a large urinal, a few changing rooms, a locker room,
+You're not exacly sure why you went into the men's room, and not the ladies' room.
+Though you suppose it doesn't really matter. There is nobody here anyways."""
+            areadesc = """ a line of toilet stalls, a large urinal, a few changing rooms, a locker room,
 showers, couple of them private, and a dispenser of hygine products."""
             choices = (
                 ("SINK", "Spash water in your face"),
@@ -495,9 +495,9 @@ and a hygine despenser with varius.. products..."""
         if not visited:
             game.rolltext("""
 You enter the {0} room.{1}
-Finding yourself in front of the large array of sinks and mirror.
+Finding yourself in front of the large array of sinks and mirrors.
 Some of the mirrors are broken, but you found one that was relativly intact.
-you have a look at yourself.
+You have a look at yourself.
 What you see is {2}
 You look about as shitty as you feel, yet it does look familiar.
 That's a good thing, right?
@@ -519,7 +519,7 @@ Looking around, you see {3}
                 if(relived): #relived = save.getdata("bathroom:relived", False)
                     act = "You sit for a bit, resting. You don't feel the need to 'do' anything."
                 else:
-                    act = "You relive yourself right there and then. You must have held it in for a while without thinking about it."
+                    act = "You relieve yourself right there and then. You must have held it in for a while without thinking about it."
                     save.setdata("bathroom:relived", True)
                     relived = True
                 game.rolltext("""You locate a nice toilet booth, and sit down on a porcelain throne.
@@ -554,12 +554,12 @@ Still, having done that, you realize you have 'other' needs to relive youself of
                         save.setdata("bathroom:relived", True)
                         relived = True
             elif choice == "HYGINE_LADIES":
-                game.showtext("you examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now")
+                game.showtext("You examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now")
             elif choice == "HYGINE_MENS":
-                game.showtext("You examine the dispenser. You find some soaps, condoms, razer blades. Nothing you really need right now.")
+                game.showtext("You examine the dispenser. You find some soaps, condoms, razor blades. Nothing you really need right now.")
             elif choice == "SHOWER":
                 if showered:
-                    game.showtext("You go over to the showers. But you aleady feel clean, so you go back.")
+                    game.showtext("You go over to the showers. But you already feel clean, so you go back.")
                 else:
                     game.rolltext("""You enter one of the private show stalls.
 You undress, and turn on the shower

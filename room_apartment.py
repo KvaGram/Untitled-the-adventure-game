@@ -9,7 +9,7 @@ def main(save):
         save.setdata("room", "apartment")
         save.setdata("prevroom", "apartment")
         game.rolltext("""
-Weeeee.. you are flying though the sky!
+Weeeee.. you are flying through the sky!
 Below you is a beautiful forest, as green as anything you could ever imagine!
 Deep down you know you are dreaming, but you can't quite get yourself to wake up.
 suddenly you are in a vintage open cockpit biplane flying over the same lands...
@@ -20,7 +20,7 @@ It seems so nice, yet something seems off. Everything seems off.
 You even struggle to remember your own name.. What.. was.. what was your name?
     """)
 
-        nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remeber my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
+        nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remember my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
 
         inp = ""
         while True:
@@ -162,7 +162,7 @@ You recognize him now. It is Jeff, your {0}.
 You stare closely at the lady in the gold framed picture.
 You study her close, trying to remember who she is.
 As you are looking in her eyes when you realize who she is.
-Her name is Klara, you seem to remeber.
+Her name is Klara, you seem to remember.
 Klara.. she is your {0}! 'How could you forget that?', you wonder.
                 """.format(game.getGenderedTerm(k, "female")))
             else:

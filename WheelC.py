@@ -203,7 +203,7 @@ As you turned around, you noticed some people float into view on the, with confu
                 """)
                 continue
             game.rolltext("""
-You enter though the first two doorways.
+You enter through the first two doorways.
 you note the middle section between the doors were diffrent than the other two.
 It was shorter and had a seam down the middle.
 As you were floating though, you were greeted by someone who suddenly floated into view.
