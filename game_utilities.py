@@ -172,7 +172,7 @@ def showtext(text = ""):
 def getGenderedTerm(term, gender):
     if term == "spouse":
         if gender == "male":
-            return "husbond"
+            return "husband"
         elif gender == "female":
             return "wife"
         else:
