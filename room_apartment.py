@@ -173,13 +173,18 @@ Klara.. she is your {0}! 'How could you forget that?', you wonder.
         table() #repeat
         #endregion table()    
     def door():
+        pills = save.getdata("apartment:pills", False)
+        left = save.getdata("apartment:left", False)
         #region door()
-        if save.getdata("apartment:pills"):
+        if left:
+            return True
+        elif pills:
             game.rolltext("""
 You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
             """)
+            save.setdata("apartment:left", True)
             return True
         else:
             game.rolltext("""
