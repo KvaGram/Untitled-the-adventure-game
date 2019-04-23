@@ -392,7 +392,7 @@ Nothing happened.
         else:
             text = """
 You press the button.
-The button flash on.
+The button flashes.
 ...
 You hear an odd clang
 ...         """
