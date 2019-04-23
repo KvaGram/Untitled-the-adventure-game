@@ -272,7 +272,7 @@ You check the screen, and find it now displays a black background with a text in
                 tblueinwhite = True
             elif a == "TASTE BLACK":
                 text = """
-You unplug the big thick blue cable, and stuck out your tongue to lick it.
+You unplug the big thick black cable, and stuck out your tongue to lick it.
 You're not sure why you just did that.
 As you somehow put the cable in your mouth, the world goes black.
                 """
