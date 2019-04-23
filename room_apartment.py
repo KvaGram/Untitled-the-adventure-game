@@ -23,6 +23,9 @@ You even struggle to remember your own name.. What.. was.. what was your name?
         inp = ""
         while True:
             inp = input()
+            while len(inp) < 1:
+                #while no input, silently re-request input
+                inp = input()
             print ()
             if game.yesno("ugh.. Was it {0}?".format(inp)):
                break
