@@ -92,6 +92,7 @@ _________________________________________________
         choices = ["New Game", "Load Game", "About", "End game"]
         choice = game.choose(choices)
         if(choice == 0):
+            save = savadata(VERSION)
             try:
                 game_loop()
             except SystemExit as _:
