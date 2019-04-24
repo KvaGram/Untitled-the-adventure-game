@@ -129,9 +129,9 @@ You closed the door so not to disturb yourself.""")
         #reason why this shutdwn could not be done remotly: temperal bleeding corrupted all data packages, repeating the signals randomly.
         game.rolltext("""
 Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
-As you enter the room you instinctivly step aside to let a oddly familiar {0} out of the room.
-Suprisingly, {1} looked oddly familiar. Looking up from {2} hands and at you, the {0} looks as shocked as you.
-But as suddenly as {1} appeared, the {0} suddenly dissappeard.
+As you enter the room you instinctivly step aside to let an oddly familiar {0} out of the room.
+Surprisingly, {1} looked oddly familiar. Looking up from {2} hands and at you, the {0} looks as shocked as you.
+But as suddenly as {1} appeared, the {0} suddenly disappeared.
 
 What was {1}? A ghost?
 
@@ -165,7 +165,7 @@ you try to undo what you did when.. you try adjusting that sqiggly thi..
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
-From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 second.
 And you soon realied why.
 
 Aside from your little looping bobble, everything was gone.
@@ -175,7 +175,7 @@ You aren't dead. Not really. But by now, you wish you were.
             return
         #end of game over stupity
         game.rolltext("""
-You hover your hand over where the manual were a secund ago.
+You hover your hand over where the manual were a second ago.
 ...
 There it is! you snatch it!
 ..!
@@ -299,7 +299,7 @@ you try to undo what you did when.. you followed instructions to adjust that sqi
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
-From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 second.
 And you soon realied why.
 
 Aside from your little looping bobble, everything was gone.
@@ -356,11 +356,11 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
                         textFireAlert += "\n\tALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {0}{1}".format(random.choice(("A", "B", "C", "D")), random.randint(1,12))
                 textFirsttime="" if warnedOfLoops else """
 It did not take long for you to realize that the 'human operator' is you.
-This might explain the anomolies.
+This might explain the anomalies.
 You should be extra careful of what you do here.
                 """
                 game.rolltext("""
-You followed the instructions to initiate a diognastic of the reactor.
+You followed the instructions to initiate a diagnostic of the reactor.
 ...
     STATUS: CRITICAL
     TACHEON EMITTERS: ONLINE

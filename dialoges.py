@@ -152,7 +152,7 @@ Immidiatly we sent repair-bots out to fix the damage to the reactor-ring.
 The reactor ring and accellerator survived the impact, but got bent on a few places.
 And you're an engineer, you know what happens if we keep sending tacheons though a bent reactor ring.
 As expected, the nearby hull-section tore itself apart.
-We lost all C-sections to vacuum in the matter of secunds.
+We lost all C-sections to vacuum in the matter of seconds.
 So fixing the reactor ring proved quite urgent.
 
 But the bots can't get over the the damage from the outside while the wheel was spinning,

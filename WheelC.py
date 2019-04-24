@@ -187,7 +187,7 @@ You took off back to the pole.""")
 You look "down" towards the huge door "below".
 Taking in the details, you see the pole ending a bit before it, splitting into 4 aches around the doorway.
 Like the pole itself, the doorway was fixed, and not rotating with the room.
-On a closer look, there is a secund doorway past it, and two more again, with only some small gap of room between them.
+On a closer look, there is a second doorway past it, and two more again, with only some small gap of room between them.
 The inner-most door are closed, but has some large windows where you can see the area past it, clearly.
             """)
             if not game.yesno("Take off towards the doorway?"):
