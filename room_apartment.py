@@ -1,7 +1,5 @@
 import game_utilities as game
 import random
-# world is the dictionary list of rooms, events, special functions etc you can call/visit.
-# savedata is the save-file, with all choices and saved data so far, this also includes some temporary data.
 
 def main(save):
     def newgame():
@@ -25,6 +23,9 @@ You even struggle to remember your own name.. What.. was.. what was your name?
         inp = ""
         while True:
             inp = input()
+            while len(inp) < 1:
+                #while no input, silently re-request input
+                inp = input()
             print ()
             if game.yesno("ugh.. Was it {0}?".format(inp)):
                break
@@ -172,13 +173,18 @@ Klara.. she is your {0}! 'How could you forget that?', you wonder.
         table() #repeat
         #endregion table()    
     def door():
+        pills = save.getdata("apartment:pills", False)
+        left = save.getdata("apartment:left", False)
         #region door()
-        if save.getdata("apartment:pills"):
+        if left:
+            return True
+        elif pills:
             game.rolltext("""
 You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
             """)
+            save.setdata("apartment:left", True)
             return True
         else:
             game.rolltext("""

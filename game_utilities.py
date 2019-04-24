@@ -25,6 +25,9 @@ def choose(list, message = "enter choice number"):
             if(list[i] != None):
                 print ("\t [{0}] - {1}".format(i+1, list[i]))
         inp = input()
+        while len(inp) < 1:
+            #while no input, silently re-request input
+            inp = input()
         try:
             inp = int(inp) - 1
         except:
@@ -118,6 +121,9 @@ def choose2(pList, message = "enter choice number", onSelect = None):
             if(dispList[i] != None):
                 print ("\t [{0}] - {1}".format(i+1, dispList[i]))
         inp = input()
+        while len(inp) < 1:
+            #while no input, silently re-request input
+            inp = input()
         try:
             inp = int(inp) - 1
         except:
@@ -144,6 +150,9 @@ def yesno(message = "Please select"):
         showtext("\t[N] no")
         showtext()
         inp = input()
+        while len(inp) < 1:
+            #while no input, silently re-request input
+            inp = input()
         if(inp[0] == "y" or inp[0] == "Y"):
             return True
         elif(inp[0] == "n" or inp[0] == "N"):
@@ -155,6 +164,9 @@ def truefalse(message = "Please select"):
         showtext("\t[F] False")
         showtext()
         inp = input()
+        while len(inp) < 1:
+            #while no input, silently re-request input
+            inp = input()
         if(inp[0] == "t" or inp[0] == "T"):
             return True
         elif(inp[0] == "f" or inp[0] == "F"):

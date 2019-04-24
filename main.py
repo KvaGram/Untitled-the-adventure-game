@@ -18,7 +18,7 @@ import inner
 import WheelC as wheel
 
 #version number. Major, minor, hotfix.
-VERSION = [0, 6, 0]
+VERSION = [0, 6, 1]
 
 
 def build_world():
@@ -92,6 +92,7 @@ _________________________________________________
         choices = ["New Game", "Load Game", "About", "End game"]
         choice = game.choose(choices)
         if(choice == 0):
+            save = savadata(VERSION)
             try:
                 game_loop()
             except SystemExit as _:

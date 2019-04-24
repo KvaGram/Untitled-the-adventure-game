@@ -375,11 +375,11 @@ You also locate a set of call-buttons for {1} and cargo, whatever that last one 
 
     
     if room == "middle" or room == "inner":
-        choices = (("UP, Press UP call button"), ("DOWN","Press DOWN call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
+        choices = (("UP", "Press UP call button"), ("DOWN","Press DOWN call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
     elif room == "core":
         choices = (("DOWN","Press DOWN call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
     elif room == "outer":
-        choices = (("UP, Press UP call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
+        choices = (("UP", "Press UP call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
 
     _,choice = game.choose2(choices, "Press a button?")
     if choice != "EXIT":
@@ -392,7 +392,7 @@ Nothing happened.
         else:
             text = """
 You press the button.
-The button flash on.
+The button flashes.
 ...
 You hear an odd clang
 ...         """
