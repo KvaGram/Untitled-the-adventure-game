@@ -5,11 +5,10 @@ import json
 
 #from tkinter import *
 import tkinter as TK
-from tkinter import filedialog
-from tkinter import messagebox
+from tkinter import *
 from pathlib import Path
 
-import game_utilities as game
+import game_utilities as G
 
 import room_apartment 
 import middlering
@@ -30,17 +29,41 @@ def test():
     return
 
 def start():
+    def onBbtn():
+        print ("The black button")
+
+    tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
+    mframe = Frame(tkRoot)
+    mframe.pack()
+    bframe = Frame(tkRoot)
+    bframe.pack( side = BOTTOM )
+
+    redbutton = Button(mframe, text="Red", fg="red")
+    redbutton.pack( side = LEFT)
+
+    greenbutton = Button(mframe, text="Brown", fg="brown")
+    greenbutton.pack( side = LEFT )
+
+    bluebutton = Button(mframe, text="Blue", fg="blue")
+    bluebutton.pack( side = LEFT )
+
+    blackbutton = Button(bframe, text="Black", fg="black", command=onBbtn)
+    blackbutton.pack( side = BOTTOM)
+
+    tkRoot.mainloop()
+
+"""
     process = test()
     for req in process:
         print ("Yielded: " + str(req))
         inn = input()
         print("user entered " + inn)
-
+"""
 def oldGame():
     def build_world():
         world = {}
         world['apartment'] = room_apartment.main
-        #world['about'] = about.main #moved to game.RunGeneral("about")
+        #world['about'] = about.main #moved to G.RunGeneral("about")
         world["core"] = wheel.core #TODO: add proper module for core 
         world["inner"] = inner.main
         world["middle"] = middlering.main
@@ -50,7 +73,7 @@ def oldGame():
         world["cargobay"] = wheel.Cargobay #TODO: move to a proper module
 
         return world
-    def start():
+    def _start():
         world = build_world() # areas the player may visit.
         save = savadata(VERSION)
 
@@ -60,9 +83,9 @@ def oldGame():
                 if(roomReq == None): #newgame location
                     roomReq = "apartment"
                 #space to check for special conditions
-                game_over = game.getGameover(save)
+                game_over = G.getGameover(save)
                 if(game_over):
-                    game.showtext("""
+                    G.showtext("""
     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\_GAME_OVER_/‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     {0}
     _________________________________________________
@@ -76,9 +99,9 @@ def oldGame():
                     room = None
                 if(room):
                     room(save)
-                    game_over = game.getGameover(save)
+                    game_over = G.getGameover(save)
                 else:
-                    game.showtext("""
+                    G.showtext("""
     |---------------------- !!! ----------------------|
     |    Sorry, something went wrong.                 |
     |    The game could not find {0}                  |
@@ -86,27 +109,27 @@ def oldGame():
     |    Do you wish to save the game first?          |
     |---------------------- !!! ----------------------|
                     """.format(roomReq))
-                    if(game.yesno("Save game?")):
+                    if(G.yesno("Save game?")):
                         save.savegame()
                     break
                 if not game_over:
-                    if(game.yesno("Open game menu?")):
-                        game.gameMenu(save)
+                    if(G.yesno("Open game menu?")):
+                        G.gameMenu(save)
             #end game loop
         #end game loop function
 
-        game.showtext("Welcome to")
+        G.showtext("Welcome to")
         f = open("title.txt", 'r', encoding="utf-8")
         titlecard = f.read()
-        game.rolltext(titlecard, 0.05)
+        G.rolltext(titlecard, 0.05)
         f.close()
         time.sleep(1)
-        game.showtext()
+        G.showtext()
         while(True):
-            game.showtext("Untitled! The adventure game")
-            game.showtext("MAIN MENU")
+            G.showtext("Untitled! The adventure game")
+            G.showtext("MAIN MENU")
             choices = ["New Game", "Load Game", "About", "End game"]
-            choice = game.choose(choices)
+            choice = G.choose(choices)
             if(choice == 0):
                 save = savadata(VERSION)
                 try:
@@ -122,7 +145,7 @@ def oldGame():
                     return
                 continue
             if(choice == 2):
-                game.RunGeneral(save,"about")#starts credits roll
+                G.RunGeneral(save,"about")#starts credits roll
                 continue
             if(choice == 3):
                 return
@@ -143,7 +166,7 @@ def oldGame():
         def setdata(self, name, value):
             self.data[name] = value
         def savegame(self):
-            game.showtext("WARNING, save and load is not fully tested yet. ")
+            G.showtext("WARNING, save and load is not fully tested yet. ")
             #dialouge = TK.Tk()
             path = TK.filedialog.asksaveasfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
             #dialouge.destroy()
@@ -161,13 +184,13 @@ def oldGame():
                 f = open (path, "w+")
                 json.dump(self.data, f)#, True, True, True, True, None, (', ', ': '), "UTF-8", False)
                 f.close()
-            elif game.yesno("The game was not saved. Try again?"):
+            elif G.yesno("The game was not saved. Try again?"):
                 return self.savegame()
         def loadgame(self):
-            game.showtext("WARNING, save and load is not fully tested yet. ")
+            G.showtext("WARNING, save and load is not fully tested yet. ")
             path = TK.filedialog.askopenfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
             if path == "" or not os.path.isfile(path):
-                if game.yesno("The game was not loaded. Try again?"):
+                if G.yesno("The game was not loaded. Try again?"):
                     return self.loadgame()
                 else:
                     return False
@@ -183,13 +206,13 @@ def oldGame():
                     #not worth comparing a hotfix
                     pass
                 elif minor > 0:
-                    game.showtext("Warning: This save was made with a newer version of the game. This may cause problems.")
+                    G.showtext("Warning: This save was made with a newer version of the game. This may cause problems.")
                 else:
-                    game.showtext("Warning: This save was made with a older version of the game. This should be fine, but could cause issues.")
+                    G.showtext("Warning: This save was made with a older version of the game. This should be fine, but could cause issues.")
             elif major > 0:
-                game.showtext("WARNING! This save is FROM THE FUTURE! You should run a newer version of the game instead.")
+                G.showtext("WARNING! This save is FROM THE FUTURE! You should run a newer version of the game instead.")
             else:
-                game.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
+                G.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
             
             self.data = ldata
             return True
