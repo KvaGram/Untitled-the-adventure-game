@@ -99,7 +99,8 @@ _________________________________________________
                 return
             continue
         if(choice == 1):
-            save.loadgame()
+            if not save.loadgame():
+                continue
             try:
                 game_loop()
             except SystemExit as _:
@@ -128,9 +129,9 @@ class savadata:
         self.data[name] = value
     def savegame(self):
         game.showtext("WARNING, save and load is not fully tested yet. ")
-        #dialouge = TK.Tk()
+        root = TK.Tk()
         path = TK.filedialog.asksaveasfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
-        #dialouge.destroy()
+        root.withdraw()
         saveOK = True
         if path == "":
             saveOK = False
@@ -149,12 +150,15 @@ class savadata:
             return self.savegame()
     def loadgame(self):
         game.showtext("WARNING, save and load is not fully tested yet. ")
-        path = TK.filedialog.askopenfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
+        root = TK.Tk()
+        path = TK.filedialog.askopenfilename(initialdir = "/", title = "Load game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
+        root.withdraw()
         if path == "" or not os.path.isfile(path):
             if game.yesno("The game was not loaded. Try again?"):
                 return self.loadgame()
             else:
                 return False
+        
         f = open(path, "r")
         ldata = json.load(f)
         lversion = ldata["version"]
