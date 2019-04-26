@@ -246,7 +246,7 @@ You decided not to try that again.
             elif val == "INSTADEATH":
                 nav.running = False
                 fixing_reactor_loop = False
-                game.setGameover(game, "You found a way to blow youself up. You are very VERY dead!")
+                game.setGameover(save, "You found a way to blow youself up. You are very VERY dead!")
                 game.rolltext("""
 You followed the instructions for initiating an emergency overload.
 Right after pressing the confirm key on the screen, you got an odd feeling.
