@@ -386,32 +386,32 @@ Stars, you realize. Stars flying upwards. You are staring into space!
             intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
             if save.getdata("middlering:visited") == None:
                 intro += """
-    You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
-    The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
-    As the door closes, you note the number-plate on your door.
-        _________________
-        |   C2A - 068   |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    There is an uneasy silence.
+You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
+The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
+As the door closes, you note the number-plate on your door.
+    _________________
+    |   C2A - 068   |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is an uneasy silence.
             """
         elif prevroom == "ladder":
             nav.setSection("B", 2)
             nav.ind = 2
             nav.sec = "B"
             intro = """
-    You close the emergency ladder's hatch.
-    You are now at the middle level ring.
+You close the emergency ladder's hatch.
+You are now at the middle level ring.
             """
         elif prevroom == "bathrooms":
             nav.setSection("A", 1)
             intro = """
-    You exit the bathrooms and returned to the corridor.
+You exit the bathrooms and returned to the corridor.
             """
         else:
             nav.setSection("B", 3)
             intro = """
-    You have walked around aimlessly for a bit, you don't know for how long
-    And oof! You just walked streight into a large closed door.
+You have walked around aimlessly for a bit, you don't know for how long
+And oof! You just walked streight into a large closed door.
             """
         game.rolltext(intro)
     if not nav.running:
