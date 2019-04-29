@@ -18,6 +18,8 @@ import WheelC as wheel
 
 #version number. Major, minor, hotfix.
 VERSION = [1, 0, 0]
+#if dev is on, some debug info may be displayed in the game
+DEV = True
 
 def test():
     print ("Hello world. This is printed in test()")
@@ -240,6 +242,36 @@ def oldGame():
         
         def versionText(self):
             return "v{0}.{1}.{2}".format(self.version[0], self.version[1], self.version[2])
+
+#TODO: when removing old code, move this further up in file.
+
+import xml.etree.ElementTree as ET
+datafiles = {}
+
+def get(reqFile, reqPart, reqlang, reqSubPart):
+    _fallbacklang = "eng"
+    if not (reqFile in datafiles):
+        try:
+            datafiles[reqFile] = ET.parse("/nerrative/" + reqFile + ".xml")
+        except:
+            print("ERROR LOADING DATA!")
+            #todo: add dummy data containing 'ERROR'
+            if(DEV):
+                return "ERROR LOADING DATA! Please check requested data exist in the datafile\n\treqFile={0}, reqPart={1}, reqlang={2}, reqSubPart={3}".format(reqFile, reqPart, reqlang, reqSubPart)
+            else:
+                return "ERROR!"
+        pass
+    reqstring = "./content[@name={0}]/part[@name={1}".format(reqPart, reqSubPart)
+    _tree = datafiles[reqFile]
+    _part = _tree.find(reqstring)
+    text = _part.find("text").text
+    variables = []
+    for var in _part.findall("var"):
+        variables.append(var.text)
+    return (text, variables)
+
+
+
 
 if __name__ == "__main__":
     start()
