@@ -79,7 +79,7 @@ def core(save):
     if(proom == "ladder"):
         intro = """
 As you push off from the laddershaft, you fly upwards in the low gravity.
-You reach the center, finding yourself entierly weightless.
+You reach the center, finding yourself entirely weightless.
 You take hold on a rotating pole. Soon the pole seemed to stop rotating, and the room started rotating around you.
 You see the ladder you came out from now no longer as "down", but as part of the wall.
 From your perspective, "up" has become a set of reinforced windows at one end of the sphere.

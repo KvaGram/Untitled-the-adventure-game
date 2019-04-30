@@ -114,7 +114,7 @@ Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
         if save.getdata("reactorC:fixed", False):
             game.rolltext("""You peek inside.
 You catch a brief glimse of yourself operating the control system.
-The reactor may not be entierly stable, but you have done what you could.
+The reactor may not be entirely stable, but you have done what you could.
 You closed the door so not to disturb yourself.""")
             return
         if not game.yesno("Are you sure you want to go inside?"):
@@ -150,16 +150,16 @@ no, now it's there again.
             game.setGameover(save, "You got yourself trapped in a timeloop")
             game.rolltext("""
 Not knowing what to do, you start hammering on the controls.
-You tried adjesting that sqiggly thing, you tried to increase that number, you tried to stop that ticking..
+You tried adjusting that squiggly thing, you tried to increase that number, you tried to stop that ticking..
 you tried any little thing you could think of..
 then you, without knowing what to do, start hammering on the controls.
 you tried adjusting that sq..
 
 you realized you were now doing what you did a minute ago. are you stu..
-tried adjusting that little sqiggly..
+tried adjusting that little squiggly..
 
 uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you try adjusting that sqiggly thi..
+you try to undo what you did when.. you try adjusting that squiggly thi..
 
 'shit' you managed to think as you suddenly find yourself trying to adjust that squigg..
 and again.. at shorter and shorter intervals.
@@ -253,7 +253,7 @@ Right after pressing the confirm key on the screen, you got an odd feeling.
 The reactor started humming. Did you just make a huge mis..
 ...
 You never got to finish that thought. You just ceased to exist.
-To say you were atomized is not entierly accurate,
+To say you were atomized is not entirely accurate,
 but that may be the closest terminology to describe what happened to you.
 At least, there were no pain.
                 """)
@@ -286,21 +286,21 @@ Nothing seems to have happened.
                 game.setGameover(save, "You got yourself trapped in a timeloop")
                 game.rolltext("""
 The instructions for accellerating the accellerator were quite easy to follow.
-you just adjusted that sqiggly thing, increased that varible,
-pressed that confirm button, changed that dial, adjusted that sqiggly thing,
+you just adjusted that squiggly thing, increased that varible,
+pressed that confirm button, changed that dial, adjusted that squiggly thing,
 increased that varia.. wait.. wha
-you adjusted that sqiggly thing, incr..
-you just had a sudden feeling of déjà vu, as you again adjusted that sqiggly thing.
+you adjusted that squiggly thing, incr..
+you just had a sudden feeling of déjà vu, as you again adjusted that squiggly thing.
 
 uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you followed instructions to adjust that sqiggly thi..
+you try to undo what you did when.. you followed instructions to adjust that squiggly thi..
 
 'shit' you managed to think as you suddenly find yourself adjusting that squigg..
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
 From what you could tell, with the little self awareness you could muster, the intervals were at about 1 second.
-And you soon realied why.
+And you soon realized why.
 
 Aside from your little looping bobble, everything was gone.
 You aren't dead. Not really. But by now, you wish you were.
