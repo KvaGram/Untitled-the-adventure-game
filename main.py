@@ -5,8 +5,6 @@ import json
 
 #from tkinter import *
 import tkinter as TK
-from tkinter import *
-from pathlib import Path
 
 import game_utilities as G
 
@@ -30,27 +28,23 @@ def test():
     print("The end is here!")
     return
 
+
 def start():
-    def onBbtn():
-        print ("The black button")
+    #def onBbtn():
+    #    print ("The black button")
 
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
-    mframe = Frame(tkRoot)
+    tkRoot.geometry("1280x720")
+
+    navFrame = TK.Frame(tkRoot, background = "orange")
+    navFrame.pack(side=TK.RIGHT)
+
+
+
+    mframe = TK.Frame(tkRoot)
     mframe.pack()
-    bframe = Frame(tkRoot)
-    bframe.pack( side = BOTTOM )
-
-    redbutton = Button(mframe, text="Red", fg="red")
-    redbutton.pack( side = LEFT)
-
-    greenbutton = Button(mframe, text="Brown", fg="brown")
-    greenbutton.pack( side = LEFT )
-
-    bluebutton = Button(mframe, text="Blue", fg="blue")
-    bluebutton.pack( side = LEFT )
-
-    blackbutton = Button(bframe, text="Black", fg="black", command=onBbtn)
-    blackbutton.pack( side = BOTTOM)
+    bframe = TK.Frame(tkRoot)
+    bframe.pack( side = TK.BOTTOM )
 
     tkRoot.mainloop()
 
@@ -176,7 +170,7 @@ def oldGame():
             if path == "":
                 saveOK = False
             elif os.path.isfile(path):
-                messagebox.askokcancel("Untitled adventure game","Override existing savefile?")
+                TK.messagebox.askokcancel("Untitled adventure game","Override existing savefile?")
                 saveOK = False
             if ".uagsave" not in path:
                 path = path + ".uagsave"
@@ -257,9 +251,9 @@ def get(reqFile, reqPart, reqlang, reqSubPart):
             print("ERROR LOADING DATA!")
             #todo: add dummy data containing 'ERROR'
             if(DEV):
-                return "ERROR LOADING DATA! Please check requested data exist in the datafile\n\treqFile={0}, reqPart={1}, reqlang={2}, reqSubPart={3}".format(reqFile, reqPart, reqlang, reqSubPart)
+                return ("ERROR LOADING DATA! Please check requested data exist in the datafile\n\treqFile={0}, reqPart={1}, reqlang={2}, reqSubPart={3}".format(reqFile, reqPart, reqlang, reqSubPart),[])
             else:
-                return "ERROR!"
+                return ("ERROR!", [])
         pass
     reqstring = "./content[@name={0}]/part[@name={1}".format(reqPart, reqSubPart)
     _tree = datafiles[reqFile]
