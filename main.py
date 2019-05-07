@@ -35,16 +35,39 @@ def start():
 
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1280x720")
-
-    navFrame = TK.Frame(tkRoot, background = "orange")
-    navFrame.pack(side=TK.RIGHT)
-
+    tkRoot.grid_columnconfigure(0, weight=1)
+    tkRoot.grid_rowconfigure(0, weight=1)
 
 
-    mframe = TK.Frame(tkRoot)
-    mframe.pack()
-    bframe = TK.Frame(tkRoot)
-    bframe.pack( side = TK.BOTTOM )
+    #mainscreen = TK.Frame(tkRoot)
+    #sidebar = TK.Frame(tkRoot)
+
+    #mainscreen.grid(columnspan=3)
+    #sidebar.grid()
+
+    main_display = TK.Frame(master=tkRoot, background ="#00c4ff")
+    main_actions = TK.Frame(master=tkRoot, background ="#2200ff")
+    side_inventory = TK.Frame(master=tkRoot, background ="#209d00")
+    side_navtext = TK.Frame(master=tkRoot, background ="#ff8f00")
+    side_navkeys = TK.Frame(master=tkRoot, background ="#ff0000")
+
+    main_display.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew")
+    main_actions.grid(row=2, column=0, columnspan=2, rowspan=1, sticky="nsew")
+    side_inventory.grid(row=0, column=3, columnspan=1, rowspan=1, sticky="nsew")
+    side_navtext.grid(row=1, column=3, columnspan=1, rowspan=1, sticky="nsew")
+    side_navkeys.grid(row=2, column=3, columnspan=1, rowspan=1, sticky="nsew")
+
+    main_display_text = TK.Label(master = main_display, text = "main_display", background ="#00c4ff")
+    main_actions_text = TK.Label(master = main_actions, text = "main_actions", background ="#2200ff")
+    side_inventory_text = TK.Label(master = side_inventory, text = "side_inventory", background ="#209d00")
+    side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
+    side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
+    
+    main_display_text.pack()
+    main_actions_text.pack()
+    side_inventory_text.pack()
+    side_navtext_text.pack()
+    side_navkeys_text.pack()
 
     tkRoot.mainloop()
 
@@ -263,9 +286,6 @@ def get(reqFile, reqPart, reqlang, reqSubPart):
     for var in _part.findall("var"):
         variables.append(var.text)
     return (text, variables)
-
-
-
 
 if __name__ == "__main__":
     start()
