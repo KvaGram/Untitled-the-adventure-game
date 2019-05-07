@@ -5,6 +5,7 @@ import json
 
 #from tkinter import *
 import tkinter as TK
+from tkinter import font as TKF
 
 import game_utilities as G
 
@@ -61,16 +62,34 @@ def start():
     main_actions_text = TK.Label(master = main_actions, text = "main_actions", background ="#2200ff")
     side_inventory_text = TK.Label(master = side_inventory, text = "side_inventory", background ="#209d00")
     side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
-    side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
-    
+    #side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
+    ui_build_navkeys(side_navkeys)
+
     main_display_text.pack()
     main_actions_text.pack()
     side_inventory_text.pack()
     side_navtext_text.pack()
-    side_navkeys_text.pack()
+    #side_navkeys_text.pack()
 
     tkRoot.mainloop()
+def ui_build_navkeys(master, **args):
+    text_left  = args.get("left",  u"\u2190")
+    text_up    = args.get("up",    u"\u2191")
+    text_right = args.get("right", u"\u2192")
+    text_down  = args.get("down",  u"\u2193")
+    font       = args.get("font", TKF.Font(family = "Consolas", size=30))
+    
+    btn_left  = TK.Button(master = master, font=font, text = text_left,  command= lambda: onDirPress("left"))
+    btn_up    = TK.Button(master = master, font=font, text = text_up,    command= lambda: onDirPress("up"))
+    btn_right = TK.Button(master = master, font=font, text = text_right, command= lambda: onDirPress("right"))
+    btn_down  = TK.Button(master = master, font=font, text = text_down,  command= lambda: onDirPress("down"))
 
+    btn_left.grid(row=1, column=0)
+    btn_up.grid(row=0, column=1)
+    btn_right.grid(row=1, column=2)
+    btn_down.grid(row=2, column=1)
+def onDirPress(dir):
+    print("TEST direction, going: " + dir)
 """
     process = test()
     for req in process:
