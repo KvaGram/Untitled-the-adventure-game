@@ -64,7 +64,7 @@ def start():
     side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
     #side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
 
-    ui_build_actions(main_actions, "text")
+    ui_build_actions(main_actions, "actions")
     ui_build_navkeys(side_navkeys)
 
     main_display_text.pack()
@@ -96,7 +96,7 @@ def ui_build_actions(master, mode:str, **args):
     if mode == "text":
         reqFields = args.get("fields", (("Input", ""),))
         fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="TKF.Font()) #NOTE: if required, use family="helvetica", size=12", size=12
+        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
         entertext = args.get("entertext", "ENTER")
         enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
         labels = []
@@ -116,7 +116,44 @@ def ui_build_actions(master, mode:str, **args):
         btnEnter = TK.Button(master=master, text=entertext, font=enterfont, command=packnsend)
         btnEnter.grid(row=length, column=0, columnspan=3)
     elif mode == "actions":
-        pass
+        reqActions:tuple = args.get("actions", (("YES", u"\u2713"), ("NO", u"\u2573")))
+        reqLabel:str = args.get("label", "Choose")
+        page:int = args.get("page", 0)
+
+        buttonfont:TKF.Font = args.get("buttonfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+        labelfont:TKF.Font = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+
+        length:int = len(reqActions)
+        actionsFrame:TK.Frame = TK.Frame(master=master)
+        actionsFrame.grid(column = 1)
+        btnLeft:TK.Button  = TK.Button(master=master, text = u"\u2190")
+        btnRight:TK.Button = TK.Button(master=master, text = u"\u2192")
+        if page > 0:
+            btnLeft.grid(column = 0)
+        if ( (1+page) * 6 ) < length:
+            btnRight.grid(column = 2)
+        
+        #this slices the requested actions tuple in respect to the current page.
+        #This off course have no practical effect in small (size 6 and under) request groups.
+        activeActions:list = reqActions[page*6:(page+1)*6]
+        actLength:int = len(activeActions)
+        
+        actionBtns:list = []
+        label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel)
+        for i in range(actLength):
+            actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = activeActions[i][1], command = lambda _i=i: onActionPress((activeActions[_i][0], _i + page*6))))
+        if actLength < 4:
+            label.grid(row = 0)
+            for i in range(actLength):
+                actionBtns[i].grid(row = i + 1)
+        else:
+            label.grid(row = 0, column = 0, columnspan = 2)
+            for i in range(actLength):
+                row = int(i / 2) + 1
+                column = i % 2
+                actionBtns[i].grid(row=row, column=column)
+        #TODO: add testcase and support for changing action page
+        #TODO: Add stretch/sticky settings to fill the UI space.
 def onActionPress(result):
     print("TEST: The input was: " + str(result))
 
