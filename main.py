@@ -59,14 +59,16 @@ def start():
     side_navkeys.grid(row=2, column=3, columnspan=1, rowspan=1, sticky="nsew")
 
     main_display_text = TK.Label(master = main_display, text = "main_display", background ="#00c4ff")
-    main_actions_text = TK.Label(master = main_actions, text = "main_actions", background ="#2200ff")
+    #main_actions_text = TK.Label(master = main_actions, text = "main_actions", background ="#2200ff")
     side_inventory_text = TK.Label(master = side_inventory, text = "side_inventory", background ="#209d00")
     side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
     #side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
+
+    ui_build_actions(main_actions, "text")
     ui_build_navkeys(side_navkeys)
 
     main_display_text.pack()
-    main_actions_text.pack()
+    #main_actions_text.pack()
     side_inventory_text.pack()
     side_navtext_text.pack()
     #side_navkeys_text.pack()
@@ -90,6 +92,38 @@ def ui_build_navkeys(master, **args):
     btn_down.grid(row=2, column=1)
 def onDirPress(dir):
     print("TEST direction, going: " + dir)
+def ui_build_actions(master, mode:str, **args):
+    if mode == "text":
+        reqFields = args.get("fields", (("Input", ""),))
+        fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="TKF.Font()) #NOTE: if required, use family="helvetica", size=12", size=12
+        entertext = args.get("entertext", "ENTER")
+        enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+        labels = []
+        inpFields = []
+        length = len(reqFields)
+        for i in range(length):
+            labels.append(TK.Label(master=master, text=reqFields[i][0], font=labelfont))
+            inpFields.append(TK.Entry(master=master, font=fieldfont))
+            inpFields[i].insert(0, reqFields[i][1])
+            labels[i].grid(row = i, column = 0)
+            inpFields[i].grid(row = i, column = 1, columnspan=2)
+        def packnsend():
+            ret = []
+            for i in range(length):
+                ret.append((labels[i]["text"], inpFields[i].get()))
+            onActionPress(ret)
+        btnEnter = TK.Button(master=master, text=entertext, font=enterfont, command=packnsend)
+        btnEnter.grid(row=length, column=0, columnspan=3)
+    elif mode == "actions":
+        pass
+def onActionPress(result):
+    print("TEST: The input was: " + str(result))
+
+
+
+
+
 """
     process = test()
     for req in process:
