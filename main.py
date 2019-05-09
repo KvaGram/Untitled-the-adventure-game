@@ -64,7 +64,9 @@ def start():
     side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
     #side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
 
-    ui_build_actions(main_actions, "actions")
+    testactions = (("TEST", "-test-"),)*16
+    ui_build_actions(main_actions, "actions")#, actions = testactions, page = 1)
+    #ui_build_actions(main_actions, "text")
     ui_build_navkeys(side_navkeys)
 
     main_display_text.pack()
@@ -86,13 +88,14 @@ def ui_build_navkeys(master, **args):
     btn_right = TK.Button(master = master, font=font, text = text_right, command= lambda: onDirPress("right"))
     btn_down  = TK.Button(master = master, font=font, text = text_down,  command= lambda: onDirPress("down"))
 
-    btn_left.grid(row=1, column=0)
-    btn_up.grid(row=0, column=1)
-    btn_right.grid(row=1, column=2)
-    btn_down.grid(row=2, column=1)
+    btn_left.grid(row=1, column=0, sticky="nsew")
+    btn_up.grid(row=0, column=1, sticky="nsew")
+    btn_right.grid(row=1, column=2, sticky="nsew")
+    btn_down.grid(row=2, column=1, sticky="nsew")
 def onDirPress(dir):
     print("TEST direction, going: " + dir)
 def ui_build_actions(master, mode:str, **args):
+    master.grid_rowconfigure(0, weight = 1)
     if mode == "text":
         reqFields = args.get("fields", (("Input", ""),))
         fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
@@ -106,16 +109,21 @@ def ui_build_actions(master, mode:str, **args):
             labels.append(TK.Label(master=master, text=reqFields[i][0], font=labelfont))
             inpFields.append(TK.Entry(master=master, font=fieldfont))
             inpFields[i].insert(0, reqFields[i][1])
-            labels[i].grid(row = i, column = 0)
-            inpFields[i].grid(row = i, column = 1, columnspan=2)
+            labels[i].grid(row = i, column = 0, sticky="new")
+            inpFields[i].grid(row = i, column = 1, columnspan=1, sticky="new")
+        master.grid_columnconfigure(0, weight = 1)
+        master.grid_columnconfigure(1, weight = 5)
         def packnsend():
             ret = []
             for i in range(length):
                 ret.append((labels[i]["text"], inpFields[i].get()))
             onActionPress(ret)
         btnEnter = TK.Button(master=master, text=entertext, font=enterfont, command=packnsend)
-        btnEnter.grid(row=length, column=0, columnspan=3)
+        btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
     elif mode == "actions":
+        master.grid_columnconfigure(0, weight = 0)
+        master.grid_columnconfigure(1, weight = 1)
+        master.grid_columnconfigure(2, weight = 0)
         reqActions:tuple = args.get("actions", (("YES", u"\u2713"), ("NO", u"\u2573")))
         reqLabel:str = args.get("label", "Choose")
         page:int = args.get("page", 0)
@@ -125,13 +133,16 @@ def ui_build_actions(master, mode:str, **args):
 
         length:int = len(reqActions)
         actionsFrame:TK.Frame = TK.Frame(master=master)
-        actionsFrame.grid(column = 1)
+        actionsFrame.grid(row = 0, column = 1, sticky="nsew")
+
+        #actionsFrame.grid_rowconfigure(0, weight = 1)
+
         btnLeft:TK.Button  = TK.Button(master=master, text = u"\u2190")
         btnRight:TK.Button = TK.Button(master=master, text = u"\u2192")
         if page > 0:
-            btnLeft.grid(column = 0)
+            btnLeft.grid(row = 0, column = 0, sticky="nsw")
         if ( (1+page) * 6 ) < length:
-            btnRight.grid(column = 2)
+            btnRight.grid(row = 0, column = 2, sticky="nse")
         
         #this slices the requested actions tuple in respect to the current page.
         #This off course have no practical effect in small (size 6 and under) request groups.
@@ -143,17 +154,20 @@ def ui_build_actions(master, mode:str, **args):
         for i in range(actLength):
             actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = activeActions[i][1], command = lambda _i=i: onActionPress((activeActions[_i][0], _i + page*6))))
         if actLength < 4:
-            label.grid(row = 0)
+            actionsFrame.grid_columnconfigure(0, weight = 1) #<-- TESTME
+            label.grid(row = 0, sticky="nsew")
             for i in range(actLength):
-                actionBtns[i].grid(row = i + 1)
+                actionBtns[i].grid(row = i + 1, sticky="nsew") 
+                actionsFrame.grid_rowconfigure(i, weight = 5)#<--TESTME
         else:
-            label.grid(row = 0, column = 0, columnspan = 2)
+            label.grid(row = 0, column = 0, columnspan = 2, sticky="nsew")
             for i in range(actLength):
                 row = int(i / 2) + 1
                 column = i % 2
-                actionBtns[i].grid(row=row, column=column)
+                actionBtns[i].grid(row=row, column=column, sticky="nsew")
+                actionsFrame.grid_rowconfigure(row, weight = 1)#<--TESTME
+                actionsFrame.grid_columnconfigure(column, weight=1) #<-- TESTME
         #TODO: add testcase and support for changing action page
-        #TODO: Add stretch/sticky settings to fill the UI space.
 def onActionPress(result):
     print("TEST: The input was: " + str(result))
 
