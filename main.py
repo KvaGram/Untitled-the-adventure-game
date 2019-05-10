@@ -31,149 +31,159 @@ def test():
 
 
 def start():
-    #def onBbtn():
-    #    print ("The black button")
-
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1280x720")
-    tkRoot.grid_columnconfigure(0, weight=1)
-    tkRoot.grid_rowconfigure(0, weight=1)
 
-
-    #mainscreen = TK.Frame(tkRoot)
-    #sidebar = TK.Frame(tkRoot)
-
-    #mainscreen.grid(columnspan=3)
-    #sidebar.grid()
-
-    main_display = TK.Frame(master=tkRoot, background ="#00c4ff")
-    main_actions = TK.Frame(master=tkRoot, background ="#2200ff")
-    side_inventory = TK.Frame(master=tkRoot, background ="#209d00")
-    side_navtext = TK.Frame(master=tkRoot, background ="#ff8f00")
-    side_navkeys = TK.Frame(master=tkRoot, background ="#ff0000")
-
-    main_display.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew")
-    main_actions.grid(row=2, column=0, columnspan=2, rowspan=1, sticky="nsew")
-    side_inventory.grid(row=0, column=3, columnspan=1, rowspan=1, sticky="nsew")
-    side_navtext.grid(row=1, column=3, columnspan=1, rowspan=1, sticky="nsew")
-    side_navkeys.grid(row=2, column=3, columnspan=1, rowspan=1, sticky="nsew")
-
-    main_display_text = TK.Label(master = main_display, text = "main_display", background ="#00c4ff")
-    #main_actions_text = TK.Label(master = main_actions, text = "main_actions", background ="#2200ff")
-    side_inventory_text = TK.Label(master = side_inventory, text = "side_inventory", background ="#209d00")
-    side_navtext_text = TK.Label(master = side_navtext, text = "side_navtext", background ="#ff8f00")
-    #side_navkeys_text = TK.Label(master = side_navkeys, text = "side_navkeys", background ="#ff0000")
-
-    testactions = (("TEST", "-test-"),)*16
-    ui_build_actions(main_actions, "actions")#, actions = testactions, page = 1)
-    #ui_build_actions(main_actions, "text")
-    ui_build_navkeys(side_navkeys)
-
-    main_display_text.pack()
-    #main_actions_text.pack()
-    side_inventory_text.pack()
-    side_navtext_text.pack()
-    #side_navkeys_text.pack()
+    _UI:UntitledUI = UntitledUI(tkRoot)
 
     tkRoot.mainloop()
-def ui_build_navkeys(master, **args):
-    text_left  = args.get("left",  u"\u2190")
-    text_up    = args.get("up",    u"\u2191")
-    text_right = args.get("right", u"\u2192")
-    text_down  = args.get("down",  u"\u2193")
-    font       = args.get("font", TKF.Font(family = "Consolas", size=30))
-    
-    btn_left  = TK.Button(master = master, font=font, text = text_left,  command= lambda: onDirPress("left"))
-    btn_up    = TK.Button(master = master, font=font, text = text_up,    command= lambda: onDirPress("up"))
-    btn_right = TK.Button(master = master, font=font, text = text_right, command= lambda: onDirPress("right"))
-    btn_down  = TK.Button(master = master, font=font, text = text_down,  command= lambda: onDirPress("down"))
 
-    btn_left.grid(row=1, column=0, sticky="nsew")
-    btn_up.grid(row=0, column=1, sticky="nsew")
-    btn_right.grid(row=1, column=2, sticky="nsew")
-    btn_down.grid(row=2, column=1, sticky="nsew")
-def onDirPress(dir):
-    print("TEST direction, going: " + dir)
-def ui_build_actions(master, mode:str, **args):
-    master.grid_rowconfigure(0, weight = 1)
-    if mode == "text":
-        reqFields = args.get("fields", (("Input", ""),))
-        fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        entertext = args.get("entertext", "ENTER")
-        enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labels = []
-        inpFields = []
-        length = len(reqFields)
-        for i in range(length):
-            labels.append(TK.Label(master=master, text=reqFields[i][0], font=labelfont))
-            inpFields.append(TK.Entry(master=master, font=fieldfont))
-            inpFields[i].insert(0, reqFields[i][1])
-            labels[i].grid(row = i, column = 0, sticky="new")
-            inpFields[i].grid(row = i, column = 1, columnspan=1, sticky="new")
-        master.grid_columnconfigure(0, weight = 1)
-        master.grid_columnconfigure(1, weight = 5)
-        def packnsend():
-            ret = []
+
+class UntitledUI:
+    def __init__(self, root:TK.Tk):
+        self.main = TK.Frame(root)
+        self.main.grid_columnconfigure(0, weight=1)
+        self.main.grid_rowconfigure(0, weight=1)
+        self.main.pack(fill = TK.BOTH, expand = 1)
+
+        self.display = TK.Frame(master=self.main, background ="#00c4ff")
+        self.actions = TK.Frame(master=self.main, background ="#2200ff")
+        self.inventory = TK.Frame(master=self.main, background ="#209d00")
+        self.navtext = TK.Frame(master=self.main, background ="#ff8f00")
+        self.navkeys = TK.Frame(master=self.main, background ="#ff0000")
+
+        self.display.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew")
+        self.actions.grid(row=2, column=0, columnspan=2, rowspan=1, sticky="nsew")
+        self.inventory.grid(row=0, column=3, columnspan=1, rowspan=1, sticky="nsew")
+        self.navtext.grid(row=1, column=3, columnspan=1, rowspan=1, sticky="nsew")
+        self.navkeys.grid(row=2, column=3, columnspan=1, rowspan=1, sticky="nsew")
+
+        self.build_display()
+        self.build_actions(mode = "actions")
+        self.build_inventory()
+        self.build_navtext()
+        self.build_navkeys()
+    @staticmethod
+    def emptyframe(frame:TK.Frame):
+        for c in frame.winfo_children():
+            c.grid_forget()
+            c.pack_forget()
+            c.destroy()
+    def onActionPress(self, data):
+        print("TEST: The action input was: " + str(data))
+    def onDirPress(self, data):
+        print("TEST: The direction input was: " + str(data))
+
+
+    def build_display(self, **args):
+        self.emptyframe(self.display)
+        #TODO: build display
+        TK.Label(master=self.display, text = "PLACEHOLDER Display").pack()
+    def build_actions(self, **args):
+        self.emptyframe(self.actions)
+        self.actions.grid_rowconfigure(0, weight = 1)
+        mode = args.get("mode", "")
+
+        if mode == "text":
+            reqFields = args.get("fields", (("Input", ""),))
+            fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+            labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+            entertext = args.get("entertext", "ENTER")
+            enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+            labels = []
+            inpFields = []
+            length = len(reqFields)
             for i in range(length):
-                ret.append((labels[i]["text"], inpFields[i].get()))
-            onActionPress(ret)
-        btnEnter = TK.Button(master=master, text=entertext, font=enterfont, command=packnsend)
-        btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
-    elif mode == "actions":
-        master.grid_columnconfigure(0, weight = 0)
-        master.grid_columnconfigure(1, weight = 1)
-        master.grid_columnconfigure(2, weight = 0)
-        reqActions:tuple = args.get("actions", (("YES", u"\u2713"), ("NO", u"\u2573")))
-        reqLabel:str = args.get("label", "Choose")
-        page:int = args.get("page", 0)
+                labels.append(TK.Label(master=self.actions, text=reqFields[i][0], font=labelfont))
+                inpFields.append(TK.Entry(master=self.actions, font=fieldfont))
+                inpFields[i].insert(0, reqFields[i][1])
+                labels[i].grid(row = i, column = 0, sticky="new")
+                inpFields[i].grid(row = i, column = 1, columnspan=1, sticky="new")
+            self.actions.grid_columnconfigure(0, weight = 1)
+            self.actions.grid_columnconfigure(1, weight = 5)
+            def packnsend():
+                ret = []
+                for i in range(length):
+                    ret.append((labels[i]["text"], inpFields[i].get()))
+                self.onActionPress(ret)
+            btnEnter = TK.Button(master=self.actions, text=entertext, font=enterfont, command=packnsend)
+            btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
+        elif mode == "actions":
+            self.actions.grid_columnconfigure(0, weight = 0)
+            self.actions.grid_columnconfigure(1, weight = 1)
+            self.actions.grid_columnconfigure(2, weight = 0)
+            reqActions:tuple = args.get("actions", (("YES", u"\u2713"), ("NO", u"\u2573")))
+            reqLabel:str = args.get("label", "Choose")
+            page:int = args.get("page", 0)
 
-        buttonfont:TKF.Font = args.get("buttonfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labelfont:TKF.Font = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+            buttonfont:TKF.Font = args.get("buttonfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+            labelfont:TKF.Font = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
 
-        length:int = len(reqActions)
-        actionsFrame:TK.Frame = TK.Frame(master=master)
-        actionsFrame.grid(row = 0, column = 1, sticky="nsew")
+            length:int = len(reqActions)
+            actionsFrame:TK.Frame = TK.Frame(master=self.actions)
+            actionsFrame.grid(row = 0, column = 1, sticky="nsew")
 
-        #actionsFrame.grid_rowconfigure(0, weight = 1)
+            #actionsFrame.grid_rowconfigure(0, weight = 1)
 
-        btnLeft:TK.Button  = TK.Button(master=master, text = u"\u2190")
-        btnRight:TK.Button = TK.Button(master=master, text = u"\u2192")
-        if page > 0:
-            btnLeft.grid(row = 0, column = 0, sticky="nsw")
-        if ( (1+page) * 6 ) < length:
-            btnRight.grid(row = 0, column = 2, sticky="nse")
-        
-        #this slices the requested actions tuple in respect to the current page.
-        #This off course have no practical effect in small (size 6 and under) request groups.
-        activeActions:list = reqActions[page*6:(page+1)*6]
-        actLength:int = len(activeActions)
-        
-        actionBtns:list = []
-        label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel)
-        for i in range(actLength):
-            actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = activeActions[i][1], command = lambda _i=i: onActionPress((activeActions[_i][0], _i + page*6))))
-        if actLength < 4:
-            actionsFrame.grid_columnconfigure(0, weight = 1) #<-- TESTME
-            label.grid(row = 0, sticky="nsew")
+            btnLeft:TK.Button  = TK.Button(master=self.actions, text = u"\u2190")
+            btnRight:TK.Button = TK.Button(master=self.actions, text = u"\u2192")
+            if page > 0:
+                btnLeft.grid(row = 0, column = 0, sticky="nsw")
+            if ( (1+page) * 6 ) < length:
+                btnRight.grid(row = 0, column = 2, sticky="nse")
+            
+            #this slices the requested actions tuple in respect to the current page.
+            #This off course have no practical effect in small (size 6 and under) request groups.
+            activeActions:list = reqActions[page*6:(page+1)*6]
+            actLength:int = len(activeActions)
+            
+            actionBtns:list = []
+            label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel)
             for i in range(actLength):
-                actionBtns[i].grid(row = i + 1, sticky="nsew") 
-                actionsFrame.grid_rowconfigure(i, weight = 5)#<--TESTME
+                actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = activeActions[i][1], command = lambda _i=i: self.onActionPress((activeActions[_i][0], _i + page*6))))
+            if actLength < 4:
+                actionsFrame.grid_columnconfigure(0, weight = 1) #<-- TESTME
+                label.grid(row = 0, sticky="nsew")
+                for i in range(actLength):
+                    actionBtns[i].grid(row = i + 1, sticky="nsew") 
+                    actionsFrame.grid_rowconfigure(i, weight = 5)#<--TESTME
+            else:
+                label.grid(row = 0, column = 0, columnspan = 2, sticky="nsew")
+                for i in range(actLength):
+                    row = int(i / 2) + 1
+                    column = i % 2
+                    actionBtns[i].grid(row=row, column=column, sticky="nsew")
+                    actionsFrame.grid_rowconfigure(row, weight = 1)#<--TESTME
+                    actionsFrame.grid_columnconfigure(column, weight=1) #<-- TESTME
         else:
-            label.grid(row = 0, column = 0, columnspan = 2, sticky="nsew")
-            for i in range(actLength):
-                row = int(i / 2) + 1
-                column = i % 2
-                actionBtns[i].grid(row=row, column=column, sticky="nsew")
-                actionsFrame.grid_rowconfigure(row, weight = 1)#<--TESTME
-                actionsFrame.grid_columnconfigure(column, weight=1) #<-- TESTME
-        #TODO: add testcase and support for changing action page
-def onActionPress(result):
-    print("TEST: The input was: " + str(result))
+            TK.Label(master=self.actions, text = "PLACEHOLDER Actions").pack()
+    def build_inventory(self, **args):
+        self.emptyframe(self.inventory)
+        #TODO build inventory
+        TK.Label(master=self.inventory, text = "PLACEHOLDER Inventory").pack()
+    def build_navtext(self, **args):
+        self.emptyframe(self.navtext)
+        #TODO build navtext
+        TK.Label(master=self.navtext, text = "PLACEHOLDER Navtext").pack()
+    def build_navkeys(self, **args):
+        self.emptyframe(self.navkeys)
+        #TODO build navkeys
+        text_left  = args.get("left",  u"\u2190")
+        text_up    = args.get("up",    u"\u2191")
+        text_right = args.get("right", u"\u2192")
+        text_down  = args.get("down",  u"\u2193")
+        font       = args.get("font", TKF.Font(family = "Consolas", size=30))
+        
+        btn_left  = TK.Button(master = self.navkeys, font=font, text = text_left,  command= lambda: self.onDirPress("left"))
+        btn_up    = TK.Button(master = self.navkeys, font=font, text = text_up,    command= lambda: self.onDirPress("up"))
+        btn_right = TK.Button(master = self.navkeys, font=font, text = text_right, command= lambda: self.onDirPress("right"))
+        btn_down  = TK.Button(master = self.navkeys, font=font, text = text_down,  command= lambda: self.onDirPress("down"))
 
-
-
-
+        btn_left.grid(row=1, column=0, sticky="nsew")
+        btn_up.grid(row=0, column=1, sticky="nsew")
+        btn_right.grid(row=1, column=2, sticky="nsew")
+        btn_down.grid(row=2, column=1, sticky="nsew")
+        
 
 """
     process = test()
