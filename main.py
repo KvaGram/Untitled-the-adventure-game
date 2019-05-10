@@ -47,12 +47,15 @@ def start():
         ("op9", "option Nine"),
         ("op10", "option Ten"),
     )
+    UI.conf_navkeys(left = False)
     UI.draw_actions(actions = testoptions, label = "These are the test options")
 
     tkRoot.mainloop()
 def handleAction(data):
     print("Action was made " + str(data))
 def handleNav(data):
+    if data == "45":
+        print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
     print("Movement was made " + str(data))
 
 class UntitledUI:
@@ -206,23 +209,37 @@ class UntitledUI:
         TK.Label(master=self.navtext, text = "PLACEHOLDER Navtext").pack()
     def draw_navkeys(self, **args):
         self.emptyframe(self.navkeys)
-        #TODO build navkeys
-        text_left  = args.get("left",  u"\u2190")
-        text_up    = args.get("up",    u"\u2191")
-        text_right = args.get("right", u"\u2192")
-        text_down  = args.get("down",  u"\u2193")
-        font       = args.get("font", TKF.Font(family = "Consolas", size=30))
-        
-        btn_left  = TK.Button(master = self.navkeys, font=font, text = text_left,  command= lambda: self.handleNav("left"))
-        btn_up    = TK.Button(master = self.navkeys, font=font, text = text_up,    command= lambda: self.handleNav("up"))
-        btn_right = TK.Button(master = self.navkeys, font=font, text = text_right, command= lambda: self.handleNav("right"))
-        btn_down  = TK.Button(master = self.navkeys, font=font, text = text_down,  command= lambda: self.handleNav("down"))
 
-        btn_left.grid(row=1, column=0, sticky="nsew")
-        btn_up.grid(row=0, column=1, sticky="nsew")
-        btn_right.grid(row=1, column=2, sticky="nsew")
-        btn_down.grid(row=2, column=1, sticky="nsew")
+        self.nav_left  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("left"))
+        self.nav_up    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("up"))
+        self.nav_45    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("45"))
+        self.nav_right = TK.Button(master = self.navkeys, command= lambda: self.handleNav("right"))
+        self.nav_down  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("down"))
+
+        self.nav_45.grid(row=0, column=2, sticky="nsew")
+        self.nav_left.grid(row=1, column=0, sticky="nsew")
+        self.nav_up.grid(row=0, column=1, sticky="nsew")
+        self.nav_right.grid(row=1, column=2, sticky="nsew")
+        self.nav_down.grid(row=2, column=1, sticky="nsew")
         
+        self.conf_navkeys(**args)
+    def conf_navkeys(self, **args):
+        state_left  = TK.NORMAL if args.get("left",  True) else TK.DISABLED
+        state_up    = TK.NORMAL if args.get("up",    True) else TK.DISABLED
+        state_right = TK.NORMAL if args.get("right", True) else TK.DISABLED
+        state_down  = TK.NORMAL if args.get("down",  True) else TK.DISABLED
+
+        text_left  = args.get("text_left",  u"\u2190")
+        text_up    = args.get("text_up",    u"\u2191")
+        text_right = args.get("text_right", u"\u2192")
+        text_down  = args.get("text_down",  u"\u2193")
+        font       = args.get("font", TKF.Font(family = "Consolas", size=30))
+
+        self.nav_left  .config(font = font, text = text_left, state = state_left)
+        self.nav_up    .config(font = font, text = text_up, state = state_up)
+        self.nav_right .config(font = font, text = text_right, state = state_right)
+        self.nav_down  .config(font = font, text = text_down, state = state_down)
+        self.nav_45    .config(font = font, text = "45")
 
 """
     process = test()
