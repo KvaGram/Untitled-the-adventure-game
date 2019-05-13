@@ -40,6 +40,53 @@ def choose(list, message = "enter choice number"):
     #showtext("you chose {0}".format(list[inp-1]))
     return inp
 
+class navdata:
+    def __init__(self, **args):
+        #boolean - enabled or disabled!
+        #by default, all are disabled.
+        self.up = args.get("up", False)
+        self.left = args.get("left", False)
+        self.right = args.get("right", False)
+        self.down = args.get("down", False)
+
+        #special flag for when all nav keys are disabled (maybe becouse of some event)
+        self.closed = args.get("closed", False)
+
+        #Custom labels for each direction.
+        self.text_left  = args.get("text_left",  u"\u2190")
+        self.text_up    = args.get("text_up",    u"\u2191")
+        self.text_right = args.get("text_right", u"\u2192")
+        self.text_down  = args.get("text_down",  u"\u2193")
+
+
+# NOTE rule:
+# if no action or textinputs are requested, and nav is missing or closed, then the game will continue the event.
+class request:
+    def __init__(self, **args):
+        #Text to dramatically roll on screen. default(False): No text will be displayed | mutually exclusive with showtext
+        self.rolltext:str    = args.get("rolltext", False)
+        #how fast above text will roll. default(0.1): fast, 1 line every 0.1 secunds
+        self.rollwtime:float = args.get("rollwtime", 0.1)
+        #Text to display instantly. default(False): No text will be displayed | mutually exclusive with rolltext
+        self.showtext:str    = args.get("showtext", False)
+        #an instance of navdata. enables nav-buttons and nav text. default(false): entire nav is disabled.
+        self.navdata:navdata = args.get("navdata", False)
+        #a list of options the player can choose from. default(false): No options to choose from | mutually exclusive with textin
+        self.actions:list    = args.get("actions", False)
+        #a list of textfields the player can enter text to. default(false): No options to choose from | mutually exclusive with actions
+        self.textin:list     = args.get("textin", False)
+        #flag for when the UI should refresh inventory elements.
+        self.invrefresh:bool = args.get("invrefresh", False)
+        #sets next place to load (str) or run (callable) once the current function ends.
+        self.next            = args.get("next", False)
+
+class response:
+    def __init__(self, pressed:str = None, data:object = None):
+        self.pressed = pressed
+        self.data    = data
+
+
+
 
 
 #choose2 documentation

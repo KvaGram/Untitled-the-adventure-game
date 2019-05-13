@@ -2,14 +2,12 @@ import os
 import time
 import random
 import json
-from PIL import Image
 
 #from tkinter import *
 import tkinter as TK
-from tkinter import font as TKF
-from tkinter import scrolledtext as TKS
 
 import game_utilities as G
+import ui
 
 import room_apartment 
 import middlering
@@ -35,7 +33,7 @@ def start():
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1280x720")
 
-    UI:UntitledUI = UntitledUI(tkRoot, handleNav = handleNav, handleAction = handleAction)
+    UI:ui.UntitledUI = ui.UntitledUI(tkRoot, handleNav = handleNav, handleAction = handleAction)
 
     testoptions = (
         ("op1", "option One"),
@@ -60,249 +58,6 @@ def handleNav(data):
         print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
     print("Movement was made " + str(data))
 
-class inventoryItem(TK.Frame):
-    def __init__(self, root:TK.Tk, **args):
-        super(inventoryItem, self).__init__(master = root, **args)
-        labelName = args.get("label", " < dummy item > ")
-        imageName = args.get("image", "empty.gif")
-        self.imageData = TK.PhotoImage(file = imageName)
-        self.labelImage = TK.Label(master = self, image = self.imageData)
-        self.labelText  = TK.Label(master = self, text = labelName)
-        self.labelImage.pack(side = TK.TOP)
-        self.labelText.pack (side = TK.BOTTOM)
-
-    def setItem(self, labelName:str, imageName:str):
-        self.imageData.config(file = imageName)
-        self.labelImage.config(image = self.imageData)
-        self.labelText.config(text = labelName)
-class UntitledUI:
-    def __init__(self, root:TK.Tk, **args):
-        self.main = TK.Frame(root)
-        self.main.pack(fill = TK.BOTH, expand = 1)
-
-        self.handleAction:callable = args.get("handleAction", self.handleAction_dummy)
-        self.handleNav:callable = args.get("handleNav", self.handleNav_dummy)
-
-        self.display = TK.Frame(master=self.main, background ="#00c4ff")
-        self.actions = TK.Frame(master=self.main, background ="#2200ff")
-        self.inventory = TK.Frame(master=self.main, background ="#209d00")
-
-        self.navzone = TK.Frame(master=self.main, background ="#ff0000")
-        self.navtext = TK.Frame(master=self.navzone, background ="#ff8f00")
-        self.navkeys = TK.Frame(master=self.navzone, background ="#ff0000")
-
-        self.display.grid(row=0, column=0, columnspan=1, rowspan=1, sticky="nsew")
-        self.actions.grid(row=1, column=0, columnspan=1, rowspan=1, sticky="nsew")
-        self.inventory.grid(row=0, column=1, columnspan=1, rowspan=1, sticky="nsew")
-        self.navzone.grid(row=1, column=1, columnspan=1, rowspan=1, sticky="nsew")
-
-        self.navtext.pack(side = TK.TOP, fill = TK.BOTH)
-        self.navkeys.pack(side = TK.BOTTOM, fill = TK.BOTH)
-
-        self.draw_display()
-        self.draw_actions()
-        #self.draw_textinputs()
-        self.draw_inventory()
-        self.draw_navtext()
-        self.draw_navkeys()
-
-        self.main.grid_columnconfigure(0, weight=10)
-        self.main.grid_columnconfigure(1, weight=1)
-        self.main.grid_rowconfigure(0, weight=10)
-        self.main.grid_rowconfigure(1, weight=4)
-        self.main.grid_rowconfigure(2, weight=5)
-    @staticmethod
-    def emptyframe(frame:TK.Frame):
-        for c in frame.winfo_children():
-            c.grid_forget()
-            c.pack_forget()
-            c.destroy()
-    def handleAction_dummy(self, data):
-        print("TEST: The action input was: " + str(data))
-    def handleNav_dummy(self, data):
-        print("TEST: The direction input was: " + str(data))
-
-
-    def draw_display(self, **args):
-        self.emptyframe(self.display)
-        #TODO: build display
-        self.dispText = TKS.ScrolledText(master = self.display, state = TK.NORMAL)
-        self.dispText.pack(fill=TK.BOTH)
-        self.dispText.insert(TK.END, "This is a\nloooooooong test\nof this scrollable text\nwidget.\nwell, long by standards of a codeline\nby GUI, this is quite short")
-        self.dispText.config(state = TK.DISABLED)
-
-    def write_all_display(self, text:str):
-        self.dispText.config(state = TK.NORMAL)
-        self.dispText.insert(TK.END, "\n" + text)
-        self.dispText.config(state = TK.DISABLED)
-    def write_linebyline_display(self, text, wtime:float = 0.1):
-        if type(text) == str:
-            text = text.splitlines()
-        self.dispText.config(state = TK.NORMAL)
-        for t in text:
-            self.dispText.insert(TK.END, "\n" + t)
-            time.sleep(wtime)
-        self.dispText.config(state = TK.DISABLED)
-    
-    def draw_actions(self, **args):
-        
-        self.emptyframe(self.actions)
-        self.actions.grid_rowconfigure(0, weight = 1)
-
-        self.action_page:int = args.get("page", 0)
-        reqActions:tuple = args.get("actions", (("YES", u"\u2713"), ("NO", u"\u2573")))
-        reqLabel:str = args.get("label", "Choose")
-        buttonfont:TKF.Font = args.get("buttonfont", TKF.Font())
-        labelfont:TKF.Font = args.get("labelfont", TKF.Font())
-
-        actionsFrame:TK.Frame = TK.Frame(master=self.actions)
-        actionsFrame.grid(row = 0, column = 1, sticky="nsew")
-
-        def nextpage():
-            self.action_page += 1
-            draw_actionbuttons()
-        def prevpage():
-            self.action_page -= 1
-            draw_actionbuttons()
-        btnLeft:TK.Button  = TK.Button(master=self.actions, text = u"\u2190", command = prevpage)
-        btnRight:TK.Button = TK.Button(master=self.actions, text = u"\u2192", command = nextpage)
-        btnLeft.grid(row = 0, column = 0, sticky="nsw")
-        btnRight.grid(row = 0, column = 2, sticky="nse")
-
-        self.actions.grid_columnconfigure(0, weight = 0)
-        self.actions.grid_columnconfigure(1, weight = 1)
-        self.actions.grid_columnconfigure(2, weight = 0)
-        fLength:int = len(reqActions) #full length of the requested actions list
-
-        def draw_actionbuttons():
-            
-            #empties the the action button container and disables the page-buttons.
-            btnLeft.config(state=TK.DISABLED)
-            btnRight.config(state=TK.DISABLED)
-            self.emptyframe(actionsFrame)
-
-            #re-enables the page-buttons as appropriate
-            if self.action_page > 0:
-                btnLeft.config(state=TK.NORMAL)
-            if ( (1+self.action_page) * 6 ) < fLength:
-                btnRight.config(state=TK.NORMAL)
-            
-            #list of active actions (buttons to draw)
-            #made by slicing the requested actions list, with respect to the current page.
-            #only usefull for actions lists larger than 6.
-            aActions:list = reqActions[self.action_page*6:(self.action_page+1)*6]
-            aLength:int = len(aActions)
-
-        
-            actionBtns:list = []
-            label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel, font = labelfont)
-            for i in range(aLength):
-                actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = aActions[i][1], command = lambda _i=i: self.handleAction((aActions[_i][0], _i + self.action_page*6))))
-            if aLength < 4:
-                actionsFrame.grid_columnconfigure(0, weight = 1)
-                label.grid(row = 0, sticky="nsew")
-                for i in range(aLength):
-                    actionBtns[i].grid(row = i + 1, sticky="nsew") 
-                    actionsFrame.grid_rowconfigure(i, weight = 5)
-            else:
-                label.grid(row = 0, column = 0, columnspan = 2, sticky="nsew")
-                for i in range(aLength):
-                    row = int(i / 2) + 1
-                    column = i % 2
-                    actionBtns[i].grid(row=row, column=column, sticky="nsew")
-                    actionsFrame.grid_rowconfigure(row, weight = 1)
-                    actionsFrame.grid_columnconfigure(column, weight=1)
-        draw_actionbuttons()
-
-    def draw_textinputs(self, **args):
-        self.emptyframe(self.actions)
-        self.actions.grid_rowconfigure(0, weight = 1)
-        reqFields = args.get("fields", (("Input", ""),))
-        fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        entertext = args.get("entertext", "ENTER")
-        enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labels = []
-        inpFields = []
-        length = len(reqFields)
-        for i in range(length):
-            labels.append(TK.Label(master=self.actions, text=reqFields[i][0], font=labelfont))
-            inpFields.append(TK.Entry(master=self.actions, font=fieldfont))
-            inpFields[i].insert(0, reqFields[i][1])
-            labels[i].grid(row = i, column = 0, sticky="new")
-            inpFields[i].grid(row = i, column = 1, columnspan=1, sticky="new")
-        self.actions.grid_columnconfigure(0, weight = 1)
-        self.actions.grid_columnconfigure(1, weight = 5)
-        def packnsend():
-            ret = []
-            for i in range(length):
-                ret.append((labels[i]["text"], inpFields[i].get()))
-            self.handleAction(ret)
-        btnEnter = TK.Button(master=self.actions, text=entertext, font=enterfont, command=packnsend)
-        btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
-
-    def draw_inventory(self, **args):
-        self.emptyframe(self.inventory)
-        self.itemObjects = []
-        for i in range(8):
-            item = inventoryItem(self.inventory)
-            
-            item.grid(row = int(i/2), column = i%2, padx = 1, pady = 1, sticky="nsew")
-            self.itemObjects.append(item)
-        self.inventory.grid_columnconfigure(index = 0, weight=1)
-        self.inventory.grid_rowconfigure(index = 0, weight=1)
-    def draw_navtext(self, **args):
-        self.emptyframe(self.navtext)
-        #TODO build navtext
-        self.navTextDisplay = TK.Text(master = self.navtext, width = 10, height = 5)
-        self.navTextDisplay.pack(fill= TK.BOTH)
-        self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")
-        self.navTextDisplay.config(state = TK.DISABLED)
-    def set_navtext(self, text:str):
-        self.navTextDisplay.config(state = TK.NORMAL)
-        self.navTextDisplay.delete(1, TK.END)
-        self.navTextDisplay.insert(TK.END, text)
-        self.navTextDisplay.config(state = TK.DISABLED)
-    def draw_navkeys(self, **args):
-        self.emptyframe(self.navkeys)
-
-        self.nav_left  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("left"))
-        self.nav_up    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("up"))
-        self.nav_45    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("45"))
-        self.nav_right = TK.Button(master = self.navkeys, command= lambda: self.handleNav("right"))
-        self.nav_down  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("down"))
-
-        #self.nav_45.grid(row=0, column=2, sticky="nsew")
-        self.nav_left.grid(row=1, column=0, sticky="nsew")
-        self.nav_up.grid(row=0, column=1, sticky="nsew")
-        self.nav_right.grid(row=1, column=2, sticky="nsew")
-        self.nav_down.grid(row=2, column=1, sticky="nsew")
-
-        self.navkeys.grid_columnconfigure(index = 0, weight = 1)
-        self.navkeys.grid_columnconfigure(index = 1, weight = 1)
-        self.navkeys.grid_columnconfigure(index = 2, weight = 1)
-        self.navkeys.grid_rowconfigure(index = 0, weight = 1)
-        self.navkeys.grid_rowconfigure(index = 1, weight = 1)
-        self.navkeys.grid_rowconfigure(index = 2, weight = 1)
-        self.conf_navkeys(**args)
-    def conf_navkeys(self, **args):
-        state_left  = TK.NORMAL if args.get("left",  True) else TK.DISABLED
-        state_up    = TK.NORMAL if args.get("up",    True) else TK.DISABLED
-        state_right = TK.NORMAL if args.get("right", True) else TK.DISABLED
-        state_down  = TK.NORMAL if args.get("down",  True) else TK.DISABLED
-
-        text_left  = args.get("text_left",  u"\u2190")
-        text_up    = args.get("text_up",    u"\u2191")
-        text_right = args.get("text_right", u"\u2192")
-        text_down  = args.get("text_down",  u"\u2193")
-        text_upright = u"\u2197"
-        font       = args.get("font", TKF.Font(family = "Consolas", size=30))
-
-        self.nav_left  .config(font = font, text = text_left, state = state_left)
-        self.nav_up    .config(font = font, text = text_up, state = state_up)
-        self.nav_right .config(font = font, text = text_right, state = state_right)
-        self.nav_down  .config(font = font, text = text_down, state = state_down)
-        self.nav_45    .config(font = font, text = text_upright)
 
 """
     process = test()
