@@ -6,6 +6,7 @@ import json
 #from tkinter import *
 import tkinter as TK
 from tkinter import font as TKF
+from tkinter import scrolledtext as TKS
 
 import game_utilities as G
 
@@ -61,8 +62,6 @@ def handleNav(data):
 class UntitledUI:
     def __init__(self, root:TK.Tk, **args):
         self.main = TK.Frame(root)
-        self.main.grid_columnconfigure(0, weight=1)
-        self.main.grid_rowconfigure(0, weight=1)
         self.main.pack(fill = TK.BOTH, expand = 1)
 
         self.handleAction:callable = args.get("handleAction", self.handleAction_dummy)
@@ -74,11 +73,11 @@ class UntitledUI:
         self.navtext = TK.Frame(master=self.main, background ="#ff8f00")
         self.navkeys = TK.Frame(master=self.main, background ="#ff0000")
 
-        self.display.grid(row=0, column=0, columnspan=2, rowspan=2, sticky="nsew")
-        self.actions.grid(row=2, column=0, columnspan=2, rowspan=1, sticky="nsew")
-        self.inventory.grid(row=0, column=3, columnspan=1, rowspan=1, sticky="nsew")
-        self.navtext.grid(row=1, column=3, columnspan=1, rowspan=1, sticky="nsew")
-        self.navkeys.grid(row=2, column=3, columnspan=1, rowspan=1, sticky="nsew")
+        self.display.grid(row=0, column=0, columnspan=1, rowspan=2, sticky="nsew")
+        self.actions.grid(row=2, column=0, columnspan=1, rowspan=1, sticky="nsew")
+        self.inventory.grid(row=0, column=1, columnspan=1, rowspan=1, sticky="nsew")
+        self.navtext.grid(row=1, column=1, columnspan=1, rowspan=1, sticky="nsew")
+        self.navkeys.grid(row=2, column=1, columnspan=1, rowspan=1, sticky="nsew")
 
         self.draw_display()
         self.draw_actions()
@@ -86,6 +85,12 @@ class UntitledUI:
         self.draw_inventory()
         self.draw_navtext()
         self.draw_navkeys()
+
+        self.main.grid_columnconfigure(0, weight=10)
+        self.main.grid_columnconfigure(1, weight=1)
+        self.main.grid_rowconfigure(0, weight=10)
+        self.main.grid_rowconfigure(1, weight=4)
+        self.main.grid_rowconfigure(2, weight=5)
     @staticmethod
     def emptyframe(frame:TK.Frame):
         for c in frame.winfo_children():
@@ -101,7 +106,24 @@ class UntitledUI:
     def draw_display(self, **args):
         self.emptyframe(self.display)
         #TODO: build display
-        TK.Label(master=self.display, text = "PLACEHOLDER Display").pack()
+        self.dispText = TKS.ScrolledText(master = self.display, state = TK.NORMAL)
+        self.dispText.pack(fill=TK.BOTH)
+        self.dispText.insert(TK.END, "This is a\nloooooooong test\nof this scrollable text\nwidget.\nwell, long by standards of a codeline\nby GUI, this is quite short")
+        self.dispText.config(state = TK.DISABLED)
+
+    def write_all_display(self, text:str):
+        self.dispText.config(state = TK.NORMAL)
+        self.dispText.insert(TK.END, "\n" + text)
+        self.dispText.config(state = TK.DISABLED)
+    def write_linebyline_display(self, text, wtime:float = 0.1):
+        if type(text) == str:
+            text = text.splitlines()
+        self.dispText.config(state = TK.NORMAL)
+        for t in text:
+            self.dispText.insert(TK.END, "\n" + t)
+            time.sleep(wtime)
+        self.dispText.config(state = TK.DISABLED)
+    
     def draw_actions(self, **args):
         
         self.emptyframe(self.actions)
@@ -206,7 +228,15 @@ class UntitledUI:
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
         #TODO build navtext
-        TK.Label(master=self.navtext, text = "PLACEHOLDER Navtext").pack()
+        self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 24)
+        self.navTextDisplay.pack(fill= TK.BOTH)
+        self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")
+        self.navTextDisplay.config(state = TK.DISABLED)
+    def set_navtext(self, text:str):
+        self.navTextDisplay.config(state = TK.NORMAL)
+        self.navTextDisplay.delete(1, TK.END)
+        self.navTextDisplay.insert(TK.END, text)
+        self.navTextDisplay.config(state = TK.DISABLED)
     def draw_navkeys(self, **args):
         self.emptyframe(self.navkeys)
 
