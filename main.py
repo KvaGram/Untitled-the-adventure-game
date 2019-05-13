@@ -156,97 +156,97 @@ def oldGame():
                 continue
             if(choice == 3):
                 return
-    class savadata:
-        # data contains all save data, including choices and the player's location
-        data = {}
-        # version is saved as an array of 3 numbers to easly warn of potential version conflicts
-        version = []
-        def __init__(self, version):
-            self.data = {}
-            self.version = version
-        def getdata(self, name, default = None):
-            try:
-                return self.data[name]
-            except:
-                self.setdata(name, default)
-                return default
-        def setdata(self, name, value):
-            self.data[name] = value
-        def savegame(self):
-            G.showtext("WARNING, save and load is not fully tested yet. ")
-            #dialouge = TK.Tk()
-            path = TK.filedialog.asksaveasfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
-            #dialouge.destroy()
-            saveOK = True
-            if path == "":
-                saveOK = False
-            elif os.path.isfile(path):
-                TK.messagebox.askokcancel("Untitled adventure game","Override existing savefile?")
-                saveOK = False
-            if ".uagsave" not in path:
-                path = path + ".uagsave"
+class savadata:
+    # data contains all save data, including choices and the player's location
+    data = {}
+    # version is saved as an array of 3 numbers to easly warn of potential version conflicts
+    version = []
+    def __init__(self, version):
+        self.data = {}
+        self.version = version
+    def getdata(self, name, default = None):
+        try:
+            return self.data[name]
+        except:
+            self.setdata(name, default)
+            return default
+    def setdata(self, name, value):
+        self.data[name] = value
+    def savegame(self):
+        G.showtext("WARNING, save and load is not fully tested yet. ")
+        #dialouge = TK.Tk()
+        path = TK.filedialog.asksaveasfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
+        #dialouge.destroy()
+        saveOK = True
+        if path == "":
+            saveOK = False
+        elif os.path.isfile(path):
+            TK.messagebox.askokcancel("Untitled adventure game","Override existing savefile?")
+            saveOK = False
+        if ".uagsave" not in path:
+            path = path + ".uagsave"
 
-            if saveOK:
-                self.setdata("version", self.version)
-                f = open (path, "w+")
-                json.dump(self.data, f)#, True, True, True, True, None, (', ', ': '), "UTF-8", False)
-                f.close()
-            elif G.yesno("The game was not saved. Try again?"):
-                return self.savegame()
-        def loadgame(self):
-            G.showtext("WARNING, save and load is not fully tested yet. ")
-            path = TK.filedialog.askopenfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
-            if path == "" or not os.path.isfile(path):
-                if G.yesno("The game was not loaded. Try again?"):
-                    return self.loadgame()
-                else:
-                    return False
-            f = open(path, "r")
-            ldata = json.load(f)
-            lversion = ldata["version"]
-            #comparing version
-            major  = lversion[0] - self.version[0]
-            minor  = lversion[1] - self.version[1]
-            #hotfix = lversion[2] - self.version[2]
-            if major == 0:
-                if minor == 0:
-                    #not worth comparing a hotfix
-                    pass
-                elif minor > 0:
-                    G.showtext("Warning: This save was made with a newer version of the game. This may cause problems.")
-                else:
-                    G.showtext("Warning: This save was made with a older version of the game. This should be fine, but could cause issues.")
-            elif major > 0:
-                G.showtext("WARNING! This save is FROM THE FUTURE! You should run a newer version of the game instead.")
+        if saveOK:
+            self.setdata("version", self.version)
+            f = open (path, "w+")
+            json.dump(self.data, f)#, True, True, True, True, None, (', ', ': '), "UTF-8", False)
+            f.close()
+        elif G.yesno("The game was not saved. Try again?"):
+            return self.savegame()
+    def loadgame(self):
+        G.showtext("WARNING, save and load is not fully tested yet. ")
+        path = TK.filedialog.askopenfilename(initialdir = "/", title = "Save game", filetypes = (("Untitled adventuregame savegame", "*.uagsave"),("all files", "*.*")))
+        if path == "" or not os.path.isfile(path):
+            if G.yesno("The game was not loaded. Try again?"):
+                return self.loadgame()
             else:
-                G.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
-            
-            self.data = ldata
-            return True
-
-        def setNav(self, nav):
-            self.setdata("roomnav", nav)
-        def getNav(self, request = None):
-            nav = self.getdata("roomnav", None)
-            if nav == None or request == None:
-                return nav
-            if nav.roomname == request:
-                return nav
-            return None
-        #sets the room save data.
-        #example use
-        # return save.goto("middleA")
-        #return statment may be seperate as goto does not return value
-        #but it is symbolic as you usually use this to move from a room (module
-        def goto(self, room):
-            if(room == None):
-                return
-            self.setdata("prevroom", self.getdata('room'))
-            self.setdata("room", room)
-            self.setNav(None) #Cleans roomnav
+                return False
+        f = open(path, "r")
+        ldata = json.load(f)
+        lversion = ldata["version"]
+        #comparing version
+        major  = lversion[0] - self.version[0]
+        minor  = lversion[1] - self.version[1]
+        #hotfix = lversion[2] - self.version[2]
+        if major == 0:
+            if minor == 0:
+                #not worth comparing a hotfix
+                pass
+            elif minor > 0:
+                G.showtext("Warning: This save was made with a newer version of the game. This may cause problems.")
+            else:
+                G.showtext("Warning: This save was made with a older version of the game. This should be fine, but could cause issues.")
+        elif major > 0:
+            G.showtext("WARNING! This save is FROM THE FUTURE! You should run a newer version of the game instead.")
+        else:
+            G.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
         
-        def versionText(self):
-            return "v{0}.{1}.{2}".format(self.version[0], self.version[1], self.version[2])
+        self.data = ldata
+        return True
+
+    def setNav(self, nav):
+        self.setdata("roomnav", nav)
+    def getNav(self, request = None):
+        nav = self.getdata("roomnav", None)
+        if nav == None or request == None:
+            return nav
+        if nav.roomname == request:
+            return nav
+        return None
+    #sets the room save data.
+    #example use
+    # return save.goto("middleA")
+    #return statment may be seperate as goto does not return value
+    #but it is symbolic as you usually use this to move from a room (module
+    def goto(self, room):
+        if(room == None):
+            return
+        self.setdata("prevroom", self.getdata('room'))
+        self.setdata("room", room)
+        self.setNav(None) #Cleans roomnav
+    
+    def versionText(self):
+        return "v{0}.{1}.{2}".format(self.version[0], self.version[1], self.version[2])
 
 #TODO: when removing old code, move this further up in file.
 

@@ -33,7 +33,7 @@ def main(save):
         
 
     nav = middleRoomNAV.GET_NAV(save)
-    intro = "place holder corridor intro text (should not show up in the game)"
+    #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
     def sectionDdoor():
@@ -606,7 +606,7 @@ if __name__ == "__main__":
     game.showtext("--- Welcome to the middle ring test code. For a regular playthugh, please run main.py instead. ---")
     #testing-code
     from main import savadata
-    from main import VERSION
+    from main import VERSION 
     testsave1 = savadata(VERSION)
     testsave1.setdata("name","Tester")
     testsave1.goto("middle")

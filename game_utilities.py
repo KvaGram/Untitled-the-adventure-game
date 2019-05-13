@@ -57,6 +57,8 @@ class navdata:
         self.text_up    = args.get("text_up",    u"\u2191")
         self.text_right = args.get("text_right", u"\u2192")
         self.text_down  = args.get("text_down",  u"\u2193")
+        
+        self.navtext = args.get("navtext", "UNKNOWN\nAREA")
 
 
 # NOTE rule:
@@ -69,8 +71,8 @@ class request:
         self.rollwtime:float = args.get("rollwtime", 0.1)
         #Text to display instantly. default(False): No text will be displayed | mutually exclusive with rolltext
         self.showtext:str    = args.get("showtext", False)
-        #an instance of navdata. enables nav-buttons and nav text. default(false): entire nav is disabled.
-        self.navdata:navdata = args.get("navdata", False)
+        #an instance of navdata. enables nav-buttons and nav text. default(navdata(closed = True)): nav is disabled, navtext display UNKNOWN AREA.
+        self.navdata:navdata = args.get("navdata", navdata(closed = True))
         #a list of options the player can choose from. default(false): No options to choose from | mutually exclusive with textin
         self.actions:list    = args.get("actions", False)
         #a list of textfields the player can enter text to. default(false): No options to choose from | mutually exclusive with actions
