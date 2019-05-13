@@ -2,6 +2,7 @@ import os
 import time
 import random
 import json
+from PIL import Image
 
 #from tkinter import *
 import tkinter as TK
@@ -59,6 +60,21 @@ def handleNav(data):
         print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
     print("Movement was made " + str(data))
 
+class inventoryItem(TK.Frame):
+    def __init__(self, root:TK.Tk, **args):
+        super(inventoryItem, self).__init__(master = root, **args)
+        labelName = args.get("label", " < dummy item > ")
+        imageName = args.get("image", "empty.gif")
+        self.imageData = TK.PhotoImage(file = imageName)
+        self.labelImage = TK.Label(master = self, image = self.imageData)
+        self.labelText  = TK.Label(master = self, text = labelName)
+        self.labelImage.pack(side = TK.TOP)
+        self.labelText.pack (side = TK.BOTTOM)
+
+    def setItem(self, labelName:str, imageName:str):
+        self.imageData.config(file = imageName)
+        self.labelImage.config(image = self.imageData)
+        self.labelText.config(text = labelName)
 class UntitledUI:
     def __init__(self, root:TK.Tk, **args):
         self.main = TK.Frame(root)
@@ -70,14 +86,18 @@ class UntitledUI:
         self.display = TK.Frame(master=self.main, background ="#00c4ff")
         self.actions = TK.Frame(master=self.main, background ="#2200ff")
         self.inventory = TK.Frame(master=self.main, background ="#209d00")
-        self.navtext = TK.Frame(master=self.main, background ="#ff8f00")
-        self.navkeys = TK.Frame(master=self.main, background ="#ff0000")
 
-        self.display.grid(row=0, column=0, columnspan=1, rowspan=2, sticky="nsew")
-        self.actions.grid(row=2, column=0, columnspan=1, rowspan=1, sticky="nsew")
+        self.navzone = TK.Frame(master=self.main, background ="#ff0000")
+        self.navtext = TK.Frame(master=self.navzone, background ="#ff8f00")
+        self.navkeys = TK.Frame(master=self.navzone, background ="#ff0000")
+
+        self.display.grid(row=0, column=0, columnspan=1, rowspan=1, sticky="nsew")
+        self.actions.grid(row=1, column=0, columnspan=1, rowspan=1, sticky="nsew")
         self.inventory.grid(row=0, column=1, columnspan=1, rowspan=1, sticky="nsew")
-        self.navtext.grid(row=1, column=1, columnspan=1, rowspan=1, sticky="nsew")
-        self.navkeys.grid(row=2, column=1, columnspan=1, rowspan=1, sticky="nsew")
+        self.navzone.grid(row=1, column=1, columnspan=1, rowspan=1, sticky="nsew")
+
+        self.navtext.pack(side = TK.TOP, fill = TK.BOTH)
+        self.navkeys.pack(side = TK.BOTTOM, fill = TK.BOTH)
 
         self.draw_display()
         self.draw_actions()
@@ -175,7 +195,7 @@ class UntitledUI:
 
         
             actionBtns:list = []
-            label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel)
+            label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel, font = labelfont)
             for i in range(aLength):
                 actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = aActions[i][1], command = lambda _i=i: self.handleAction((aActions[_i][0], _i + self.action_page*6))))
             if aLength < 4:
@@ -223,12 +243,18 @@ class UntitledUI:
 
     def draw_inventory(self, **args):
         self.emptyframe(self.inventory)
-        #TODO build inventory
-        TK.Label(master=self.inventory, text = "PLACEHOLDER Inventory").pack()
+        self.itemObjects = []
+        for i in range(8):
+            item = inventoryItem(self.inventory)
+            
+            item.grid(row = int(i/2), column = i%2, padx = 1, pady = 1, sticky="nsew")
+            self.itemObjects.append(item)
+        self.inventory.grid_columnconfigure(index = 0, weight=1)
+        self.inventory.grid_rowconfigure(index = 0, weight=1)
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
         #TODO build navtext
-        self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 24)
+        self.navTextDisplay = TK.Text(master = self.navtext, width = 10, height = 5)
         self.navTextDisplay.pack(fill= TK.BOTH)
         self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")
         self.navTextDisplay.config(state = TK.DISABLED)
@@ -246,12 +272,18 @@ class UntitledUI:
         self.nav_right = TK.Button(master = self.navkeys, command= lambda: self.handleNav("right"))
         self.nav_down  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("down"))
 
-        self.nav_45.grid(row=0, column=2, sticky="nsew")
+        #self.nav_45.grid(row=0, column=2, sticky="nsew")
         self.nav_left.grid(row=1, column=0, sticky="nsew")
         self.nav_up.grid(row=0, column=1, sticky="nsew")
         self.nav_right.grid(row=1, column=2, sticky="nsew")
         self.nav_down.grid(row=2, column=1, sticky="nsew")
-        
+
+        self.navkeys.grid_columnconfigure(index = 0, weight = 1)
+        self.navkeys.grid_columnconfigure(index = 1, weight = 1)
+        self.navkeys.grid_columnconfigure(index = 2, weight = 1)
+        self.navkeys.grid_rowconfigure(index = 0, weight = 1)
+        self.navkeys.grid_rowconfigure(index = 1, weight = 1)
+        self.navkeys.grid_rowconfigure(index = 2, weight = 1)
         self.conf_navkeys(**args)
     def conf_navkeys(self, **args):
         state_left  = TK.NORMAL if args.get("left",  True) else TK.DISABLED
@@ -263,13 +295,14 @@ class UntitledUI:
         text_up    = args.get("text_up",    u"\u2191")
         text_right = args.get("text_right", u"\u2192")
         text_down  = args.get("text_down",  u"\u2193")
+        text_upright = u"\u2197"
         font       = args.get("font", TKF.Font(family = "Consolas", size=30))
 
         self.nav_left  .config(font = font, text = text_left, state = state_left)
         self.nav_up    .config(font = font, text = text_up, state = state_up)
         self.nav_right .config(font = font, text = text_right, state = state_right)
         self.nav_down  .config(font = font, text = text_down, state = state_down)
-        self.nav_45    .config(font = font, text = "45")
+        self.nav_45    .config(font = font, text = text_upright)
 
 """
     process = test()
