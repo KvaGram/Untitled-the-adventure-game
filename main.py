@@ -2,6 +2,7 @@ import os
 import time
 import random
 import json
+import types
 
 #from tkinter import *
 import tkinter as TK
@@ -50,6 +51,13 @@ def start():
     UI.conf_navkeys(left = False)
     UI.draw_actions(actions = testoptions, label = "These are the test options")
 
+
+    #TODO: remove the handle action and handle nav. re-write: save data to class instead. The UI loop can fetch it!
+    while True:
+        tkRoot.update_idletasks()
+        tkRoot.update()
+    
+
     tkRoot.mainloop()
 def handleAction(data):
     print("Action was made " + str(data))
@@ -57,6 +65,7 @@ def handleNav(data):
     if data == "45":
         print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
     print("Movement was made " + str(data))
+
 
 
 """
