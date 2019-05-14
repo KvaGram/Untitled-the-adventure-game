@@ -6,6 +6,7 @@ import types
 
 #from tkinter import *
 import tkinter as TK
+from tkinter import messagebox as TKmsg
 
 import game_utilities as G
 import ui
@@ -30,9 +31,21 @@ def test():
     print("The end is here!")
     return
 
+def onExit():
+    s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
+    if(s == None):
+        return
+    if(s == True):
+        print("DEBUG: Save not yet implemented in this build")
+    tkRoot.destroy()
+    exit()
+
 def start():
+    global tkRoot
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1600x900")
+    
+    tkRoot.protocol("WM_DELETE_WINDOW", onExit)
 
     UI:ui.UntitledUI = ui.UntitledUI(tkRoot)
 
@@ -48,8 +61,8 @@ def start():
         ("op9", "option Nine"),
         ("op10", "option Ten"),
     )
-    UI.conf_navkeys(left = False)
-    UI.draw_actions(actions = testoptions, label = "These are the test options")
+    #UI.conf_navkeys(left = False)
+    #UI.draw_actions(actions = testoptions, label = "These are the test options")
     tkRoot.update_idletasks()
     tkRoot.update()
 
@@ -60,6 +73,7 @@ def start():
     resp:G.response = None
     req:G.request = None
     nextEvent:callable = None
+
     while running:
         
         tkRoot.update_idletasks()
@@ -116,15 +130,24 @@ def titleMenu():
     req.rolltext += f.read()
     f.close()
     req.rollwtime = 0.05
+    navtext = """TITLE MENU
+    WELCOME TO
+    UNTITLED!
+    the adventure game
+    """
+    nav = G.navdata(navtext = navtext, closed = True)
     menu = (
     ("NEWGAME", "Start new game"),
     ("LOADGAME", "Load a save"),
     ("ABOUT", "Run credits"),
     ("EXIT", "Exit Game"),
     )
+    req.navdata = nav
     req.actions = menu
     res = G.response()
-    yield(req, res)
+    while not res.isactive():
+        yield(req, res)
+    print("RESPONSE RECIVED! {0}, {1}".format(res.pressed, str(res.data)))
 
 
 def handleAction(data):
