@@ -32,9 +32,9 @@ def test():
 
 def start():
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
-    tkRoot.geometry("1280x720")
+    tkRoot.geometry("1600x900")
 
-    UI:ui.UntitledUI = ui.UntitledUI(tkRoot, handleNav = handleNav, handleAction = handleAction)
+    UI:ui.UntitledUI = ui.UntitledUI(tkRoot)
 
     testoptions = (
         ("op1", "option One"),
@@ -50,21 +50,94 @@ def start():
     )
     UI.conf_navkeys(left = False)
     UI.draw_actions(actions = testoptions, label = "These are the test options")
-
+    tkRoot.update_idletasks()
+    tkRoot.update()
 
     #TODO: remove the handle action and handle nav. re-write: save data to class instead. The UI loop can fetch it!
-    while True:
+    event = titleMenu()
+    waiting = False
+    running = True
+    resp:G.response = None
+    req:G.request = None
+    nextEvent:callable = None
+    while running:
+        
         tkRoot.update_idletasks()
         tkRoot.update()
-    
+        newRes = UI.deqeue()
+        if newRes:
+            if newRes.pressed == "game":
+                pass #TODO: handle game menu
+            else:
+                resp.copyfrom(newRes)
+                waiting = False
+        if waiting:
+            continue
+        req, resp = next(event, ("END", resp))
+        if req == "END":
+            if(type(nextEvent) == callable):
+                event = nextEvent.__call__()
+                nextEvent = None
+                req, resp = next(event, ("END", resp))
+            else:
+                print("DEBUG: UNEXPECTED END OF EVENT FUNCTION!! - returning to title")
+                event = titleMenu()
+                req, resp = next(event, ("END", resp))
+        if req.rolltext:
+            UI.write_linebyline_display(req.rolltext, req.rollwtime)
+        elif req.showtext:
+            UI.write_all_display(req.showtext)
+        if req.actions:
+            waiting = True
+            UI.draw_actions(actions = req.actions)
+            pass #TODO: handle actions request
+        elif req.textin:
+            pass #TODO: handle text in request
+            waiting = True
+        else:
+            pass #TODO: handle no action request
+        if req.navdata:
+            pass #TODO: handle navdata
+            if req.navdata.canmove():
+                waiting = True
+        else:
+            pass #TODO: handle missing navdata (should never happen, but just in case)
+        if req.invrefresh:
+            pass #TODO: handle refresh inventory UI
 
-    tkRoot.mainloop()
+
+
+
+
+def titleMenu():
+    req = G.request()
+    req.rolltext = "WELCOME TO\n\n"
+    f = open("title.txt", 'r', encoding="utf-8")
+    req.rolltext += f.read()
+    f.close()
+    req.rollwtime = 0.05
+    menu = (
+    ("NEWGAME", "Start new game"),
+    ("LOADGAME", "Load a save"),
+    ("ABOUT", "Run credits"),
+    ("EXIT", "Exit Game"),
+    )
+    req.actions = menu
+    res = G.response()
+    yield(req, res)
+
+
 def handleAction(data):
     print("Action was made " + str(data))
 def handleNav(data):
     if data == "45":
         print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
     print("Movement was made " + str(data))
+
+
+
+
+
 
 
 

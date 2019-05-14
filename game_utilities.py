@@ -59,6 +59,10 @@ class navdata:
         self.text_down  = args.get("text_down",  u"\u2193")
         
         self.navtext = args.get("navtext", "UNKNOWN\nAREA")
+    def canmove(self):
+        if self.closed:
+            return False
+        return self.up or self.left or self.right or self.down
 
 
 # NOTE rule:
@@ -86,6 +90,11 @@ class response:
     def __init__(self, pressed:str = None, data:object = None):
         self.pressed = pressed
         self.data    = data
+    def copyfrom(self, other):
+        self.pressed = other.pressed
+        self.data    = other.data
+    def isactive(self):
+        return type(self.pressed) == str
 
 
 

@@ -2,6 +2,8 @@ import tkinter as TK
 from tkinter import font as TKF
 from tkinter import scrolledtext as TKS
 import time
+import game_utilities as G
+from typing import List
 
 class inventoryItem(TK.Frame):
     def __init__(self, root:TK.Tk, **args):
@@ -20,13 +22,17 @@ class inventoryItem(TK.Frame):
         self.labelText.config(text = labelName)
 class UntitledUI:
     def __init__(self, root:TK.Tk, **args):
+        #main container, packed into parent (normally TK root)
+        self.root = root
         self.main = TK.Frame(root)
-        self.main.pack(fill = TK.BOTH, expand = 1)
+        self.main.pack(fill = TK.BOTH, expand = True)
 
-        self.handleAction:callable = args.get("handleAction", self.handleAction_dummy)
-        self.handleNav:callable = args.get("handleNav", self.handleNav_dummy)
+        #queue of inputs from player. to be deqeued by main loop.
+        self.queue = [] #:List[G.response]
 
+        #container for main display, shows a scrollable textfield. Grid-placed in main, top-left
         self.display = TK.Frame(master=self.main, background ="#00c4ff")
+        #container for
         self.actions = TK.Frame(master=self.main, background ="#2200ff")
         self.inventory = TK.Frame(master=self.main, background ="#209d00")
 
@@ -54,23 +60,36 @@ class UntitledUI:
         self.main.grid_rowconfigure(0, weight=10)
         self.main.grid_rowconfigure(1, weight=4)
         self.main.grid_rowconfigure(2, weight=5)
+    
     @staticmethod
     def emptyframe(frame:TK.Frame):
         for c in frame.winfo_children():
             c.grid_forget()
             c.pack_forget()
             c.destroy()
-    def handleAction_dummy(self, data):
-        print("TEST: The action input was: " + str(data))
-    def handleNav_dummy(self, data):
-        print("TEST: The direction input was: " + str(data))
+    def handleAction(self, data):
+        self.queue.append(G.response("action", data))
+        print("DEBUG: Enqueued action input: " + str(data))
 
+    def handleNav(self, data):
+        self.queue.append(G.response("nav", data))
+        print("DEBUG: Enqueued nav input: " + str(data))
+
+    def handleTextin(self, data):
+        self.queue.append(G.response("text", data))
+        print("DEBUG: Enqueued text input: " + str(data))
+    def handleGamemenu(self, data):
+        self.queue.append(G.response("game", data))
+        print("DEBUG: Enqueued game menu command:" + str(data))
+    def deqeue(self):
+        if(len(self.queue) < 1):
+            return False
+        return self.queue.pop(0)
 
     def draw_display(self, **args):
         self.emptyframe(self.display)
-        #TODO: build display
-        self.dispText = TKS.ScrolledText(master = self.display, state = TK.NORMAL)
-        self.dispText.pack(fill=TK.BOTH)
+        self.dispText = TKS.ScrolledText(master = self.display, state = TK.NORMAL, height = 60)
+        self.dispText.pack(fill=TK.BOTH, expand = True, anchor="center")
         self.dispText.insert(TK.END, "This is a\nloooooooong test\nof this scrollable text\nwidget.\nwell, long by standards of a codeline\nby GUI, this is quite short")
         self.dispText.config(state = TK.DISABLED)
 
@@ -79,11 +98,17 @@ class UntitledUI:
         self.dispText.insert(TK.END, "\n" + text)
         self.dispText.config(state = TK.DISABLED)
     def write_linebyline_display(self, text, wtime:float = 0.1):
+        print("DEBUG: linebyline currently broken. redirecting to write all")
+        self.write_all_display(text)
+        return
         if type(text) == str:
             text = text.splitlines()
+        
         self.dispText.config(state = TK.NORMAL)
         for t in text:
             self.dispText.insert(TK.END, "\n" + t)
+            self.root.update()
+            self.root.update_idletasks()
             time.sleep(wtime)
         self.dispText.config(state = TK.DISABLED)
     
@@ -99,7 +124,7 @@ class UntitledUI:
         labelfont:TKF.Font = args.get("labelfont", TKF.Font())
 
         actionsFrame:TK.Frame = TK.Frame(master=self.actions)
-        actionsFrame.grid(row = 0, column = 1, sticky="nsew")
+        actionsFrame.grid(row = 0, column = 1, sticky="news")
 
         def nextpage():
             self.action_page += 1
@@ -118,7 +143,10 @@ class UntitledUI:
         fLength:int = len(reqActions) #full length of the requested actions list
 
         def draw_actionbuttons():
-            
+            GRIDX = 2
+            GRIDY = 4
+            GRIDTOT = GRIDX * GRIDY
+
             #empties the the action button container and disables the page-buttons.
             btnLeft.config(state=TK.DISABLED)
             btnRight.config(state=TK.DISABLED)
@@ -127,33 +155,34 @@ class UntitledUI:
             #re-enables the page-buttons as appropriate
             if self.action_page > 0:
                 btnLeft.config(state=TK.NORMAL)
-            if ( (1+self.action_page) * 6 ) < fLength:
+            if ( (1+self.action_page) * GRIDTOT ) < fLength:
                 btnRight.config(state=TK.NORMAL)
             
             #list of active actions (buttons to draw)
             #made by slicing the requested actions list, with respect to the current page.
-            #only usefull for actions lists larger than 6.
-            aActions:list = reqActions[self.action_page*6:(self.action_page+1)*6]
+            #only usefull for actions lists larger than GRIDTOT.
+            aActions:list = reqActions[self.action_page*GRIDTOT:(self.action_page+1)*GRIDTOT]
             aLength:int = len(aActions)
 
         
             actionBtns:list = []
             label:TK.Label = TK.Label(master = actionsFrame, text = reqLabel, font = labelfont)
             for i in range(aLength):
-                actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = aActions[i][1], command = lambda _i=i: self.handleAction((aActions[_i][0], _i + self.action_page*6))))
-            if aLength < 4:
+                actionBtns.append(TK.Button(master=actionsFrame, font=buttonfont, text = aActions[i][1], command = lambda _i=i: self.handleAction((aActions[_i][0], _i + self.action_page*GRIDTOT))))
+            if aLength <= GRIDY:
                 actionsFrame.grid_columnconfigure(0, weight = 1)
                 label.grid(row = 0, sticky="nsew")
+                actionsFrame.grid_rowconfigure(0, weight = 3)
                 for i in range(aLength):
                     actionBtns[i].grid(row = i + 1, sticky="nsew") 
                     actionsFrame.grid_rowconfigure(i, weight = 5)
             else:
                 label.grid(row = 0, column = 0, columnspan = 2, sticky="nsew")
                 for i in range(aLength):
-                    row = int(i / 2) + 1
-                    column = i % 2
+                    row = int(i / GRIDX) + 1
+                    column = i % GRIDX
                     actionBtns[i].grid(row=row, column=column, sticky="nsew")
-                    actionsFrame.grid_rowconfigure(row, weight = 1)
+                    actionsFrame.grid_rowconfigure(row+1, weight = 1)
                     actionsFrame.grid_columnconfigure(column, weight=1)
         draw_actionbuttons()
 
@@ -180,7 +209,7 @@ class UntitledUI:
             ret = []
             for i in range(length):
                 ret.append((labels[i]["text"], inpFields[i].get()))
-            self.handleAction(ret)
+            self.handleTextin(ret)
         btnEnter = TK.Button(master=self.actions, text=entertext, font=enterfont, command=packnsend)
         btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
 
@@ -197,7 +226,7 @@ class UntitledUI:
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
         #TODO build navtext
-        self.navTextDisplay = TK.Text(master = self.navtext, width = 10, height = 5)
+        self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 5)
         self.navTextDisplay.pack(fill= TK.BOTH)
         self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")
         self.navTextDisplay.config(state = TK.DISABLED)
