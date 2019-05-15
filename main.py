@@ -88,7 +88,6 @@ def start():
             running = False
             break
             
-
         if req == "END":
             if(type(nextEvent) == callable):
                 event = nextEvent.__call__(save)
@@ -99,6 +98,13 @@ def start():
                 save = savadata(VERSION)
                 event = titleMenu()
                 req, resp = next(event, ("END", resp))
+        if req == "LOADGAME":
+            #TODO: Handle loadgame
+            continue
+        if req == "NEWGAME":
+            save = savegame(VERSION)
+            save.prevroom
+            event = world["apartment"](save)
         if req.rolltext:
             UI.write_linebyline_display(req.rolltext, req.rollwtime)
         elif req.showtext:
@@ -251,13 +257,13 @@ class savadata:
                 #not worth comparing a hotfix
                 pass
             elif minor > 0:
-                G.showtext("Warning: This save was made with a newer version of the game. This may cause problems.")
+                TKmsg.showinfo("UNTITLED! The adventure game","This save was made with a newer version of the game. This may cause problems.")
             else:
-                G.showtext("Warning: This save was made with a older version of the game. This should be fine, but could cause issues.")
+                TKmsg.showinfo("UNTITLED! The adventure game","This save was made with a older version of the game. This should be fine, but could cause issues.")
         elif major > 0:
-            G.showtext("WARNING! This save is FROM THE FUTURE! You should run a newer version of the game instead.")
+            TKmsg.showwarning("UNTITLED! The adventure game","This save is FROM THE FUTURE! You should run a newer version of the game instead.")
         else:
-            G.showtext("WARNING! The save is OLD! The game may not run correctly with this savefile.")
+            TKmsg.showwarning("UNTITLED! The adventure game","The save is OLD! The game may not run correctly with this savefile.")
         
         self.data = ldata
         return True
@@ -271,17 +277,26 @@ class savadata:
         if nav.roomname == request:
             return nav
         return None
-    #sets the room save data.
-    #example use
-    # return save.goto("middleA")
-    #return statment may be seperate as goto does not return value
-    #but it is symbolic as you usually use this to move from a room (module
-    def goto(self, room):
-        if(room == None):
+
+    def setInventory(self, item:str, value):
+        inv = self.getdata("inventory", {})
+        inv[item] = value
+        self.setdata("inventory", inv)
+    def getInventory(self, item:str):
+        inv = self.getdata("inventory", {})
+        return inv.get(item, None)
+    def getAllInventory(self):
+        return self.getdata("inventory", {})
+    
+
+    def getplace(self) -> (str, str):
+        return (self.getdata('place'), self.getdata('prevplace'))
+    #sets place data. Used for context in events.
+    def setplace(self, place):
+        if(place == None):
             return
-        self.setdata("prevroom", self.getdata('room'))
-        self.setdata("room", room)
-        self.setNav(None) #Cleans roomnav
+        self.setdata("prevplace", self.getdata('place'))
+        self.setdata("place", place)
     
 
 def versionText(self):

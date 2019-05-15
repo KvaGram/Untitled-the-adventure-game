@@ -1,4 +1,5 @@
-import game_utilities as game
+import game_utilities as G
+game = G #temp alias to support old code. Prevents pylint from complaining untill old code is removed.
 import random
 
 def main(save):
@@ -194,6 +195,31 @@ When it is over you are back on the bed, panting.
             """)
         return False
         #endregion door()
+
+    req = G.request()
+    save.setplace("apartment")
+    prevplace:str = save.getplace()[1]
+    if prevplace == None:
+        #TODO: run intro newgame
+        pass
+    elif prevplace == "ring2":
+        #TODO: run intro ring2
+        pass
+    req.reset()
+    req.showlabel = "What do you want to do?"
+    req.actions = (
+        ("WINDOW", "Look out the window"),
+        ("TABLE", "examine the table"),
+        ("SINK", "examine the sink"),
+        ("DOOR", "go to the door"),
+        )
+    res = G.response()
+    yield(req, res)
+
+    #TODO: handle choice
+
+    #---OLD CODE---
+    return #to end before old code runs
 
     if(save.getdata("name") == None):
         newgame()

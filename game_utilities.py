@@ -69,14 +69,19 @@ class navdata:
 # if no action or textinputs are requested, and nav is missing or closed, then the game will continue the event.
 class request:
     def __init__(self, **args):
+        #an instance of navdata. enables nav-buttons and nav text. default(navdata(closed = True)): nav is disabled, navtext display UNKNOWN AREA.
+        self.navdata:navdata = args.get("navdata", navdata(closed = True))
+        self.reset(**args)
+    #recycles the request, sets all values except navdata
+    def reset(self, **args):
         #Text to dramatically roll on screen. default(False): No text will be displayed | mutually exclusive with showtext
         self.rolltext:str    = args.get("rolltext", False)
         #how fast above text will roll. default(0.1): fast, 1 line every 0.1 secunds
         self.rollwtime:float = args.get("rollwtime", 0.1)
         #Text to display instantly. default(False): No text will be displayed | mutually exclusive with rolltext
         self.showtext:str    = args.get("showtext", False)
-        #an instance of navdata. enables nav-buttons and nav text. default(navdata(closed = True)): nav is disabled, navtext display UNKNOWN AREA.
-        self.navdata:navdata = args.get("navdata", navdata(closed = True))
+        #Text to display on actions or textin. default("Your input is required!"): quite the generic wording.
+        self.showlabel:str     = args.get("showlabel", "Your input is required!")
         #a list of options the player can choose from. default(false): No options to choose from | mutually exclusive with textin
         self.actions:list    = args.get("actions", False)
         #a list of textfields the player can enter text to. default(false): No options to choose from | mutually exclusive with actions
@@ -85,6 +90,8 @@ class request:
         self.invrefresh:bool = args.get("invrefresh", False)
         #sets next place to load (str) or run (callable) once the current function ends.
         self.next            = args.get("next", False)
+
+
 
 class response:
     def __init__(self, pressed:str = None, data:object = None):
