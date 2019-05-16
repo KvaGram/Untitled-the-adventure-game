@@ -200,7 +200,16 @@ When it is over you are back on the bed, panting.
     save.setplace("apartment")
     prevplace:str = save.getplace()[1]
     if prevplace == None:
-        #TODO: run intro newgame
+        save.setInventory("HEACACHE", True, "A frigging headache!")
+        req.rolltext = G.getText("apartment:newgame1")
+        req.textin = ("name", "")
+        res = G.response()
+        yield(req, res)
+        iname = res.data[0][1]
+        while True:
+            req.reset(actions = (("YES", "Yes"), ("NO", "No")), showlabel = G.getText("apartment:newgame-name", iname = iname))
+            yield(req, res)
+        #TODO: continue writing intro newgame
         pass
     elif prevplace == "ring2":
         #TODO: run intro ring2

@@ -278,13 +278,13 @@ class savadata:
             return nav
         return None
 
-    def setInventory(self, item:str, value):
+    def setInventory(self, key:str, value, display:str):
         inv = self.getdata("inventory", {})
-        inv[item] = value
+        inv[key] = (value, display)
         self.setdata("inventory", inv)
     def getInventory(self, item:str):
         inv = self.getdata("inventory", {})
-        return inv.get(item, None)
+        return inv.get(item, (None, "NO ITEM"))
     def getAllInventory(self):
         return self.getdata("inventory", {})
     

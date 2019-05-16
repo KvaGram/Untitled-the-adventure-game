@@ -103,7 +103,9 @@ class response:
     def isactive(self):
         return type(self.pressed) == str
 
-
+def getText(key:str, **args):
+    lang = args.get("lang", "en")
+    return ("getText not implemented. language {2}, key: {0}, arguments: {1}".format(str(key), str(args), lang))
 
 
 
