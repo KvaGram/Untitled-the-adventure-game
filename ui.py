@@ -93,13 +93,13 @@ class UntitledUI:
         self.dispText.insert(TK.END, "This is a\nloooooooong test\nof this scrollable text\nwidget.\nwell, long by standards of a codeline\nby GUI, this is quite short")
         self.dispText.config(state = TK.DISABLED)
 
-    def write_all_display(self, text:str):
+    def writeToDisplay(self, text:str):
         self.dispText.config(state = TK.NORMAL)
         self.dispText.insert(TK.END, "\n" + text)
         self.dispText.config(state = TK.DISABLED)
     def write_linebyline_display(self, text, wtime:float = 0.1):
         print("DEBUG: linebyline currently broken. redirecting to write all")
-        self.write_all_display(text)
+        self.writeToDisplay(text)
         return
         if type(text) == str:
             text = text.splitlines()
