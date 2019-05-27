@@ -31,8 +31,8 @@ class Game:
         self.tkroot.update_idletasks()
     def deqeue(self):
         data = self.ui.deqeue()
-        if data and data[0] == "menu":
-            raise NotImplementedError() #TODO: handle menu events
+        if data and data[0] == "game":
+            raise NotImplementedError() #TODO: handle gamemenu events
         return data
     
     def runGeneral(self, call):

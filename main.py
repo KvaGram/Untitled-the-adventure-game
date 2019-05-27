@@ -8,7 +8,7 @@ import types
 import tkinter as TK
 from tkinter import messagebox as TKmsg
 
-import game_utilities as G
+#import game_utilities as G
 import ui
 
 import room_apartment 
@@ -16,6 +16,8 @@ import middlering
 import outer
 import inner
 import WheelC as wheel
+
+import Game
 
 #version number. Major, minor, hotfix.
 VERSION = [1, 0, 0]
@@ -32,6 +34,7 @@ def test():
     return
 
 def onExit():
+    global running
     s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
     if(s == None):
         return
@@ -45,101 +48,56 @@ def start():
     build_world()
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1600x900")
-    
     tkRoot.protocol("WM_DELETE_WINDOW", onExit)
 
-    UI:ui.UntitledUI = ui.UntitledUI(tkRoot)
-    #UI.conf_navkeys(left = False)
-    #UI.draw_actions(actions = testoptions, label = "These are the test options")
-    tkRoot.update_idletasks()
-    tkRoot.update()
-
-    save = savadata(VERSION)
-
-    #TODO: remove the handle action and handle nav. re-write: save data to class instead. The UI loop can fetch it!
-    event = titleMenu()
-    waiting = False
-    running = True
-    resp:G.response = None
-    req:G.request = None
-    nextEvent:callable = None
-
+    game = Game.Game(tkRoot, VERSION, "english")
     while running:
-        
-        tkRoot.update_idletasks()
-        tkRoot.update()
-        newRes = UI.deqeue()
-        if newRes:
-            if newRes.pressed == "game":
-                pass #TODO: handle game menu
-            else:
-                resp.copyfrom(newRes)
-                waiting = False
-        if waiting:
-            continue
-        
-        # run 'event' function to next yield statement.
-        # expect a tuple of 2 elements, req and resp to be yielded.
-        # if function ends (no new yield statement), set req to "END", and keep resp as it was.
-        # req may be a G.request or a str (special case). resp may be a G.response or a Nonetype (special case)
-        req, resp = next(event, ("END", resp))
-        if req == "QUIT":
-            tkRoot.destroy()
-            running = False
-            break
-            
-        if req == "END":
-            if(type(nextEvent) == callable):
-                event = nextEvent.__call__(save)
-                nextEvent = None
-                req, resp = next(event, ("END", resp))
-            else:
-                print("DEBUG: UNEXPECTED END OF EVENT FUNCTION!! - returning to title")
-                save = savadata(VERSION)
-                event = titleMenu()
-                req, resp = next(event, ("END", resp))
-        if req == "LOADGAME":
-            #TODO: Handle loadgame
-            continue
-        if req == "NEWGAME":
-            save = savegame(VERSION)
-            save.prevroom
-            event = world["apartment"](save)
-        if req.rolltext:
-            UI.write_linebyline_display(req.rolltext, req.rollwtime)
-        elif req.showtext:
-            UI.write_all_display(req.showtext)
-        if req.actions:
-            waiting = True
-            UI.draw_actions(actions = req.actions)
-            pass #TODO: handle actions request
-        elif req.textin:
-            pass #TODO: handle text in request
-            waiting = True
-        else:
-            pass #TODO: handle no action request
-        if req.navdata:
-            pass #TODO: handle navdata
-            if req.navdata.canmove():
-                waiting = True
-        else:
-            pass #TODO: handle missing navdata (should never happen, but just in case)
-        if req.invrefresh:
-            pass #TODO: handle refresh inventory UI
-        if req.next:
-            n = req.next
-            if type(n) == str:
-                n = world.get(n, None)
-                if n == None:
-                    print("DEBUG: Err - could not find " + req.next)
-            nextEvent = n
+        titleMenu(game)
     
+def titleMenu(game:Game.Game):
+    navdata = game.navdata
+    navdata.navtext = """TITLE MENU
+    WELCOME TO
+    UNTITLED!
+    the adventure game"""
+    navdata.closed = True
+    titleroll = "WELCOME TO\n\n"
+    f = open("title.txt", 'r', encoding="utf-8")
+    titleroll += f.read()
+    f.close()
+    rollwtime = 0.05
+    
+    menu = (
+    ("NEWGAME", "Start new game"),
+    ("LOADGAME", "Load a save"),
+    ("ABOUT", "Run credits"),
+    ("EXIT", "Exit Game"),
+    )
+
+    game.rolltext(titleroll, rollwtime)
+    while True:
+        game.choose(menu, "Welcome! What do you wish to do?", False)
+        etype, data = game.wait()
+        if etype != "action":
+            continue
+        r = data[1] #button press from user
+        if r == "EXIT":
+            return
+        if r == "ABOUT":
+            #TODO: run credits
+            return
+        if r == "LOADGAME":
+            #TODO: load game and resule
+            return
+        if r == "NEWGAME":
+            #TODO: start new game
+            return
 
 
 
 
 
-def titleMenu():
+def _titleMenu():
     req = G.request()
     req.rolltext = "WELCOME TO\n\n"
     f = open("title.txt", 'r', encoding="utf-8")

@@ -49,7 +49,8 @@ class UntitledUI:
         self.navkeys.pack(side = TK.BOTTOM, fill = TK.BOTH)
 
         self.draw_display()
-        self.draw_actions()
+        #self.draw_actions()
+        self.draw_noactions
         #self.draw_textinputs()
         self.draw_inventory()
         self.draw_navtext()
@@ -68,18 +69,18 @@ class UntitledUI:
             c.pack_forget()
             c.destroy()
     def handleAction(self, data):
-        self.queue.append(G.response("action", data))
+        self.queue.append(("action", data))
         print("DEBUG: Enqueued action input: " + str(data))
 
     def handleNav(self, data):
-        self.queue.append(G.response("nav", data))
+        self.queue.append(("nav", data))
         print("DEBUG: Enqueued nav input: " + str(data))
 
     def handleTextin(self, data):
-        self.queue.append(G.response("text", data))
+        self.queue.append(("text", data))
         print("DEBUG: Enqueued text input: " + str(data))
     def handleGamemenu(self, data):
-        self.queue.append(G.response("game", data))
+        self.queue.append(("game", data))
         print("DEBUG: Enqueued game menu command:" + str(data))
     def deqeue(self):
         if(len(self.queue) < 1):
