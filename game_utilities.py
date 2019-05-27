@@ -1,3 +1,5 @@
+#disabled obsolete code
+"""
 #this script binds together all scripts such as all others can access each other in a global scope
 import sys
 import tkinter as tk
@@ -108,7 +110,7 @@ def getText(key:str, **args):
     return ("getText not implemented. language {2}, key: {0}, arguments: {1}".format(str(key), str(args), lang))
 
 
-
+"""
 #choose2 documentation
 #pList is a list of option for the user to selct from.
 #   Items of pList may be a string, a None, or a list/tuple of options
@@ -163,6 +165,9 @@ def getText(key:str, **args):
     Also note absense of option 7, as this choice was a None.
     Finally note the fallback result from the invalid input in option 4. Best to avoid this.
 
+"""
+
+#disabled obsolete code
 """
 def choose2(pList, message = "enter choice number", onSelect = None):
     valid = False
@@ -453,8 +458,8 @@ class RoomNav1D:
                 self.runAction()
 
 
-
+"""
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.
     #if your only change is in this code-block, feel free to commit.
-    showtext("Testcode for this utilities/common code is not written yet.\nPlease run from main.py instead.")
+    print("Testcode for this utilities/common code is not written yet.\nPlease run from main.py instead.")

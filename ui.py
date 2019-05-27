@@ -97,21 +97,10 @@ class UntitledUI:
         self.dispText.config(state = TK.NORMAL)
         self.dispText.insert(TK.END, "\n" + text)
         self.dispText.config(state = TK.DISABLED)
-    def write_linebyline_display(self, text, wtime:float = 0.1):
-        print("DEBUG: linebyline currently broken. redirecting to write all")
-        self.writeToDisplay(text)
-        return
-        if type(text) == str:
-            text = text.splitlines()
-        
-        self.dispText.config(state = TK.NORMAL)
-        for t in text:
-            self.dispText.insert(TK.END, "\n" + t)
-            self.root.update()
-            self.root.update_idletasks()
-            time.sleep(wtime)
-        self.dispText.config(state = TK.DISABLED)
-    
+    def draw_noactions(self, **args):
+        self.emptyframe(self.actions)
+        #NOTE: might be an idea to add some filler.
+
     def draw_actions(self, **args):
         
         self.emptyframe(self.actions)
