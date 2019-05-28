@@ -11,17 +11,30 @@ class Game:
         self.ui:ui.UntitledUI = ui.UntitledUI(tkroot)
         self.tkroot:TK.Tk = tkroot
         self.version = version
-        self.savedata = {}
         self.langauge = language
-        self.navdata = Navdata()
-        
+        self.newgame()
+
         self.GeneralList = {
+            "credits"        : Game.runCredits,
             "onReactorCTime" : Game.onReactorCTime
         }
+    def opengamemenu(self):
+        raise NotImplementedError
+        #TODO: implement open game menu
+    def newgame(self):
+        self.savedata = {}
+        self.setdata("navdata", Navdata())
+    def loadgame(self):
+        raise NotImplementedError
+        #TODO: implement loadgame
+    def savegame(self):
+        raise NotImplementedError
+        #TODO: implement savegame
+
     def update(self):
-        n = self.navdata
+        n = self.Navdata
         if n.refresh:
-            self.ui.set_navtext(self.navdata.navtext)
+            self.ui.set_navtext(self.Navdata.navtext)
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
@@ -148,7 +161,10 @@ class Game:
         self.setdata("GAME OVER", reason)
     def getGameover(self):
         return self.getdata("GAME OVER")
-
+    
+    @property
+    def Navdata(self):
+        return self.getdata("navdata")
 #NOTE: remove hasGender and hasName?
     @property
     def hasGender(self)->bool:
@@ -263,6 +279,15 @@ class Game:
             self.setGameover("You wasted too much time! You're kinda dead now")
             return "death"
         return "safe"
+    def runCredits(self):
+        f = open("title.txt", 'r', encoding="utf-8")
+        titlecard = f.read()
+        self.rolltext(titlecard, 0.05)
+        f.close()
+        f = open("credits.txt", 'r', encoding="utf-8")
+        creditsText = f.read()
+        self.rolltext(creditsText, 0.1)
+        f.close()
     #endregion general_functions
 
 class Counterdata:

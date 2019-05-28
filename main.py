@@ -10,14 +10,13 @@ from tkinter import messagebox as TKmsg
 
 #import game_utilities as G
 import ui
+import Game
 
 import room_apartment 
-import middlering
-import outer
-import inner
-import WheelC as wheel
-
-import Game
+#import middlering
+#import outer
+#import inner
+#import WheelC as wheel
 
 #version number. Major, minor, hotfix.
 VERSION = [1, 0, 0]
@@ -45,17 +44,67 @@ def onExit():
 
 def start():
     global tkRoot, running
-    build_world()
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1600x900")
     tkRoot.protocol("WM_DELETE_WINDOW", onExit)
 
     game = Game.Game(tkRoot, VERSION, "english")
+    running = True
     while running:
         titleMenu(game)
+
+def game_loop(game:Game.Game):
+    global running
+    world = {
+        "apartment" : room_apartment.main,
+        #"core"      : wheel.core,
+        #"inner"     : inner.main,
+        #"middle"    : middlering.main,
+        #"outer"     : outer.main,
+        #"ladder"    : wheel.emergencyLadder,
+        #"bathrooms" : middlering.bathrooms,
+        #"cargobay"  : wheel.Cargobay
+    }
+
+    while running:
+        placeReq = game.place
+        if(placeReq == None): #newgame location
+            placeReq = "apartment"
+        #space to check for special conditions
+        game_over = game.getGameover()
+        if(game_over):
+            game.showtext("""
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\\_GAME_OVER_/‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+{0}
+_________________________________________________
+            """.format(game_over))
+            break
+        #general rule
+        place = None
+        try:
+            place = world[placeReq]
+        except:
+            place = None
+        if(place):
+            place(game)
+            game_over = game.getGameover()
+        else:
+            game.showtext("""
+|---------------------- !!! ----------------------|
+|    Sorry, something went wrong.                 |
+|    The game could not find {0}                  |
+|    The game will now end.                       |
+|    Do you wish to save the game first?          |
+|---------------------- !!! ----------------------|
+            """.format(placeReq))
+            if(game.yesno("Save game?")):
+                game.savegame()
+            break
+    #end game loop
+#end game loop function
     
 def titleMenu(game:Game.Game):
-    navdata = game.navdata
+    navdata = game.Navdata
     navdata.navtext = """TITLE MENU
     WELCOME TO
     UNTITLED!
@@ -84,80 +133,21 @@ def titleMenu(game:Game.Game):
         if r == "EXIT":
             return
         if r == "ABOUT":
-            #TODO: run credits
+            game.runGeneral("credits")
             return
         if r == "LOADGAME":
-            #TODO: load game and resule
+            if game.loadgame():
+                game_loop(game)
             return
         if r == "NEWGAME":
             #TODO: start new game
+            game.newgame()
+            game_loop(game)
             return
 
 
-
-
-
-def _titleMenu():
-    req = G.request()
-    req.rolltext = "WELCOME TO\n\n"
-    f = open("title.txt", 'r', encoding="utf-8")
-    req.rolltext += f.read()
-    f.close()
-    req.rollwtime = 0.05
-    navtext = """TITLE MENU
-    WELCOME TO
-    UNTITLED!
-    the adventure game
-    """
-    nav = G.navdata(navtext = navtext, closed = True)
-    menu = (
-    ("NEWGAME", "Start new game"),
-    ("LOADGAME", "Load a save"),
-    ("ABOUT", "Run credits"),
-    ("EXIT", "Exit Game"),
-    )
-    req.navdata = nav
-    req.actions = menu
-    res = G.response()
-    while True:
-        yield(req, res)
-        print("RESPONSE RECIVED! {0}, {1}".format(res.pressed, str(res.data)))
-        if res.pressed == "action":
-            r = res.data[0]
-            if r == "EXIT":
-                yield("QUIT", None)
-                return
-            if r == "ABOUT":
-                yield(G.request(next = "CREDITS", nav = nav))
-                return
-            if r == "LOADGAME":
-                yield("LOADGAME", None)
-                return
-            if r == "NEWGAME":
-                yield(G.request(next = "APARTMENT", nav = nav))
-                return
-
-def handleAction(data):
-    print("Action was made " + str(data))
-def handleNav(data):
-    if data == "45":
-        print("You tried to walk 45 degrees in a text-based adventure game with node-based navigation.\nYou tripped, fell and landed on your face!! Your bloodied nose giving you a lesson.\nYou learned not to make unreasonaly weird demands to the developer.")
-    print("Movement was made " + str(data))
-
-def build_world():
-    global world
-    world = {}
-    world['apartment'] = room_apartment.main
-    #world['about'] = about.main #moved to G.RunGeneral("about")
-    world["core"] = wheel.core #TODO: add proper module for core 
-    world["inner"] = inner.main
-    world["middle"] = middlering.main
-    world["outer"] = outer.main
-    world["ladder"] = wheel.emergencyLadder #TODO: move ladder to seperate module
-    world["bathrooms"] = middlering.bathrooms #TODO: move bathrooms to its own module, and update this list.
-    world["cargobay"] = wheel.Cargobay #TODO: move to a proper module
-
-
+#old code:
+"""
 class savadata:
     # data contains all save data, including choices and the player's location
     data = {}
@@ -286,6 +276,8 @@ def get(reqFile, reqPart, reqlang, reqSubPart):
     for var in _part.findall("var"):
         variables.append(var.text)
     return (text, variables)
+
+"""
 
 if __name__ == "__main__":
     start()

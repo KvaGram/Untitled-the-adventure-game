@@ -1,6 +1,6 @@
 #dialoges
 #for long dialoges or nerratives that take up much space in a module, or that could be called from multible places.
-import game_utilities as game
+#import game_utilities as game
 
 def auxcom_contact(save):
     #region auxcom

@@ -1,4 +1,3 @@
-import game_utilities as game
 import random
 import dialoges
 

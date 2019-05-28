@@ -2,7 +2,9 @@ import Game
 import random
 
 def main(game:Game.Game):
+    navdata:Game.Navdata = game.Navdata
     def newgame():
+        navdata.navtext = """???"""
         #region NEW GAME
         game.place = "apartment"
         game.setInventory("HEADACHE", True)
@@ -24,7 +26,7 @@ You even struggle to remember your own name...
             #ask for text input, name, wait for response, get the data. We assume type is textin.
             indata = game.textin(("Name", inp), "What.. was.. what was your name?", True)[1]
             #from indata get first element, then get the text inputted
-            inp = [0][1]
+            inp = indata[0][1]
             if len(inp) < 1:
                 #if no input, re-request input
                 continue
@@ -32,6 +34,7 @@ You even struggle to remember your own name...
                break
             game.showtext(random.choice(nameExcuses))
         game.setdata("name", inp)
+        navdata.navtext = """Small apartment"""
         game.rolltext("""
 Yes {0} the.. uhh.. something something title titles..
 You are sure you'll remember soon enough. Your head is quite foggy.
@@ -205,6 +208,7 @@ When it is over you are back on the bed, panting.
 
     if(game.getdata("name") == None):
         newgame()
+    navdata.navtext = """Small apartment"""
     choices = (
         ("WINDOW", "look out the window"),
         ("TABLE" "examine the table"),

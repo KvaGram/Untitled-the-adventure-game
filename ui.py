@@ -2,7 +2,6 @@ import tkinter as TK
 from tkinter import font as TKF
 from tkinter import scrolledtext as TKS
 import time
-import game_utilities as G
 from typing import List
 
 class inventoryItem(TK.Frame):
@@ -222,7 +221,7 @@ class UntitledUI:
         self.navTextDisplay.config(state = TK.DISABLED)
     def set_navtext(self, text:str):
         self.navTextDisplay.config(state = TK.NORMAL)
-        self.navTextDisplay.delete(1, TK.END)
+        self.navTextDisplay.delete("1.0", TK.END)
         self.navTextDisplay.insert(TK.END, text)
         self.navTextDisplay.config(state = TK.DISABLED)
     def draw_navkeys(self, **args):
