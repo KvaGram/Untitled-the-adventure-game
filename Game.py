@@ -55,12 +55,23 @@ class Game:
         if cleanup:
             self.ui.draw_noactions()
         return data
-
-    def yesno(self, message = "Please select", wait = False):
+    def waitfor(self, type, val, cleanup = True):
+        while True:
+            self.update()
+            data = self.deqeue()
+            if data and data[0] == type:
+                if cleanup:
+                    self.ui.draw_noactions()
+                return data[1][0] == val
+    def yesno(self, message = "Please select", wait = True):
         choices = (("True", "Yes"), ("False", "No"))
-        return self.choose(choices, message, wait)
-    def truefalse(self, message = "Please select", wait = False):
+        if wait:
+            return self.waitfor("action", "True")
+        return self.choose(choices, message)
+    def truefalse(self, message = "Please select", wait = True):
         choices = (("True", "True"), ("False", "False"))
+        if wait:
+            return self.waitfor("action", "True")
         return self.choose(choices, message, wait)
     def textin(self, fields = (("Input", ""),), entertext = "ENTER", wait = False, **kwargs ):
         self.ui.draw_textinputs(fields = fields, entertext = entertext, **kwargs)
@@ -119,6 +130,19 @@ class Game:
         return self.savedata.get(key, default)
     def setdata(self, key, value):
         self.savedata[key] = value
+    
+    def setInventory(self, key:str, value):
+        inv = self.getdata("inventory", {})
+        inv[key] = value
+        self.setdata("inventory", inv)
+        #TODO: refresh inventory in UI
+        #TODO: make a list of image and description for ever inventory item
+    def getInventory(self, item:str):
+        inv = self.getdata("inventory", {})
+        return inv.get(item, (None, "NO ITEM"))
+    def getAllInventory(self):
+        return self.getdata("inventory", {})
+        
 
     def setGameover(self, reason):
         self.setdata("GAME OVER", reason)
@@ -187,6 +211,16 @@ class Game:
             self.setdata("gender", g)
         return g
 
+    @property
+    def place(self):
+        return self.getdata("place")
+    @property
+    def prevPlace(self):
+        return self.getdata("prevplace")
+    @place.setter
+    def place(self, val:str):
+        self.setdata("prevplace", self.place)
+        self.setdata("place", val)
     #endregion setters and getters
     #region counters
 
@@ -249,7 +283,6 @@ class FamPerson:
     @property
     def RoleCounterpart(self):
         return self.game.roleCounterpart(self.role)
-
 class Navdata:
     def __init__(self, **args):
         #boolean - enabled or disabled!
@@ -269,13 +302,19 @@ class Navdata:
         self.text_down  = args.get("text_down",  u"\u2193")
         
         self.__navtext = args.get("navtext", "UNKNOWN\nAREA")
-
+        
+        self.cleanxyz()
         self.refresh = True
     @property
     def canmove(self):
         if self.closed:
             return False
         return self.up or self.left or self.right or self.down
+    #X, Y and Z are varables for use by the active code/place to keep its place.
+    def cleanxyz(self):
+        self.x = 0
+        self.y = 0
+        self.z = 0
     #region getters
     @property
     def up(self)->bool:

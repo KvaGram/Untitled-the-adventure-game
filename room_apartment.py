@@ -1,12 +1,11 @@
-import game_utilities as G
-game = G #temp alias to support old code. Prevents pylint from complaining untill old code is removed.
+import Game
 import random
 
-def main(save):
+def main(game:Game.Game):
     def newgame():
         #region NEW GAME
-        save.setdata("room", "apartment")
-        save.setdata("prevroom", "apartment")
+        game.place = "apartment"
+        game.setInventory("HEADACHE", True)
         game.rolltext("""
 Weeeee.. you are flying through the sky!
 Below you is a beautiful forest, as green as anything you could ever imagine!
@@ -16,22 +15,23 @@ suddenly you are in a vintage open cockpit biplane flying over the same lands...
 
 Your eyes shook open! Out the window you see the landscape you pictured in your dream.
 It seems so nice, yet something seems off. Everything seems off.
-You even struggle to remember your own name.. What.. was.. what was your name?
+You even struggle to remember your own name... 
     """)
 
         nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remember my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
-
-        inp = ""
+        inp = game.PlayerName
         while True:
-            inp = input()
-            while len(inp) < 1:
-                #while no input, silently re-request input
-                inp = input()
-            print ()
+            #ask for text input, name, wait for response, get the data. We assume type is textin.
+            indata = game.textin(("Name", inp), "What.. was.. what was your name?", True)[1]
+            #from indata get first element, then get the text inputted
+            inp = [0][1]
+            if len(inp) < 1:
+                #if no input, re-request input
+                continue
             if game.yesno("ugh.. Was it {0}?".format(inp)):
                break
-            print (random.choice(nameExcuses))
-        save.setdata("name", inp)
+            game.showtext(random.choice(nameExcuses))
+        game.setdata("name", inp)
         game.rolltext("""
 Yes {0} the.. uhh.. something something title titles..
 You are sure you'll remember soon enough. Your head is quite foggy.
@@ -43,14 +43,14 @@ At the head end of the bed there is a window.
 Towards the end of the room there is a sink with a mirror.
 At the end is a door, probably the exit by the looks of it.
 
-        """.format(save.getdata("name")))
+        """.format(game.PlayerName))
         #endregion NEW GAME
     def sink():
         #region Sink()
-        if(save.getdata("apartment:sink")):
+        if(game.getdata("apartment:sink")):
             game.showtext("The mirror is still broken.")
         else:
-            save.setdata("apartment:sink", True)
+            game.setdata("apartment:sink", True)
             game.rolltext("""
 You walk to the sink.
 You see glass shards in the sink.
@@ -61,7 +61,7 @@ You might want to find a proper bathroom and freshen up a bit.
         #endregion Sink
     def window():
         #region window()
-        if save.getdata("apartment:window"):
+        if game.getdata("apartment:window"):
             game.rolltext("""
 You enjoy the holographic nature outside the window.
 ...
@@ -71,7 +71,7 @@ a holographic deer just walked past.
 Time to go.
         """)
         else:
-            save.setdata("apartment:window", True)
+            game.setdata("apartment:window", True)
             game.rolltext("""
 You look through the window into the lush forest landscape.
 ...
@@ -94,7 +94,7 @@ so this isn't home then...?
     def table():
         #region table()
         def glassText():
-            g = save.getdata("apartment:glass")
+            g = game.getdata("apartment:glass")
             if g == None or g == 2:
                 return "a full glass of water"
             elif g == 1:
@@ -103,7 +103,7 @@ so this isn't home then...?
                 return "an empty glass"
             #end of glass description
         def pillsText():
-            if(save.getdata("apartment:pills")):
+            if(game.getdata("apartment:pills")):
                 return ""
             else:
                 return ", some small white pills"
@@ -114,68 +114,75 @@ You see {0}{1}
 and two framed pictures.
 One with a cyan frame, one with a golden frame.
         """.format(glassText(), pillsText()))
-        a = game.choose(["Glass", "Cyan framed picture", "Golden framed picture", "back off"])
+        data = game.choose((("GLASS", "Glass"), ("CYAN","Cyan framed picture"), ("GOLD","Golden framed picture"), ("BACK","back off")), "What do you wish to examine", True)[1]
+        a = data[1] #index of the choice
         if a == 0:
-            g = save.getdata("apartment:glass")
+            g = game.getdata("apartment:glass")
             if g == None or g == 2:
-                save.setdata("apartment:glass", 2)
+                game.setdata("apartment:glass", 2)
                 if(game.yesno("Take the pills?")):
                     game.showtext("You take the white pills and drink from the glass.")
-                    save.setdata("apartment:pills", True)
-                    save.setdata("apartment:glass", 1)
+                    game.setdata("apartment:pills", True)
+                    game.setdata("apartment:glass", 1)
+                    game.setInventory("HEADACHE", False)
                 else:
                     game.showtext("You did not take the pills")
             elif g == 1:
-                print ("The glass is half empty. Or is it half full?")
+                game.showtext ("The glass is half empty. Or is it half full?")
                 if(game.yesno("Drink from the glass?")):
                     game.showtext("you drank the rest. The glass is now empty.")
-                    save.setdata("apartment:glass", 0)
+                    game.setdata("apartment:glass", 0)
                 else:
                     game.showtext("you left the glass alone")
             else:
                 game.showtext("The glass is empty")
         elif a == 1:
-            j = save.getdata("jeff")
-            if(j == None):
-                if(save.getdata("klara") == None):
-                    j = "spouse"
-                else:
-                    j = "sibling"
-                save.setdata("jeff", j)
+            m = game.getdata("malefam", None)
+            f = game.getdata("femalefam", None)
+            if m == None:
                 game.rolltext("""
 You stare closely at the man in the cyan framed picture.
 He looks familiar. Very familiar.
 You seem to remember he insisted you did not need some expensive frame for his picture.
 You study his features closely.
 Suddenly it clicks in your mind.
-You recognize him now. It is Jeff, your {0}.
-                """.format(game.getGenderedTerm(j, "male")))
-            else:
-                game.showtext("It is Jeff, your {0}".format(game.getGenderedTerm(j, "male")))
-        elif a == 2:
-            k = save.getdata("klara")
-            if(k == None):
-                if(save.getdata("jeff") == None):
-                    k = "spouse"
+You recognize him now. You think you remeber his name.""")
+                indata = game.textin(("name:", "Jeff"), "What is his name?", True)[1]
+                mName = indata[0][1]
+                if f:
+                    mRole = "sibling"
                 else:
-                    k = "sibling"
-                save.setdata("klara", k)
+                    mRole = "spouse"
+                game.setMaleFam(mRole, mName) 
+                game.showtext("That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!".format(game))
+            else:
+                game.showtext("It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}.".format(game))
+        elif a == 2:
+            m = game.getdata("malefam", None)
+            f = game.getdata("femalefam", None)
+            if f == None:
                 game.rolltext("""
 You stare closely at the lady in the gold framed picture.
 You study her close, trying to remember who she is.
 As you are looking in her eyes when you realize who she is.
-Her name is Klara, you seem to remember.
-Klara.. she is your {0}! 'How could you forget that?', you wonder.
-                """.format(game.getGenderedTerm(k, "female")))
+You suddenly recall her name!""")
+                indata = game.textin(("name:", "Klara"), "What is her name?", True)[1]
+                fName = indata[0][1]
+                if m:
+                    fRole = "sibling"
+                else:
+                    fRole = "spouse"
+                game.setFemaleFam(fRole, fName)
+                game.showtext("{game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?".format(game))
             else:
-                game.showtext("It is Klara, your {0}".format(game.getGenderedTerm(k, "female")))
+                game.showtext("It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}.".format(game))
         else:
             return
         table() #repeat
         #endregion table()    
     def door():
-        pills = save.getdata("apartment:pills", False)
-        left = save.getdata("apartment:left", False)
+        pills = game.getdata("apartment:pills", False)
+        left = game.getdata("apartment:left", False)
         #region door()
         if left:
             return True
@@ -185,7 +192,7 @@ You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
             """)
-            save.setdata("apartment:left", True)
+            game.setdata("apartment:left", True)
             return True
         else:
             game.rolltext("""
@@ -196,63 +203,37 @@ When it is over you are back on the bed, panting.
         return False
         #endregion door()
 
-    req = G.request()
-    save.setplace("apartment")
-    prevplace:str = save.getplace()[1]
-    if prevplace == None:
-        save.setInventory("HEACACHE", True, "A frigging headache!")
-        req.rolltext = G.getText("apartment:newgame1")
-        req.textin = ("name", "")
-        res = G.response()
-        yield(req, res)
-        iname = res.data[0][1]
-        while True:
-            req.reset(actions = (("YES", "Yes"), ("NO", "No")), showlabel = G.getText("apartment:newgame-name", iname = iname))
-            yield(req, res)
-        #TODO: continue writing intro newgame
-        pass
-    elif prevplace == "ring2":
-        #TODO: run intro ring2
-        pass
-    req.reset()
-    req.showlabel = "What do you want to do?"
-    req.actions = (
-        ("WINDOW", "Look out the window"),
-        ("TABLE", "examine the table"),
-        ("SINK", "examine the sink"),
-        ("DOOR", "go to the door"),
-        )
-    res = G.response()
-    yield(req, res)
-
-    #TODO: handle choice
-
-    #---OLD CODE---
-    return #to end before old code runs
-
-    if(save.getdata("name") == None):
+    if(game.getdata("name") == None):
         newgame()
-    choices = ["look out the window", "examine the table", "examine the sink", "go to the door", "OPEN GAME MENU"]
+    choices = (
+        ("WINDOW", "look out the window"),
+        ("TABLE" "examine the table"),
+        ("SINK", "examine the sink"),
+        ("DOOR", "go to the door")
+        )
     end = False
     while not end:
         game.showtext("You are sitting on the side of the bed")
-        choice = game.choose(choices)
-        if choice == 0:
+        game.choose(choices, "What do you wish to do?")
+        data = game.wait()
+        if data[0] != "action":
+            continue
+        choice = data[0][0]
+
+        if choice == "WINDOW":
             window()
-        elif choice == 1:
+        elif choice == "TABLE":
             table()
-        elif choice == 2:
+        elif choice == "SINK":
             sink()
-        elif choice == 3:
+        elif choice == "DOOR":
             if(door()):
-                return save.goto("middle")
-            pass
-        elif choice == 4:
-            if(game.gameMenu(save)):
-                break
+                game.place = "middle"
+                return 
+
         #if room is revisited after the reactor counter has been enabled,
         #you will be wasting time here.
-        status = game.updateCounter(save, "reactorC", -1)
+        status = game.updateCounter("reactorC", -1)
         if status == "death":
             end = True
 
@@ -261,4 +242,4 @@ When it is over you are back on the bed, panting.
 if __name__ == "__main__":
     #testers, feel free to enter your testcode here.
     #if your only change is in this code-block, feel free to commit.
-    game.showtext("Testcode for this room is not written yet.\nPlease run from main.py instead.")
+    print("Testcode is not written yet.\nPlease run from main.py instead.")
