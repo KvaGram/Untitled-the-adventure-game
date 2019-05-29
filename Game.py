@@ -5,6 +5,7 @@ import tkinter as TK
 import time
 import random
 import sys
+from tkinter import messagebox as TKmsg
 
 class Game:
     def __init__(self, tkroot:TK.Tk, version:(int,int,int), language:str = "english"):
@@ -13,6 +14,9 @@ class Game:
         self.version = version
         self.langauge = language
         self.newgame()
+
+        self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
+        self.destroyed = False
 
         self.GeneralList = {
             "credits"        : Game.runCredits,
@@ -40,8 +44,28 @@ class Game:
             else:
                 self.ui.conf_navkeys() #by default: all directions disabled.
             n.refresh = False
-        self.tkroot.update()
-        self.tkroot.update_idletasks()
+        try:
+            self.tkroot.update()
+            self.tkroot.update_idletasks()
+        except (TK.TclError):
+            return
+    def onExit(self):
+        s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
+        if(s == None):
+            return
+        if(s == True):
+            self.savegame()
+        self.tkroot.destroy
+        self.destroyed = True
+        exit()
+    # retext runs format twice.
+    # First pass replaces {game} and {story} tags, where story tags are text to be fetched from a translatable file. (TODO)
+    # Secund pass replaces any lingering {game} tags, where text are to be fetched from this class (see region getters)
+    def retext(self, text:str):
+        story = {}
+        text = text.format(story, self)
+        text = text.format(self)
+        return text
     def deqeue(self):
         data = self.ui.deqeue()
         if data and data[0] == "game":
@@ -56,6 +80,7 @@ class Game:
             raise NotImplementedError
 
     def choose(self, list, message = "Please make a choice", wait = False):
+        message = self.retext(message)
         self.ui.draw_actions(label = message, actions = list)
         self.update()
         if wait:
@@ -78,22 +103,27 @@ class Game:
                 return data[1][0] == val
     def yesno(self, message = "Please select", wait = True):
         choices = (("True", "Yes"), ("False", "No"))
+        self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message)
     def truefalse(self, message = "Please select", wait = True):
         choices = (("True", "True"), ("False", "False"))
+        self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message, wait)
     def textin(self, fields = (("Input", ""),), entertext = "ENTER", wait = False, **kwargs ):
+        entertext = self.retext(entertext)
         self.ui.draw_textinputs(fields = fields, entertext = entertext, **kwargs)
         if wait:
             return self.wait()
     def showtext(self, txt:str):
+        txt = self.retext(txt)
         self.ui.writeToDisplay(txt)
         self.update()
     def rolltext(self, txt:str, linepause:float = 0.1):
+        txt = self.retext(txt)
         lines = txt.splitlines()
         for l in lines:
             self.showtext(l)
@@ -102,6 +132,7 @@ class Game:
     #For use in skippable text, and/or some action can be done while it runs.
     #Yields first the input data, then the list and next index.
     def rolltextWait(self, txt:str, linepause:float = 0.1):
+        txt = self.retext(txt)
         lines = txt.splitlines()
         for i in len (lines):
             l = lines[i]
@@ -109,7 +140,8 @@ class Game:
             if data:
                 yield data
                 yield ("rolltexthalt", (lines, i))
-            self.showtext(l)
+            self.ui.writeToDisplay(l)
+            self.update()
             time.sleep(linepause)
 
     #region dictionaries
@@ -386,3 +418,5 @@ class Navdata:
         self.__navtext = val
         self.refresh = True
     #endregion setters
+    
+

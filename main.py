@@ -32,21 +32,10 @@ def test():
     print("The end is here!")
     return
 
-def onExit():
-    global running
-    s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
-    if(s == None):
-        return
-    if(s == True):
-        print("DEBUG: Save not yet implemented in this build")
-    tkRoot.destroy()
-    running = False
-
 def start():
     global tkRoot, running
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1600x900")
-    tkRoot.protocol("WM_DELETE_WINDOW", onExit)
 
     game = Game.Game(tkRoot, VERSION, "english")
     running = True
@@ -54,7 +43,6 @@ def start():
         titleMenu(game)
 
 def game_loop(game:Game.Game):
-    global running
     world = {
         "apartment" : room_apartment.main,
         #"core"      : wheel.core,
@@ -66,7 +54,7 @@ def game_loop(game:Game.Game):
         #"cargobay"  : wheel.Cargobay
     }
 
-    while running:
+    while True:
         placeReq = game.place
         if(placeReq == None): #newgame location
             placeReq = "apartment"
@@ -129,7 +117,7 @@ def titleMenu(game:Game.Game):
         etype, data = game.wait()
         if etype != "action":
             continue
-        r = data[1] #button press from user
+        r = data[0] #button press from user
         if r == "EXIT":
             return
         if r == "ABOUT":
@@ -140,7 +128,6 @@ def titleMenu(game:Game.Game):
                 game_loop(game)
             return
         if r == "NEWGAME":
-            #TODO: start new game
             game.newgame()
             game_loop(game)
             return

@@ -96,6 +96,7 @@ class UntitledUI:
     def writeToDisplay(self, text:str):
         self.dispText.config(state = TK.NORMAL)
         self.dispText.insert(TK.END, "\n" + text)
+        self.dispText.yview_moveto("1.0")
         self.dispText.config(state = TK.DISABLED)
     def draw_noactions(self, **args):
         self.emptyframe(self.actions)

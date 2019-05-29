@@ -18,22 +18,23 @@ suddenly you are in a vintage open cockpit biplane flying over the same lands...
 Your eyes shook open! Out the window you see the landscape you pictured in your dream.
 It seems so nice, yet something seems off. Everything seems off.
 You even struggle to remember your own name... 
+What.. was.. what was your name?
     """)
 
         nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remember my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
         inp = game.PlayerName
         while True:
             #ask for text input, name, wait for response, get the data. We assume type is textin.
-            indata = game.textin(("Name", inp), "What.. was.. what was your name?", True)[1]
+            indata = game.textin((("Name", inp),), "Is this my name?", True)[1]
             #from indata get first element, then get the text inputted
             inp = indata[0][1]
             if len(inp) < 1:
                 #if no input, re-request input
                 continue
-            if game.yesno("ugh.. Was it {0}?".format(inp)):
+            game.setdata("name", inp)
+            if game.yesno("ugh.. Was it {game.PlayerName}?"):
                break
             game.showtext(random.choice(nameExcuses))
-        game.setdata("name", inp)
         navdata.navtext = """Small apartment"""
         game.rolltext("""
 Yes {0} the.. uhh.. something something title titles..
@@ -150,16 +151,16 @@ You seem to remember he insisted you did not need some expensive frame for his p
 You study his features closely.
 Suddenly it clicks in your mind.
 You recognize him now. You think you remeber his name.""")
-                indata = game.textin(("name:", "Jeff"), "What is his name?", True)[1]
+                indata = game.textin((("name:", "Jeff"),), "What is his name?", True)[1]
                 mName = indata[0][1]
                 if f:
                     mRole = "sibling"
                 else:
                     mRole = "spouse"
                 game.setMaleFam(mRole, mName) 
-                game.showtext("That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!".format(game))
+                game.showtext("That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!" )
             else:
-                game.showtext("It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}.".format(game))
+                game.showtext("It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}." )
         elif a == 2:
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
@@ -169,16 +170,16 @@ You stare closely at the lady in the gold framed picture.
 You study her close, trying to remember who she is.
 As you are looking in her eyes when you realize who she is.
 You suddenly recall her name!""")
-                indata = game.textin(("name:", "Klara"), "What is her name?", True)[1]
+                indata = game.textin((("name:", "Klara"),), "What is her name?", True)[1]
                 fName = indata[0][1]
                 if m:
                     fRole = "sibling"
                 else:
                     fRole = "spouse"
                 game.setFemaleFam(fRole, fName)
-                game.showtext("{game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?".format(game))
+                game.showtext("{game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?" )
             else:
-                game.showtext("It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}.".format(game))
+                game.showtext("It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}." )
         else:
             return
         table() #repeat
