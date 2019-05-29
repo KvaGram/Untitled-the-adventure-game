@@ -58,13 +58,15 @@ class Game:
         self.tkroot.destroy
         self.destroyed = True
         exit()
-    # retext runs format twice.
+    # retext runs format_map twice.
+    # The custom dict, formatdict, defaults missing keys with original tag.
     # First pass replaces {game} and {story} tags, where story tags are text to be fetched from a translatable file. (TODO)
     # Secund pass replaces any lingering {game} tags, where text are to be fetched from this class (see region getters)
     def retext(self, text:str):
         story = {}
-        text = text.format(story, self)
-        text = text.format(self)
+        text = text.format_map(formatdict(story = story, game = self))
+        text = text.format_map(formatdict(game = self))
+
         return text
     def deqeue(self):
         data = self.ui.deqeue()
@@ -418,5 +420,6 @@ class Navdata:
         self.__navtext = val
         self.refresh = True
     #endregion setters
-    
-
+class formatdict(dict):
+    def __missing__(self, key):
+        return key
