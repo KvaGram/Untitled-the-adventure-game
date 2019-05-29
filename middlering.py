@@ -1,8 +1,12 @@
 import random
 import dialoges
+import Game
 
+def main(game:Game.Game):
 
-def main(save):
+    
+
+    """
     sectionA = []
     sectionB = []
     class middleRoomNAV(game.RoomNav1D):
@@ -29,9 +33,9 @@ def main(save):
                 raise("INVALID ROOM SECTION LABEL")
             self.sec = newSec
             self.ind = newInd
-        
+    """    
 
-    nav = middleRoomNAV.GET_NAV(save)
+    nav = middleRoomNAV.GET_NAV(game)
     #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
@@ -62,13 +66,13 @@ What happened here?
         game.showtext("You pass through the open door separating the two sectors")
         nav.setSection("A", 5)
     def auxcom_repair():
-        #grabbing some data from save
-        #redwhiteblue = save.getdata("auxcom:redwhiteinblue")
-        cargoConnected = save.getdata("auxcom:cargo")
-        blueinblue = save.getdata("auxcom:blueinblue")
-        tblueinwhite = save.getdata("auxcom:thickblueinwhite")
-        yellowtasted = save.getdata("auxcom:yellowtasted")
-        systemStatus = save.getdata("auxcom:systemstatus", "BROKEN")
+        #grabbing some data from game
+        #redwhiteblue = game.getdata("auxcom:redwhiteinblue")
+        cargoConnected =  game.getdata("auxcom:cargo")
+        blueinblue = game.getdata("auxcom:blueinblue")
+        tblueinwhite = game.getdata("auxcom:thickblueinwhite")
+        yellowtasted = game.getdata("auxcom:yellowtasted")
+        systemStatus = game.getdata("auxcom:systemstatus", "BROKEN")
         #region auxcom repair
         game.rolltext("""
 You find a large panel with a screen on wall next to you.
@@ -85,14 +89,14 @@ Under that you find a smaller panel that seem to invite you to push it.
             game.showtext("You leave the auxillary communications panel alone")
             return
         if(cargoConnected):
-            return dialoges.auxcom_cargo(save) #auxcom_cargo: contact the folks in cargo.
+            return dialoges.auxcom_cargo(game) #auxcom_cargo: contact the folks in cargo.
         if(systemStatus == "OK"):
             game.rolltext("""
 You push the panel. The panel lowers as a latch to reveal a keyboard.
 The screen turns on and displays the text
         ' AUXILLARY COMS ONLINE. DO YOU WISH TO PLACE A CALL?'
             """)
-            return dialoges.auxcom_contact(save) #auxcom_contact: finding someone to talk to
+            return dialoges.auxcom_contact(game) #auxcom_contact: finding someone to talk to
         # auxcom main: fix the system
         if(systemStatus == "SHUTDOWN"):
             game.rolltext("""
@@ -105,8 +109,8 @@ The screen remains off for a while. Then you hear a beep.
 The screen turns on and displays the text
         'CONNECTION RE-ESTABLISHED! DO YOU WISH TO PLACE A CALL?'
                 """)
-                save.setdata("auxcom:systemstatus", systemStatus)
-                return dialoges.auxcom_contact(save)
+                game.setdata("auxcom:systemstatus", systemStatus)
+                return dialoges.auxcom_contact(game)
         else:
             game.showtext("You push the panel. The panel lowers as a latch to reveal a keyboard.")
         game.rolltext("""
@@ -275,7 +279,7 @@ You unplug the big thick black cable, and stuck out your tongue to lick it.
 You're not sure why you just did that.
 As you somehow put the cable in your mouth, the world goes black.
                 """
-                game.setGameover(save, "You put a live power-cable in your mouth. Yeah, you are dead.")
+                game.setGameover(game, "You put a live power-cable in your mouth. Yeah, you are dead.")
                 nav.running = False #escape outer room loop
                 cableLoop = False #escape inner loop
             elif a == "YELLOW IN BLACK":
@@ -297,19 +301,19 @@ You decide to undo it, and never try that again, putting the black cable back in
             game.rolltext(text)
 
         #saving data..
-        #save.setdata("auxcom:redwhiteinblue", redwhiteblue)
-        save.setdata("auxcom:blueinblue", blueinblue)
-        save.setdata("auxcom:thickblueinwhite", tblueinwhite)
-        save.setdata("auxcom:yellowtasted", yellowtasted)
-        save.setdata("auxcom:systemstatus", systemStatus)
+        #game.setdata("auxcom:redwhiteinblue", redwhiteblue)
+        game.setdata("auxcom:blueinblue", blueinblue)
+        game.setdata("auxcom:thickblueinwhite", tblueinwhite)
+        game.setdata("auxcom:yellowtasted", yellowtasted)
+        game.setdata("auxcom:systemstatus", systemStatus)
         if(systemStatus == "OK"):
-            return dialoges.auxcom_contact(save)
-        elif not game.getGameover(save):
+            return dialoges.auxcom_contact(game)
+        elif not game.getGameover(game):
             game.showtext("You leave the AUX com alone.")
         #endregion auxcom repair
     def ladder():
-        if not save.getdata("reactorC:fixed", False) and not game.getCounter(save, "reactorC")[0]: #if counter reactorC is not enabled
-            game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+        if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
+            game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
         text = """
 The corridor gives way to a large column, splitting the corridor to go around it on both sides.
 On two sides of the column you find large hatches with a colored engraving
@@ -325,7 +329,7 @@ On two sides of the column you find large hatches with a colored engraving
 
 You locate the panel as indicated on the engraving.
         """
-        if save.getdata("WheelCMiddleLadder") == "open":
+        if game.getdata("WheelCMiddleLadder") == "open":
             text += "\nThe glass is already broken."
             enterText = "You reach in the panel, and pull the lever.\nThe hatch opens and you go inside."
             openText = "Pull the lever?"
@@ -336,8 +340,8 @@ You locate the panel as indicated on the engraving.
             openText = "Smash the glass?"
         game.rolltext(text)
         if(game.yesno(openText)):
-            if save.getdata("WheelCMiddleLadder") == None:
-                save.setdata("WheelCMiddleLadder", "open")
+            if game.getdata("WheelCMiddleLadder") == None:
+                game.setdata("WheelCMiddleLadder", "open")
             game.rolltext(enterText)
             goto("ladder")
 
@@ -358,14 +362,14 @@ And you see some small faint light far back in the darknes, moving.
 Stars, you realize. Stars flying upwards. You are staring into space!
     """)
     def elevator():
-        return dialoges.elevator(save)
+        return dialoges.elevator(game)
     #endregion places and actions
     #----------------------------
     #local shorthand.
-    #Stops loop and sets next room in the save.
+    #Stops loop and sets next room in the game.
     def goto(room):
         nav.running = False
-        save.goto(room)
+        game.goto(room)
     def initNav():
         sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
         sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
@@ -379,11 +383,11 @@ Stars, you realize. Stars flying upwards. You are staring into space!
         sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
         sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
 
-        prevroom = save.getdata("prevroom")
+        prevroom = game.getdata("prevroom")
         if prevroom == "apartment":
             nav.setSection("A", 2)
             intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
-            if save.getdata("middlering:visited") == None:
+            if game.getdata("middlering:visited") == None:
                 intro += """
     You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
     The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
@@ -415,10 +419,10 @@ Stars, you realize. Stars flying upwards. You are staring into space!
         game.rolltext(intro)
     if not nav.running:
         initNav()
-    nav.loop(save)
+    nav.loop(game)
 
 #TODO: move this to its own module
-def bathrooms(save):
+def bathrooms(game):
     def bathrooms1():
         while True:
             game.rolltext("""
@@ -432,20 +436,20 @@ One door with a depiction of a man, one depicting a woman.
             elif val == "FEMALE":
                 bathrooms2("ladies")
             else:
-                save.goto("middle")
+                game.goto("middle")
                 break
-            if(game.getGameover(save)):
+            if(game.getGameover(game)):
                 return
 
     def bathrooms2(subroom):
         gender = None 
-        visited = save.getdata("bathroom:visited", False) # if the Player Character has visited the bathrooms beofore
-        showered = save.getdata("bathroom:showered", False) # whatever the PC has showered
-        relived = save.getdata("bathroom:relived", False) # whatever the PC has had the chance to relive themself
-        keepsake = save.getdata("spouse:keepsake", False) # potential use in later chapters. Only unlockable if you have remembered who your spouse is.
+        visited = game.getdata("bathroom:visited", False) # if the Player Character has visited the bathrooms beofore
+        showered = game.getdata("bathroom:showered", False) # whatever the PC has showered
+        relived = game.getdata("bathroom:relived", False) # whatever the PC has had the chance to relive themself
+        keepsake = game.getdata("spouse:keepsake", False) # potential use in later chapters. Only unlockable if you have remembered who your spouse is.
 
-        relationKlara = save.getdata("klara", None) #if spouse, unlocks retrival of keepsake in ladies locker-room
-        relationJeff = save.getdata("jeff", None) #if spouse, unlocks retrival of keepsake in mens locker-room
+        relationKlara = game.getdata("klara", None) #if spouse, unlocks retrival of keepsake in ladies locker-room
+        relationJeff = game.getdata("jeff", None) #if spouse, unlocks retrival of keepsake in mens locker-room
 
         choices = None
 
@@ -455,7 +459,7 @@ One door with a depiction of a man, one depicting a woman.
 
         #This section determines PC's gender if not already set.
         if subroom == "mens":
-            gender = save.getdata("gender", "male")
+            gender = game.getdata("gender", "male")
             if gender != "male":
                 wrongroom = """
 You're not exacly sure why you went into the men's room, and not the ladies' room.
@@ -472,7 +476,7 @@ showers, couple of them private, and a dispenser of hygine products."""
                 ("EXIT", "leave")
             )
         elif subroom == "ladies":
-            gender = save.getdata("gender", "female")
+            gender = game.getdata("gender", "female")
             if gender != "female":
                 wrongroom = """
 A man going inside the ladies room would normally be seen as quite perverted.
@@ -505,7 +509,7 @@ Looking around, you see {3}
         else:
             game.showtext("PLACEHOLDER text for return visit to bathrooms.")
         visited = True
-        save.setdata("bathroom:visited", True)
+        game.setdata("bathroom:visited", True)
         while True:
             _,choice = game.choose2(choices, "What do you want to do?")
             if   choice == "EXIT":
@@ -515,11 +519,11 @@ Looking around, you see {3}
                 game.showtext("You splash some water on your face. It feels refreshing.")
             elif choice == "TOILET":
                 act = ""
-                if(relived): #relived = save.getdata("bathroom:relived", False)
+                if(relived): #relived = game.getdata("bathroom:relived", False)
                     act = "You sit for a bit, resting. You don't feel the need to 'do' anything."
                 else:
                     act = "You relieve yourself right there and then. You must have held it in for a while without thinking about it."
-                    save.setdata("bathroom:relived", True)
+                    game.setdata("bathroom:relived", True)
                     relived = True
                 game.rolltext("""You locate a nice toilet booth, and sit down on a porcelain throne.
                 Well, ok, not porcelain, these toilets are made of metal.
@@ -540,7 +544,7 @@ mostly..
 Still, having done that, you realize you have 'other' needs to relive youself of.""")
                         if(game.yesno("Take a dump in the uninal?")):
                             game.showtext("You did the deed in the urinal. you slowly back off, giggling a bit as your inner girl got her wicked wish.")
-                            save.setdata("bathroom:relived", True)
+                            game.setdata("bathroom:relived", True)
                             relived = True
                     else:
                         game.showtext("You left the uninal alone.")
@@ -550,7 +554,7 @@ Still, having done that, you realize you have 'other' needs to relive youself of
  But soon you realize you have 'other' needs to relive youself of.""")
                     if(game.yesno("Take a dump in the uninal?")):
                         game.showtext("You did the deed in the urinal. you slowly back off, giggling a bit as your inner child got his very childish wish.")
-                        save.setdata("bathroom:relived", True)
+                        game.setdata("bathroom:relived", True)
                         relived = True
             elif choice == "HYGINE_LADIES":
                 game.showtext("You examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now")
@@ -568,7 +572,7 @@ you feel a lot better now.
 ...
 you dry up, dress yourself and again, and leave the shower.""")
                     showered = True
-                    showered = save.setdata("bathroom:showered", True)
+                    showered = game.setdata("bathroom:showered", True)
             elif choice == "LOCKERS":
                 text = "You take a walk along the lockers."
                 if keepsake:
@@ -591,23 +595,14 @@ You take it with you."""
                     keepsake = True
                 else:
                     text += "\nThere was not much to see."
-                save.setdata("spouse:keepsake", keepsake)
+                game.setdata("spouse:keepsake", keepsake)
                 game.rolltext(text)
-            status = game.updateCounter(save, "reactorC", -1)
+            status = game.updateCounter(game, "reactorC", -1)
             if status == "death": #if reactor counter reach 0, and the game ends.
                 break
         #end of loop
     bathrooms1() #Starts the room.
 
 if __name__ == "__main__":
-    #testers, feel free to enter your testcode here.
-    #if your only change is in this code-block, feel free to commit.
-    game.showtext("--- Welcome to the middle ring test code. For a regular playthugh, please run main.py instead. ---")
-    #testing-code
-    from main import savadata
-    from main import VERSION 
-    testsave1 = savadata(VERSION)
-    testsave1.setdata("name","Tester")
-    testsave1.goto("middle")
-
-    main(testsave1)
+    # No testcode
+    print("No testcode, please run main.py")

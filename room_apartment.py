@@ -212,7 +212,7 @@ When it is over you are back on the bed, panting.
     navdata.navtext = """Small apartment"""
     choices = (
         ("WINDOW", "look out the window"),
-        ("TABLE" "examine the table"),
+        ("TABLE", "examine the table"),
         ("SINK", "examine the sink"),
         ("DOOR", "go to the door")
         )

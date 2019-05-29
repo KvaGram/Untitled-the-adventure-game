@@ -374,6 +374,11 @@ class Navdata:
         self.x = 0
         self.y = 0
         self.z = 0
+    def cleantextdirs(self):
+        self.text_left  = u"\u2190"
+        self.text_up    = u"\u2191"
+        self.text_right = u"\u2192"
+        self.text_down  = u"\u2193"
     #region getters
     @property
     def up(self)->bool:
@@ -420,6 +425,14 @@ class Navdata:
         self.__navtext = val
         self.refresh = True
     #endregion setters
+
+class corridorhandler:
+    def __init__(self, game:Game):
+        self.game = game
+        self.nav = game.Navdata
+    def run(self):
+        pass
+
 class formatdict(dict):
     def __missing__(self, key):
         return key

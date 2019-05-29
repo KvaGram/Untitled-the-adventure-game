@@ -2,11 +2,11 @@
 #for long dialoges or nerratives that take up much space in a module, or that could be called from multible places.
 #import game_utilities as game
 
-def auxcom_contact(save):
+def auxcom_contact(game):
     #region auxcom
-    cargoConnected = save.getdata("auxcom:cargo", False)
+    cargoConnected = game.getdata("auxcom:cargo", False)
     if cargoConnected:
-        return auxcom_cargo(save)
+        return auxcom_cargo(game)
     text = """
 A list of communication nodes show up on the screen.
 Some of them with an error-message saying they are offline
@@ -65,25 +65,25 @@ You attempt to make your connection.
 You hear two voices from the com system.
             """)
             makingCall = False #sweet clean redundancy
-            return auxcom_cargo(save)
+            return auxcom_cargo(game)
         game.rolltext(text)
     #endregion auxcom2
-def auxcom_cargo(save):
+def auxcom_cargo(game):
     #Note: Whatever the dialoge, it is up to the player what to do afterwards.
-    asshole = save.getdata("auxcom:asshole", False)
-    reactorFixed = save.getdata("reactorC:fixed", False)
-    prevcontact = save.getdata("auxcom:cargo", False)
-    thankedForReactor = save.getdata("auxcom:react_thanks", False)
+    asshole = game.getdata("auxcom:asshole", False)
+    reactorFixed = game.getdata("reactorC:fixed", False)
+    prevcontact = game.getdata("auxcom:cargo", False)
+    thankedForReactor = game.getdata("auxcom:react_thanks", False)
     
-    key = save.getdata("auxcom:stasispasskey", False)
+    key = game.getdata("auxcom:stasispasskey", False)
     # Only change is the information they are given.
     # From here, or the ladder if the player skips this, a counter is enabled that gives the player 10 'time units' before game over.
-    if not reactorFixed and game.getCounter(save, "reactorC")[0]: #counter not enabled
-        game.setCounter(save, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+    if not reactorFixed and game.getCounter(game, "reactorC")[0]: #counter not enabled
+        game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
 
-    name = game.getName(save)
-    gender = game.getGender(save)
-    klara =  game.getKlara(save)
+    name = game.getName(game)
+    gender = game.getGender(game)
+    klara =  game.getKlara(game)
 
     if prevcontact:
         #TODO: alternate contact for returning to auxcom
@@ -270,9 +270,9 @@ Don't worry about it.
                 elif ans == "EXIT":
                     game.rolltext("Good luck.\n(Call disconnected)")
                     break
-            save.setdata("auxcom:stasispasskey", True)
-            save.setdata("auxcom:cargo", True)
-            save.setdata("auxcom:react_thanks", True)
+            game.setdata("auxcom:stasispasskey", True)
+            game.setdata("auxcom:cargo", True)
+            game.setdata("auxcom:react_thanks", True)
         
     # If the reactor is not yet fixed:
         game.rolltext("""
@@ -348,13 +348,13 @@ You need to hurry! Get back and contact us again once you have done it!
 (The call has ended)
             """)
             key = True
-    save.setdata("auxcom:asshole", asshole)
-    save.setdata("auxcom:stasispasskey", key)
-    save.setdata("auxcom:cargo", True)
-    save.setdata("auxcom:react_thanks", thankedForReactor)
-def elevator(save):
+    game.setdata("auxcom:asshole", asshole)
+    game.setdata("auxcom:stasispasskey", key)
+    game.setdata("auxcom:cargo", True)
+    game.setdata("auxcom:react_thanks", thankedForReactor)
+def elevator(game):
     #region elevator
-    room = save.getdata("room")
+    room = game.getdata("room")
 
     coredesc = """The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
     The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look."""
@@ -383,7 +383,7 @@ You also locate a set of call-buttons for {1} and cargo, whatever that last one 
 
     _,choice = game.choose2(choices, "Press a button?")
     if choice != "EXIT":
-        if(save.getdata("WheelC_elevator") == "dead"):
+        if(game.getdata("WheelC_elevator") == "dead"):
             text = """
 You press the button.
 ...
@@ -401,7 +401,7 @@ You hear an odd clang
             else:
                 text += "\nOne of the elevator doors open in a very slight crack."
             text += "\nThen you hear a fizzeling sound, and everything stops working"
-            save.setdata("WheelC_elevator", "dead")
+            game.setdata("WheelC_elevator", "dead")
         game.rolltext(text)
     else:
         game.showtext("You left the elevators alone")
