@@ -2,6 +2,10 @@ import random
 import dialoges
 import Game
 
+class MiddleRunner(Game.PlaceRunner1D):
+    def __init__()
+    #TODO: Continue writing replacement for middleroomnav
+
 def main(game:Game.Game):
 
     

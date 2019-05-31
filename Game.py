@@ -1,5 +1,5 @@
 # Merging the utility functions, savedata and UI into one nice and convinient class.
-
+from typing import List
 import ui
 import tkinter as TK
 import time
@@ -424,15 +424,95 @@ class Navdata:
     def navtext(self, val):
         self.__navtext = val
         self.refresh = True
+    def setdir(self, dir:str, val:bool):
+        if dir == "up":
+            self.up = val
+        elif dir == "left":
+            self.left = val
+        elif dir == "right":
+            self.right = val
+        elif dir == "down":
+            self.down = val
     #endregion setters
 
-class corridorhandler:
+class PlaceRunner:
     def __init__(self, game:Game):
-        self.game = game
-        self.nav = game.Navdata
-    def run(self):
-        pass
+        self.game:Game = game
 
+class PlaceRunner1D(PlaceRunner):
+    def __init__(self, game:Game, axis:str = 'x', minusDir = "left", plusDir = "right"):
+        super().__init__(game)
+        self.nav:Navdata = game.Navdata
+        self.nodes:List[PlaceNode] = []
+        self.axis = axis
+        self.running = False
+        self.minusDir = minusDir
+        self.plusDir = plusDir
+    def run(self):
+        if len(self.nodes) == 0:
+            print("ERR: place has no nodes!")
+            return
+        # ensure the index is valid.
+        self.index = self.index
+        self.running = True
+        while self.running:
+            i:int = self.index
+            n:PlaceNode = self.nodes[i]
+            self.nav.setdir(self.minusDir, i > 0)
+            self.nav.setdir(self.plusDir, i < len(self.nodes)-1)
+            self.nav.navtext = n.navtext
+            if len (n.actions) > 0:
+                self.game.choose(n.actions, "")
+            data = self.game.wait()
+            if data[0] == "action":
+                j = data[0][1]
+                self.runaction(n.actions[j])
+            elif data[0] == "nav":
+                if data[1] == self.minusDir:
+                    self.index -= 1
+                elif data[1] == self.plusDir:
+                    self.index += 1
+    def indexofnode(self, nodeid:str):
+        for i in range(len(self.nodes)):
+            if self.nodes[i].id == nodeid:
+                return i
+        return None
+    #should be overritten
+    def runaction(self, action):
+        a = self.nodes[self.index].actions
+        if len(a) > 2:
+            a[2]()
+        else:
+            print("Unhandled call to run " + a[0])
+    def onTravel(self):
+        pass
+    @property
+    def index(self):
+        if self.axis == 'x':
+            return self.nav.x
+        elif self.axis == 'y':
+            return self.nav.y
+        elif self.axis == 'z':
+            return self.nav.z
+        else:
+            return None
+    @index.setter
+    def index(self, val):
+        i = (self.index + val) % len(self.nodes)
+        if self.axis == 'x':
+            self.nav.x = i
+        elif self.axis == 'y':
+            self.nav.y = i
+        elif self.axis == 'z':
+            self.nav.z = i
+        
+
+class PlaceNode:
+    def __init__(self, game:Game, _id:str, navtext:str, actions:List[(str, str, callable)]):
+        self.game = game
+        self.id = _id
+        self.navtext = navtext
+        self.actions = actions
 class formatdict(dict):
     def __missing__(self, key):
-        return key
+        return "{"+key+"}"
