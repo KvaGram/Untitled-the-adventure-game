@@ -118,9 +118,9 @@ You see {0}{1}
 and two framed pictures.
 One with a cyan frame, one with a golden frame.
         """.format(glassText(), pillsText()))
-        data = game.choose((("GLASS", "Glass"), ("CYAN","Cyan framed picture"), ("GOLD","Golden framed picture"), ("BACK","back off")), "What do you wish to examine", True)[1]
-        a = data[1] #index of the choice
-        if a == 0:
+        data:Game.ActDataInput = game.choose((("GLASS", "Glass"), ("CYAN","Cyan framed picture"), ("GOLD","Golden framed picture"), ("BACK","back off")), "What do you wish to examine", True)
+        
+        if data.tag == "GLASS":
             g = game.getdata("apartment:glass")
             if g == None or g == 2:
                 game.setdata("apartment:glass", 2)
@@ -140,7 +140,7 @@ One with a cyan frame, one with a golden frame.
                     game.showtext("you left the glass alone")
             else:
                 game.showtext("The glass is empty")
-        elif a == 1:
+        elif data.tag == "CYAN":
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
             if m == None:
@@ -161,7 +161,7 @@ You recognize him now. You think you remeber his name.""")
                 game.showtext("That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!" )
             else:
                 game.showtext("It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}." )
-        elif a == 2:
+        elif data.tag == "GOLD":
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
             if f == None:
@@ -185,12 +185,18 @@ You suddenly recall her name!""")
         table() #repeat
         #endregion table()    
     def door():
-        pills = game.getdata("apartment:pills", False)
+        ache = game.getInventory("HEADACHE")
         left = game.getdata("apartment:left", False)
         #region door()
         if left:
             return True
-        elif pills:
+        elif ache:
+            game.rolltext("""
+You walk towards the door.
+Suddenly there is a sharp spike of pain in your head.
+When it is over you are back on the bed, panting.""")
+            return False
+        else:
             game.rolltext("""
 You walk to the door.
 Your head is starting to clear up.
@@ -198,13 +204,6 @@ You open the door, and walk out.
             """)
             game.setdata("apartment:left", True)
             return True
-        else:
-            game.rolltext("""
-You walk towards the door.
-Suddenly there is a sharp spike of pain in your head.
-When it is over you are back on the bed, panting.
-            """)
-        return False
         #endregion door()
 
     if(game.getdata("name") == None):
@@ -221,9 +220,9 @@ When it is over you are back on the bed, panting.
         game.showtext("You are sitting on the side of the bed")
         game.choose(choices, "What do you wish to do?")
         data = game.wait()
-        if data[0] != "action":
+        if data.Type != "action":
             continue
-        choice = data[0][0]
+        choice = data.tag
 
         if choice == "WINDOW":
             window()

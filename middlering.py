@@ -3,14 +3,83 @@ import dialoges
 import Game
 
 class MiddleRunner(Game.PlaceRunner1D):
-    def __init__()
+    def __init__(self, game:Game.Game):
+        super().__init__(game, 'x', 'left', 'right')
+    def onTravel(self, previndex:int):
+        if previndex == self.index:
+            print("Null travel error ? ignoring")
+        pass
+        #check for section passage
+    def runaction(self, action):
+        status = self.game.updateCounter("reactorC", -1)
+        if status == "death":
+            self.running = False
+            return
+        super().runaction(action)
+
     #TODO: Continue writing replacement for middleroomnav
 
 def main(game:Game.Game):
+    navdata = game.Navdata
+    runner:MiddleRunner = MiddleRunner(game)
+    nav_informed = game.getdata("middle:informed", False)
+    if(nav_informed):
+        base_navtext = (
+"""Wheel C
+Ring 2, subsection {0}
+{1}""")
+    else:
+        base_navtext = (
+"""Unknown place
+Mysterius corridor
+{1}""")
+    runner.nodes = [
+        Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "Large closed blastdoor\nTo sector D"), [
 
-    
+        ]),
+        Game.PlaceNode(game, "BATH",        base_navtext.format("A", "Outside a\ncommunal bathroom"), [
 
+        ]),
+        Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "A familiar door"), [
+
+        ]),
+        Game.PlaceNode(game, "ELE",         base_navtext.format("A", "A set of\nelevators"), [
+
+        ]),
+        Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "A cafeteria"), [
+
+        ]),
+        Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "Large open doorway\nTo sector B"), [
+
+        ]),
+        Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "Large open doorway\nTo sector A"), [
+
+        ]),
+        Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "Auxillary communications console"), [
+
+        ]),
+        Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "Emergency access ladder"), [
+
+        ]),
+        Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "Large closed blastdoor\nTo sector C"), [
+
+        ])
+    ]
+    runner.run()
+    return
+def OLD_CODE(game):
     """
+        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
+        sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
+        sectionA.append((door_2A68, "Door C2A - 068", "enter"))                 #A 2 (from apartment, newgame location)
+        sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
+        sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
+        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
+
+        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
+        sectionB.append((auxcom_repair, "Auxillary communications", "use"))        #B 1
+        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
+        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
     sectionA = []
     sectionB = []
     class middleRoomNAV(game.RoomNav1D):
@@ -39,7 +108,7 @@ def main(game:Game.Game):
             self.ind = newInd
     """    
 
-    nav = middleRoomNAV.GET_NAV(game)
+    
     #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
@@ -377,13 +446,13 @@ Stars, you realize. Stars flying upwards. You are staring into space!
     def initNav():
         sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
         sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
-        sectionA.append((door_2A68, "Door C2A - 068", "enter"))                 #A 2 (from apartment, newgame location)
+        sectionA.append((door_2A68, "Door C2A - 068", "enter"))             #A 2 (from apartment, newgame location)
         sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
         sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
         sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
 
         sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-        sectionB.append((auxcom_repair, "Auxillary communications", "use"))        #B 1
+        sectionB.append((auxcom_repair, "Auxillary communications", "use")) #B 1
         sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
         sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
 

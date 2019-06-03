@@ -13,7 +13,7 @@ import ui
 import Game
 
 import room_apartment 
-#import middlering
+import middlering
 #import outer
 #import inner
 #import WheelC as wheel
@@ -47,7 +47,7 @@ def game_loop(game:Game.Game):
         "apartment" : room_apartment.main,
         #"core"      : wheel.core,
         #"inner"     : inner.main,
-        #"middle"    : middlering.main,
+        "middle"    : middlering.main,
         #"outer"     : outer.main,
         #"ladder"    : wheel.emergencyLadder,
         #"bathrooms" : middlering.bathrooms,
@@ -119,6 +119,7 @@ def titleMenu(game:Game.Game):
             continue
         r = data[0] #button press from user
         if r == "EXIT":
+            game.quit()
             return
         if r == "ABOUT":
             game.runGeneral("credits")

@@ -20,9 +20,9 @@ class inventoryItem(TK.Frame):
         self.labelImage.config(image = self.imageData)
         self.labelText.config(text = labelName)
 class UntitledUI:
-    def __init__(self, root:TK.Tk, **args):
+    def __init__(self, root, **args):
         #main container, packed into parent (normally TK root)
-        self.root = root
+        self.root:TK.Tk = root
         self.main = TK.Frame(root)
         self.main.pack(fill = TK.BOTH, expand = True)
 
@@ -60,7 +60,10 @@ class UntitledUI:
         self.main.grid_rowconfigure(0, weight=10)
         self.main.grid_rowconfigure(1, weight=4)
         self.main.grid_rowconfigure(2, weight=5)
-    
+    def quit(self):
+        self.root.quit()
+        self.root.destroy()
+
     @staticmethod
     def emptyframe(frame:TK.Frame):
         for c in frame.winfo_children():

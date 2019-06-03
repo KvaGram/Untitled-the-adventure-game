@@ -22,6 +22,19 @@ class Game:
             "credits"        : Game.runCredits,
             "onReactorCTime" : Game.onReactorCTime
         }
+    def quit(self):
+        self.destroyed = True
+        self.ui.quit()
+    def onExit(self):
+        if len (self.savedata) <= 1:
+            return self.quit()
+        s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
+        if(s == None):
+            return
+        if(s == True):
+            self.savegame()
+        self.quit()
+        sys.exit()
     def opengamemenu(self):
         raise NotImplementedError
         #TODO: implement open game menu
@@ -36,6 +49,9 @@ class Game:
         #TODO: implement savegame
 
     def update(self):
+        if self.destroyed:
+            sys.exit()
+            return
         n = self.Navdata
         if n.refresh:
             self.ui.set_navtext(self.Navdata.navtext)
@@ -49,15 +65,6 @@ class Game:
             self.tkroot.update_idletasks()
         except (TK.TclError):
             return
-    def onExit(self):
-        s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
-        if(s == None):
-            return
-        if(s == True):
-            self.savegame()
-        self.tkroot.destroy
-        self.destroyed = True
-        exit()
     # retext runs format_map twice.
     # The custom dict, formatdict, defaults missing keys with original tag.
     # First pass replaces {game} and {story} tags, where story tags are text to be fetched from a translatable file. (TODO)
@@ -69,8 +76,8 @@ class Game:
 
         return text
     def deqeue(self):
-        data = self.ui.deqeue()
-        if data and data[0] == "game":
+        data = DataInput.Make(self.ui.deqeue())
+        if data and data.Type == "game":
             raise NotImplementedError() #TODO: handle gamemenu events
         return data
     
@@ -86,7 +93,7 @@ class Game:
         self.ui.draw_actions(label = message, actions = list)
         self.update()
         if wait:
-            return self.wait
+            return self.wait()
     def wait(self, cleanup = True):
         data = None
         while not data:
@@ -364,6 +371,7 @@ class Navdata:
         
         self.cleanxyz()
         self.refresh = True
+    
     @property
     def canmove(self):
         if self.closed:
@@ -468,10 +476,12 @@ class PlaceRunner1D(PlaceRunner):
                 j = data[0][1]
                 self.runaction(n.actions[j])
             elif data[0] == "nav":
+                previndex = self.index
                 if data[1] == self.minusDir:
                     self.index -= 1
                 elif data[1] == self.plusDir:
                     self.index += 1
+                self.onTravel(previndex)
     def indexofnode(self, nodeid:str):
         for i in range(len(self.nodes)):
             if self.nodes[i].id == nodeid:
@@ -484,7 +494,7 @@ class PlaceRunner1D(PlaceRunner):
             a[2]()
         else:
             print("Unhandled call to run " + a[0])
-    def onTravel(self):
+    def onTravel(self, previndex:int):
         pass
     @property
     def index(self):
@@ -498,17 +508,60 @@ class PlaceRunner1D(PlaceRunner):
             return None
     @index.setter
     def index(self, val):
-        i = (self.index + val) % len(self.nodes)
+        i = val % len(self.nodes)
         if self.axis == 'x':
             self.nav.x = i
         elif self.axis == 'y':
             self.nav.y = i
         elif self.axis == 'z':
             self.nav.z = i
-        
+
+
+class DataInput(list):
+    @staticmethod
+    def Make(dataInput):
+        if not dataInput:
+            return None
+        elif dataInput[0] == "action":
+            return ActDataInput(dataInput)
+        elif dataInput[0] == "text":
+            return TextinDataInput(dataInput)
+        elif dataInput[0] == "nav":
+            return NavDataInput(dataInput)
+        elif dataInput[0] == "game":
+            return GameMenuInput(dataInput)
+        else:
+            return DataInput(dataInput)
+
+    def __init__(self, dataInput):
+        super().__init__(dataInput)
+    @property
+    def Data(self):
+        return self[1]
+    @property
+    def Type(self):
+        return self[0]
+class ActDataInput(DataInput):
+    def __init__(self, data):
+        super().__init__(data)
+    @property
+    def index(self)->int:
+        return self.Data[1]
+    @property
+    def tag(self)->str:
+        return self.Data[0]
+class TextinDataInput(DataInput):
+    def __init__(self, data):
+        super().__init__(data)
+class NavDataInput(DataInput):
+    def __init__(self, data):
+        super().__init__(data)
+class GameMenuInput(DataInput):
+    def __init__(self, data):
+        super().__init__(data)
 
 class PlaceNode:
-    def __init__(self, game:Game, _id:str, navtext:str, actions:List[(str, str, callable)]):
+    def __init__(self, game:Game, _id:str, navtext:str, actions:list):
         self.game = game
         self.id = _id
         self.navtext = navtext

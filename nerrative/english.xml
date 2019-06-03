@@ -1,6 +1,4 @@
 <xml>
-    <!--- all text to be displayed are stored in content packages (areas / manues / large nerrative)
-    then further divided into parts, some of with may be html formatted-->
     <content name="title">
         <part name="title">Untitled! The adventure game</part>
         <part name="menuname"><text>Main Menu</text></part>
