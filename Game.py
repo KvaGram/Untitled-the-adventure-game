@@ -5,6 +5,7 @@ import tkinter as TK
 import time
 import random
 import sys
+import Storyloader
 from tkinter import messagebox as TKmsg
 
 class Game:
@@ -14,6 +15,7 @@ class Game:
         self.version = version
         self.langauge = language
         self.newgame()
+        self.story = Storyloader.load(language)
 
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
         self.destroyed = False
@@ -54,7 +56,7 @@ class Game:
             return
         n = self.Navdata
         if n.refresh:
-            self.ui.set_navtext(self.Navdata.navtext)
+            self.ui.set_navtext(self.retext(self.Navdata.navtext))
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
@@ -70,10 +72,12 @@ class Game:
     # First pass replaces {game} and {story} tags, where story tags are text to be fetched from a translatable file. (TODO)
     # Secund pass replaces any lingering {game} tags, where text are to be fetched from this class (see region getters)
     def retext(self, text:str):
-        story = {}
-        text = text.format_map(formatdict(story = story, game = self))
-        text = text.format_map(formatdict(game = self))
-
+        if type(text) == str:
+            text = text.format_map(formatdict(game = self, **self.story))
+            text = text.format_map(formatdict(game = self))
+        elif type(text) == list:
+            for i in range(len(text)):
+                text[i] = self.retext(text[i])
         return text
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
@@ -88,9 +92,10 @@ class Game:
         else:
             raise NotImplementedError
 
-    def choose(self, list, message = "Please make a choice", wait = False):
+    def choose(self, _list, message = "{GAME_MAKECHOICE}", wait = False):
+        _list = self.retext(_list)
         message = self.retext(message)
-        self.ui.draw_actions(label = message, actions = list)
+        self.ui.draw_actions(label = message, actions = _list)
         self.update()
         if wait:
             return self.wait()
@@ -110,14 +115,14 @@ class Game:
                 if cleanup:
                     self.ui.draw_noactions()
                 return data[1][0] == val
-    def yesno(self, message = "Please select", wait = True):
-        choices = (("True", "Yes"), ("False", "No"))
+    def yesno(self, message = "{GAME_PLEASESEL}", wait = True):
+        choices = (("True", "{YES}"), ("False", "{NO}"))
         self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message)
-    def truefalse(self, message = "Please select", wait = True):
-        choices = (("True", "True"), ("False", "False"))
+    def truefalse(self, message = "{GAME_PLEASESEL}", wait = True):
+        choices = (("True", "{TRUE}"), ("False", "{TRUE}"))
         self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
@@ -158,8 +163,8 @@ class Game:
     def getGenderedRole(self, role:str, gender:str) -> str:
         fallback:str = gender + " " + role
         gendered_role:dict = {
-            "spouse"  : {"male":"husband", "female":"wife"},
-            "sibling" : {"male":"brother", "female":"sister"}
+            "spouse"  : {"male":self.story["HUSBAND"], "female":self.story["WIFE"]},
+            "sibling" : {"male":self.story["BROTHER"], "female":self.story["SISTER"]}
         }
         ret:dict = gendered_role.get(role, {})
         return ret.get(gender, fallback)

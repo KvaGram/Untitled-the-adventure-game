@@ -11,6 +11,7 @@ from tkinter import messagebox as TKmsg
 #import game_utilities as G
 import ui
 import Game
+import Storyloader
 
 import room_apartment 
 import middlering
@@ -105,16 +106,16 @@ def titleMenu(game:Game.Game):
     f.close()
     rollwtime = 0.05
     
-    menu = (
-    ("NEWGAME", "Start new game"),
-    ("LOADGAME", "Load a save"),
-    ("ABOUT", "Run credits"),
-    ("EXIT", "Exit Game"),
-    )
+    menu = [
+    ["NEWGAME", "{TITLE_STARTNEW}"],
+    ["LOADGAME", "{TITLE_LOADASAVE}"],
+    ["ABOUT", "{TITLE_RUNCREDITS}"],
+    ["EXIT", "{TITLE_EXITGAME}"],
+    ]
 
     game.rolltext(titleroll, rollwtime)
     while True:
-        game.choose(menu, "Welcome! What do you wish to do?", False)
+        game.choose(menu, "{TITLE_WELCOME}", False)
         etype, data = game.wait()
         if etype != "action":
             continue
