@@ -14,8 +14,15 @@ Welcome!! What do you wish to do?
 <GAME_PLEASESEL>Please select</GAME_PLEASESEL>
 <GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
 
-
+<BATH_INTRO>
+You stand in front of the bathrooms. There are two doors in front of you.
+One door with a depiction of a man, one depicting a woman.
+</BATH_INTRO>
+<BATH_WHATDOOR>What door do you enter</BATH_WHATDOOR>
+<BATH_CHOICEMENS>Enter men's room</BATH_CHOICEMENS>
+<BATH_CHOICELADIES>Enter ladies' room"</BATH_CHOICELADIES>
 <!--Basic terms -->
+<LEAVE>Leave</LEAVE>
 <YES>Yes</YES>
 <NO>No</NO>
 <TRUE>True</TRUE>

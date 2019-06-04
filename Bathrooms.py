@@ -1,12 +1,10 @@
-def main(game):
+import Game
+def main(game:Game.Game):
     def bathrooms1():
         while True:
-            game.rolltext("""
-You stand in front of the bathrooms. There are two doors in front of you.
-One door with a depiction of a man, one depicting a woman.
-            """)
-            choices = [("MALE", "Enter men's room"), ("FEMALE", "Enter ladies' room"), ("EXIT", "Leave")]
-            _, val = game.choose2(choices, "What door do you enter")
+            game.rolltext("{BATH_INTRO}")
+            choices = [["MALE", "{BATH_CHOICEMENS}"], ["FEMALE", "{BATH_CHOICELADIES}"], ["EXIT", "{LEAVE}"]]
+            _, val = game.choose(choices, "{BATH_WHATDOOR}")
             if val == "MALE":
                 bathrooms2("mens")
             elif val == "FEMALE":
@@ -16,7 +14,7 @@ One door with a depiction of a man, one depicting a woman.
                 break
             if(game.getGameover(game)):
                 return
-
+#TODO: continue rewrite from here
     def bathrooms2(subroom):
         gender = None 
         visited = game.getdata("bathroom:visited", False) # if the Player Character has visited the bathrooms beofore
