@@ -429,7 +429,7 @@ One door with a depiction of a man, one depicting a woman.
             choices = [("MALE", "Enter men's room"), ("FEMALE", "Enter ladies' room"), ("EXIT", "Leave")]
             _, val = game.choose2(choices, "What door do you enter")
             if val == "MALE":
-                bathrooms2("mens")
+                bathrooms2("men's")
             elif val == "FEMALE":
                 bathrooms2("ladies")
             else:
