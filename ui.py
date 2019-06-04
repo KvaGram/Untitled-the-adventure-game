@@ -251,10 +251,10 @@ class UntitledUI:
         self.navkeys.grid_rowconfigure(index = 2, weight = 1)
         self.conf_navkeys(**args)
     def conf_navkeys(self, **args):
-        state_left  = TK.NORMAL if args.get("left",  True) else TK.DISABLED
-        state_up    = TK.NORMAL if args.get("up",    True) else TK.DISABLED
-        state_right = TK.NORMAL if args.get("right", True) else TK.DISABLED
-        state_down  = TK.NORMAL if args.get("down",  True) else TK.DISABLED
+        state_left  = TK.NORMAL if args.get("left",  False) else TK.DISABLED
+        state_up    = TK.NORMAL if args.get("up",    False) else TK.DISABLED
+        state_right = TK.NORMAL if args.get("right", False) else TK.DISABLED
+        state_down  = TK.NORMAL if args.get("down",  False) else TK.DISABLED
 
         text_left  = args.get("text_left",  u"\u2190")
         text_up    = args.get("text_up",    u"\u2191")
