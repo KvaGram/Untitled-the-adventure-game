@@ -446,20 +446,24 @@ class Navdata:
 class PlaceRunner:
     def __init__(self, game:Game):
         self.game:Game = game
+        self.running = False
+        self.nav:Navdata = game.Navdata
+    def stop(self):
+        self.running = False
 
 class PlaceRunner1D(PlaceRunner):
     def __init__(self, game:Game, axis:str = 'x', minusDir = "left", plusDir = "right"):
         super().__init__(game)
-        self.nav:Navdata = game.Navdata
         self.nodes:List[PlaceNode] = []
         self.axis = axis
-        self.running = False
         self.minusDir = minusDir
         self.plusDir = plusDir
     def run(self):
         if len(self.nodes) == 0:
             print("ERR: place has no nodes!")
             return
+        #ensure the nav is open
+        self.nav.closed = False
         # ensure the index is valid.
         self.index = self.index
         self.running = True
@@ -471,10 +475,10 @@ class PlaceRunner1D(PlaceRunner):
             self.nav.navtext = n.navtext
             if len (n.actions) > 0:
                 self.game.choose(n.actions, "")
-            data = self.game.wait()
-            if data[0] == "action":
-                j = data[0][1]
-                self.runaction(n.actions[j])
+            data:ActDataInput = self.game.wait()
+            if data.Type == "action":
+                actIndex = data.index
+                self.runaction(n.actions[actIndex])
             elif data[0] == "nav":
                 previndex = self.index
                 if data[1] == self.minusDir:
@@ -489,11 +493,10 @@ class PlaceRunner1D(PlaceRunner):
         return None
     #should be overritten
     def runaction(self, action):
-        a = self.nodes[self.index].actions
-        if len(a) > 2:
-            a[2]()
+        if len(action) > 2:
+            action[2]()
         else:
-            print("Unhandled call to run " + a[0])
+            print("Unhandled call to run " + action[0])
     def onTravel(self, previndex:int):
         pass
     @property
@@ -508,6 +511,10 @@ class PlaceRunner1D(PlaceRunner):
             return None
     @index.setter
     def index(self, val):
+        if type(val) == str:
+            val = self.indexofnode(val)
+        if val == None:
+            return
         i = val % len(self.nodes)
         if self.axis == 'x':
             self.nav.x = i

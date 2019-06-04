@@ -14,6 +14,7 @@ import Game
 
 import room_apartment 
 import middlering
+import Bathrooms
 #import outer
 #import inner
 #import WheelC as wheel

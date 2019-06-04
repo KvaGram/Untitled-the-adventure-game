@@ -208,6 +208,7 @@ You open the door, and walk out.
 
     if(game.getdata("name") == None):
         newgame()
+    navdata.closed = True
     navdata.navtext = """Small apartment"""
     choices = (
         ("WINDOW", "look out the window"),

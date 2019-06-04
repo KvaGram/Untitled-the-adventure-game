@@ -22,93 +22,6 @@ class MiddleRunner(Game.PlaceRunner1D):
 def main(game:Game.Game):
     navdata = game.Navdata
     runner:MiddleRunner = MiddleRunner(game)
-    nav_informed = game.getdata("middle:informed", False)
-    if(nav_informed):
-        base_navtext = (
-"""Wheel C
-Ring 2, subsection {0}
-{1}""")
-    else:
-        base_navtext = (
-"""Unknown place
-Mysterius corridor
-{1}""")
-    runner.nodes = [
-        Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "Large closed blastdoor\nTo sector D"), [
-
-        ]),
-        Game.PlaceNode(game, "BATH",        base_navtext.format("A", "Outside a\ncommunal bathroom"), [
-
-        ]),
-        Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "A familiar door"), [
-
-        ]),
-        Game.PlaceNode(game, "ELE",         base_navtext.format("A", "A set of\nelevators"), [
-
-        ]),
-        Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "A cafeteria"), [
-
-        ]),
-        Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "Large open doorway\nTo sector B"), [
-
-        ]),
-        Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "Large open doorway\nTo sector A"), [
-
-        ]),
-        Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "Auxillary communications console"), [
-
-        ]),
-        Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "Emergency access ladder"), [
-
-        ]),
-        Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "Large closed blastdoor\nTo sector C"), [
-
-        ])
-    ]
-    runner.run()
-    return
-def OLD_CODE(game):
-    """
-        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-        sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
-        sectionA.append((door_2A68, "Door C2A - 068", "enter"))                 #A 2 (from apartment, newgame location)
-        sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
-        sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
-        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
-
-        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-        sectionB.append((auxcom_repair, "Auxillary communications", "use"))        #B 1
-        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
-        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
-    sectionA = []
-    sectionB = []
-    class middleRoomNAV(game.RoomNav1D):
-        termPlus = "GO LEFT"#
-        termMinus = "GO RIGHT" #
-        roomname = "middle" #
-
-        sec = "A" #current location, section
-        #Override
-        def runAction(self):
-            act,_,_ = self.getPlace()
-            #note: ticks the reactorC counter if enabled.
-            status = game.updateCounter(save, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                self.running = False
-            else:
-                act()
-        def setSection(self, newSec, newInd):
-            if newSec == "A":
-                self.places = sectionA
-            elif newSec == "B":
-                self.places = sectionB
-            else:
-                raise("INVALID ROOM SECTION LABEL")
-            self.sec = newSec
-            self.ind = newInd
-    """    
-
-    
     #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
@@ -133,11 +46,9 @@ What happened here?
     def cafeteria():
         game.showtext("The Cafeteria is closed!")
     def sectionBdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("B", 0)
+        pass
     def sectionAdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("A", 5)
+        pass
     def auxcom_repair():
         #grabbing some data from game
         #redwhiteblue = game.getdata("auxcom:redwhiteinblue")
@@ -353,7 +264,7 @@ You're not sure why you just did that.
 As you somehow put the cable in your mouth, the world goes black.
                 """
                 game.setGameover(game, "You put a live power-cable in your mouth. Yeah, you are dead.")
-                nav.running = False #escape outer room loop
+                runner.stop()
                 cableLoop = False #escape inner loop
             elif a == "YELLOW IN BLACK":
                 pass
@@ -439,26 +350,57 @@ Stars, you realize. Stars flying upwards. You are staring into space!
     #endregion places and actions
     #----------------------------
     #local shorthand.
-    #Stops loop and sets next room in the game.
-    def goto(room):
-        nav.running = False
-        game.goto(room)
-    def initNav():
-        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-        sectionA.append((bathrooms, "Public bathrooms", "enter"))           #A 1
-        sectionA.append((door_2A68, "Door C2A - 068", "enter"))             #A 2 (from apartment, newgame location)
-        sectionA.append((elevator, "Elevator C2A", "use"))                  #A 3
-        sectionA.append((cafeteria, "cafeteria C2A", "enter"))              #A 4
-        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 5
-
-        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-        sectionB.append((auxcom_repair, "Auxillary communications", "use")) #B 1
-        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 2 (entry and exit to and from other rings in the wheel)
-        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 3
-
-        prevroom = game.getdata("prevroom")
-        if prevroom == "apartment":
-            nav.setSection("A", 2)
+    #Stops loop and sets next place in the game.
+    def goto(place):
+        runner.stop()
+        game.place = place
+    def setupRunner():
+        nav_informed = game.getdata("middle:informed", False)
+        if(nav_informed):
+            base_navtext = (
+"""Wheel C
+Ring 2, subsection {0}
+{1}""")
+        else:
+            base_navtext = (
+"""Unknown place
+Mysterius corridor
+{1}""")
+        runner.nodes = [
+            Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "Large closed blastdoor\nTo sector D"), [
+                ("EXAMINE_SEC_D", "Examine the closed door", sectionDdoor),
+            ]),
+            Game.PlaceNode(game, "BATHROOMS",        base_navtext.format("A", "Outside a\ncommunal bathroom"), [
+                ("TAAAAG", "Teeeeeext", bathrooms),
+            ]),
+            Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "A familiar door"), [
+                ("TAAAAG", "Teeeeeext", door_2A68),
+            ]),
+            Game.PlaceNode(game, "ELE",         base_navtext.format("A", "A set of\nelevators"), [
+                ("TAAAAG", "Teeeeeext"), #elevator
+            ]),
+            Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "A cafeteria"), [
+                ("TAAAAG", "Teeeeeext"), #cafeteria
+            ]),
+            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "Large open doorway\nTo sector B"), [
+                ("TAAAAG", "Teeeeeext"), #sectionBdoor
+            ]),
+            Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "Large open doorway\nTo sector A"), [
+                ("TAAAAG", "Teeeeeext"), #sectionAdoor
+            ]),
+            Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "Auxillary communications console"), [
+                ("TAAAAG", "Teeeeeext"), #auxcom_repair
+            ]),
+            Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "Emergency access ladder"), [
+                ("TAAAAG", "Teeeeeext"), #ladder
+            ]),
+            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "Large closed blastdoor\nTo sector C"), [
+                ("TAAAAG", "Teeeeeext"), #sectionCdoor
+            ])
+        ]
+        prevplace = game.prevPlace
+        if prevplace == "apartment":
+            runner.index = "DOOR_2A68" #setter fetches index.
             intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
             if game.getdata("middlering:visited") == None:
                 intro += """
@@ -470,212 +412,23 @@ Stars, you realize. Stars flying upwards. You are staring into space!
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     There is an uneasy silence.
             """
-        elif prevroom == "ladder":
-            nav.setSection("B", 2)
-            nav.ind = 2
-            nav.sec = "B"
+        elif prevplace == "ladder":
+            runner.index = "LADDER"
             intro = """
     You close the emergency ladder's hatch.
     You are now at the middle level ring.
             """
-        elif prevroom == "bathrooms":
-            nav.setSection("A", 1)
+        elif prevplace == "bathrooms":
+            runner.index = "BATHROOMS"
             intro = """
     You exit the bathrooms and returned to the corridor.
             """
         else:
-            nav.setSection("B", 3)
-            intro = """
-    You have walked around aimlessly for a bit, you don't know for how long
-    And oof! You just walked streight into a large closed door.
-            """
+            #using the existing index (nav.x) from save or testcode as default.
+            intro = "You are standing in the long corridor"
         game.rolltext(intro)
-    if not nav.running:
-        initNav()
-    nav.loop(game)
-
-#TODO: move this to its own module
-def bathrooms(game):
-    def bathrooms1():
-        while True:
-            game.rolltext("""
-You stand in front of the bathrooms. There are two doors in front of you.
-One door with a depiction of a man, one depicting a woman.
-            """)
-            choices = [("MALE", "Enter men's room"), ("FEMALE", "Enter ladies' room"), ("EXIT", "Leave")]
-            _, val = game.choose2(choices, "What door do you enter")
-            if val == "MALE":
-                bathrooms2("mens")
-            elif val == "FEMALE":
-                bathrooms2("ladies")
-            else:
-                game.goto("middle")
-                break
-            if(game.getGameover(game)):
-                return
-
-    def bathrooms2(subroom):
-        gender = None 
-        visited = game.getdata("bathroom:visited", False) # if the Player Character has visited the bathrooms beofore
-        showered = game.getdata("bathroom:showered", False) # whatever the PC has showered
-        relived = game.getdata("bathroom:relived", False) # whatever the PC has had the chance to relive themself
-        keepsake = game.getdata("spouse:keepsake", False) # potential use in later chapters. Only unlockable if you have remembered who your spouse is.
-
-        relationKlara = game.getdata("klara", None) #if spouse, unlocks retrival of keepsake in ladies locker-room
-        relationJeff = game.getdata("jeff", None) #if spouse, unlocks retrival of keepsake in mens locker-room
-
-        choices = None
-
-        wrongroom = "" #if the PC enters the wrong bathroom, this extra nerrative is added.
-        facedesc = "" #describes what the PC sees in the mirror (male or female)
-        areadesc = "" #describes the facilities in the room (mens or ladies)
-
-        #This section determines PC's gender if not already set.
-        if subroom == "mens":
-            gender = game.getdata("gender", "male")
-            if gender != "male":
-                wrongroom = """
-You're not exacly sure why you went into the men's room, and not the ladies' room.
-Though you suppose it doesn't really matter. There is nobody here anyways."""
-            areadesc = """ a line of toilet stalls, a large urinal, a few changing rooms, a locker room,
-showers, couple of them private, and a dispenser of hygine products."""
-            choices = (
-                ("SINK", "Spash water in your face"),
-                ("TOILET", "Visit a toilet booth"),
-                ("URINAL", "Visit the urinal"),
-                ("HYGINE_MENS", "open the hygine dispenser"),
-                ("SHOWER", "Go the the showers"),
-                ("LOCKERS", "Go to the locker room"),
-                ("EXIT", "leave")
-            )
-        elif subroom == "ladies":
-            gender = game.getdata("gender", "female")
-            if gender != "female":
-                wrongroom = """
-A man going inside the ladies room would normally be seen as quite perverted.
-But as it is, the ladies is as vacant of people as the rest of this place."""
-            areadesc = """ a line of toilet stalls, a few changing rooms, a looker room, showers, couple of them private
-and a hygine despenser with varius.. products..."""
-            choices = (
-                ("SINK", "Spash water in your face"),
-                ("TOILET", "Visit a toilet booth"),
-                ("HYGINE_LADIES", "open the hygine dispenser"),
-                ("SHOWER", "Go the the showers"),
-                ("LOCKERS", "Go to the locker room"),
-                ("EXIT", "leave")
-            )
-        if gender == "male":
-            facedesc = "a rugged man with a stubby beard."
-        if gender == "female":
-            facedesc = "a tired looking woman with clear bags under they eyes."
-        if not visited:
-            game.rolltext("""
-You enter the {0} room.{1}
-Finding yourself in front of the large array of sinks and mirrors.
-Some of the mirrors are broken, but you found one that was relativly intact.
-You have a look at yourself.
-What you see is {2}
-You look about as shitty as you feel, yet it does look familiar.
-That's a good thing, right?
-Looking around, you see {3}
-            """.format(subroom, wrongroom, facedesc, areadesc))
-        else:
-            game.showtext("PLACEHOLDER text for return visit to bathrooms.")
-        visited = True
-        game.setdata("bathroom:visited", True)
-        while True:
-            _,choice = game.choose2(choices, "What do you want to do?")
-            if   choice == "EXIT":
-                game.showtext("You leave the {0} room".format(subroom))
-                return
-            elif choice == "SINK":
-                game.showtext("You splash some water on your face. It feels refreshing.")
-            elif choice == "TOILET":
-                act = ""
-                if(relived): #relived = game.getdata("bathroom:relived", False)
-                    act = "You sit for a bit, resting. You don't feel the need to 'do' anything."
-                else:
-                    act = "You relieve yourself right there and then. You must have held it in for a while without thinking about it."
-                    game.setdata("bathroom:relived", True)
-                    relived = True
-                game.rolltext("""You locate a nice toilet booth, and sit down on a porcelain throne.
-                Well, ok, not porcelain, these toilets are made of metal.
-                {0}
-                After a while you decide it is time to get back up""".format(act))
-            elif choice == "URINAL":
-                if relived:
-                    game.showtext("you stand over by the urinal for a bit, but you don't feel any need to use it.")
-                elif gender == "female":
-                    game.showtext("As you approach the urinal, you wondered how it was like for men to use contraptions like this.")
-                    if(game.yesno("Try to piss in it?")):
-                        game.rolltext("""You awkwardly posision yourself,
-and partially relive youself down the urinal.
-It was kinda fun.
-And you mostly hit the target.
-mostly..
-
-Still, having done that, you realize you have 'other' needs to relive youself of.""")
-                        if(game.yesno("Take a dump in the uninal?")):
-                            game.showtext("You did the deed in the urinal. you slowly back off, giggling a bit as your inner girl got her wicked wish.")
-                            game.setdata("bathroom:relived", True)
-                            relived = True
-                    else:
-                        game.showtext("You left the uninal alone.")
-                else:
-                    game.rolltext("""You instinctively unzip and relive youself down the uninal.
- it was quickly done.
- But soon you realize you have 'other' needs to relive youself of.""")
-                    if(game.yesno("Take a dump in the uninal?")):
-                        game.showtext("You did the deed in the urinal. you slowly back off, giggling a bit as your inner child got his very childish wish.")
-                        game.setdata("bathroom:relived", True)
-                        relived = True
-            elif choice == "HYGINE_LADIES":
-                game.showtext("You examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now")
-            elif choice == "HYGINE_MENS":
-                game.showtext("You examine the dispenser. You find some soaps, condoms, razor blades. Nothing you really need right now.")
-            elif choice == "SHOWER":
-                if showered:
-                    game.showtext("You go over to the showers. But you already feel clean, so you go back.")
-                else:
-                    game.rolltext("""You enter one of the private show stalls.
-You undress, and turn on the shower
-You note as all the grime washes off you.
-you feel a lot better now.
-...
-...
-you dry up, dress yourself and again, and leave the shower.""")
-                    showered = True
-                    showered = game.setdata("bathroom:showered", True)
-            elif choice == "LOCKERS":
-                text = "You take a walk along the lockers."
-                if keepsake:
-                    text += "\nThere was not much more to see."
-                elif subroom == "mens" and relationJeff == "spouse":
-                    text+= """
-You stumble upon a familiar locker. Jeff's locker.
-Your hands move on their own, it seems his locker combination is deep in your subconsius.
-Inside you find a small box.
-It feels important.
-You take it with you."""
-                    keepsake = True
-                elif subroom == "ladies" and relationKlara == "spouse":
-                    text+= """
-You stumble upon a familiar locker. Klara's locker.
-Your hands move on their own, it seems her locker combination is deep in your subconsius.
-Inside you find a small box.
-It feels important.
-You take it with you.""" 
-                    keepsake = True
-                else:
-                    text += "\nThere was not much to see."
-                game.setdata("spouse:keepsake", keepsake)
-                game.rolltext(text)
-            status = game.updateCounter(game, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                break
-        #end of loop
-    bathrooms1() #Starts the room.
-
+    setupRunner()
+    runner.run()
 if __name__ == "__main__":
     # No testcode
     print("No testcode, please run main.py")
