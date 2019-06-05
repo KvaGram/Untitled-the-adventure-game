@@ -52,7 +52,7 @@ def game_loop(game:Game.Game):
         "middle"    : middlering.main,
         #"outer"     : outer.main,
         #"ladder"    : wheel.emergencyLadder,
-        #"bathrooms" : middlering.bathrooms,
+        "bathrooms" : Bathrooms.main
         #"cargobay"  : wheel.Cargobay
     }
 

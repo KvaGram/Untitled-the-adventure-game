@@ -13,6 +13,7 @@ Welcome!! What do you wish to do?
 
 <GAME_PLEASESEL>Please select</GAME_PLEASESEL>
 <GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
+<GAME_MAKECHOICE2>What do you want to do?</GAME_MAKECHOICE2>
 
 <BATH_INTRO>
 You stand in front of the bathrooms. There are two doors in front of you.
@@ -20,7 +21,156 @@ One door with a depiction of a man, one depicting a woman.
 </BATH_INTRO>
 <BATH_WHATDOOR>What door do you enter</BATH_WHATDOOR>
 <BATH_CHOICEMENS>Enter men's room</BATH_CHOICEMENS>
-<BATH_CHOICELADIES>Enter ladies' room"</BATH_CHOICELADIES>
+<BATH_CHOICELADIES>Enter ladies' room</BATH_CHOICELADIES>
+
+
+<BATH_MENS_ENTERING>You enter the Men's room.</BATH_MENS_ENTERING>
+<BATH_LADIES_ENTERING>You enter the Ladies's room.</BATH_LADIES_ENTERING>
+
+<BATH_MENS_LEAVING>You leave the Men's room.</BATH_MENS_LEAVING>
+<BATH_LADIES_LEAVING>You leave the Ladies's room.</BATH_LADIES_LEAVING>
+
+<BATH_MENS_WRONGROOM>
+You're not exacly sure why you went into the men's room, and not the ladies' room.
+Though you suppose it doesn't really matter. There is nobody here anyways.
+</BATH_MENS_WRONGROOM>
+<BATH_LADIES_WRONGROOM>
+A man going inside the ladies room would normally be seen as quite perverted.
+But as it is, the ladies is as vacant of people as the rest of this place.
+</BATH_LADIES_WRONGROOM>
+
+<BATH_MENS_DESCRIPTION>
+What you see is a line of toilet stalls, a large urinal, a few changing rooms, a locker room,
+showers, couple of them private, and a dispenser of hygine products.
+
+Finding yourself in front of the large array of sinks and mirrors.
+Some of the mirrors are broken, but you found one that was relativly intact.
+</BATH_MENS_DESCRIPTION>
+
+<BATH_LADIES_DESCRIPTION>
+What you see is a line of toilet stalls, a few changing rooms, a looker room, showers, couple of them private
+and a hygine despenser with varius.. products...
+
+Finding yourself in front of the large array of sinks and mirrors.
+Some of the mirrors are broken, but you found one that was relativly intact.
+</BATH_LADIES_DESCRIPTION>
+
+<BATH_MIRROR_MALE>
+You have a look at yourself.
+What you see is a rugged man with a stubby beard.
+You look about as shitty as you feel, yet it does look familiar.
+That's a good thing, right?
+</BATH_MIRROR_MALE>
+
+<BATH_MIRROR_FEMALE>
+You have a look at yourself.
+What you see is a tired looking woman with clear bags under they eyes.
+You look about as shitty as you feel, yet it does look familiar.
+That's a good thing, right?
+</BATH_MIRROR_FEMALE>
+
+<BATH_WASHFACE>
+You splash some water on your face. It feels refreshing.
+</BATH_WASHFACE>
+
+<BATH_TOILET1>
+You locate a nice toilet booth, and sit down on a porcelain throne.
+Well, ok, not porcelain, these toilets are made of metal.
+You relieve yourself right there and then. You must have held it in for a while without thinking about it.
+After a while you decide it is time to get back up
+</BATH_TOILET1>
+<BATH_TOILET2>
+You locate a nice toilet booth, and sit down on a porcelain throne.
+Well, ok, not porcelain, these toilets are made of metal.
+You sit for a bit, resting. You don't feel the need to 'do' anything.
+After a while you decide it is time to get back up
+</BATH_TOILET2>
+
+<BATH_URINAL1>
+You instinctively unzip and relive youself down the uninal.
+it was quickly done.
+But soon you realize you have 'other' needs to relive youself of.
+</BATH_URINAL1>
+<BATH_URINAL2>
+you stand over by the urinal for a bit, but you don't feel any need to use it.
+</BATH_URINAL2>
+
+<BATH_URINAL_FEM1>
+As you approach the urinal, you wondered how it was like for men to use contraptions like this.
+</BATH_URINAL_FEM1>
+
+<BATH_URINAL_FEMQUEST>
+Try to piss in it?
+</BATH_URINAL_FEMQUEST>
+
+<BATH_URINAL_FEM2>
+You awkwardly posision yourself,
+and partially relive youself down the urinal.
+It was kinda fun.
+And you mostly hit the target.
+mostly..
+
+Still, having done that, you realize you have 'other' needs to relive youself of.
+</BATH_URINAL_FEM2>
+
+<BATH_URINAL_DUMPQUEST>
+Take a dump in the urinal?
+</BATH_URINAL_DUMPQUEST>
+
+<BATH_URINAL_FEM_DUMP>
+You did the deed in the urinal. you slowly back off, giggling a bit as your inner girl got her wicked wish.
+</BATH_URINAL_FEM_DUMP>
+
+<BATH_URINAL_MALE_DUMP>
+You did the deed in the urinal. you slowly back off, giggling a bit as your inner child got his very childish wish.
+</BATH_URINAL_MALE_DUMP>
+
+<BATH_URINAL_LEAVE>
+You left the urinal alone.
+</BATH_URINAL_LEAVE>
+
+<BATH_HYGINE_MENS>
+You examine the dispenser. You find some soaps, condoms, razor blades. Nothing you really need right now.
+</BATH_HYGINE_MENS>
+
+<BATH_HYGINE_LADIES>
+You examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now
+</BATH_HYGINE_LADIES>
+
+<BATH_SHOWER1>
+You enter one of the private show stalls.
+You undress, and turn on the shower
+You note as all the grime washes off you.
+you feel a lot better now.
+...
+...
+you dry up, dress yourself and again, and leave the shower.
+</BATH_SHOWER1>
+
+<BATH_SHOWER2>
+You go over to the showers. But you already feel clean, so you go back.
+</BATH_SHOWER2>
+
+<BATH_LOCKERS1>
+You take a walk along the lockers
+There was not much more to see.
+</BATH_LOCKERS1>
+<BATH_LOCKERS2>
+You stumble upon a familiar locker. {game.Spouse.name}'s locker.
+Your hands move on their own, it seems the locker combination is buried deep in your subconsius.
+Inside you find a small box.
+It feels important.
+You take it with you.
+</BATH_LOCKERS2>
+
+<BATH_OPTION_SINK>Spash water in your face</BATH_OPTION_SINK>
+<BATH_OPTION_TOILET>Visit a toilet booth</BATH_OPTION_TOILET>
+<BATH_OPTION_URINAL>Visit the urinal</BATH_OPTION_URINAL>
+<BATH_OPTION_HYGINE>open the hygine dispenser</BATH_OPTION_HYGINE>
+<BATH_OPTION_SHOWER>Go the the showers</BATH_OPTION_SHOWER>
+<BATH_OPTION_LOCKERS>Go to the locker room</BATH_OPTION_LOCKERS>
+
+
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
 <YES>Yes</YES>
@@ -28,9 +178,9 @@ One door with a depiction of a man, one depicting a woman.
 <TRUE>True</TRUE>
 <FALSE>False</FALSE>
 <HUSBAND>husband</HUSBAND>
-<BROTHER>husband</BROTHER>
-<WIFE>husband</WIFE>
-<SISTER>husband</SISTER>
+<BROTHER>brother</BROTHER>
+<WIFE>wife</WIFE>
+<SISTER>sister</SISTER>
 
 <!--End of file-->
 </story>

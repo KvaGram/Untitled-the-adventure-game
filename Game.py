@@ -116,18 +116,18 @@ class Game:
                     self.ui.draw_noactions()
                 return data[1][0] == val
     def yesno(self, message = "{GAME_PLEASESEL}", wait = True):
-        choices = (("True", "{YES}"), ("False", "{NO}"))
+        choices = [["True", "{YES}"], ["False", "{NO}"]]
         self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message)
     def truefalse(self, message = "{GAME_PLEASESEL}", wait = True):
-        choices = (("True", "{TRUE}"), ("False", "{TRUE}"))
+        choices = [["True", "{TRUE}"], ["False", "{TRUE}"]]
         self.choose(choices, message, False)
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message, wait)
-    def textin(self, fields = (("Input", ""),), entertext = "ENTER", wait = False, **kwargs ):
+    def textin(self, fields = [["Input", ""],], entertext = "ENTER", wait = False, **kwargs ):
         entertext = self.retext(entertext)
         self.ui.draw_textinputs(fields = fields, entertext = entertext, **kwargs)
         if wait:
@@ -176,16 +176,16 @@ class Game:
         }
         return counterRole.get(role, "")
     #endregion dictionaries
-    
-    #region setters and getters
+
+    #region setters and getters.
     def getdata(self, key, default = None):
-        if type(key) == tuple or type(key) == list:
+        if type(key) in (tuple, list):
             d = self.savedata
             for k in key:
                 d = d.get(k, default)
                 if type(d) != dict:
                     break
-            return d
+            ret = d
         return self.savedata.get(key, default)
     def setdata(self, key, value):
         self.savedata[key] = value
@@ -198,7 +198,7 @@ class Game:
         #TODO: make a list of image and description for ever inventory item
     def getInventory(self, item:str):
         inv = self.getdata("inventory", {})
-        return inv.get(item, (None, "NO ITEM"))
+        return inv.get(item, None)
     def getAllInventory(self):
         return self.getdata("inventory", {})
         
@@ -220,24 +220,34 @@ class Game:
         return self.getdata("name") != None
 
     @property
-    def FemaleFam(self)->dict:
+    def FemaleFam(self):
         f = self.getdata("femalefam")
         if not f:
             self.defaultFam()
             return self.FemaleFam
         return f
     @property
-    def MaleFam(self)->dict:
+    def MaleFam(self):
         f = self.getdata("malefam")
         if not f:
             self.defaultFam()
             return self.MaleFam
         return f
-    
+    @property
+    def Spouse(self):
+        return self.getFamByRole("spouse")
+    def Sibling(self):
+        return self.getFamByRole("sibling")
+    def getFamByRole(self, role):
+        if self.FemaleFam.role == role:
+            return self.FemaleFam
+        else:
+            return self.MaleFam
+
     def defaultFam(self):
         m:FamPerson = self.getdata("malefam")
         f:FamPerson = self.getdata("femalefam")
-        randRole1 = random.choices(("spouse", "sibling"))
+        randRole1 = random.choice(("spouse", "sibling"))
         randRole2 = self.roleCounterpart(randRole1)
 
         if (m or f) == None:
