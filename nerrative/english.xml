@@ -171,6 +171,195 @@ You take it with you.
 <BATH_OPTION_LOCKERS>Go to the locker room</BATH_OPTION_LOCKERS>
 
 
+<OUTER_NAV_DESC_1>
+ - Habitat Wheel C
+ - Outer ring
+ - sector {0}
+ {1}
+</OUTER_NAV_DESC_1>
+<OUTER_NAV_DESC_2>
+ - Habitat Wheel C
+ - Maintenence and disections ring
+ - sector {0}
+ {1}
+</OUTER_NAV_DESC_2>
+
+<MIDDLE_NAV_DESC_1>
+ - Unknown place
+ - Mysterius corridor
+ {1}
+</MIDDLE_NAV_DESC_1>
+<MIDDLE_NAV_DESC_2>
+ - Habitat Wheel C
+ - Middle ring
+ - Sector {0}
+ {1} 
+</MIDDLE_NAV_DESC_2>
+<MIDDLE_NAV_DESC_3>
+ - Habitat Wheel C
+ - Human habitat
+ - Sector {0}
+ {1}
+</MIDDLE_NAV_DESC_3>
+
+<INNER_NAV_DESC_1>
+ - Habitat Wheel C
+ - Inner ring 
+ - Sector {0}
+ {1} 
+</INNER_NAV_DESC_1>
+<INNER_NAV_DESC_2>
+ - Habitat Wheel C
+ - Human cryogenics
+ - Sector {0}
+ {1}
+</INNER_NAV_DESC_2>
+
+<MIDDLE_NAV_TO_SEC_D>
+ - Large closed blastdoor
+ - To sector D
+</MIDDLE_NAV_TO_SEC_D>
+<MIDDLE_NAV_TO_BATH>
+ - Outside a
+ - communal bathroom
+</MIDDLE_NAV_TO_BATH>
+<MIDDLE_NAV_DOOR_2A68>
+ - A familiar door
+</MIDDLE_NAV_DOOR_2A68>
+<MIDDLE_NAV_ELE>
+ - A set of
+ - elevators
+</MIDDLE_NAV_ELE>
+<MIDDLE_NAV_CAFE>
+ - A cafeteria
+</MIDDLE_NAV_CAFE>
+<MIDDLE_NAV_TO_SEC_B>
+ - Large open doorway
+ - To sector B
+</MIDDLE_NAV_TO_SEC_B>
+<MIDDLE_NAV_TO_SEC_A>
+ - Large open doorway
+ - To sector A
+</MIDDLE_NAV_TO_SEC_A>
+<MIDDLE_NAV_AUXCOM>
+ - Auxillary communications console
+</MIDDLE_NAV_AUXCOM>
+<MIDDLE_NAV_LADDER>
+ - Emergency access ladder
+</MIDDLE_NAV_LADDER>
+<MIDDLE_NAV_TO_SEC_C>
+ - Large closed blastdoor
+ - To sector C
+</MIDDLE_NAV_TO_SEC_C>
+
+<ACT_READ_SIGN>
+Read sign
+</ACT_READ_SIGN>
+<ACT_ENTER_ROOM>
+Enter room
+</ACT_ENTER_ROOM>
+<ACT_USE>
+Use
+</ACT_USE>
+
+<MIDDLE_INTRO_1>
+You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
+The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
+As the door closes, you note there is a number-plate on your door.
+There is an uneasy silence.
+</MIDDLE_INTRO_1>
+<MIDDLE_INTRO_2>
+You exit out of your room and behold the large corridor streching as far as you can see in either direction.
+</MIDDLE_INTRO_2>
+<MIDDLE_INTRO_3>
+You close the emergency ladder's hatch.
+You are now at the middle level ring.
+</MIDDLE_INTRO_3>
+<MIDDLE_INTRO_4>
+You exit the bathrooms and returned to the corridor.
+</MIDDLE_INTRO_4>
+<MIDDLE_INTRO_5>
+You are standing in the long corridor
+</MIDDLE_INTRO_5>
+
+<MIDDLE_LADDER_INTRO_1>
+The corridor gives way to a large column, splitting the corridor to go around it on both sides.
+On two sides of the column you find large hatches with a colored engraving
+        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+        |    EMERGENCY ESCAPE   |
+        |      WHEEL C RING 2   |
+        |                       |
+        |      BREAK GLASS      |
+        |          AND          |
+        |       PULL LEVER      |
+        |        TO OPEN        |
+        |_______________________|
+
+You locate the panel as indicated on the engraving.
+</MIDDLE_LADDER_INTRO_1>
+<MIDDLE_LADDER_INTRO_2>
+The glass is already broken.
+</MIDDLE_LADDER_INTRO_2>
+<MIDDLE_LADDER_INTRO_3>
+The glass look thin and you feel an odd temtation to smash it.
+Written on the glass is a warning.
+    FOR EMERGENCIES ONLY!
+    SECURITY WILL BE ALERTED TO MISUSE!
+</MIDDLE_LADDER_INTRO_3>
+
+<MIDDLE_LADDER_ENTERQUEST_1>Smash the glass?</MIDDLE_LADDER_ENTERQUEST_1>
+<MIDDLE_LADDER_ENTERQUEST_2>Pull the lever?</MIDDLE_LADDER_ENTERQUEST_2>
+
+<MIDDLE_LADDER_ENTER_1>
+You reach in the panel, and pull the lever.
+The hatch opens and you go inside.
+</MIDDLE_LADDER_ENTER_1>
+<MIDDLE_LADDER_ENTER_2>
+You smash the glass, and pull the lever.
+The hatch opens and you go inside.
+</MIDDLE_LADDER_ENTER_2>
+
+<MIDDLE_READ_ROOM_2A68>
+The sign on the door reads
+    ______________________
+    |   C - 2 SECTOR A   |
+    |         068        |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+</MIDDLE_READ_ROOM_2A68>
+
+<MIDDLE_SEC_D_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+    _________________________
+    |      C - 2 SECTOR D    |
+    |      EMERGENCY DOOR    |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door, you look through it.
+On the other side you see a corridor much like the one you are in
+except, the lights are all off, and a number of dead bodies litter the floor.
+What happened here?
+</MIDDLE_SEC_D_DOOR>
+<MIDDLE_SEC_C_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+    ____________________________
+    |     C - 2 SECTOR C       |
+    |      EMERGENCY DOOR      |
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door, you look through it.
+On the other side you see.. nothing. just blackness.
+No, that's not quite right. As your eyes get used to the dark,
+you see the walls on the other side of the door.
+They go on for a bit over a meter, then abruptly ends in uneven bent metal.
+And you see some small faint light far back in the darknes, moving.
+Stars, you realize. Stars flying upwards. You are staring into space!
+</MIDDLE_SEC_C_DOOR>
+
+<AUXCOM_INTRO>
+
+</AUXCOM_INTRO>
+
+
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
 <YES>Yes</YES>

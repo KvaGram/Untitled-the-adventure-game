@@ -26,25 +26,24 @@ def main(game:Game.Game):
     #----------------------------
     #region places and actions
     def sectionDdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C2 SECTOR D    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look through it.
-On the other side you see a corridor much like the one you are in
-except, the lights are all off, and a number of dead bodies litter the floor.
-What happened here?
-        """)
+        game.rolltext("{MIDDLE_SEC_D_DOOR}")
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
     def bathrooms():
         goto("bathrooms")
     def door_2A68():
         game.showtext("You open the door to your apartment and go inside.")
         goto("apartment")
+    def Read_door_2A68():
+        game.rolltext("{MIDDLE_READ_ROOM_2A68}")
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
     def cafeteria():
-        game.showtext("The Cafeteria is closed!")
+        game.showtext("The Cafeteria is closed!") #TODO: write cafeteria
     def sectionBdoor():
         pass
     def sectionAdoor():
@@ -298,30 +297,19 @@ You decide to undo it, and never try that again, putting the black cable back in
     def ladder():
         if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
             game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
-        text = """
-The corridor gives way to a large column, splitting the corridor to go around it on both sides.
-On two sides of the column you find large hatches with a colored engraving
-        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |    EMERGENCY ESCAPE   |
-        |      WHEEL C RING 2   |
-        |                       |
-        |      BREAK GLASS      |
-        |          AND          |
-        |       PULL LEVER      |
-        |        TO OPEN        |
-        |_______________________|
-
-You locate the panel as indicated on the engraving.
-        """
+        text = "{MIDDLE_LADDER_INTRO}"
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
         if game.getdata("WheelCMiddleLadder") == "open":
-            text += "\nThe glass is already broken."
-            enterText = "You reach in the panel, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Pull the lever?"
+            text += "\n{MIDDLE_LADDER_INTRO_2}"
+            enterText = "{MIDDLE_LADDER_ENTERQUEST_1}"
+            openText = "{}"
         else:
-            text += "\nThe glass look thin and you feel an odd temtation to smash it.\nWritten on the glass is a warning."
-            text += "\nFOR EMERGENCIES ONLY.\nSECURITY WILL BE ALERTED TO MISUSE!"
-            enterText = "You smash the glass, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Smash the glass?"
+            text += "\n{MIDDLE_LADDER_INTRO_3}"
+            enterText = "{}"
+            openText = "{MIDDLE_LADDER_ENTERQUEST_1}"
         game.rolltext(text)
         if(game.yesno(openText)):
             if game.getdata("WheelCMiddleLadder") == None:
@@ -330,21 +318,11 @@ You locate the panel as indicated on the engraving.
             goto("ladder")
 
     def sectionCdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C2 SECTOR C    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look through it.
-On the other side you see.. nothing. just blackness.
-No, that's not quite right. As your eyes get used to the dark,
-you see the walls on the other side of the door.
-They go on for a bit over a meter, then abruptly ends in uneven bent metal.
-And you see some small faint light far back in the darknes, moving.
-Stars, you realize. Stars flying upwards. You are staring into space!
-    """)
+        game.rolltext("{MIDDLE_SEC_C_DOOR}")
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
     def elevator():
         return dialoges.elevator(game)
     #endregion places and actions
@@ -355,77 +333,65 @@ Stars, you realize. Stars flying upwards. You are staring into space!
         runner.stop()
         game.place = place
     def setupRunner():
-        nav_informed = game.getdata("middle:informed", False)
-        if(nav_informed):
-            base_navtext = (
-"""Wheel C
-Ring 2, subsection {0}
-{1}""")
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        game.setdata("wheelC:knowledge", knowledge)
+        if knowledge <= 0:
+            base_navtext = game.story["MIDDLE_NAV_DESC_1"]
+        elif knowledge == 1:
+            base_navtext = game.story["MIDDLE_NAV_DESC_2"]
         else:
-            base_navtext = (
-"""Unknown place
-Mysterius corridor
-{1}""")
+            base_navtext = game.story["MIDDLE_NAV_DESC_3"]
         runner.nodes = [
-            Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "Large closed blastdoor\nTo sector D"), [
-                ("EXAMINE_SEC_D", "Examine the closed door", sectionDdoor),
+            Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_D}"), [
+                ("_", "{ACT_READ_SIGN}", sectionDdoor),
             ]),
-            Game.PlaceNode(game, "BATHROOMS",        base_navtext.format("A", "Outside a\ncommunal bathroom"), [
-                ("TAAAAG", "Teeeeeext", bathrooms),
+            Game.PlaceNode(game, "BATHROOMS",        base_navtext.format("A", "{MIDDLE_NAV_TO_BATH}"), [
+                ("_", "{ACT_ENTER_ROOM}", bathrooms),
             ]),
-            Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "A familiar door"), [
-                ("TAAAAG", "Teeeeeext", door_2A68),
+            Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "{MIDDLE_NAV_DOOR_2A68}"), [
+                ("_", "{ACT_ENTER_ROOM}", door_2A68),
+                ("_", "{ACT_READ_SIGN}", Read_door_2A68)
             ]),
-            Game.PlaceNode(game, "ELE",         base_navtext.format("A", "A set of\nelevators"), [
-                ("TAAAAG", "Teeeeeext"), #elevator
+            Game.PlaceNode(game, "ELE",         base_navtext.format("A", "{MIDDLE_NAV_ELE}"), [
+                ("_", "{ACT_USE}"), #elevator
             ]),
-            Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "A cafeteria"), [
-                ("TAAAAG", "Teeeeeext"), #cafeteria
+            Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "{MIDDLE_NAV_CAFE}"), [
+                ("_", "{ACT_ENTER_ROOM}"), #cafeteria
             ]),
-            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "Large open doorway\nTo sector B"), [
-                ("TAAAAG", "Teeeeeext"), #sectionBdoor
+            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_B}"), [
+                ("_", "{ACT_READ_SIGN}"), #sectionBdoor
             ]),
-            Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "Large open doorway\nTo sector A"), [
-                ("TAAAAG", "Teeeeeext"), #sectionAdoor
+            Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_A}"), [
+                ("_", "{ACT_READ_SIGN}"), #sectionAdoor
             ]),
-            Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "Auxillary communications console"), [
-                ("TAAAAG", "Teeeeeext"), #auxcom_repair
+            Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "{MIDDLE_NAV_AUXCOM}"), [
+                ("_", "{ACT_USE}"), #auxcom_repair
             ]),
-            Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "Emergency access ladder"), [
-                ("TAAAAG", "Teeeeeext"), #ladder
+            Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "{MIDDLE_NAV_LADDER}"), [
+                ("_", "{ACT_USE}"), #ladder
             ]),
-            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "Large closed blastdoor\nTo sector C"), [
-                ("TAAAAG", "Teeeeeext"), #sectionCdoor
+            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_C}"), [
+                ("_", "{ACT_READ_SIGN}"), #sectionCdoor
             ])
         ]
         prevplace = game.prevPlace
-        if prevplace == "apartment":
-            runner.index = "DOOR_2A68" #setter fetches index.
-            intro = "You exit out of your room, and behold the large corridor streching as far as you can see in either direction."
-            if game.getdata("middlering:visited") == None:
-                intro += """
-    You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
-    The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
-    As the door closes, you note the number-plate on your door.
-        _________________
-        |   C2A - 068   |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    There is an uneasy silence.
-            """
+        if prevplace == "apartment" and game.getdata("apartment:left", False):
+            game.setdata("apartment:left", True)
+            runner.index = "DOOR_2A68"
+            intro = "{MIDDLE_INTRO_1}"
+        elif prevplace == "apartment":
+            intro = "{MIDDLE_INTRO_2}"
+            runner.index = "DOOR_2A68"
+            pass
         elif prevplace == "ladder":
             runner.index = "LADDER"
-            intro = """
-    You close the emergency ladder's hatch.
-    You are now at the middle level ring.
-            """
+            intro = "{MIDDLE_INTRO_3}"
         elif prevplace == "bathrooms":
             runner.index = "BATHROOMS"
-            intro = """
-    You exit the bathrooms and returned to the corridor.
-            """
+            intro = "{MIDDLE_INTRO_4}"
         else:
             #using the existing index (nav.x) from save or testcode as default.
-            intro = "You are standing in the long corridor"
+            intro = "{MIDDLE_INTRO_5}"
         game.rolltext(intro)
     setupRunner()
     runner.run()

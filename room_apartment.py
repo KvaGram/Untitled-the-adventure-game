@@ -202,7 +202,6 @@ You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
             """)
-            game.setdata("apartment:left", True)
             return True
         #endregion door()
 

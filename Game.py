@@ -16,6 +16,7 @@ class Game:
         self.langauge = language
         self.newgame()
         self.story = Storyloader.load(language)
+        self.runner:PlaceRunner = None
 
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
         self.destroyed = False
@@ -185,7 +186,6 @@ class Game:
                 d = d.get(k, default)
                 if type(d) != dict:
                     break
-            ret = d
         return self.savedata.get(key, default)
     def setdata(self, key, value):
         self.savedata[key] = value
