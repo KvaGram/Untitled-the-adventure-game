@@ -20,6 +20,10 @@ class MiddleRunner(Game.PlaceRunner1D):
     #TODO: Continue writing replacement for middleroomnav
 
 def main(game:Game.Game):
+    def T(storytag:str)->str:
+        fallback = "(({0}))".format(storytag)
+        return game.story.get(storytag, fallback)
+
     navdata = game.Navdata
     runner:MiddleRunner = MiddleRunner(game)
     #intro = "place holder corridor intro text (should not show up in the game)"
@@ -57,86 +61,56 @@ def main(game:Game.Game):
         yellowtasted = game.getdata("auxcom:yellowtasted")
         systemStatus = game.getdata("auxcom:systemstatus", "BROKEN")
         #region auxcom repair
-        game.rolltext("""
-You find a large panel with a screen on wall next to you.
-It has the following text painted and engraved under it
-        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |   AUXILLARY COMS      |
-        |                       |
-        | FOR AUTHORIZED USE    |
-        |          ONLY         |
-        |_______________________|
-Under that you find a smaller panel that seem to invite you to push it.
-        """)
-        if not game.yesno("Push the lower panel?"):
-            game.showtext("You leave the auxillary communications panel alone")
+        game.rolltext("{AUXCOM_INTRO}")
+        if not game.yesno("{AUXCOM_OPENQUEST_1}"):
+            game.showtext("{AUXCOM_LEAVE_1}")
             return
         if(cargoConnected):
             return dialoges.auxcom_cargo(game) #auxcom_cargo: contact the folks in cargo.
         if(systemStatus == "OK"):
-            game.rolltext("""
-You push the panel. The panel lowers as a latch to reveal a keyboard.
-The screen turns on and displays the text
-        ' AUXILLARY COMS ONLINE. DO YOU WISH TO PLACE A CALL?'
-            """)
+            game.rolltext("{AUXCOM_STATUS_1}")
             return dialoges.auxcom_contact(game) #auxcom_contact: finding someone to talk to
         # auxcom main: fix the system
         if(systemStatus == "SHUTDOWN"):
-            game.rolltext("""
-You push the panel.  The panel lowers as a latch to reveal a keyboard.
-The screen remains off for a while. Then you hear a beep.
-            """)
+            game.rolltext("{AUXCOM_STATUS_2}")
             if tblueinwhite:
                 systemStatus = "OK"
-                game.rolltext("""
-The screen turns on and displays the text
-        'CONNECTION RE-ESTABLISHED! DO YOU WISH TO PLACE A CALL?'
-                """)
+                game.rolltext("{AUXCOM_STATUS_3}")
                 game.setdata("auxcom:systemstatus", systemStatus)
                 return dialoges.auxcom_contact(game)
         else:
-            game.showtext("You push the panel. The panel lowers as a latch to reveal a keyboard.")
-        game.rolltext("""
-The screen turns on, but displays static.
-Unseen speakers make some sort of repeated beeping pattern that
-seems oddly familiar, but you cannot quite place it.
-
-You notice a handle on the side of the panel the screen is on.
-            """)
-        if not game.yesno("open the panel?"):
-            game.showtext("You decide it is not worth bothering with, close the lower panel, and turn to leave.")
+            game.showtext("{AUXCOM_STATUS_4}")
+        game.rolltext("{AUXCOM_STATUS_5}")
+        if not game.yesno("{AUXCOM_OPENQUEST_2}"):
+            game.showtext("{AUXCOM_LEAVE_2}")
             return
-        """
-Opening the panel you find a mess of vires, some of them lose.
-Unfortunetly, none of them are labled, and all have the same port shape.
-The only diffrence is the thinkness and color of the cables.
-
-You take a moment to brainstorm ideas on what do with with the cables.
-...
-..
-.
-You made a list of things you could try.
-        """
+        game.rolltext("{AUXCOM_STATUS_6}")
         #NOTE: the general idea I have is to have a larger puzzle where options are added and removed as you try things.
         #       For now, there is only a single set of options, where the bad options are removed as they are attempted.
-        #       Uses game.choose2 to allow for options to be added and removed
+        #       Uses game.choose to allow for options to be added and removed
         choices = []
-        choices.append(("THICK BLACK IN WHITE","Disconnect thick black cable and plug it into white socket")) #a speaker explodes
-        choices.append(("BLUE IN BLUE","Plug blue cable into blue socket")) # nothing happens. if left this way, one speaker will later have a (harmless) feedback
-        choices.append(("REDWHITE IN WHITE","disconnect red/white striped cable and plug it in white socket"))  # screen comes to life, displaying an audiovawe of your panting.
-        choices.append(("REDWHITE IN BLUE","disconnect red/white striped cable and plug it in blue socket")) # screen remains static, but what looks like flags seems to faintly fly in the background.
-        choices.append(("THICK BLUE IN WHITE","Disconnect thick Blue cable and plug it into white socket")) #nothing happens (key to make it work)
-        choices.append(("TASTE BLACK","disconnect thick black cable and taste it.")) # yeah.. death.
-        choices.append(("YELLOW IN BLACK","plug yellow cable into black socket")) #com system shuts down
-        choices.append(("TASTE YELLOW","taste yellow cable")) #this acually works... after you plug blue into white
+        choices.append(("THICK BLACK IN WHITE",T("AUXCOM_WIREOPTION_1"))) #a speaker explodes
+        choices.append(("BLUE IN BLUE",("AUXCOM_WIREOPTION_2"))) # nothing happens. if left this way, one speaker will later have a (harmless) feedback
+        choices.append(("REDWHITE IN WHITE",T("AUXCOM_WIREOPTION_3")))  # screen comes to life, displaying an audiovawe of your panting.
+        choices.append(("REDWHITE IN BLUE",T("AUXCOM_WIREOPTION_4"))) # screen remains static, but what looks like flags seems to faintly fly in the background.
+        choices.append(("THICK BLUE IN WHITE",T("AUXCOM_WIREOPTION_5"))) #nothing happens (key to make it work)
+        choices.append(("TASTE BLACK",T("AUXCOM_WIREOPTION_6"))) # yeah.. death.
+        choices.append(("YELLOW IN BLACK",T("AUXCOM_WIREOPTION_7"))) #com system shuts down
+        choices.append(("TASTE YELLOW",T("AUXCOM_WIREOPTION_8"))) #this acually works... after you plug blue into white
         random.shuffle(choices)
-        choices.append(("EXIT", "close panel"))
+        choices.append(("EXIT", T("AUXCOM_WIREOPTION_9")))
 
         cableLoop = True
 
         while cableLoop:
             text = ""
-            i, a = game.choose2(choices, "What will you try next?")
+            game.choose(choices, T("AUXCOM_WIREOPTION_CHOOSE"))
+            data = game.wait()
+            if data.Type != "action":
+                continue
+            i = data.index
+            a = data.tag
+            
             if a == "EXIT":
                 cableLoop = False
                 break #redundant?
@@ -173,112 +147,61 @@ Nothing seems to have changed though, still just beeps and static.
                     """
             #endof taste yellow
             elif a == "THICK BLACK IN WHITE":
-                text = "You disconnect the think black cable, and plug it into the white socket."
+                text = T("AUXCOM_WIREACTION_1A")
                 if systemStatus == "SHUTDOWN":
-                    text += "\nAt first, this seems to work, as the system seemed to turn back to life. Alas it were not to last."
-                text += """
-            
-Suddenly there was some sparks in the area aroud the white socket.
-You hear a faint hum.
-Then hum then turns into a screeching sound that increase in frequency and volume.
-Then a speaker explodes, and the system goes black{0}.
-You quickly disconnect the black cable, and put it back to where it was.
-You decide not to try that again.
-                """.format(" again" if systemStatus != "SHUTDOWN" else "")
+                    text += "\n" + T("AUXCOM_WIREACTION_1B")
+                text += "\n" + T("AUXCOM_WIREACTION_1C")
                 systemStatus = "SHUTDOWN"
                 choices.pop(i)
             #endof thick black in yellow
             elif a == "BLUE IN BLUE":
                 blueinblue = True
-                text = """
-You insert the blue cable in the blue socket.
-...
-*blip*
-....
-..
-Nothing...
-Other than a faint blip, nothing happened. You scratch this off the list.
-                """
+                text = T("AUXCOM_WIREACTION_2")
                 choices.pop(i)
             #endof blue in blue
             elif a == "REDWHITE IN WHITE":
-                text = "You plug the red-white striped cable in the white socket."
+                text = T("AUXCOM_WIREACTION_3A")
                 if systemStatus == "SHUTDOWN":
-                    text += "\nBut nothing happened, and the system is still shut down."
+                    text += "\n" + T("AUXCOM_WIREACTION_3B")
                 else:
-                    text += """
-The beeps stop, and you notice the screen stops playing static.
-You check the screen
-....
-'What th..'
-you are about to say when all you saw was a flat blue line.
-But then you noticed it made a wave as you talked.
-Well, that's very 'useful'
-                    """
-                text += "\nYou disconnect the red-white striped cable.\nThat was a blind end."
+                    text += "\n" + T("AUXCOM_WIREACTION_3C")
+                text += "\n" + T("AUXCOM_WIREACTION_3D")
                 choices.pop(i)
             #end of redwhite in white
             elif a == "REDWHITE IN BLUE":
-                text = "You plug the red-white striped cable in the blue socket."
+                text = T("AUXCOM_WIREACTION_4A")
                 if systemStatus == "SHUTDOWN":
-                    text += "\nBut nothing happened, and the system is still shut down."
+                    text += "\n"+T("AUXCOM_WIREACTION_4B")
                 else:
-                    text += """
-You hear an extra beep as you plug in the cable, but nothing else.
-The screen blinks, but seems to be back to show ing static.
-You check the screen, and you notice the screen now shows something behind the static.
-....
-'What the..'
-you say as you notice a number of red white and blue flags burned into the background of the static.
-Well, that's.. colorful...
-                    """
-                text += "\nYou disconnect the red-white striped cable.\nThat was a blind end."
+                    text += "\n"+T("AUXCOM_WIREACTION_4C")
+                text += "\n"+T("AUXCOM_WIREACTION_4D")
                 choices.pop(i)
             #endof redwhite in blue
             elif a == "THICK BLUE IN WHITE":
                 text = ""
                 if systemStatus == "SHUTDOWN":
                     if tblueinwhite:
-                        text += "\nYou unplug the thick blue cable, and plug it back in."
+                        text += "\n"+T("AUXCOM_WIREACTION_5A")
                     else:
-                        text += "\nYou plug the thick blue cable in the white slot"
-                    text += "\nBut nothing happened. The system is still shut down."
-                    text += "\nYou decide to leave the cable connected."
+                        text += "\n"+T("AUXCOM_WIREACTION_5B")
+                    text += "\n"+T("AUXCOM_WIREACTION_5C")
                 else:
                     if tblueinwhite:
-                        text += "\nYou unplug the thick blue cable, and plug it back in."
-                        text += "\nThe screen blinks with brief static, but once again displays black screen with the text 'ERROR - PLEASE REBOOT'."
+                        text += "\n"+T("AUXCOM_WIREACTION_5D")
                     else:
-                        text += """
-You plug the thick blue cable in the white slot
-You notise the screen suddenly stopped displaying static.
-You check the screen, and find it now displays a black background with a text in white
-        'ERROR - PLEASE REBOOT'
-                        """
+                        text += "\n"+T("AUXCOM_WIREACTION_5E")
                 tblueinwhite = True
             elif a == "TASTE BLACK":
-                text = """
-You unplug the big thick black cable, and stuck out your tongue to lick it.
-You're not sure why you just did that.
-As you somehow put the cable in your mouth, the world goes black.
-                """
-                game.setGameover(game, "You put a live power-cable in your mouth. Yeah, you are dead.")
+                text = T("AUXCOM_WIREACTION_6")
+                game.setGameover(game, T("AUXCOM_WIREACTION_6_GAMEOVER"))
                 runner.stop()
                 cableLoop = False #escape inner loop
             elif a == "YELLOW IN BLACK":
                 pass
                 if systemStatus == "SHUTDOWN":
-                    text = """
-You unplug the cable in the black slot, and plug in the yellow.
-Nothing happened, and the system is still shut down.
-You decide to undo it, plugging the black cable back in.
-                    """
+                    text = T("AUXCOM_WIREACTION_7A")
                 else:
-                    text = """
-You unplug the cable in the black slot, and plug in the yellow.
-As you plug in the yellow cable, there was a breif spark, then system shuts down.
-You decide to undo it, and never try that again, putting the black cable back in.
-                    """
+                    text = T("AUXCOM_WIREACTION_7B")
                     choices.pop(i)
                 systemStatus = "SHUTDOWN"
             game.rolltext(text)
@@ -292,7 +215,7 @@ You decide to undo it, and never try that again, putting the black cable back in
         if(systemStatus == "OK"):
             return dialoges.auxcom_contact(game)
         elif not game.getGameover(game):
-            game.showtext("You leave the AUX com alone.")
+            game.showtext("{AUXCOM_LEAVE_1}")
         #endregion auxcom repair
     def ladder():
         if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
@@ -336,11 +259,11 @@ You decide to undo it, and never try that again, putting the black cable back in
         knowledge = game.getdata("wheelC:knowledge", 0)
         game.setdata("wheelC:knowledge", knowledge)
         if knowledge <= 0:
-            base_navtext = game.story["MIDDLE_NAV_DESC_1"]
+            base_navtext = T("MIDDLE_NAV_DESC_1")
         elif knowledge == 1:
-            base_navtext = game.story["MIDDLE_NAV_DESC_2"]
+            base_navtext = T("MIDDLE_NAV_DESC_2")
         else:
-            base_navtext = game.story["MIDDLE_NAV_DESC_3"]
+            base_navtext = T("MIDDLE_NAV_DESC_3")
         runner.nodes = [
             Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_D}"), [
                 ("_", "{ACT_READ_SIGN}", sectionDdoor),

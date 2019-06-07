@@ -93,8 +93,10 @@ class UntitledUI:
         self.emptyframe(self.display)
         self.dispText = TKS.ScrolledText(master = self.display, state = TK.NORMAL, height = 60)
         self.dispText.pack(fill=TK.BOTH, expand = True, anchor="center")
-        self.dispText.insert(TK.END, "This is a\nloooooooong test\nof this scrollable text\nwidget.\nwell, long by standards of a codeline\nby GUI, this is quite short")
+        self.dispText.insert(TK.END, "")
         self.dispText.config(state = TK.DISABLED)
+        self.dispText.configure(bg='black', fg='cyan')
+        
 
     def writeToDisplay(self, text:str):
         self.dispText.config(state = TK.NORMAL)
@@ -231,11 +233,11 @@ class UntitledUI:
     def draw_navkeys(self, **args):
         self.emptyframe(self.navkeys)
 
-        self.nav_left  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("left"))
-        self.nav_up    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("up"))
-        self.nav_45    = TK.Button(master = self.navkeys, command= lambda: self.handleNav("45"))
-        self.nav_right = TK.Button(master = self.navkeys, command= lambda: self.handleNav("right"))
-        self.nav_down  = TK.Button(master = self.navkeys, command= lambda: self.handleNav("down"))
+        self.nav_left  = NavButton(master = self.navkeys, command= lambda: self.handleNav("left"))
+        self.nav_up    = NavButton(master = self.navkeys, command= lambda: self.handleNav("up"))
+        self.nav_45    = NavButton(master = self.navkeys, command= lambda: self.handleNav("45"))
+        self.nav_right = NavButton(master = self.navkeys, command= lambda: self.handleNav("right"))
+        self.nav_down  = NavButton(master = self.navkeys, command= lambda: self.handleNav("down"))
 
         #self.nav_45.grid(row=0, column=2, sticky="nsew")
         self.nav_left.grid(row=1, column=0, sticky="nsew")
@@ -268,6 +270,18 @@ class UntitledUI:
         self.nav_right .config(font = font, text = text_right, state = state_right)
         self.nav_down  .config(font = font, text = text_down, state = state_down)
         self.nav_45    .config(font = font, text = text_upright)
+
+class NavButton(TK.Button):
+    def __init__(self, master=None, cnf={}, **kwargs):
+        super().__init__(master, cnf, **kwargs)
+    def config(self, cnf=None, **kw):
+        if kw.get("state") == TK.NORMAL:
+            kw["bg"] = "green4"
+        elif kw.get("state") == TK.DISABLED:
+            kw["bg"] = "red4"
+        else:
+            kw["bg"] = "gray"
+        super().config(cnf, **kw)
 
 def testUI():
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")

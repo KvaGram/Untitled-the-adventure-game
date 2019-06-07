@@ -356,8 +356,185 @@ Stars, you realize. Stars flying upwards. You are staring into space!
 </MIDDLE_SEC_C_DOOR>
 
 <AUXCOM_INTRO>
-
+You find a large panel with a screen on wall next to you.
+It has the following text painted and engraved under it
+        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+        |   AUXILLARY COMS      |
+        |                       |
+        | FOR AUTHORIZED USE    |
+        |          ONLY         |
+        |_______________________|
+Under that you find a smaller panel that seem to invite you to push it.
 </AUXCOM_INTRO>
+<AUXCOM_LEAVE_1>
+You leave the auxillary communications panel alone
+</AUXCOM_LEAVE_1>
+<AUXCOM_LEAVE_2>
+You decide it is not worth bothering with, close the lower panel, and turn to leave.
+</AUXCOM_LEAVE_2>
+<AUXCOM_OPENQUEST_1>
+Push the lower panel?
+</AUXCOM_OPENQUEST_1>
+<AUXCOM_OPENQUEST_2>
+open the panel?
+</AUXCOM_OPENQUEST_2>
+<AUXCOM_STATUS_1>
+You push the panel. The panel lowers as a latch to reveal a keyboard.
+The screen turns on and displays the text
+        ' AUXILLARY COMS ONLINE. DO YOU WISH TO PLACE A CALL?'
+</AUXCOM_STATUS_1>
+<AUXCOM_STATUS_2>
+You push the panel.  The panel lowers as a latch to reveal a keyboard.
+The screen remains off for a while. Then you hear a beep.
+</AUXCOM_STATUS_2>
+<AUXCOM_STATUS_3>
+The screen turns on and displays the text
+        'CONNECTION RE-ESTABLISHED! DO YOU WISH TO PLACE A CALL?'
+</AUXCOM_STATUS_3>
+<AUXCOM_STATUS_4>
+You push the panel. The panel lowers as a latch to reveal a keyboard.
+</AUXCOM_STATUS_4>
+<AUXCOM_STATUS_5>
+The screen turns on, but displays static.
+Unseen speakers make some sort of repeated beeping pattern that
+seems oddly familiar, but you cannot quite place it.
+
+You notice a handle on the side of the panel the screen is on.
+</AUXCOM_STATUS_5>
+<AUXCOM_STATUS_6>
+Opening the panel you find a mess of vires, some of them lose.
+Unfortunetly, none of them are labled, and all have the same port shape.
+The only diffrence is the thinkness and color of the cables.
+
+You take a moment to brainstorm ideas on what do with with the cables.
+...
+..
+.
+You made a list of things you could try.
+</AUXCOM_STATUS_6>
+
+<AUXCOM_WIREOPTION_1>Disconnect thick black cable and plug it into white socket</AUXCOM_WIREOPTION_1>
+<AUXCOM_WIREOPTION_2>Plug blue cable into blue socket</AUXCOM_WIREOPTION_2>
+<AUXCOM_WIREOPTION_3>disconnect red/white striped cable and plug it in white socket</AUXCOM_WIREOPTION_3>
+<AUXCOM_WIREOPTION_4>disconnect red/white striped cable and plug it in blue socket</AUXCOM_WIREOPTION_4>
+<AUXCOM_WIREOPTION_5>Disconnect thick Blue cable and plug it into white socket</AUXCOM_WIREOPTION_5>
+<AUXCOM_WIREOPTION_6>disconnect thick black cable and taste it.</AUXCOM_WIREOPTION_6>
+<AUXCOM_WIREOPTION_7>plug yellow cable into black socket</AUXCOM_WIREOPTION_7>
+<AUXCOM_WIREOPTION_8>taste yellow cable</AUXCOM_WIREOPTION_8>
+<AUXCOM_WIREOPTION_9>close panel</AUXCOM_WIREOPTION_9>
+
+<AUXCOM_WIREOPTION_CHOOSE>What will you try next?</AUXCOM_WIREOPTION_CHOOSE>
+
+<AUXCOM_WIREACTION_1A>
+You disconnect the think black cable, and plug it into the white socket.
+</AUXCOM_WIREACTION_1A>
+<AUXCOM_WIREACTION_1B>
+At first, this seems to work, as the system seemed to turn back to life. Alas it were not to last.
+</AUXCOM_WIREACTION_1B>
+<AUXCOM_WIREACTION_1C>
+Suddenly there was some sparks in the area aroud the white socket.
+You hear a faint hum.
+Then hum then turns into a screeching sound that increase in frequency and volume.
+Then a speaker explodes, and the system goes black.
+You quickly disconnect the black cable, and put it back to where it was.
+You decide not to try that again.
+</AUXCOM_WIREACTION_1C>
+
+<AUXCOM_WIREACTION_2>
+You insert the blue cable in the blue socket.
+...
+*blip*
+....
+..
+Nothing...
+Other than a faint blip, nothing happened. You scratch this off the list.
+</AUXCOM_WIREACTION_2>
+
+<AUXCOM_WIREACTION_3A>
+You plug the red-white striped cable in the white socket.
+</AUXCOM_WIREACTION_3A>
+<AUXCOM_WIREACTION_3B>
+But nothing happened, and the system is still shut down.
+</AUXCOM_WIREACTION_3B>
+<AUXCOM_WIREACTION_3C>
+The beeps stop, and you notice the screen stops playing static.
+You check the screen
+....
+'What th..'
+you are about to say when all you saw was a flat blue line.
+But then you noticed it made a wave as you talked.
+Well, that's very 'useful'
+</AUXCOM_WIREACTION_3C>
+<AUXCOM_WIREACTION_3D>
+You disconnect the red-white striped cable.
+That was a blind end.
+</AUXCOM_WIREACTION_3D>
+
+<AUXCOM_WIREACTION_4A>
+You plug the red-white striped cable in the blue socket.
+</AUXCOM_WIREACTION_4A>
+<AUXCOM_WIREACTION_4B>
+But nothing happened, and the system is still shut down.
+</AUXCOM_WIREACTION_4B>
+<AUXCOM_WIREACTION_4C>
+You hear an extra beep as you plug in the cable, but nothing else.
+The screen blinks, but seems to be back to show ing static.
+You check the screen, and you notice the screen now shows something behind the static.
+....
+'What the..'
+you say as you notice a number of red white and blue flags burned into the background of the static.
+Well, that's.. colorful...
+</AUXCOM_WIREACTION_4C>
+<AUXCOM_WIREACTION_4D>
+You disconnect the red-white striped cable.
+That was a blind end.
+</AUXCOM_WIREACTION_4D>
+
+<AUXCOM_WIREACTION_5A>
+You unplug the thick blue cable, and plug it back in.
+</AUXCOM_WIREACTION_5A>
+<AUXCOM_WIREACTION_5B>
+You plug the thick blue cable in the white slot.
+</AUXCOM_WIREACTION_5B>
+<AUXCOM_WIREACTION_5C>
+But nothing happened. The system is still shut down.
+You decide to leave the cable connected.
+</AUXCOM_WIREACTION_5C>
+<AUXCOM_WIREACTION_5D>
+You unplug the thick blue cable, and plug it back in.
+The screen blinks with brief static,
+but once again displays black screen with the text 
+    'ERROR - PLEASE REBOOT'.
+</AUXCOM_WIREACTION_5D>
+<AUXCOM_WIREACTION_5E>
+You plug the thick blue cable in the white slot
+You notise the screen suddenly stopped displaying static.
+You check the screen, and find it now displays a black background with a text in white
+        'ERROR - PLEASE REBOOT'
+</AUXCOM_WIREACTION_5E>
+
+<AUXCOM_WIREACTION_6>
+You unplug the big thick black cable, and stuck out your tongue to lick it.
+You're not sure why you just did that.
+As you somehow put the cable in your mouth, the world goes black.
+</AUXCOM_WIREACTION_6>
+<AUXCOM_WIREACTION_6_GAMEOVER>
+You put a live power-cable in your mouth. Yeah, you're dead.
+</AUXCOM_WIREACTION_6_GAMEOVER>
+
+<AUXCOM_WIREACTION_7A>
+You unplug the cable in the black slot, and plug in the yellow.
+Nothing happened, and the system is still shut down.
+You decide to undo it, plugging the black cable back in.
+</AUXCOM_WIREACTION_7A>
+<AUXCOM_WIREACTION_7B>
+You unplug the cable in the black slot, and plug in the yellow.
+As you plug in the yellow cable, there was a breif spark, then system shuts down.
+You decide to undo it, and never try that again, putting the black cable back in.
+</AUXCOM_WIREACTION_7B>
+
+<AUXCOM_WIREACTION_8>
+</AUXCOM_WIREACTION_8>
 
 
 <!--Basic terms -->
