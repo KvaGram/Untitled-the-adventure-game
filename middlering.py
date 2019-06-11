@@ -118,33 +118,18 @@ def main(game:Game.Game):
             elif a == "TASTE YELLOW":
                 text = ""
                 if yellowtasted:
-                    text +="""
-You decide to try and lick the yellow cable again.
-...
-Yup, still tingley
-                    """
+                    text += "\n{AUXCOM_WIREACTION_8A}"
                 else:
                     yellowtasted = True
-                    text += """
-On a whim you decided to lick the end of the yellow cable.
-It had kind of a tingely taste to it."""
+                    text += "\n{AUXCOM_WIREACTION_8B}"
                 if tblueinwhite:
-                    text += """
-As you lick, you notice the system {0}boot, and a robotic voice comes the the speakers.
-"<<CONNECTION RE-ESTABLISHED! DO YOU WISH TO PLACE A CALL?>>"
-                    """.format("re" if systemStatus != "SHUTDOWN" else "")
+                    text += "\n{AUXCOM_WIREACTION_8C}"
                     systemStatus = "OK"
                 elif systemStatus == "SHUTDOWN":
-                    text += """
-As you lick the cable, the com-system suddenly comes back to life!
-Though it is back to just beeps and static
-                    """
+                    text += "\n{AUXCOM_WIREACTION_8D}"
                     systemStatus = "BROKEN"
                 else:
-                    text += """
-The system blinks and reboots.
-Nothing seems to have changed though, still just beeps and static.
-                    """
+                    text += "\n{AUXCOM_WIREACTION_8E}"
             #endof taste yellow
             elif a == "THICK BLACK IN WHITE":
                 text = T("AUXCOM_WIREACTION_1A")

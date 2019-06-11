@@ -533,8 +533,27 @@ As you plug in the yellow cable, there was a breif spark, then system shuts down
 You decide to undo it, and never try that again, putting the black cable back in.
 </AUXCOM_WIREACTION_7B>
 
-<AUXCOM_WIREACTION_8>
-</AUXCOM_WIREACTION_8>
+<AUXCOM_WIREACTION_8A>
+You decide to try and lick the yellow cable again.
+...
+Yup, still tingley
+</AUXCOM_WIREACTION_8A>
+<AUXCOM_WIREACTION_8B>
+On a whim you decided to lick the end of the yellow cable.
+It had kind of a tingely taste to it.
+</AUXCOM_WIREACTION_8B>
+<AUXCOM_WIREACTION_8C>
+As you lick, you notice the system reboot, and a robotic voice comes the the speakers.
+"(( CONNECTION RE-ESTABLISHED! DO YOU WISH TO PLACE A CALL? ))"
+</AUXCOM_WIREACTION_8C>
+<AUXCOM_WIREACTION_8D>
+As you lick the cable, the com-system suddenly comes back to life!
+Though it is back to just beeps and static
+</AUXCOM_WIREACTION_8D>
+<AUXCOM_WIREACTION_8E>
+The system blinks and reboots.
+Nothing seems to have changed though, still just beeps and static.
+</AUXCOM_WIREACTION_8E>
 
 
 <!--Basic terms -->
