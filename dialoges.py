@@ -2,30 +2,43 @@
 #for long dialoges or nerratives that take up much space in a module, or that could be called from multible places.
 #import game_utilities as game
 
+import Game
+
 def auxcom_contact(game):
+    T = Game.Gettexter(game)
     #region auxcom
     cargoConnected = game.getdata("auxcom:cargo", False)
     if cargoConnected:
         return auxcom_cargo(game)
-    text = """
-A list of communication nodes show up on the screen.
-Some of them with an error-message saying they are offline
-    """
+    game.rolltext("{AUXCOM2_INTRO}")
     choices = [
-        ("BRIDGE", "Connect to main bridge com system"),
-        ("ENGINEERING", "Connect to main engineering"),
-        ("RADIATION SHELTER 1", "Connect to radiation shelter One"),
-        ("RADIATION SHELTER 2", "Connect to radiation shelter Two"),
-        ("RADIATION SHELTER 3", "Connect to radiation shelter Three"),
-        ("RADIATION SHELTER 4", "Connect to radiation shetter Four"),
-        ("WHEEL A AUXCOM", "Connect to Auxillary coms, wheel One"),
-        ("WHEEL B AUXCOM", "Connect to Auxillary coms, wheel two"),
-        ("WHEEL D AUXCOM", "Connect to Auxillary coms, wheel four"),
-        ("CARGO", "Connect to main cargo bay"),
-        ("EXIT", "Exit the auxillary com system")
+        ("BRIDGE", T("AUXCOM2_COMOP_1")),
+        ("ENGINEERING", T("AUXCOM2_COMOP_2")),
+        ("RADIATION SHELTER 1", T("AUXCOM2_COMOP_3")),
+        ("RADIATION SHELTER 2", T("AUXCOM2_COMOP_4")),
+        ("RADIATION SHELTER 3", T("AUXCOM2_COMOP_5")),
+        ("RADIATION SHELTER 4", T("AUXCOM2_COMOP_6")),
+        ("WHEEL A AUXCOM", T("AUXCOM2_COMOP_7")),
+        ("WHEEL B AUXCOM", T("AUXCOM2_COMOP_8")),
+        ("WHEEL D AUXCOM", T("AUXCOM2_COMOP_9")),
+        ("CARGO", T("AUXCOM2_COMOP_CARGO")),
+        ("EXIT", T("AUXCOM2_COMOP_EXIT")),
     ]
     
-    useGenericNoResponse = (
+    responsekey = {
+        "BRIDGE" : "{AUXCOM2_NO_RESP_1}",
+        "ENGINEERING" : "{AUXCOM2_NO_RESP_1}",
+        "RADIATION SHELTER 1" : "{AUXCOM2_NO_RESP_1}",
+        "RADIATION SHELTER 2" : "{AUXCOM2_NO_RESP_1}",
+        "RADIATION SHELTER 3" : "{AUXCOM2_NO_RESP_1}",
+        "RADIATION SHELTER 4" : "{AUXCOM2_NO_RESP_1}",
+        "WHEEL A AUXCOM" : "{AUXCOM2_NO_RESP_1}",
+        "WHEEL B AUXCOM" : "{AUXCOM2_NO_RESP_1}",
+        "WHEEL D AUXCOM" : "{AUXCOM2_NO_RESP_1}",
+        "CARGO" :   "{AUXCOM2_RESP_CARGO}",
+        "EXIT"  :   "{AUXCOM2_RESP_EXIT}"
+    }
+    duds = (
         "BRIDGE",
         "ENGINEERING",
         "RADIATION SHELTER 1",
@@ -34,41 +47,24 @@ Some of them with an error-message saying they are offline
         "RADIATION SHELTER 4",
         "WHEEL A AUXCOM",
         "WHEEL B AUXCOM",
-        "WHEEL D AUXCOM"
-    ) #some of these are placeholders
-    game.rolltext(text)
-    makingCall = True
-    while(makingCall):
-        text = ""
-        ind, labl = game.choose2(choices, "Who do you wish to contact?")
-        if labl == "EXIT":
-            text = "You close the lower panel, shutting down the system"
-            makingCall = False
-        elif labl in useGenericNoResponse:
-            text = """
-You attempt to make your connection.
-...
-....
-.....
-... ....
-... .... .....
-ERROR: CONNECTION TIMED OUT, SYSTEM MAY BE OFFLINE!
-            """
-            choices.pop(ind)
-        
-        elif labl == "CARGO":
-            game.rolltext("""
-You attempt to make your connection.
-...
-....
-.. '-oming from inside Wheel C!' 'What?! Hello, who's there!?'
-You hear two voices from the com system.
-            """)
-            makingCall = False #sweet clean redundancy
+        "WHEEL D AUXCOM",
+    )
+    while(True):
+        game.choose(choices, "{AUXCOM2_CONTACTQUEST}")
+        data:Game.ActDataInput = game.wait()
+        tag = data.tag
+        if(data.Type != "action"):
+            continue
+        game.rolltext(responsekey.get(tag, "..."))
+        if tag == "EXIT":
+            break
+        elif tag in duds:
+            choices.pop(tag)
+        elif tag == "CARGO":
             return auxcom_cargo(game)
-        game.rolltext(text)
     #endregion auxcom2
 def auxcom_cargo(game):
+    T = Game.Gettexter(game)
     #Note: Whatever the dialoge, it is up to the player what to do afterwards.
     asshole = game.getdata("auxcom:asshole", False)
     reactorFixed = game.getdata("reactorC:fixed", False)
@@ -88,24 +84,12 @@ def auxcom_cargo(game):
     if prevcontact:
         #TODO: alternate contact for returning to auxcom
         if asshole:
-            game.rolltext("What? You again? uhm.. sorry, just lost connection!\n(call disconnected!)")
+            game.rolltext("{AUXCOM3_INTRO_ASS}")
         elif reactorFixed:
             if not thankedForReactor:
-                game.rolltext("""
-Hey! Good job with the reactor!
-The accellerator seems to be running stable for now.
-It will not last long, but at least we aren't in a hurry any more.
-Looks like we got maybe two hours. Though bestnot wait that long.
-
-Alright, what I need you to do now, is to rescue everyone who is stuck in stasis.
-Any questions?
-                """)
+                game.rolltext("{AUXCOM3_INTRO_THANKS}")
             else:
-                game.rolltext("""
-Hello again.
-Again, thanks for fixing the reactor. We still got some time.
-Did you have more questions?
-                """)
+                game.rolltext("{AUXCOM3_INTRO_RETURN}")
             choices = (
                 ("CODE", "What was that code again?"),
                 ("TRUTH","Exacly what happened?"),
@@ -183,31 +167,28 @@ But the important thing now is to get you and everyone else stuck in the module 
                     """)
                 game.showtext("Did you have more questions?")
         else:
-            game.rolltext("""
-Hi?
-Look, our systems say the reactor is still in a bad condition!
-We don't have time to chat!
-Either fix the reactor, or get out of there!
-            """)
+            game.rolltext("{AUXCOM3_INTRO_PLZFIX}")
     else:
-        game.showtext("The people on the other side of the call is waiting for you to answer.")
+        game.showtext("{AUXCOM_CONTACT_MADE}")
         choices = [
-            ("I'm {0}. I'm lost, where am I?".format(name)),
-            ("Help, I don't know who or where I am!"),
-            ("uhh"),
-            ("I.. I think my name is {0}. I find it hard to remember.".format(name))
+            ("", T("AUXCOM_DIALOGE_1_OPTION_1")),
+            ("", T("AUXCOM_DIALOGE_1_OPTION_2")),
+            ("", T("AUXCOM_DIALOGE_1_OPTION_3")),
+            ("", T("AUXCOM_DIALOGE_1_OPTION_4")),
         ]
         ind, ans = game.choose2(choices, "What do I say?")
         game.showtext(">>"+ans)
-        p = "mister" if gender == "male" else "miss"
         if ind == 0 or ind == 3:
             p = name
+        elif gender == "male":
+            p = T("GENDERED_1_MALE")
+        else:
+            p = T("GENDERED_1_FEMALE")
+
     
         if(reactorFixed):
-            game.rolltext("""
-Ok, {0}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
-        """)
-            admitfix = game.yesno("Was it?")
+            game.rolltext("{AUXCOM_DIALOGE_1_REACTOR_QUEST}",frags={"_P":p})
+            admitfix = game.yesno(T("QWASIT"))
             reactorText1 = ""
             reactorText2 = ""
             if(admitfix):

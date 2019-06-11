@@ -5,8 +5,11 @@ import tkinter as TK
 import time
 import random
 import sys
+import re
+
 import Storyloader
 from tkinter import messagebox as TKmsg
+
 
 class Game:
     def __init__(self, tkroot:TK.Tk, version:(int,int,int), language:str = "english"):
@@ -57,7 +60,7 @@ class Game:
             return
         n = self.Navdata
         if n.refresh:
-            self.ui.set_navtext(self.retext(self.Navdata.navtext))
+            self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
@@ -68,17 +71,25 @@ class Game:
             self.tkroot.update_idletasks()
         except (TK.TclError):
             return
-    # retext runs format_map twice.
-    # The custom dict, formatdict, defaults missing keys with original tag.
-    # First pass replaces {game} and {story} tags, where story tags are text to be fetched from a translatable file. (TODO)
-    # Secund pass replaces any lingering {game} tags, where text are to be fetched from this class (see region getters)
-    def retext(self, text:str):
+    # retext runs format_map untill the text is formatted (or up to 5 times)
+    # Fills inn all the tags that may show up:
+    # game tags: example {game.PlayerSomething} - always starts with 'game.'
+    # story tags example {EPIC_PART_9} - Always all caps
+    # fragment parts {*OPTIONAL_3} - Always starts with star*
+    #
+    # Game tags gets data from the game state.
+    # Story tags gets data from the nerrative text,
+    # fragment tags gets data from the module code (usually a story tag that may alternate)
+    def retext(self, text:str, frags:dict):
         if type(text) == str:
-            text = text.format_map(formatdict(game = self, **self.story))
-            text = text.format_map(formatdict(game = self))
+            i = 0
+            reg = r'(?<=(?<!\{)\{)[^{}]*(?=\}(?!\}))'
+            while i < 5 and re.search(reg, text):
+                text = text.format_map(formatdict(game = self, **self.story, **frags))
+                i += 1
         elif type(text) == list:
             for i in range(len(text)):
-                text[i] = self.retext(text[i])
+                text[i] = self.retext(text[i], frags)
         return text
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
@@ -93,9 +104,9 @@ class Game:
         else:
             raise NotImplementedError
 
-    def choose(self, _list, message = "{GAME_MAKECHOICE}", wait = False):
-        _list = self.retext(_list)
-        message = self.retext(message)
+    def choose(self, _list, message = "{GAME_MAKECHOICE}", wait = False, frags = {}):
+        _list = self.retext(_list, frags)
+        message = self.retext(message, frags)
         self.ui.draw_actions(label = message, actions = _list)
         self.update()
         if wait:
@@ -128,17 +139,17 @@ class Game:
         if wait:
             return self.waitfor("action", "True")
         return self.choose(choices, message, wait)
-    def textin(self, fields = [["Input", ""],], entertext = "ENTER", wait = False, **kwargs ):
-        entertext = self.retext(entertext)
+    def textin(self, fields = [["Input", ""],], entertext = "ENTER", wait = False, frags = {}, **kwargs ):
+        entertext = self.retext(entertext, frags)
         self.ui.draw_textinputs(fields = fields, entertext = entertext, **kwargs)
         if wait:
             return self.wait()
-    def showtext(self, txt:str):
-        txt = self.retext(txt)
+    def showtext(self, txt:str, frags:dict = {}):
+        txt = self.retext(txt, frags)
         self.ui.writeToDisplay(txt)
         self.update()
-    def rolltext(self, txt:str, linepause:float = 0.1):
-        txt = self.retext(txt)
+    def rolltext(self, txt:str, linepause:float = 0.1, frags:dict = {}):
+        txt = self.retext(txt, frags)
         lines = txt.splitlines()
         for l in lines:
             self.showtext(l)
@@ -146,8 +157,8 @@ class Game:
     #runs as rolltext, but yields if an input is pressed.
     #For use in skippable text, and/or some action can be done while it runs.
     #Yields first the input data, then the list and next index.
-    def rolltextWait(self, txt:str, linepause:float = 0.1):
-        txt = self.retext(txt)
+    def rolltextWait(self, txt:str, linepause:float = 0.1, frags:dict = {}):
+        txt = self.retext(txt, frags)
         lines = txt.splitlines()
         for i in len (lines):
             l = lines[i]
@@ -345,6 +356,14 @@ class Game:
         self.rolltext(creditsText, 0.1)
         f.close()
     #endregion general_functions
+
+#Gettexter generates a function T as a shortcut for getting text from game.story.
+#This intended for use by other modules.
+def Gettexter(game:Game):
+    def T(storytag:str)->str:
+        fallback = "(({0}))".format(storytag)
+        return game.story.get(storytag, fallback)
+    return T
 
 class Counterdata:
     def __init__(self, game:Game, **args):

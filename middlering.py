@@ -20,9 +20,7 @@ class MiddleRunner(Game.PlaceRunner1D):
     #TODO: Continue writing replacement for middleroomnav
 
 def main(game:Game.Game):
-    def T(storytag:str)->str:
-        fallback = "(({0}))".format(storytag)
-        return game.story.get(storytag, fallback)
+    T = Game.Gettexter(game)
 
     navdata = game.Navdata
     runner:MiddleRunner = MiddleRunner(game)

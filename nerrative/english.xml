@@ -1,4 +1,24 @@
 <story>
+<!--
+README:
+This document contains all text that are displayed in Untitled!
+If you work on this, take case to preserve the integrety of the outer tags
+        start < TAG > end </ TAG >
+Please also respect the inner tags when reworking text. {TAG}
+Inner tags are filled in by the game as loaded.
+There are three types or inner tag
+
+ game tags: example {game.PlayerSomething} - always starts with 'game.'
+        Game tags gets data from the game state.
+ story tags example {EPIC_PART_9} - Always all caps
+        Story tags gets data from the nerrative text (this document)
+ fragment parts {*OPTIONAL_3} - Always starts with star*
+        fragment tags gets data from the module code
+        usually a story tag that may alternate between playthoughs
+
+-->
+
+
 <TITLE_TITLENAME>
 Untitled! The adventure game
 </TITLE_TITLENAME>
@@ -171,6 +191,8 @@ You take it with you.
 <BATH_OPTION_LOCKERS>Go to the locker room</BATH_OPTION_LOCKERS>
 
 
+<!-- {0} is sector letter (A or B)
+     {1} is name of local node/place (see below) -->
 <OUTER_NAV_DESC_1>
  - Habitat Wheel C
  - Outer ring
@@ -555,6 +577,99 @@ The system blinks and reboots.
 Nothing seems to have changed though, still just beeps and static.
 </AUXCOM_WIREACTION_8E>
 
+<AUXCOM2_INTRO>
+A list of communication nodes show up on the screen.
+Some of them with an error-message saying they are offline
+</AUXCOM2_INTRO>
+
+<AUXCOM2_CONTACTQUEST>Who do you wish to contact?</AUXCOM2_CONTACTQUEST>
+
+<AUXCOM2_COMOP_1>Connect to main bridge com system</AUXCOM2_COMOP_1>
+<AUXCOM2_COMOP_2>Connect to main engineering</AUXCOM2_COMOP_2>
+<AUXCOM2_COMOP_3>Connect to radiation shelter One</AUXCOM2_COMOP_3>
+<AUXCOM2_COMOP_4>Connect to radiation shelter Two</AUXCOM2_COMOP_4>
+<AUXCOM2_COMOP_5>Connect to radiation shelter Three</AUXCOM2_COMOP_5>
+<AUXCOM2_COMOP_6>Connect to radiation shetter Four</AUXCOM2_COMOP_6>
+<AUXCOM2_COMOP_7>Connect to Auxillary coms, wheel One</AUXCOM2_COMOP_7>
+<AUXCOM2_COMOP_8>Connect to Auxillary coms, wheel two</AUXCOM2_COMOP_8>
+<AUXCOM2_COMOP_9>Connect to Auxillary coms, wheel four</AUXCOM2_COMOP_9>
+<AUXCOM2_COMOP_CARGO>Connect to main cargo bay</AUXCOM2_COMOP_CARGO>
+<AUXCOM2_COMOP_EXIT>Exit the auxillary com system</AUXCOM2_COMOP_EXIT>
+
+<AUXCOM2_NO_RESP_1>
+You attempt to make your connection.
+...
+....
+.....
+... ....
+... .... .....
+ERROR: CONNECTION TIMED OUT, SYSTEM MAY BE OFFLINE!
+</AUXCOM2_NO_RESP_1>
+
+<AUXCOM2_RESP_CARGO>
+You attempt to make your connection.
+...
+....
+.. '-oming from inside Wheel C!' 'What?! Hello, who's there!?'
+You hear two voices from the com system.
+</AUXCOM2_RESP_CARGO>
+
+<AUXCOM2_RESP_EXIT>
+You close the lower panel, shutting down the system
+</AUXCOM2_RESP_EXIT>
+
+<AUXCOM3_INTRO_ASS>
+What? You again? uhm.. sorry, just lost connection!
+(call disconnected!)
+</AUXCOM3_INTRO_ASS>
+
+<AUXCOM3_INTRO_THANKS>
+Hey! Good job with the reactor!
+The accellerator seems to be running stable for now.
+It will not last long, but at least we aren't in a hurry any more.
+Looks like we got maybe two hours. Though bestnot wait that long.
+
+Alright, what I need you to do now, is to rescue everyone who is stuck in stasis.
+Any questions?
+</AUXCOM3_INTRO_THANKS>
+
+<AUXCOM3_INTRO_RETURN>
+Hello again.
+Again, thanks for fixing the reactor. We still got some time.
+Did you have more questions?
+</AUXCOM3_INTRO_RETURN>
+
+<AUXCOM3_INTRO_PLZFIX>
+Hi?
+Look, our systems say the reactor is still in a bad condition!
+We don't have time to chat!
+Either fix the reactor, or get out of there!
+</AUXCOM3_INTRO_PLZFIX>
+
+<AUXCOM_CONTACT_MADE>
+The people on the other side of the call is waiting for you to answer.
+</AUXCOM_CONTACT_MADE>
+
+<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1_OPTION_1>
+<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1_OPTION_2>
+<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1_OPTION_3>
+<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1_OPTION_4>
+
+<!-- Fragmented text, filled in-game
+{_P} - player name or (mister/miss) See GENDERED_1-->
+<AUXCOM_DIALOGE_1_REACTOR_QUEST>
+Ok, {_P}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
+</AUXCOM_DIALOGE_1_REACTOR_QUEST>
+
+<!-- 
+{_P} - player name or (mister/miss) See GENDERED_1
+-->
+<AUXCOM_DIALOGE_1_PART_1A>
+</AUXCOM_DIALOGE_1_PART_1A>
+<AUXCOM_DIALOGE_1_PART_1B>
+</AUXCOM_DIALOGE_1_PART_1B>
+
+
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
@@ -566,6 +681,14 @@ Nothing seems to have changed though, still just beeps and static.
 <BROTHER>brother</BROTHER>
 <WIFE>wife</WIFE>
 <SISTER>sister</SISTER>
+
+<QWASIT>Was it?</QWASIT>
+
+<GENDERED_1_MALE>mister</GENDERED_1_MALE>
+<GENDERED_1_FEMALE>miss</GENDERED_1_FEMALE>
+
+<GENDERED_2_MALE>man</GENDERED_2_MALE>
+<GENDERED_2_FEMALE>lady</GENDERED_2_FEMALE>
 
 <!--End of file-->
 </story>
