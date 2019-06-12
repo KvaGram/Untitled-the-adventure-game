@@ -388,6 +388,9 @@ class FamPerson:
     def GenderedRole(self):
         return self.game.getGenderedRole(self.role, self.gender)
     @property
+    def GenderedRolePlayer(self):
+        return self.game.getGenderedRole(self.role, self.game.PlayerGender)
+    @property
     def RoleCounterpart(self):
         return self.game.roleCounterpart(self.role)
 class Navdata:

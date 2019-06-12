@@ -64,6 +64,7 @@ def auxcom_contact(game):
             return auxcom_cargo(game)
     #endregion auxcom2
 def auxcom_cargo(game):
+    localfrags = {}
     T = Game.Gettexter(game)
     #Note: Whatever the dialoge, it is up to the player what to do afterwards.
     asshole = game.getdata("auxcom:asshole", False)
@@ -176,79 +177,55 @@ But the important thing now is to get you and everyone else stuck in the module 
             ("", T("AUXCOM_DIALOGE_1_OPTION_3")),
             ("", T("AUXCOM_DIALOGE_1_OPTION_4")),
         ]
-        ind, ans = game.choose2(choices, "What do I say?")
-        game.showtext(">>"+ans)
+        while True:
+            game.choose(choices, T("AUXCOM_DIALOGE_1_QUEST"))
+            data = game.wait()
+            if data:
+                if data.Type != "action":
+                    continue
+                ind = data.index
+                break
+        #game.showtext(">> "+choices[ind][1])
         if ind == 0 or ind == 3:
             p = name
         elif gender == "male":
             p = T("GENDERED_1_MALE")
         else:
             p = T("GENDERED_1_FEMALE")
-
-    
+        localfrags['_P'] = p
         if(reactorFixed):
-            game.rolltext("{AUXCOM_DIALOGE_1_REACTOR_QUEST}",frags={"_P":p})
+            game.rolltext("{AUXCOM_DIALOGE_1B_REACTOR_QUEST}",frags=localfrags)
             admitfix = game.yesno(T("QWASIT"))
-            reactorText1 = ""
-            reactorText2 = ""
+            localfrags['_REACT_1'] = ""
+            localfrags['_REACT_2'] = ""
             if(admitfix):
-                reactorText1 = "Well, thanks for that, {0}. We were starting to sweat bullets up here."
-                reactorText2 = "Thanks for fixing the reactor! Klara told me you were good with machines, {2}. I guess this proves it."
+                localfrags['_REACT_1'] = "{AUXCOM_DIALOGE_1B_PART_1A}"
+                localfrags['_REACT_2'] = "{AUXCOM_DIALOGE_1B_PART_2A}"
             else:
-                reactorText1 =  "No? Well, if there are more of you awake down there {0}, you should get in contact with them as soon as possible.\n"
-                reactorText1 += "They would likly be down in the outer ring, right below you."
-                reactorText2 =  "It was you who fixed the reactor, wasen't it? Klara warned me you were as good a jokesteer as an engineer, {2}.\n"
-                reactorText2 += "Besides, I can tell. Your voice carries some residual effect from someone resently exposed to micro-time loops."
-            game.rolltext("""
-{3}
-They would likly be down in the outer ring, right below you.
-Anyways, please hold the line for a bit, I'm gonna get some help.
-(The woman you were talking leaves)
-...
-(A man, an engineer by the looks of his attire, takes her place)
-Alright, {0}, I am not gonna lie. You are in a bit of trouble.
-But thanks to the temporary fix to the reactor, we got some time.
-First of, since we got the time, let me explain what has happened.
-
-You are onboard the UNS Armstrong on route from Sol to Alpha Centauri.
-If this seems unfamiliar to you, this may be due stasis-amnesia,
-a common condition caused by emergency awakening from stasis.
-On the way, there was a glitch i..
-(the man is rudely interrupted by a third person)
-Hey! I know you. You're Klara's {1} right?
-Thanks for fixing the reactor! Klara told me you were good with machines, {2}, I guess this proves it.
-{4}
-We should probobly have you checked out in the infirmery once you get up here.
-But for now, we need your help.
-
-About two hundered people were stuck in stasis during the evacuation.
-It is up to you. With the reactor temporarally fixed, we got maybe two hours before we need to detach the module.
-I need you to climb up to the outer ring, and awake everyone who is still alive in there.
-You will need a securitycode to enter the stasis chambers. The code is 0-0-0-0-0.
-Yes, really. just 0-0-0-0-0.
-
-Any questions?
-            """.format(p, game.getGenderedTerm(klara, gender), name, reactorText1, reactorText2))
+                localfrags['_REACT_1'] =  "{AUXCOM_DIALOGE_1B_PART_1B}"
+                localfrags['_REACT_2'] = "{AUXCOM_DIALOGE_1B_PART_2B}"
+            game.rolltext("{AUXCOM_DIALOGE_1B}")
             choices = (
-                ("WHY_ME", "Why can't you save them?"),
-                ("WEAK_CODE", "Why the simple code?"),
-                ("EXIT", "No. I'm on my way")
+                ("WHY_ME", T("AUXCOM_DIALOGE_2B_OPTION_1")),
+                ("WEAK_CODE", T("AUXCOM_DIALOGE_2B_OPTION_2")),
+                ("EXIT", T("AUXCOM_DIALOGE_2B_OPTION_3"))
                 )
-            c = None
-            while (c != 2):
-                c, ans = game.choose2(choices, "How do you respond?", "<< {2}")
-                if ans == "WHY_ME":
+            while (True:
+                game.choose(choices, "{AUXCOM_DIALOGE_2B_QUEST}")
+                data = game.wait()
+                if not data or data.Type != "action":
+                    continue
+                if data.tag == "WHY_ME":
                     game.rolltext("""
-There is a problem with the doors up here. Look, it's complicated. sufficed to say, we can't go in, but you and anyone you rescue can come out.
-I'm not a door technician, I barely understand the problem myself. Not sure if we got the time for me to properly explain it.
+{AUXCOM_DIALOGE_2B_WHY}
                     """)
-                elif ans == "WEAK_CODE":
+                elif data.tag == "WEAK_CODE":
                     game.rolltext("""
 Well.. yeah.. we never expected there to ever be some kind of security issue onboard,
 and we kinda still don't, so we never bothered to change the factory settings.
 Don't worry about it.
                     """)
-                elif ans == "EXIT":
+                elif data.tag == "EXIT":
                     game.rolltext("Good luck.\n(Call disconnected)")
                     break
             game.setdata("auxcom:stasispasskey", True)
@@ -257,23 +234,23 @@ Don't worry about it.
         
     # If the reactor is not yet fixed:
         game.rolltext("""
-Ok. {0}, I need you to stay calm. I'm gonna get some help
+Ok. {_P}, I need you to stay calm. I'm gonna get some help
 (The woman you were talking leaves)
 ...
 (A man, an engineer by the looks of his attire, takes her place)
-Ok, {0}. I am not gonna lie, you are in a bit of touble. We are gonna do what we can to help you.
+Ok, {_P}. I am not gonna lie, you are in a bit of touble. We are gonna do what we can to help you.
 You are onboard the UNS Armstrong on route from Sol to Alpha Centauri.
 If this seems unfamiliar to you, this may be due stasis-amnesia,
 a common condition caused by emergency awakening from stasis.
 The reactor onboard is about to explode, so were about to detach the module when you contacted us.
 
-Look {0}, I need you to find the emergency ladd..
+Look {_P}, I need you to find the emergency ladd..
 (the man is rudely interrupted by a third person)
-Hey! I know you. You're Klara's {1} right?
+Hey! I know you. You're {game.FemaleFam.name}'s {game.FemaleFam.GenderedRolePlayer} right?
 You're a engineer, right? Maybe you could try to stabilize the reactor temporarily?
 There are still lots of people stuck in stasis in the upper ring!
 
-Look, {2}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
+Look, {game.PlayerName}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
         """.format(p, game.getGenderedTerm(klara, gender), name))
         choices = [
             ("Screw them! I'm out of here! I'm gonna climb down and get out of here!"), #ignorant idiot option

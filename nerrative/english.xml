@@ -202,8 +202,36 @@ You take it with you.
 <BATH_OPTION_SHOWER>Go the the showers</BATH_OPTION_SHOWER>
 <BATH_OPTION_LOCKERS>Go to the locker room</BATH_OPTION_LOCKERS>
 
+<!--  -->
+<NAV_DESC_TEMPLATE>
+ - {_WHEEL}
+ - {_RINGNAME}
+ - {_SECTORNAME}
+ - {_LOCAL_NAME}
+</NAV_DESC_TEMPLATE>
 
-<!-- {0} is sector letter (A or B)
+<WHEEL_C_NAME_1>
+Habitat Wheel C
+</WHEEL_C_NAME_1>
+
+<WHEEL_C_NAME_2>
+Unknown place
+</WHEEL_C_NAME_2>
+
+<SECTOR_A_TERM_1>
+Sector A
+</SECTOR_A_TERM_1>
+
+<SECTOR_A_TERM_2>
+Mysterius corridor
+</SECTOR_A_TERM_2>
+
+<SECTOR_B_TERM>
+Sector B
+</SECTOR_B_TERM>
+
+<!-- this navtext is to be replaced by above template
+     {0} is sector letter (A or B)
      {1} is name of local node/place (see below) -->
 <OUTER_NAV_DESC_1>
  - Habitat Wheel C
@@ -213,10 +241,13 @@ You take it with you.
 </OUTER_NAV_DESC_1>
 <OUTER_NAV_DESC_2>
  - Habitat Wheel C
- - Maintenence and disections ring
+ - {OUTER_RING_NAME}
  - sector {0}
  {1}
 </OUTER_NAV_DESC_2>
+<OUTER_RING_NAME>
+Maintenence and disections ring
+</OUTER_RING_NAME>
 
 <MIDDLE_NAV_DESC_1>
  - Unknown place
@@ -255,7 +286,7 @@ You take it with you.
 </MIDDLE_NAV_TO_SEC_D>
 <MIDDLE_NAV_TO_BATH>
  - Outside a
- - communal bathroom
+ - Public bathroom
 </MIDDLE_NAV_TO_BATH>
 <MIDDLE_NAV_DOOR_2A68>
  - A familiar door
@@ -662,26 +693,131 @@ Either fix the reactor, or get out of there!
 The people on the other side of the call is waiting for you to answer.
 </AUXCOM_CONTACT_MADE>
 
-<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1_OPTION_1>
-<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1_OPTION_2>
-<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1_OPTION_3>
-<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1_OPTION_4>
+<AUXCOM_DIALOGE_1_QUEST>
+What do you say?
+</AUXCOM_DIALOGE_1_QUEST>
 
-<!-- Fragmented text, filled in-game
-{_P} - player name or (mister/miss) See GENDERED_1-->
-<AUXCOM_DIALOGE_1_REACTOR_QUEST>
-Ok, {_P}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
-</AUXCOM_DIALOGE_1_REACTOR_QUEST>
+<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1B_OPTION_1>
+<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1B_OPTION_2>
+<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1B_OPTION_3>
+<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1B_OPTION_4>
 
-<!-- 
+<!-- AUXCOM_DIALOGE_1 fragments
 {_P} - player name or (mister/miss) See GENDERED_1
+{_REACT_1} see AUXCOM_DIALOGE_1B_PART_1 A and B
+{_REACT_2} see AUXCOM_DIALOGE_1B_PART_2 A and B
 -->
-<AUXCOM_DIALOGE_1_PART_1A>
-</AUXCOM_DIALOGE_1_PART_1A>
-<AUXCOM_DIALOGE_1_PART_1B>
-</AUXCOM_DIALOGE_1_PART_1B>
+<AUXCOM_DIALOGE_1B_REACTOR_QUEST>
+Ok, {_P}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
+</AUXCOM_DIALOGE_1B_REACTOR_QUEST>
+
+<AUXCOM_DIALOGE_1B_PART_1A>
+Well, thanks for that, {_P}. We were starting to sweat bullets up here.
+</AUXCOM_DIALOGE_1B_PART_1A>
+<AUXCOM_DIALOGE_1B_PART_1B>
+No? Well, then there must be more of you awake down there {_P},
+you should get in contact with them as soon as possible.
+They would likly be down below you in the outer ring
+also known as the {OUTER_RING_NAME}.
+</AUXCOM_DIALOGE_1B_PART_1B>
+
+<AUXCOM_DIALOGE_1B_PART_2A>
+Thanks for fixing the reactor! {game.FemaleFam.name} told me you were good with machines, {game.PlayerName}. I guess this proves it.
+</AUXCOM_DIALOGE_1B_PART_2A>
+<AUXCOM_DIALOGE_1B_PART_2B>
+It was you who fixed the reactor, wasen't it?
+{game.FemaleFam.name} warned me you were as good a jokesteer as an engineer, {game.PlayerName}.
+Besides, I can tell. Your voice carries some residual effect from someone resently exposed to micro-time loops.
+</AUXCOM_DIALOGE_1B_PART_2B>
+
+<AUXCOM_DIALOGE_1B>
+{_REACT_1}
+Anyways, please hold the line for a bit, I'm gonna get some help.
+(The woman you were talking leaves)
+...
+(A man, an engineer by the looks of his attire, takes her place)
+Alright, {_P}, I am not gonna lie. You are in a bit of trouble.
+But thanks to the temporary fix to the reactor, we got some time.
+First of, since we got the time, let me explain what has happened.
+
+The reason why you are having a hard time to remeber anything, is likly due to the stasis-pod.
+Amnesia is a side-effect of the stasis.
+Your memories will come back to you slowly over time.
+Quite slowly in fact.
+Last time it took me a year to even remeber the invasion.
+I suppose I should fill you in. Here's the short.
+
+We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
+Some 10 or so years ago now, the Ziruup Empire invaded Earth.
+Well, as much as you could call it an invasion.
+Their fighterplanes were armed with semi-automatic ballistas.
+And their soldiers were armed with primitive spears.
+From what we heard from the radio, they called it the "5 hour world war" back home.
+
+Still, they managed to abduct a good number of us from around the world befo..
+(the man is rudely interrupted by a third person)
+
+Hey! I know you. You're {game.FemaleFam.name}'s {game.FemaleFam.GenderedRolePlayer} right?
+Thanks for fixing the reactor! {game.FemaleFam.name} told me you were good with machines, {game.PlayerName}, I guess this proves it.
+{_REACT_2}
+We should probobly have you checked out in the infirmery once you get up here.
+But for now, we need your help.
+
+About two hundered people were stuck in stasis during the evacuation.
+It is up to you. With the reactor temporarally fixed, we got maybe two hours before we need to detach the module.
+I need you to climb up to the inner ring, and awake everyone who is still alive in there.
+You will need a securitycode to enter the stasis chambers. The code is 0-0-0-0-0.
+Yes, really. just 0-0-0-0-0.
+
+Any questions?
+</AUXCOM_DIALOGE_1B>
+
+<AUXCOM_DIALOGE_2B_QUEST>
+How do you respond?
+</AUXCOM_DIALOGE_2B_QUEST>
+
+<AUXCOM_DIALOGE_2B_OPTION_1>
+Why can't you save them?
+</AUXCOM_DIALOGE_2B_OPTION_1>
+<AUXCOM_DIALOGE_2B_OPTION_2>
+Why the simple code?
+</AUXCOM_DIALOGE_2B_OPTION_2>
+<AUXCOM_DIALOGE_2B_OPTION_3>
+No. I'm on my way
+</AUXCOM_DIALOGE_2B_OPTION_3>
+
+<AUXCOM_DIALOGE_2B_WHY>
+There is a problem with the doors up here.
+Look, it's complicated. They were designed by aliens after all.
+Sufficed to say, we can't go in, but you and anyone you rescue can come out.
+I'm not a door technician, I barely understand the problem myself.
+Not sure if we got the time for me to properly explain it.
+</AUXCOM_DIALOGE_2B_WHY>
+<AUXCOM_DIALOGE_2B_CODE>
+
+</AUXCOM_DIALOGE_2B_CODE>
+<AUXCOM_DIALOGE_2B_EXIT>
+
+</AUXCOM_DIALOGE_2B_EXIT>
 
 
+<!--
+We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
+Some 10 or so years ago now, the Ziruup Empire invaded Earth.
+Well, as much as you could call it an invasion.
+Their fighterplanes were armed with semi-automatic ballistas.
+And their soldiers were armed with primitive spears.
+From what we heard from the radio, they called it the "5 hour world war" back home.
+
+Still, they managed to abduct a good number of us from around the world before they fled Earth.
+It took awhile, but seeing as we were all unarmed, a number of us decided to cooperate.
+A growing number of our captors now see us more as ambassadors than medical experiments.
+We talked our captors into letting us upgrade our habitat wheel using technology captured with us.
+
+Then some of the more fanatical reserchers decided that the people who refused to cooperate would be fine subjects for disection.
+Well, that did not go well. The people scheduled for disection broke loose, and started a revolt.
+During the fight in the outer ring, a laboretory exploded, pushing the reactor-ring out of alligment.
+-->
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
