@@ -31,6 +31,18 @@ Welcome!! What do you wish to do?
 <TITLE_RUNCREDITS>Run credits</TITLE_RUNCREDITS>
 <TITLE_EXITGAME>Exit Game</TITLE_EXITGAME>
 
+<ITEM_HEADACHE_NAME>Headache</ITEM_HEADACHE_NAME>
+<ITEM_HEADACHE_DESC>
+A painfull headache
+hindering your thinking
+</ITEM_HEADACHE_DESC>
+<ITEM_TRANSLATOR_NAME>Translation device</ITEM_TRANSLATOR_NAME>
+<ITEM_TRANSLATOR_DESC>
+An alien device
+that translates
+both text and speech
+</ITEM_TRANSLATOR_DESC>
+
 <GAME_PLEASESEL>Please select</GAME_PLEASESEL>
 <GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
 <GAME_MAKECHOICE2>What do you want to do?</GAME_MAKECHOICE2>

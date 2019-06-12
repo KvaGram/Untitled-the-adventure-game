@@ -7,12 +7,14 @@ import random
 import sys
 import re
 
+import ItemDB
 import Storyloader
 from tkinter import messagebox as TKmsg
 
 
 class Game:
     def __init__(self, tkroot:TK.Tk, version:(int,int,int), language:str = "english"):
+        T = Gettexter(self)
         self.ui:ui.UntitledUI = ui.UntitledUI(tkroot)
         self.tkroot:TK.Tk = tkroot
         self.version = version
@@ -22,7 +24,10 @@ class Game:
         self.runner:PlaceRunner = None
 
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
-        self.destroyed = False
+        self.destroyed = False 
+
+        ItemDB.SET("HEADACHE", T("ITEM_HEADACHE_NAME"), T("ITEM_HEADACHE_DESC"), "empty.gif")
+        ItemDB.SET("TRANSLATOR", T("ITEM_TRANSLATOR_NAME"), T("ITEM_TRANSLATOR_DESC"), "empty.gif")
 
         self.GeneralList = {
             "credits"        : Game.runCredits,
@@ -205,6 +210,8 @@ class Game:
         inv = self.getdata("inventory", {})
         inv[key] = value
         self.setdata("inventory", inv)
+        
+        self.ui.draw_inventory(itemlist = self.getAllInventory())
         #TODO: refresh inventory in UI
         #TODO: make a list of image and description for ever inventory item
     def getInventory(self, item:str):

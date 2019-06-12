@@ -3,22 +3,32 @@ from tkinter import font as TKF
 from tkinter import scrolledtext as TKS
 import time
 from typing import List
+import ItemDB
 
 class inventoryItem(TK.Frame):
-    def __init__(self, root:TK.Tk, **args):
+    def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, **args):
         super(inventoryItem, self).__init__(master = root, **args)
-        labelName = args.get("label", " < dummy item > ")
-        imageName = args.get("image", "empty.gif")
-        self.imageData = TK.PhotoImage(file = imageName)
-        self.labelImage = TK.Label(master = self, image = self.imageData)
-        self.labelText  = TK.Label(master = self, text = labelName)
-        self.labelImage.pack(side = TK.TOP)
-        self.labelText.pack (side = TK.BOTTOM)
+        if itemtype:
+            displayName = itemtype.dName
+            displayImag = itemtype.image
+            displayDesc = itemtype.desc
+        else:
+            displayName = "((ERROR))"
+            displayImag = "empty.gif"
+            displayDesc = " - "
+        self.imageData = TK.PhotoImage(file = displayImag)
+        self.toplabel = TK.Label(master=self, text = displayName)
+        self.midlabel = TK.Label(master=self, image = self.imageData)
+        self.buttomlabel = TK.Label(master=self, text= displayDesc)
+        
+        self.toplabel.pack()
+        self.midlabel.pack()
+        self.buttomlabel.pack()
 
-    def setItem(self, labelName:str, imageName:str):
-        self.imageData.config(file = imageName)
-        self.labelImage.config(image = self.imageData)
-        self.labelText.config(text = labelName)
+    def setItem(self, displayName:str, displayImag:str, displayDesc:str):
+        self.toplabel = TK.Label(text = displayName)
+        self.imageData.config(file = displayImag)
+        self.buttomlabel = TK.Label(text= displayDesc)
 class UntitledUI:
     def __init__(self, root, **args):
         #main container, packed into parent (normally TK root)
@@ -209,15 +219,20 @@ class UntitledUI:
         btnEnter.grid(row=length, column=0, columnspan=3, sticky="nsew")
 
     def draw_inventory(self, **args):
+        itemlist = args.get("itemlist", {})
         self.emptyframe(self.inventory)
         self.itemObjects = []
-        for i in range(8):
-            item = inventoryItem(self.inventory)
-            
-            item.grid(row = int(i/2), column = i%2, padx = 1, pady = 1, sticky="nsew")
-            self.itemObjects.append(item)
-        self.inventory.grid_columnconfigure(index = 0, weight=1)
-        self.inventory.grid_rowconfigure(index = 0, weight=1)
+
+        for itemtype, value in itemlist.items():
+            i = len(self.itemObjects)
+            if not value:
+                continue
+            row = int(i/2)
+            column = i%2
+            item = inventoryItem(self.inventory, itemtype = ItemDB.GET(itemtype))
+            item.grid(row = row, column = column, padx = 1, pady = 1, sticky="new")
+            self.inventory.grid_rowconfigure(index = row, weight=1)
+            self.inventory.grid_columnconfigure(index = column, weight=1)
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
         #TODO build navtext

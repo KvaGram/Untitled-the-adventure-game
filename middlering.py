@@ -249,35 +249,35 @@ def main(game:Game.Game):
             base_navtext = T("MIDDLE_NAV_DESC_3")
         runner.nodes = [
             Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_D}"), [
-                ("_", "{ACT_READ_SIGN}", sectionDdoor),
+                ("_", T("ACT_READ_SIGN"), sectionDdoor),
             ]),
             Game.PlaceNode(game, "BATHROOMS",        base_navtext.format("A", "{MIDDLE_NAV_TO_BATH}"), [
-                ("_", "{ACT_ENTER_ROOM}", bathrooms),
+                ("_", T("ACT_ENTER_ROOM"), bathrooms),
             ]),
             Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "{MIDDLE_NAV_DOOR_2A68}"), [
-                ("_", "{ACT_ENTER_ROOM}", door_2A68),
-                ("_", "{ACT_READ_SIGN}", Read_door_2A68)
+                ("_", T("ACT_ENTER_ROOM"), door_2A68),
+                ("_", T("ACT_READ_SIGN"), Read_door_2A68)
             ]),
             Game.PlaceNode(game, "ELE",         base_navtext.format("A", "{MIDDLE_NAV_ELE}"), [
-                ("_", "{ACT_USE}"), #elevator
+                ("_", T("ACT_USE")), #elevator
             ]),
             Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "{MIDDLE_NAV_CAFE}"), [
-                ("_", "{ACT_ENTER_ROOM}"), #cafeteria
+                ("_", ("ACT_ENTER_ROOM")), #cafeteria
             ]),
             Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_B}"), [
-                ("_", "{ACT_READ_SIGN}"), #sectionBdoor
+                ("_", T("ACT_READ_SIGN")), #sectionBdoor
             ]),
             Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_A}"), [
-                ("_", "{ACT_READ_SIGN}"), #sectionAdoor
+                ("_", T("ACT_READ_SIGN")), #sectionAdoor
             ]),
             Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "{MIDDLE_NAV_AUXCOM}"), [
-                ("_", "{ACT_USE}"), #auxcom_repair
+                ("_", T("ACT_USE")), #auxcom_repair
             ]),
             Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "{MIDDLE_NAV_LADDER}"), [
-                ("_", "{ACT_USE}"), #ladder
+                ("_", T("ACT_USE")), #ladder
             ]),
             Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_C}"), [
-                ("_", "{ACT_READ_SIGN}"), #sectionCdoor
+                ("_", T("ACT_READ_SIGN")), #sectionCdoor
             ])
         ]
         prevplace = game.prevPlace

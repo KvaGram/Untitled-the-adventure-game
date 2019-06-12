@@ -25,15 +25,6 @@ VERSION = [1, 0, 0]
 #if dev is on, some debug info may be displayed in the game
 DEV = True
 
-def test():
-    print ("Hello world. This is printed in test()")
-    yield "This is however not."
-    print ("Even more that is not")
-    print ("next line will be yielded")
-    yield "Is everything neat and in order, I wonder?"
-    print("The end is here!")
-    return
-
 def start():
     global tkRoot, running
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
@@ -42,7 +33,12 @@ def start():
     game = Game.Game(tkRoot, VERSION, "english")
     running = True
     while running:
-        titleMenu(game)
+        try:
+            titleMenu(game)
+        except (SystemExit):
+            running = False
+
+            
 
 def game_loop(game:Game.Game):
     world = {
