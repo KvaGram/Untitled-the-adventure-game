@@ -1003,6 +1003,35 @@ But the important thing now is to get you and everyone else stuck in the module 
 Do you have any more questions?
 </AUXCOM_DIALOGE_3_FULL_STORY>
 
+<!-- Elevator scene. May happen at any ring and the core.
+frags:
+
+ -->
+<ELEVATOR_CORE_DESC>
+The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
+    The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look.
+</ELEVATOR_CORE_DESC>
+
+<ELEVATOR_CORRIDOR_DESC>
+The elevators breaks up the corridor, as the corridor splits to around a large round column you learn is the elevator shaft,
+the walls around bending outwards giving way for the path around the shaft until they hit flat outer walls.
+</ELEVATOR_CORRIDOR_DESC>
+
+<ELEVATOR_DESC>
+</ELEVATOR_DESC>
+
+<ELEVATOR_BUTTONSET_CORE>
+down and 'cargo'
+</ELEVATOR_BUTTONSET_CORE>
+
+<ELEVATOR_BUTTONSET_MID>
+up, down and 'cargo'
+</ELEVATOR_BUTTONSET_MID>
+
+<ELEVATOR_BUTTONSET_BUTTOM>
+up and 'cargo'
+</ELEVATOR_BUTTONSET_BUTTOM>
+
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
 <YES>Yes</YES>

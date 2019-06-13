@@ -197,7 +197,9 @@ def auxcom_cargo(game:Game.Game):
                 continue
     game.setdata("auxcom:cargo", True)
     game.setdata("auxcom:react_thanks", thankedForReactor)
-def elevator(game):
+def elevator(game:Game.Game):
+    T = Game.Gettexter(game)
+    frags = {}
     #region elevator
     room = game.getdata("room")
 
