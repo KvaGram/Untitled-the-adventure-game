@@ -42,6 +42,17 @@ An alien device
 that translates
 both text and speech
 </ITEM_TRANSLATOR_DESC>
+<ITEM_ASSHOLE_NAME>Asshole reputation</ITEM_ASSHOLE_NAME>
+<ITEM_ASSHOLE_DESC>
+It seems I got
+a reputation for
+being a bit of an
+asshole.
+</ITEM_ASSHOLE_DESC>
+<ITEM_KEYCODE_NAME>Human habitat security keycode</ITEM_KEYCODE_NAME>
+<ITEM_KEYCODE_DESC>
+0-0-0-0-0
+</ITEM_KEYCODE_DESC>
 
 <GAME_PLEASESEL>Please select</GAME_PLEASESEL>
 <GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
@@ -707,6 +718,96 @@ What do you say?
 {_REACT_1} see AUXCOM_DIALOGE_1B_PART_1 A and B
 {_REACT_2} see AUXCOM_DIALOGE_1B_PART_2 A and B
 -->
+
+<AUXCOM_DIALOGE_1A>
+Ok. {_P}, I need you to stay calm. I'm gonna get some help
+(The woman you were talking leaves)
+...
+(A man, an engineer by the looks of his attire, takes her place)
+Ok, {_P}. I am not gonna lie, you are in a bit of touble. We are gonna do what we can to help you.
+We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
+The reason why you are having a hard time to remeber anything, is likly due to the stasis-pod.
+Amnesia is a side-effect of the stasis.
+Alright, listen up!
+The reactor onboard is about to explode, so were about to detach the module when you contacted us.
+
+Look {_P}, I need you to find the emergency ladd..
+(the man is rudely interrupted by a third person)
+Hey! I know you. You're {game.FemaleFam.name}'s {game.FemaleFam.GenderedRolePlayer} right?
+You're a engineer, right? Maybe you could try to stabilize the reactor temporarily?
+There are still lots of people stuck in stasis in the upper ring!
+
+Look, {game.PlayerName}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
+</AUXCOM_DIALOGE_1B>
+
+<AUXCOM_DIALOGE_2A_QUEST>
+How do you respond?
+</AUXCOM_DIALOGE_2A_QUEST>
+
+<!-- Going 'down' is not an error. The player character acually makes this mistake in this option. -->
+<AUXCOM_DIALOGE_2A_OPTION_1>
+Screw them! I'm out of here! I'm gonna climb down and get out of here!
+</AUXCOM_DIALOGE_2A_OPTION_1>
+<AUXCOM_DIALOGE_2A_OPTION_2>
+I.. I am not gonna take that chance. I'm just gonna go meet you up the ladder!
+</AUXCOM_DIALOGE_2A_OPTION_2>
+<AUXCOM_DIALOGE_2A_OPTION_3>
+Alright, how do I get to the reactor?
+</AUXCOM_DIALOGE_2A_OPTION_3>
+<AUXCOM_DIALOGE_2A_OPTION_4>
+What exacly happened?
+</AUXCOM_DIALOGE_2A_OPTION_4>
+
+<AUXCOM_DIALOGE_2A_SCREWIT>
+Well, ehm.. that's rude. ..
+uh well, sure go DOWN the ladder. Uh, and take your good time too.
+Got to go, bye!
+
+(The call has ended)
+</AUXCOM_DIALOGE_2A_SCREWIT>
+<AUXCOM_DIALOGE_2A_NO>
+I see. Well, the reactor will reach a meltdown in just a few minutes, we need to detach the module before then.
+You need to hurry! The escape ladder should be nearby. You need to climb up as fast as you can.
+In case you need to pass though a locked security door, the code is 0-0-0-0-0. And, please dont ask.
+Again, the code is 0-0-0-0-0!
+We will meet you at the airlock in the module core.
+Please beware, you will be weightless up here!
+See you soon!
+
+(The call has ended)
+</AUXCOM_DIALOGE_2A_NO>
+<AUXCOM_DIALOGE_2A_YES>
+Thanks for doing this!
+Ok, there won't be much time, but we will hold off detaching the module as long as we can.
+First of, you need a translation device. There should be a few in the cafeteria.
+Without one, you would have a hard time reading the manuals and displays.
+Once you have one, you need to get down to the outer ring.
+Do not use the elevators, that system is down. You will need to climb the emergency ladders
+
+You should find the emergency stairs nearby. You need to climb down to the outermost ring.
+The nearest reactor-node will not be far from the ladder.
+You need to first initalize the emergency cooling system, then the emergency particle decelerator.
+In that order! You will find detailed manuals on how to do this in the reactor-node control room.
+Doing this will buy us maybe an hour or two before meltdown.
+In case you need to pass though a locked security door, the code is 0-0-0-0-0. And, please dont ask.
+Again, the code is 0-0-0-0-0!
+You need to hurry! Get back and contact us again once you have done it!
+
+(The call has ended)
+</AUXCOM_DIALOGE_2A_YES>
+
+
+<AUXCOM_DIALOGE_2A_WUT>
+There was the revolt down in the outer ring,
+the so-called {OUTER_RING_NAME}.
+The fighting damaged the reactor-ring.
+We don't have time to discuss details.
+I need you to either stabilize the reactor so we can save everyone, or get you safely out of there!
+</AUXCOM_DIALOGE_2A_WUT>
+
+
+
+<!-- Alternate dialouge: If the player for some reason fixed the reactor before making contact -->
 <AUXCOM_DIALOGE_1B_REACTOR_QUEST>
 Ok, {_P}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
 </AUXCOM_DIALOGE_1B_REACTOR_QUEST>
@@ -794,30 +895,113 @@ I'm not a door technician, I barely understand the problem myself.
 Not sure if we got the time for me to properly explain it.
 </AUXCOM_DIALOGE_2B_WHY>
 <AUXCOM_DIALOGE_2B_CODE>
-
+Well.. yeah.. we never expected there to ever be some kind of security issue onboard,
+and we kinda still don't, so we never bothered to change the factory settings.
+Don't worry about it.
 </AUXCOM_DIALOGE_2B_CODE>
 <AUXCOM_DIALOGE_2B_EXIT>
-
+Good luck.
+(Call disconnected)
 </AUXCOM_DIALOGE_2B_EXIT>
 
+<AUXCOM_DIALOGE_3_QUEST>How do you respond?</AUXCOM_DIALOGE_3_QUEST>
 
-<!--
+<AUXCOM_DIALOGE_3_OPTION_CODE>
+What was that code again?
+</AUXCOM_DIALOGE_3_OPTION_CODE>
+<AUXCOM_DIALOGE_3_OPTION_TRUTH>
+Exacly what happened?
+</AUXCOM_DIALOGE_3_OPTION_TRUTH>
+<AUXCOM_DIALOGE_3_OPTION_EXIT>
+Not right now. Bye.
+</AUXCOM_DIALOGE_3_OPTION_EXIT>
+
+<AUXCOM_DIALOGE_3_CODE>
+As we said earlier, the code is 0-0-0-0-0.
+Again, please don't mock us for not changing the factory settings.
+</AUXCOM_DIALOGE_3_CODE>
+<AUXCOM_DIALOGE_3_EXIT>
+Ok then. Hope to see you here soon.
+</AUXCOM_DIALOGE_3_EXIT>
+<AUXCOM_DIALOGE_3_TRUTH>
+Ok then. Here are the full story
 We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
 Some 10 or so years ago now, the Ziruup Empire invaded Earth.
+
 Well, as much as you could call it an invasion.
 Their fighterplanes were armed with semi-automatic ballistas.
 And their soldiers were armed with primitive spears.
-From what we heard from the radio, they called it the "5 hour world war" back home.
+They landed worldwide en-masse, and started abucting people.
+That's how we ended up here.
+I seem to remeber you said you were at a tourist spot in America when you were taken.
+Anyways, some of us had radios with us when abducted, and from what we heard,
+they called it the "5 hour world war" back home.
+Clearly spears and ballistas don't do well against tanks and jet-fighters.
+...
+</AUXCOM_DIALOGE_3_TRUTH>
 
-Still, they managed to abduct a good number of us from around the world before they fled Earth.
-It took awhile, but seeing as we were all unarmed, a number of us decided to cooperate.
-A growing number of our captors now see us more as ambassadors than medical experiments.
-We talked our captors into letting us upgrade our habitat wheel using technology captured with us.
 
-Then some of the more fanatical reserchers decided that the people who refused to cooperate would be fine subjects for disection.
-Well, that did not go well. The people scheduled for disection broke loose, and started a revolt.
-During the fight in the outer ring, a laboretory exploded, pushing the reactor-ring out of alligment.
--->
+<AUXCOM_DIALOGE_3_INTERRUPT_QUEST>
+Ask for the short story?
+</AUXCOM_DIALOGE_3_INTERRUPT_QUEST>
+
+<AUXCOM_DIALOGE_3_SHORT_STORY>
+Uh? Ok, I will short it down.
+Most of us is kept in stasis chambers between research project.
+Ziruupan scientists usually just do social studies of us, so most of us cooperate.
+But earlier today, some a more fanatical scientists decided to disect some of us.
+This is what led to the riot that damaged the reactor.
+
+IS there anything else you want to know?
+</AUXCOM_DIALOGE_3_SHORT_STORY>
+<AUXCOM_DIALOGE_3_FULL_STORY>
+All in all, Ziruup forces abucted 451 people during the retreat.
+Along with several tons of precius metals, equiptment, food supplies from places they raided.
+They also raided a dump for some reason, so we got a cargo bay filled with all sort of rubbish.
+
+Well, as we left Earth at a speed faster than anything that could be lauched from Earth, we all soon realized we were trapped.
+There were an attempt to take control of the vessel, but...
+Well, spears and ballistas do well against unarmed people.
+
+After the initial fighting was over, we were forced into this habitat wheel.
+Many of us, being familiar with science fiction and alien abduction stories, expected some grusome experiements.
+But none of that came to be. The studies the aliens did to us initially were social.
+They wanted to understand our langauges, cultures, social structure, physical strength, etc.
+It was easy to cooperate.
+
+Since our food supply was limited to what was raided, most of us agreed to enter into stasis.
+Well, except the ones who refused to cooperate at all. They were forced into stasis.
+
+Over the years we talked our Zirtuupan captors into letting us upgrade our habitat to make it more livable.
+Installing common comfort from what we could from the raided supplies and equiptment.
+Soon enough, some of our captors started to see us more as accidental ambassadors.
+
+Some that is. Many still belive we should all be slaves for their emperror.
+One of the more fanatical scientists decided to go ahead with a disection project, and defrosted a group of malcontent abductees from stasis.
+Her reasoning were that since they diden't want to cooperate, they might as well be used to learn our atanomy.
+This did not go well.
+
+Since this was done in secret, there weren't many guards protecting the lab.
+And so they broke free, started a revolt many others joined in on.
+They, or should I say we. Some of us up here were part of the riot.
+Anyways, we started to destroy the laboretories in the outer ring.
+We diden't know about the reactor back then.
+So the thinking was that the worst that could happen were getting vented into space.
+
+We diden't notice at first, but as the lab blew, it pushed the reactor particle accellerator ring out of allignment.
+The alarm started as hole-breaches started appearing all over in sector D on all rings. And then later in sector C.
+An Zirtuupan engineer told us what was could happen, and so we started evacuating, or more like panicing.
+As we started defrosting people en-masse, the already disorderly evacuation turned into an outright stampede.
+
+Just as we got the last group though of paniced folks though, the doors decided to glitch up.
+Then you suddenly contacted us. Good thing you did. We were about to edject the module,
+using the internal atmosphere as thurst. You would have been sucked out into space had we done that.
+
+Sorry you got left down there.
+But the important thing now is to get you and everyone else stuck in the module out before we blow this thing.
+
+Do you have any more questions?
+</AUXCOM_DIALOGE_3_FULL_STORY>
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>

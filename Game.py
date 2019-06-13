@@ -26,8 +26,12 @@ class Game:
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
         self.destroyed = False 
 
+        
         ItemDB.SET("HEADACHE", T("ITEM_HEADACHE_NAME"), T("ITEM_HEADACHE_DESC"), "empty.gif")
         ItemDB.SET("TRANSLATOR", T("ITEM_TRANSLATOR_NAME"), T("ITEM_TRANSLATOR_DESC"), "empty.gif")
+        ItemDB.SET("ASSHOLE", T("ITEM_ASSHOLE_NAME"), T("ITEM_ASSHOLE_DESC"), "empty.gif")
+        ItemDB.SET("KEYCODE", T("ITEM_KEYCODE_NAME"), T("ITEM_KEYCODE_DESC"), "empty.gif")
+
 
         self.GeneralList = {
             "credits"        : Game.runCredits,

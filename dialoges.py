@@ -63,24 +63,18 @@ def auxcom_contact(game):
         elif tag == "CARGO":
             return auxcom_cargo(game)
     #endregion auxcom2
-def auxcom_cargo(game):
+def auxcom_cargo(game:Game.Game):
     localfrags = {}
     T = Game.Gettexter(game)
     #Note: Whatever the dialoge, it is up to the player what to do afterwards.
-    asshole = game.getdata("auxcom:asshole", False)
+    asshole = game.getInventory("ASSHOLE") #if player has a reputation for being an ass.
     reactorFixed = game.getdata("reactorC:fixed", False)
     prevcontact = game.getdata("auxcom:cargo", False)
     thankedForReactor = game.getdata("auxcom:react_thanks", False)
-    
-    key = game.getdata("auxcom:stasispasskey", False)
     # Only change is the information they are given.
     # From here, or the ladder if the player skips this, a counter is enabled that gives the player 10 'time units' before game over.
     if not reactorFixed and game.getCounter(game, "reactorC")[0]: #counter not enabled
         game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
-
-    name = game.getName(game)
-    gender = game.getGender(game)
-    klara =  game.getKlara(game)
 
     if prevcontact:
         #TODO: alternate contact for returning to auxcom
@@ -92,81 +86,26 @@ def auxcom_cargo(game):
             else:
                 game.rolltext("{AUXCOM3_INTRO_RETURN}")
             choices = (
-                ("CODE", "What was that code again?"),
-                ("TRUTH","Exacly what happened?"),
-                ("EXIT", "Not right now. Bye.")
+                ("CODE", T("AUXCOM_DIALOGE_3_OPTION_CODE")),
+                ("TRUTH",T("AUXCOM_DIALOGE_3_OPTION_TRUTH")),
+                ("EXIT", T("AUXCOM_DIALOGE_3_OPTION_EXIT"))
             )
             while True:
-                _, c = game.choose2(choices, "How do you respond?", "<<{2}")
-                if c=="EXIT":
-                    game.showtext("Ok then. Hope to see you here soon.")
-                    break
-                elif c=="CODE":
-                    game.rolltext("""
-As we said earlier, the code is 0-0-0-0-0.
-Again, please don't mock us for not changing the factory settings.
-                    """)
-                elif c=="TRUTH":
-                    game.rolltext("""
-Well, that's the thing. We are still investigating.
-What we know so far is that there was a glitch in the nav system.
-We don't know how that happend, nor why nobody noticed.
-Well, this glitch caused us to pass though an asteroidbelt.
-We don't know how that happened, nor why nobody noticed.
-Well, this glitch caused us to pass through an asteroidbelt.
-
-Our fine pilots got us through the worst. The ship may not be very manuverable,
-but there are still kilometers between the rocks, so at least we had a good chance.
-But alas we hit one of the smaller rocks that we somehow missed on our LIDAR.
-                    """)
-                    choices2 = ("Ask for short version", "Continue listening to the entire tale")
-                    c2 = game.choose2(choices2, "Interrupt?")
-                    if c2 == 0:
-                        game.rolltext("""
-Um.. sorry? Well, you asked.
-Ok. Short version.
-We got hit hard by an asteroid. Might be sabotage, unknown.
-We started an orderly evacuation, then the reactor got bad, and the hull breached a few places.
-Then we woke everyone we could, and ran for the exit.
-Sorry to say, but it seems you got left behind and forgotten in the chaos.
-                        """)
+                game.choose(T("AUXCOM_DIALOGE_3_QUEST"))
+                data = game.wait()
+                if not data or data.Type != "action":
+                    continue
+                elif data.tag =="CODE":
+                    game.rolltext("{AUXCOM_DIALOGE_3_CODE}")
+                elif data.tag =="TRUTH":
+                    game.rolltext("{AUXCOM_DIALOGE_3_TRUTH}")
+                    if game.yesno(T("AUXCOM_DIALOGE_3_INTERRUPT_QUEST")):
+                        game.rolltext("{AUXCOM_DIALOGE_3_SHORT_STORY}")
                     else:
-                        game.rolltext("""
-The rock bounced off Wheel C, causing massive damage.
-Immidiatly we sent repair-bots out to fix the damage to the reactor-ring.
-The reactor ring and accellerator survived the impact, but got bent on a few places.
-And you're an engineer, you know what happens if we keep sending tacheons though a bent reactor ring.
-As expected, the nearby hull-section tore itself apart.
-We lost all C-sections to vacuum in the matter of secunds.
-So fixing the reactor ring proved quite urgent.
-
-But the bots can't get over the the damage from the outside while the wheel was spinning,
-and the AG-thursters got wrecked in the impact, so we coulden't brake the wheel.
-So we thought we could send the bots though the section-doors, but lacking internal airlocks in the sections, we would need to vacuum the wheel first.
-So we started evacuating, first by waking people by small groups at a time.
-
-Our reports say you were amung the first to be recovered from stasis, unfortunatly, you remained unconscious.
-So you were put in your bed untill you woke up.
-We thought we had plenty of time to evacuate everyone in an slow and organized way.
-
-Then the reactor started going bad.
-The tacheon feedback from the bent accellerator ring hit earlier than eastimated.
-So with fixing the reactor no longer being an option, we have to ditch the entire module. The neck, wheel and core. all of it.
-And with that, we accellerated the evacuation.
-We activated the emergency wake-up system, though some of the pods in the inner ring glitched out.
-
-The People who did wake stumbled out of sleep en masse, heard the alarm, and started to panic.
-It was already getting a bit chaotic, but then sectors 1D and 2D suddenly breached!
-
-The already disorderly evacuation turned into an outright stampede.
-Just as we got the last group though of paniced folks though, the doors decided to glitch up.
-Then you suddenly contacted us. Good thing you did. We were about to edject the module,
-using the internal atmosphere as thurst. You would have been sucked out into space had we done that.
-
-Sorry you got left down there.
-But the important thing now is to get you and everyone else stuck in the module out before we blow this thing.
-                    """)
-                game.showtext("Did you have more questions?")
+                        game.rolltext("{AUXCOM_DIALOGE_3_FULL_STORY}")
+                elif data.tag =="EXIT":
+                    game.showtext("{AUXCOM_DIALOGE_3_EXIT}")
+                    break
         else:
             game.rolltext("{AUXCOM3_INTRO_PLZFIX}")
     else:
@@ -187,8 +126,8 @@ But the important thing now is to get you and everyone else stuck in the module 
                 break
         #game.showtext(">> "+choices[ind][1])
         if ind == 0 or ind == 3:
-            p = name
-        elif gender == "male":
+            p = game.PlayerName
+        elif game.PlayerGender == "male":
             p = T("GENDERED_1_MALE")
         else:
             p = T("GENDERED_1_FEMALE")
@@ -210,104 +149,52 @@ But the important thing now is to get you and everyone else stuck in the module 
                 ("WEAK_CODE", T("AUXCOM_DIALOGE_2B_OPTION_2")),
                 ("EXIT", T("AUXCOM_DIALOGE_2B_OPTION_3"))
                 )
-            while (True:
+            while True:
                 game.choose(choices, "{AUXCOM_DIALOGE_2B_QUEST}")
                 data = game.wait()
                 if not data or data.Type != "action":
                     continue
                 if data.tag == "WHY_ME":
-                    game.rolltext("""
-{AUXCOM_DIALOGE_2B_WHY}
-                    """)
+                    game.rolltext("{AUXCOM_DIALOGE_2B_WHY}")
                 elif data.tag == "WEAK_CODE":
-                    game.rolltext("""
-Well.. yeah.. we never expected there to ever be some kind of security issue onboard,
-and we kinda still don't, so we never bothered to change the factory settings.
-Don't worry about it.
-                    """)
+                    game.rolltext("{AUXCOM_DIALOGE_2B_CODE}")
                 elif data.tag == "EXIT":
-                    game.rolltext("Good luck.\n(Call disconnected)")
+                    game.rolltext("{AUXCOM_DIALOGE_2B_EXIT}")
                     break
             game.setdata("auxcom:stasispasskey", True)
             game.setdata("auxcom:cargo", True)
             game.setdata("auxcom:react_thanks", True)
         
     # If the reactor is not yet fixed:
-        game.rolltext("""
-Ok. {_P}, I need you to stay calm. I'm gonna get some help
-(The woman you were talking leaves)
-...
-(A man, an engineer by the looks of his attire, takes her place)
-Ok, {_P}. I am not gonna lie, you are in a bit of touble. We are gonna do what we can to help you.
-You are onboard the UNS Armstrong on route from Sol to Alpha Centauri.
-If this seems unfamiliar to you, this may be due stasis-amnesia,
-a common condition caused by emergency awakening from stasis.
-The reactor onboard is about to explode, so were about to detach the module when you contacted us.
-
-Look {_P}, I need you to find the emergency ladd..
-(the man is rudely interrupted by a third person)
-Hey! I know you. You're {game.FemaleFam.name}'s {game.FemaleFam.GenderedRolePlayer} right?
-You're a engineer, right? Maybe you could try to stabilize the reactor temporarily?
-There are still lots of people stuck in stasis in the upper ring!
-
-Look, {game.PlayerName}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
-        """.format(p, game.getGenderedTerm(klara, gender), name))
+        game.rolltext("{AUXCOM_DIALOGE_1A}")
         choices = [
-            ("Screw them! I'm out of here! I'm gonna climb down and get out of here!"), #ignorant idiot option
-            ("I.. I am not gonna take that chance. I'm just gonna go meet you up the ladder!"), #reluctant selfishness
-            ("Alright, how do I get to the reactor?"),
-            ("What exacly happened?")
+            ("SCREWIT", T("AUXCOM_DIALOGE_2A_OPTION_1")), #Asshole option! Locks up all future dialoge
+            ("NO", T("AUXCOM_DIALOGE_2A_OPTION_2")),
+            ("YES", T("AUXCOM_DIALOGE_2A_OPTION_3")),
+            ("WUT", T("AUXCOM_DIALOGE_2A_OPTION_4"))
         ]
-        ind, ans = game.choose2(choices, "How do you respond?", "<< {2}")
-        if ind == 3:
-            game.rolltext("""
-I figured you would ask that. We hit an asteroid!
-We don't have time to go into details right now!
-I need you to either stabilize the reactor so we can save everyone, or get you safely out of there!
-            """)
-            choices.pop(3)
-            ind, ans = game.choose2(choices, "How do you respond?", "<< {2}")
-        
-        if ind == 0:
-            game.rolltext("""
-Well, ehm.. that's rude. ..
-uh well, sure go DOWN the ladder. Uh, and take your good time too.
-Got to go, bye!
-
-(The call has ended)
-            """)
-            asshole = True
-        elif ind == 1:
-            game.rolltext("""
-I see. Well, the reactor will reach a meltdown in just a few minutes, we need to detach the module before then.
-You need to hurry! The escape ladder should be nearby. You need to climb up as fast as you can.
-In case you need to pass though a locked security door, the code is 0-0-0-0-0. And, please dont ask.
-Again, the code is 0-0-0-0-0!
-We will meet you at the airlock in the module core.
-Please beware, you will be weightless up here!
-See you soon!
-
-(The call has ended)
-            """)
-            key = True
-        elif ind == 2:
-            game.rolltext("""
-Thanks for doing this!
-Ok, there won't be much time, but we will hold off detaching the module as long as we can.
-You should find the emergency stairs nearby. You need to climb down to the outermost ring.
-The nearest reactor-node will not be far from the ladder.
-You need to first initalize the emergency cooling system, then the emergency particle decelerator.
-In that order! You will find detailed instructions on how to do this in the reactor-node control room.
-Doing this will buy us maybe an hour or two before meltdown.
-In case you need to pass though a locked security door, the code is 0-0-0-0-0. And, please dont ask.
-Again, the code is 0-0-0-0-0!
-You need to hurry! Get back and contact us again once you have done it!
-
-(The call has ended)
-            """)
-            key = True
-    game.setdata("auxcom:asshole", asshole)
-    game.setdata("auxcom:stasispasskey", key)
+        while True:
+            game.choose(choices, T("AUXCOM_DIALOGE_2A_QUEST"))
+            data = game.wait()
+            if not data or data.Type != "action":
+                continue
+            elif data.tag == "SCREWIT":
+                asshole = True
+                game.setInventory("ASSHOLE", True)
+                game.rolltext("{AUXCOM_DIALOGE_2A_SCREWIT}")
+                break
+            elif data.tag == "NO":
+                game.rolltext("{AUXCOM_DIALOGE_2A_NO}")
+                game.setInventory("KEYCODE", True)
+                break
+            elif data.tag == "YES":
+                game.rolltext("{AUXCOM_DIALOGE_2A_YES}")
+                game.setInventory("KEYCODE", True)
+                break
+            elif data.tag == "WUT":
+                game.rolltext("{AUXCOM_DIALOGE_2A_WUT}")
+                choices.pop(3)
+                continue
     game.setdata("auxcom:cargo", True)
     game.setdata("auxcom:react_thanks", thankedForReactor)
 def elevator(game):
