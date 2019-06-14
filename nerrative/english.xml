@@ -55,8 +55,6 @@ A box that you seem to remember
 is very important to
 {game.Spouse.name}
 </ITEM_KEEPSAKE_DESC>
-
-
 <ITEM_KEYCODE_NAME>Human habitat security keycode</ITEM_KEYCODE_NAME>
 <ITEM_KEYCODE_DESC>
 0-0-0-0-0
@@ -65,6 +63,121 @@ is very important to
 <GAME_PLEASESEL>Please select</GAME_PLEASESEL>
 <GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
 <GAME_MAKECHOICE2>What do you want to do?</GAME_MAKECHOICE2>
+
+<APT_NAVTEXT_1>
+???
+</APT_NAVTEXT_1>
+<APT_NAVTEXT_2>
+Small apartment
+</APT_NAVTEXT_2>
+
+<APT_DREAM>
+Weeeee.. you are flying through the sky!
+Below you is a beautiful forest, as green as anything you could ever imagine!
+Deep down you know you are dreaming, but you can't quite get yourself to wake up.
+suddenly you are in a vintage open cockpit biplane flying over the same lands...
+                            **CRASH**
+
+Your eyes shook open! Out the window you see the landscape you pictured in your dream.
+It seems so nice, yet something seems off. Everything seems off.
+You even struggle to remember your own name... 
+What.. was.. what was your name?
+</APT_DREAM>
+
+<!--NOTE: This is list. It is split by lines. Keep each excuse as a one-liner.-->
+<APT_NAME_EXCUSES>
+or maybe it was
+no why would.. that be my name.. no it must be
+no.. ugh.. why can't I remember my name. Maybe it was
+no no no no! That can't be right, so it must be
+no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??
+</APT_NAME_EXCUSES>
+
+<APT_NAME_SUBMIT>
+This is my name
+</APT_NAME_SUBMIT>
+
+<APT_NAME_CONFIRM>
+ugh.. Was it {game.PlayerName}?
+</APT_NAME_CONFIRM>
+
+<APT_NAME_CONFIRMED>
+Yes {game.PlayerName} the.. uhh.. something something title titles..
+You are sure you'll remember soon enough. Your head is quite foggy.
+You think you might have a headache, but you are not sure.
+Looking around you see you are in a small room, an apartment maybe? Maybe a hotel room?
+You are sitting on the edge of a large bed. Next to the bed is a small table.
+On the table there are some small white spheres, a glass of water and two framed pictures face down
+At the head end of the bed there is a window.
+Towards the end of the room there is a sink with a mirror.
+At the end is a door, probably the exit by the looks of it.
+</APT_NAME_CONFIRMED>
+
+<APT_SINK_1>
+You walk to the sink.
+You see glass shards in the sink.
+The mirror is broken.
+What little of yourself you can see looks like a mess.
+You might want to find a proper bathroom and freshen up a bit.
+</APT_SINK_1>
+<APT_SINK_2>
+The mirror is still broken.
+</APT_SINK_2>
+
+<APT_WINDOW_1>
+You look through the window into the lush forest landscape.
+...
+The nature seems oddly calming, yet somehow uncanny
+...
+...
+As you move your head around to look form different angles, you notice a subtle lag.
+...
+You recognize this now.
+It is a hologram.
+Probably a cheap class 3 eye-tracking laser-holo, you suddenly realize.
+Not that you remember what that is, or what it means.
+Only that you had a class 5 back..
+...
+back home...
+..had.. back home...
+so this isn't home then...?
+</APT_WINDOW_1>
+<APT_WINDOW_2>
+You enjoy the holographic nature outside the window.
+...
+...
+a holographic deer just walked past.
+....
+Time to go.
+</APT_WINDOW_2>
+
+<APT_GLASS_1>a full glass of water</APT_GLASS_1>
+<APT_GLASS_2>a half full glass of water</APT_GLASS_2>
+<APT_GLASS_3>an empty glass</APT_GLASS_3>
+<APT_PILLS>, some small white pills</APT_PILLS>
+
+<APT_TABLE>
+You look at the nightstand table.
+You see {_GLASS}{_PILLS}
+and two framed pictures.
+One with a cyan frame, one with a golden frame.
+</APT_TABLE>
+
+<APT_TABLE_QUEST>What do you wan to do?</APT_TABLE_QUEST>
+<APT_TABLE_OPTION_GLASS>Examine the glass</APT_TABLE_OPTION_GLASS>
+<APT_TABLE_OPTION_CYAN>Examine the cyan framed picture</APT_TABLE_OPTION_CYAN>
+<APT_TABLE_OPTION_GOLD>Examine the gold framed picture</APT_TABLE_OPTION_GOLD>
+<APT_TABLE_OPTION_BACK>Back off from the table</APT_TABLE_OPTION_BACK>
+
+<APT_GLASS_QUEST_1>Take the pills?</APT_GLASS_QUEST_1>
+<APT_GLASS_QUEST_2>Drink from the glass?</APT_GLASS_QUEST_2>
+
+<APT_GLASS_1>You take the white pills and drink from the glass.</APT_GLASS_1>
+<APT_GLASS_2>You did not take the pills</APT_GLASS_2>
+<APT_GLASS_3>The glass is half empty. Or is it half full?</APT_GLASS_3>
+<APT_GLASS_4>you drank the rest. The glass is now empty.</APT_GLASS_4>
+<APT_GLASS_5>you left the glass alone</APT_GLASS_5>
+<APT_GLASS_6>The glass is empty</APT_GLASS_6>
 
 <BATH_INTRO>
 You stand in front of the bathrooms. There are two doors in front of you.

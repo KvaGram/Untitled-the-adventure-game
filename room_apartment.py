@@ -3,143 +3,91 @@ import random
 
 def main(game:Game.Game):
     navdata:Game.Navdata = game.Navdata
+    T = Game.Gettexter(game)
     def newgame():
-        navdata.navtext = """???"""
+        navdata.navtext = T("APT_NAVTEXT_1")
         #region NEW GAME
         game.place = "apartment"
         game.setInventory("HEADACHE", True)
-        game.rolltext("""
-Weeeee.. you are flying through the sky!
-Below you is a beautiful forest, as green as anything you could ever imagine!
-Deep down you know you are dreaming, but you can't quite get yourself to wake up.
-suddenly you are in a vintage open cockpit biplane flying over the same lands...
-                            **CRASH**
+        game.rolltext("{APT_DREAM}")
 
-Your eyes shook open! Out the window you see the landscape you pictured in your dream.
-It seems so nice, yet something seems off. Everything seems off.
-You even struggle to remember your own name... 
-What.. was.. what was your name?
-    """)
-
-        nameExcuses = ["or maybe it was", "no why would.. that be my name.. no it must be ", "no.. ugh.. why can't I remember my name. Maybe it was", "no no no no! That can't be right, so it must be", "no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??"]
+        nameExcuses = T("APT_NAME_EXCUSES").split("\n")
         inp = game.PlayerName
         while True:
             #ask for text input, name, wait for response, get the data. We assume type is textin.
-            indata = game.textin((("Name", inp),), "Is this my name?", True)[1]
+            indata = game.textin((("Name", inp),), T("APT_NAME_SUBMIT"), True)[1]
             #from indata get first element, then get the text inputted
             inp = indata[0][1]
             if len(inp) < 1:
                 #if no input, re-request input
                 continue
             game.setdata("name", inp)
-            if game.yesno("ugh.. Was it {game.PlayerName}?"):
+            if game.yesno("{APT_NAME_CONFIRM}"):
                break
             game.showtext(random.choice(nameExcuses))
-        navdata.navtext = """Small apartment"""
-        game.rolltext("""
-Yes {0} the.. uhh.. something something title titles..
-You are sure you'll remember soon enough. Your head is quite foggy.
-You think you might have a headache, but you are not sure.
-Looking around you see you are in a small room, an apartment maybe? Maybe a hotel room?
-You are sitting on the edge of a large bed. Next to the bed is a small table.
-On the table there are some small white spheres, a glass of water and two framed pictures face down
-At the head end of the bed there is a window.
-Towards the end of the room there is a sink with a mirror.
-At the end is a door, probably the exit by the looks of it.
-
-        """.format(game.PlayerName))
+        navdata.navtext = T("APT_NAVTEXT_2")
+        game.rolltext("{APT_NAME_CONFIRMED}")
         #endregion NEW GAME
     def sink():
         #region Sink()
         if(game.getdata("apartment:sink")):
-            game.showtext("The mirror is still broken.")
+            game.showtext("{APT_SINK_2}")
         else:
             game.setdata("apartment:sink", True)
-            game.rolltext("""
-You walk to the sink.
-You see glass shards in the sink.
-The mirror is broken.
-What little of yourself you can see looks like a mess.
-You might want to find a proper bathroom and freshen up a bit.
-            """)
+            game.rolltext("{APT_SINK_1}")
         #endregion Sink
     def window():
         #region window()
         if game.getdata("apartment:window"):
-            game.rolltext("""
-You enjoy the holographic nature outside the window.
-...
-...
-a holographic deer just walked past.
-....
-Time to go.
-        """)
+            game.rolltext("{APT_WINDOW_2}")
         else:
             game.setdata("apartment:window", True)
-            game.rolltext("""
-You look through the window into the lush forest landscape.
-...
-The nature seems oddly calming, yet somehow uncanny
-...
-...
-As you move your head around to look form different angles, you notice a subtle lag.
-...
-You recognize this now.
-It is a hologram.
-Probably a cheap class 3 eye-tracking laser-holo, you suddenly realize.
-Not that you remember what that is, or what it means.
-Only that you had a class 5 back..
-...
-back home...
-..had.. back home...
-so this isn't home then...?
-    """)
+            game.rolltext("{APT_WINDOW_1}")
         #endregion window() 
     def table():
+        frags = {}
         #region table()
         def glassText():
             g = game.getdata("apartment:glass")
             if g == None or g == 2:
-                return "a full glass of water"
+                return "{APT_GLASS_1}"
             elif g == 1:
-                return "a half full glass of water"
+                return "{APT_GLASS_2}"
             else:
-                return "an empty glass"
+                return "{APT_GLASS_3}"
             #end of glass description
         def pillsText():
             if(game.getdata("apartment:pills")):
                 return ""
             else:
-                return ", some small white pills"
+                return "{APT_PILLS}"
         #end of pills description
-        game.rolltext("""
-You look at the nightstand table.
-You see {0}{1}
-and two framed pictures.
-One with a cyan frame, one with a golden frame.
-        """.format(glassText(), pillsText()))
-        data:Game.ActDataInput = game.choose((("GLASS", "Glass"), ("CYAN","Cyan framed picture"), ("GOLD","Golden framed picture"), ("BACK","back off")), "What do you wish to examine", True)
+        frags["_GLASS"] = glassText()
+        frags["_PILLS"] = pillsText()
+        game.rolltext("{APT_TABLE}", frags = frags)
+        choices = (("GLASS", T("APT_TABLE_OPTION_GLASS")),("CYAN", T("APT_TABLE_OPTION_CYAN")),("GOLD", T("APT_TABLE_OPTION_GOLD")),("BACK", T("APT_TABLE_OPTION_BACK")),)
+        data:Game.ActDataInput = game.choose(choices, T("APT_TABLE_QUEST"), True)
         
         if data.tag == "GLASS":
             g = game.getdata("apartment:glass")
             if g == None or g == 2:
                 game.setdata("apartment:glass", 2)
-                if(game.yesno("Take the pills?")):
-                    game.showtext("You take the white pills and drink from the glass.")
+                if(game.yesno("{APT_GLASS_QUEST_1}")):
+                    game.showtext("{APT_GLASS_1}")
                     game.setdata("apartment:pills", True)
                     game.setdata("apartment:glass", 1)
                     game.setInventory("HEADACHE", False)
                 else:
-                    game.showtext("You did not take the pills")
+                    game.showtext("{APT_GLASS_2}")
             elif g == 1:
-                game.showtext ("The glass is half empty. Or is it half full?")
-                if(game.yesno("Drink from the glass?")):
-                    game.showtext("you drank the rest. The glass is now empty.")
+                game.showtext ("{APT_GLASS_3}")
+                if(game.yesno("{APT_GLASS_QUEST_2}")):
+                    game.showtext("{APT_GLASS_4}")
                     game.setdata("apartment:glass", 0)
                 else:
-                    game.showtext("you left the glass alone")
+                    game.showtext("{APT_GLASS_5}")
             else:
-                game.showtext("The glass is empty")
+                game.showtext("{APT_GLASS_6}")
         elif data.tag == "CYAN":
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
@@ -208,7 +156,7 @@ You open the door, and walk out.
     if(game.getdata("name") == None):
         newgame()
     navdata.closed = True
-    navdata.navtext = """Small apartment"""
+    navdata.navtext = T("APT_NAVTEXT_2")
     choices = (
         ("WINDOW", "look out the window"),
         ("TABLE", "examine the table"),
