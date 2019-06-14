@@ -504,6 +504,7 @@ class PlaceRunner1D(PlaceRunner):
         self.axis = axis
         self.minusDir = minusDir
         self.plusDir = plusDir
+        self.frags = []
     def run(self):
         if len(self.nodes) == 0:
             print("ERR: place has no nodes!")

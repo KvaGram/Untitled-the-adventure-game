@@ -1,77 +1,64 @@
-import game_utilities as game
+import Game
 import dialoges
 
 #The Ladder
-def emergencyLadder(save):
-    class ladderNAV(game.RoomNav1D):
-        termPlus = "GO DOWN"#
-        termMinus = "GO UP" #
-        roomname = "ladder" #
+class LadderRunner(Game.PlaceRunner1D):
+    def __init__(self, game:Game.Game):
+        super().__init__(game, 'y', 'up', 'down')
+    def onTravel(self, previndex:int):
+        if previndex == self.index:
+            print("Null travel error ? ignoring")
+        if previndex > self.index:
+            self.game.showtext("{LADDER_GO_DOWN}")
+        if previndex < self.index:
+            self.game.showtext("{LADDER_GO_UP}")
+        #check for section passage
+    def runaction(self, action):
+        status = self.game.updateCounter("reactorC", -1)
+        if status == "death":
+            self.running = False
+            return
+        super().runaction(action)
+def emergencyLadder(game):
+    T = Game.Gettexter(game)
+    runner = LadderRunner(game)
 
-        #Override
-        def runAction(self):
-            act,_,_ = self.getPlace()
-            #note: ticks the reactorC counter if enabled.
-            status = game.updateCounter(save, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                self.running = False
-            else:
-                act()
-        def plus(self):
-            game.rolltext("You climb down, feeling a slight stronger pull downwards")
-            self.ind += 1
-        def minus(self):
-            game.rolltext("You climb upwards, feeling yourself getting a bit lighter")
-            self.ind -= 1
-    
-    nav = ladderNAV.GET_NAV(save)
+    def goto(place):
+        runner.stop()
+        game.place = place
+
     def core():
-        game.showtext("The ladder-shaft ends in a roof-hatch, you open it and stare into the huge spherical room above")
-#        game.rolltext("""
-#You open the hatch, and beholds the spinning room.
-#In the light gravity you push off upwards into the core.
-#        """)
+        game.showtext("{LADDER_TO_CORE}")
         goto("core")
     def inner():
-        game.showtext("You open the hatch for the inner ring")
+        game.showtext("{LADDER_TO_INNER}")
         goto("inner")
     def middle():
-        game.showtext("You open the hatch for the middle ring")
+        game.showtext("{LADDER_TO_MID}")
         goto("middle")
     def outer():
-        game.showtext("You open the hatch for the outer ring")
+        game.showtext("{LADDER_TO_OUT}")
         goto("outer")
 
-    
-
-    #((sectionDdoor, "Section D door", "examine")) 
-    nav.places = (
-        (core, "The core", "Exit to the Core"),
-        (inner, "inner ring", "Exit into the inner ring" ),
-        (middle, "middle ring", "Exit into the middle ring" ),
-        (outer, "outer ring", "Exit into the outer ring" )
-    )
-    def goto(room):
-        nav.running = False
-        save.goto(room)
-    def initNav():
-        prevroom = save.getdata("prevroom")
-        if prevroom == "core":
-            nav.ind = 0
-        elif prevroom == "inner":
-            nav.ind = 1
-        elif prevroom == "middle":
-            nav.ind = 2
-        elif prevroom == "outer":
-            nav.ind = 3
-
-    if not nav.running:
-        initNav()
-    nav.loop(save)
-    
-
-
-
+    def setupRunner():
+        base_navtext = T("NAV_DESC_TEMPLATE")
+        frags = {"_WHEEL" : "Habitat wheel C", "_SECTORNAME" : "Sector B"}
+        runner.nodes = [
+            Game.PlaceNode(game, "TO_CORE",    game.retext(base_navtext, {**frags, "_RINGNAME":"Core", "_LOCAL_NAME":"Exit to core"}),[
+                ("_", T("LADDER_CORE_QUEST"), core),
+            ]),
+            Game.PlaceNode(game, "TO_INNER",    game.retext(base_navtext, {**frags, "_RINGNAME":"Inner ring", "_LOCAL_NAME":"Exit to inner ring"}),[
+                ("_", T("LADDER_INNER_QUEST"), inner),
+            ]),
+            Game.PlaceNode(game, "TO_MID",    game.retext(base_navtext, {**frags, "_RINGNAME":"Middle ring", "_LOCAL_NAME":"Exit to middle ring"}),[
+                ("_", T("LADDER_MID_QUEST"), middle),
+            ]),
+            Game.PlaceNode(game, "TO_OUT",    game.retext(base_navtext, {**frags, "_RINGNAME":"Outer ring", "_LOCAL_NAME":"Exit to outer ring"}),[
+                ("_", T("LADDER_OUT_QUEST"), outer),
+            ]),
+        ]
+    setupRunner()
+    runner.run()
 
 def core(save):
     intro = ""

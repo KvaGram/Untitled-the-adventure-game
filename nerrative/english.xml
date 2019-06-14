@@ -1245,6 +1245,32 @@ Then you hear a fizzeling sound, and everything stops working
 You left the elevators alone
 </ELEVATOR_EXIT>
 
+<LADDER_GO_UP>
+You climb upwards, feeling yourself getting a bit lighter
+</LADDER_GO_UP>
+<LADDER_GO_DOWN>
+You climb down, feeling a slight stronger pull downwards
+</LADDER_GO_DOWN>
+
+<LADDER_TO_CORE>
+The ladder-shaft ends in a roof-hatch, you open it and stare into the huge spherical room above
+</LADDER_TO_CORE>
+<LADDER_TO_INNER>
+You open the hatch for the inner ring
+</LADDER_TO_INNER>
+<LADDER_TO_MID>
+You open the hatch for the middle ring
+</LADDER_TO_MID>
+<LADDER_TO_OUT>
+You open the hatch for the outer ring
+</LADDER_TO_OUT>
+
+<LADDER_CORE_QUEST>Exit to the Core<LADDER_CORE_QUEST>
+<LADDER_INNER_QUEST>Exit into the inner ring<LADDER_INNER_QUEST>
+<LADDER_MID_QUEST>Exit into the middle ring<LADDER_MID_QUEST>
+<LADDER_OUT_QUEST>Exit into the outer ring<LADDER_OUT_QUEST>
+
+
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
 <YES>Yes</YES>
