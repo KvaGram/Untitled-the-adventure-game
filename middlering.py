@@ -17,8 +17,6 @@ class MiddleRunner(Game.PlaceRunner1D):
             return
         super().runaction(action)
 
-    #TODO: Continue writing replacement for middleroomnav
-
 def main(game:Game.Game):
     T = Game.Gettexter(game)
 

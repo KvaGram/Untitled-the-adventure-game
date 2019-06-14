@@ -15,13 +15,12 @@ def main(game:Game.Game):
                 break
             if(game.getGameover()):
                 return
-#TODO: continue rewrite from here
     def bathrooms2(subroom):
         gender = None 
         visited = game.getdata("bathroom:visited", False) # if the Player Character has visited the bathrooms beofore
         showered = game.getdata("bathroom:showered", False)  # whatever the player character has showered
         relived = game.getdata("bathroom:relived", False) # whatever the PC has had the chance to relive themself
-        keepsake = game.getInventory("keepsake") # potential use in later chapters. Only unlockable if you have remembered who your spouse is.
+        keepsake = game.getInventory("KEEPSAKE") # potential use in later chapters. Only unlockable if you have remembered who your spouse is.
 
         choices = None
         introtext = "" #text-block to display. Will be cunstructed below
@@ -136,7 +135,7 @@ def main(game:Game.Game):
                 else:
                     game.rolltext("{BATH_LOCKERS2}")
                     keepsake = True
-                game.setdata("spouse:keepsake", keepsake)
+                    game.setInventory("KEEPSAKE", True)
             status = game.updateCounter("reactorC", -1)
             if status == "death": #if reactor counter reach 0, and the game ends.
                 break

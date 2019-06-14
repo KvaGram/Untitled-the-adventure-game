@@ -49,6 +49,14 @@ a reputation for
 being a bit of an
 asshole.
 </ITEM_ASSHOLE_DESC>
+<ITEM_KEEPSAKE_NAME>{game.Spouse.name}'s keepsake</ITEM_KEEPSAKE_NAME>
+<ITEM_KEEPSAKE_DESC>
+A box that you seem to remember
+is very important to
+{game.Spouse.name}
+</ITEM_KEEPSAKE_DESC>
+
+
 <ITEM_KEYCODE_NAME>Human habitat security keycode</ITEM_KEYCODE_NAME>
 <ITEM_KEYCODE_DESC>
 0-0-0-0-0

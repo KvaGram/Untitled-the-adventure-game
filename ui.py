@@ -235,7 +235,6 @@ class UntitledUI:
             self.inventory.grid_columnconfigure(index = column, weight=1)
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
-        #TODO build navtext
         self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 5)
         self.navTextDisplay.pack(fill= TK.BOTH)
         self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")

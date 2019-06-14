@@ -218,7 +218,7 @@ As you were floating though, you were greeted by someone who suddenly floated in
     #end of loop
 #TODO: Move to a proper module
 def Cargobay(save):
-    #TODO: write the ending, mention if reactor was fixed, and if the people in stasis was saved. end with being told to go to the infirmary. END OF CHAPTER!
+    #TODO: Rewrite needed!
     reactorFixed = save.getdata("reactorC:fixed", False)
     peopleSaved = save.getdata("stasis:peopleSaved", 0)
     prevcontact = save.getdata("auxcom:cargo", False)

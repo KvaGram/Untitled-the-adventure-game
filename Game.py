@@ -31,7 +31,7 @@ class Game:
         ItemDB.SET("TRANSLATOR", T("ITEM_TRANSLATOR_NAME"), T("ITEM_TRANSLATOR_DESC"), "empty.gif")
         ItemDB.SET("ASSHOLE", T("ITEM_ASSHOLE_NAME"), T("ITEM_ASSHOLE_DESC"), "empty.gif")
         ItemDB.SET("KEYCODE", T("ITEM_KEYCODE_NAME"), T("ITEM_KEYCODE_DESC"), "empty.gif")
-
+        ItemDB.SET("KEEPSAKE", T("ITEM_KEEPSAKE_NAME"), T("ITEM_KEEPSAKE_DESC"), "empty.gif")
 
         self.GeneralList = {
             "credits"        : Game.runCredits,
@@ -216,8 +216,6 @@ class Game:
         self.setdata("inventory", inv)
         
         self.ui.draw_inventory(itemlist = self.getAllInventory())
-        #TODO: refresh inventory in UI
-        #TODO: make a list of image and description for ever inventory item
     def getInventory(self, item:str):
         inv = self.getdata("inventory", {})
         return inv.get(item, None)
