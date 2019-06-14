@@ -200,56 +200,38 @@ def auxcom_cargo(game:Game.Game):
 def elevator(game:Game.Game):
     T = Game.Gettexter(game)
     frags = {}
+    place = game.place
     #region elevator
-    room = game.getdata("room")
-
-    coredesc = """The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
-    The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look."""
-    corridesc = """The elevators breaks up the corridor, as the corridor splits to around a large round column you learn is the elevator shaft,
-the walls around bending outwards giving way for the path around the shaft until they hit flat outer walls."""
-    if room == "outer":
-        buttonsets = "up"
-    elif room == "core":
-        buttonsets = "down"
+    if place == "outer":
+        frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_BOTTOM}"
+        frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
+        choices = (("UP", "{ELEVATOR_OPTION_UP}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
+    elif place == "core":
+        frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_CORE}"
+        frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
+        choices = (("DOWN", "{ELEVATOR_OPTION_DOWN}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
     else:
-        buttonsets = "up, down"
-    game.rolltext("""
-{0}
-You find six elevator doors in pairs of two around the large cylinder.
-You also locate a set of call-buttons for {1} and cargo, whatever that last one means.
-    """.format(coredesc if room == "core" else corridesc, buttonsets))
+        frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_MID}"
+        frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
+        choices = (("UP", "{ELEVATOR_OPTION_UP}"), ("DOWN", "{ELEVATOR_OPTION_DOWN}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
+    game.rolltext("{ELEVATOR_DESC}", frags=frags)
     
-
-    
-    if room == "middle" or room == "inner":
-        choices = (("UP", "Press UP call button"), ("DOWN","Press DOWN call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
-    elif room == "core":
-        choices = (("DOWN","Press DOWN call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
-    elif room == "outer":
-        choices = (("UP", "Press UP call button"), ("CARGO","Press CARGO call button"), ("EXIT","Leave"))
-
-    _,choice = game.choose2(choices, "Press a button?")
-    if choice != "EXIT":
-        if(game.getdata("WheelC_elevator") == "dead"):
-            text = """
-You press the button.
-...
-Nothing happened.
-            """
-        else:
-            text = """
-You press the button.
-The button flashes.
-...
-You hear an odd clang
-...         """
-            if choice == "CARGO":
-                text += "\nTwo of the elevator doors open in a very slight crack."
-            else:
-                text += "\nOne of the elevator doors open in a very slight crack."
-            text += "\nThen you hear a fizzeling sound, and everything stops working"
-            game.setdata("WheelC_elevator", "dead")
-        game.rolltext(text)
-    else:
-        game.showtext("You left the elevators alone")
+    while True:
+        game.choose(choices, "{ELEVATOR_QUEST}")
+        data = game.wait()
+        if not data or data.Type != "action":
+            continue
+        if data.tag == "EXIT":
+            game.showtext("{ELEVATOR_EXIT}")
+            break
+        elif game.getdata("WheelC_elevator") == "dead":
+            game.rolltext("{ELEVATOR_PRESS_DEAD}")
+            
+        game.setdata("WheelC_elevator", "dead")
+        if   data.tag == "UP":
+            game.rolltext("{ELEVATOR_OPTION_UP}")
+        elif data.tag == "DOWN":
+            game.rolltext("{ELEVATOR_OPTION_DOWN}")
+        elif data.tag == "CARGO":
+            game.rolltext("{ELEVATOR_OPTION_CARGO}")
     #endregion elevator

@@ -1005,19 +1005,23 @@ Do you have any more questions?
 
 <!-- Elevator scene. May happen at any ring and the core.
 frags:
-
+_BUTTONSET - see ELEVATOR_BUTTONSET ( CORE, MID, BUTTOM )
+_DESC -  see ELEVATOR_DESC ( CORE, CORRIDOR )
  -->
-<ELEVATOR_CORE_DESC>
+<ELEVATOR_DESC_CORE>
 The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
-    The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look.
-</ELEVATOR_CORE_DESC>
+The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look.
+</ELEVATOR_DESC_CORE>
 
-<ELEVATOR_CORRIDOR_DESC>
+<ELEVATOR_DESC_CORRIDOR>
 The elevators breaks up the corridor, as the corridor splits to around a large round column you learn is the elevator shaft,
 the walls around bending outwards giving way for the path around the shaft until they hit flat outer walls.
-</ELEVATOR_CORRIDOR_DESC>
+</ELEVATOR_DESC_CORRIDOR>
 
 <ELEVATOR_DESC>
+{_DESC}
+You find six elevator doors in pairs of two around the large cylinder.
+You also locate a set of call-buttons for {_BUTTONSET}, whatever that last one means.
 </ELEVATOR_DESC>
 
 <ELEVATOR_BUTTONSET_CORE>
@@ -1028,9 +1032,45 @@ down and 'cargo'
 up, down and 'cargo'
 </ELEVATOR_BUTTONSET_MID>
 
-<ELEVATOR_BUTTONSET_BUTTOM>
+<ELEVATOR_BUTTONSET_BOTTOM>
 up and 'cargo'
-</ELEVATOR_BUTTONSET_BUTTOM>
+</ELEVATOR_BUTTONSET_BOTTOM>
+
+<ELEVATOR_QUEST>
+Press a button?
+</ELEVATOR_QUEST>
+
+<ELEVATOR_OPTION_UP>Press UP call button</ELEVATOR_OPTION_UP>
+<ELEVATOR_OPTION_DOWN>Press DOWN call button</ELEVATOR_OPTION_DOWN>
+<ELEVATOR_OPTION_CARGO>Press CARGO call button</ELEVATOR_OPTION_CARGO>
+<ELEVATOR_OPTION_EXIT>Leave the elevators</ELEVATOR_OPTION_EXIT>
+
+<ELEVATOR_PRESS_DEAD>
+You press the button.
+...
+Nothing happened.
+</ELEVATOR_PRESS_DEAD>
+<ELEVATOR_PRESS_NORM>
+You press the button.
+The button flashes.
+...
+You hear an odd clang
+...
+One of the elevator doors open in a very slight crack.
+Then you hear a fizzeling sound, and everything stops working
+</ELEVATOR_PRESS_NORM>
+<ELEVATOR_PRESS_CARGO>
+You press the button.
+The button flashes.
+...
+You hear an odd clang
+...
+Two of the elevator doors open in a very slight crack.
+Then you hear a fizzeling sound, and everything stops working
+</ELEVATOR_PRESS_CARGO>
+<ELEVATOR_EXIT>
+You left the elevators alone
+</ELEVATOR_EXIT>
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
