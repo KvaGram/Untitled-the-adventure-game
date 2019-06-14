@@ -1270,6 +1270,31 @@ You open the hatch for the outer ring
 <LADDER_MID_QUEST>Exit into the middle ring<LADDER_MID_QUEST>
 <LADDER_OUT_QUEST>Exit into the outer ring<LADDER_OUT_QUEST>
 
+<CORE_INTRO_1>
+As you push off from the laddershaft, you fly upwards in the low gravity.
+You reach the center, finding yourself entierly weightless.
+You take hold on a rotating pole. Soon the pole seemed to stop rotating, and the room started rotating around you.
+You see the ladder you came out from now no longer as "down", but as part of the wall.
+From your perspective, "up" has become a set of reinforced windows at one end of the sphere.
+"Down" has become a large open doorway, with a sign lableing it "airlock".
+That being said, had you turned yourself the other way, it would be the other way around.
+
+As the room spins around you, you take note of the clearly labled entry points around you.
+</CORE_INTRO_1>
+<CORE_INTRO_2>
+You float mindlessly around in the huge sphere untill you get a hold on a spinning pole in center.
+Soon the pole seemed to stop rotating, and the room started rotating around you.
+As the room spins around you, you take note of the clearly labled entry points around you.
+</CORE_INTRO_2>
+
+<CORE_OPTION_WINDOW>Float to the core window</CORE_OPTION_WINDOW>
+<CORE_OPTION_SEC_A>Float to the section A transport elevator</CORE_OPTION_SEC_A>
+<CORE_OPTION_SEC_B>Float to the section B emergency ladder</CORE_OPTION_SEC_B>
+<CORE_OPTION_SEC_C>Float to the section C transport elevator</CORE_OPTION_SEC_C>
+<CORE_OPTION_SEC_D>Float to the section D emergency ladder</CORE_OPTION_SEC_D>
+<CORE_OPTION_AIRLOCK>Float to the module airlock</CORE_OPTION_AIRLOCK>
+
+<CORE_QUEST>What do you wish to do?</CORE_QUEST>
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>

@@ -2,38 +2,29 @@ import Game
 import dialoges
 
 def Core(game:Game.Game):
+    T = Game.Gettexter(game)
     intro = ""
-    proom = save.getdata("prevroom")
-    if(proom == "ladder"):
-        intro = """
-As you push off from the laddershaft, you fly upwards in the low gravity.
-You reach the center, finding yourself entierly weightless.
-You take hold on a rotating pole. Soon the pole seemed to stop rotating, and the room started rotating around you.
-You see the ladder you came out from now no longer as "down", but as part of the wall.
-From your perspective, "up" has become a set of reinforced windows at one end of the sphere.
-"Down" has become a large open doorway, with a sign lableing it "airlock".
-That being said, had you turned yourself the other way, it would be the other way around.
-
-As the room spins around you, you take note of the clearly labled entry points around you.
-        """
+    prevplave = game.prevPlace
+    if(prevplave == "ladder"):
+        intro = "{CORE_INTRO_1}"
     else:
-        intro = """
-You float mindlessly around in the huge sphere untill you get a hold on a spinning pole in center.
-Soon the pole seemed to stop rotating, and the room started rotating around you.
-As the room spins around you, you take note of the clearly labled entry points around you.
-        """
+        intro = "{CORE_INTRO_2}"
     game.rolltext(intro)
     choices = (
-        ("WINDOW", "Core window"),
-        ("ELEVATOR_SEC_A", "Section A transport elevator"),
-        ("LADDER_SEC_B", "Section B emergency access ladder"),
-        ("ELEVATOR_SEC_C", "Section C transport elevator"),
-        ("LADDER_SEC_D", "Section D emergency access ladder"),
-        ("AIRLOCK", "Module primary airlock and dock"),
-        ("GAMEMENU", "OPEN GAME MENU")
+        ("WINDOW", T("CORE_OPTION_WINDOW")),
+        ("ELEVATOR_SEC_A", T("CORE_OPTION_SEC_A")),
+        ("LADDER_SEC_B", T("CORE_OPTION_SEC_B")),
+        ("ELEVATOR_SEC_C", T("CORE_OPTION_SEC_C")),
+        ("LADDER_SEC_D", T("CORE_OPTION_SEC_D")),
+        ("AIRLOCK", T("CORE_OPTION_AIRLOCK")),
     )
     running = True
     while running:
+        game.choose(choices, T("CORE_QUEST"))
+        data = game.wait()
+        if not data or data.Type != "action":
+            continue
+#Continue rewrite from here!
         _, choice = game.choose2(choices)
         if choice == "GAMEMENU":
             if(game.gameMenu(save)):
