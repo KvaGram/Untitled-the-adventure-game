@@ -8,7 +8,6 @@ import types
 import tkinter as TK
 from tkinter import messagebox as TKmsg
 
-#import game_utilities as G
 import ui
 import Game
 import Storyloader
@@ -16,9 +15,10 @@ import Storyloader
 import room_apartment 
 import middlering
 import Bathrooms
+import Ladder
+import Core
 #import outer
 #import inner
-#import WheelC as wheel
 
 #version number. Major, minor, hotfix.
 VERSION = [1, 0, 0]
@@ -43,13 +43,13 @@ def start():
 def game_loop(game:Game.Game):
     world = {
         "apartment" : room_apartment.main,
-        #"core"      : wheel.core,
+        #"core"      : Core.Core,
         #"inner"     : inner.main,
         "middle"    : middlering.main,
         #"outer"     : outer.main,
-        #"ladder"    : wheel.emergencyLadder,
-        "bathrooms" : Bathrooms.main
-        #"cargobay"  : wheel.Cargobay
+        "ladder"    : Ladder.Main,
+        "bathrooms" : Bathrooms.main,
+        #"cargobay"  : Core.Cargobay
     }
 
     while True:
