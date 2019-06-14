@@ -881,10 +881,10 @@ The people on the other side of the call is waiting for you to answer.
 What do you say?
 </AUXCOM_DIALOGE_1_QUEST>
 
-<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1B_OPTION_1>
-<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1B_OPTION_2>
-<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1B_OPTION_3>
-<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1B_OPTION_4>
+<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1_OPTION_1>
+<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1_OPTION_2>
+<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1_OPTION_3>
+<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1_OPTION_4>
 
 <!-- AUXCOM_DIALOGE_1 fragments
 {_P} - player name or (mister/miss) See GENDERED_1
@@ -911,7 +911,7 @@ You're a engineer, right? Maybe you could try to stabilize the reactor temporari
 There are still lots of people stuck in stasis in the upper ring!
 
 Look, {game.PlayerName}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
-</AUXCOM_DIALOGE_1B>
+</AUXCOM_DIALOGE_1A>
 
 <AUXCOM_DIALOGE_2A_QUEST>
 How do you respond?

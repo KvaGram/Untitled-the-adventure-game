@@ -141,10 +141,10 @@ def main(game:Game.Game):
     navdata.closed = True
     navdata.navtext = T("APT_NAVTEXT_2")
     choices = (
-        ("WINDOW", "{APT_OPTION_WINDOW}"),
-        ("TABLE", "{APT_OPTION_TABLE}"),
-        ("SINK", "{APT_OPTION_SINK}"),
-        ("DOOR", "{APT_OPTION_DOOR}")
+        ("WINDOW", T("APT_OPTION_WINDOW")),
+        ("TABLE", T("APT_OPTION_TABLE")),
+        ("SINK", T("APT_OPTION_SINK")),
+        ("DOOR", T("APT_OPTION_DOOR")),
         )
     end = False
     while not end:
