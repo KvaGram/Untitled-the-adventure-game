@@ -92,42 +92,32 @@ def main(game:Game.Game):
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
             if m == None:
-                game.rolltext("""
-You stare closely at the man in the cyan framed picture.
-He looks familiar. Very familiar.
-You seem to remember he insisted you did not need some expensive frame for his picture.
-You study his features closely.
-Suddenly it clicks in your mind.
-You recognize him now. You think you remeber his name.""")
-                indata = game.textin((("name:", "Jeff"),), "What is his name?", True)[1]
+                game.rolltext("{APT_CYAN_1}")
+                indata = game.textin((("name:", "Jeff"),), "{APT_CYAN_SUBMIT}", True)[1]
                 mName = indata[0][1]
                 if f:
                     mRole = "sibling"
                 else:
                     mRole = "spouse"
                 game.setMaleFam(mRole, mName) 
-                game.showtext("That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!" )
+                game.showtext("{APT_CYAN_2}")
             else:
-                game.showtext("It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}." )
+                game.showtext("{APT_CYAN_3}")
         elif data.tag == "GOLD":
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)
             if f == None:
-                game.rolltext("""
-You stare closely at the lady in the gold framed picture.
-You study her close, trying to remember who she is.
-As you are looking in her eyes when you realize who she is.
-You suddenly recall her name!""")
-                indata = game.textin((("name:", "Klara"),), "What is her name?", True)[1]
+                game.rolltext("{APT_GOLD_1}")
+                indata = game.textin((("name:", "Klara"),), "{APT_GOLD_SUBMIT}", True)[1]
                 fName = indata[0][1]
                 if m:
                     fRole = "sibling"
                 else:
                     fRole = "spouse"
                 game.setFemaleFam(fRole, fName)
-                game.showtext("{game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?" )
+                game.showtext("{APT_GOLD_2}")
             else:
-                game.showtext("It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}." )
+                game.showtext("{APT_GOLD_3}")
         else:
             return
         table() #repeat
@@ -139,17 +129,10 @@ You suddenly recall her name!""")
         if left:
             return True
         elif ache:
-            game.rolltext("""
-You walk towards the door.
-Suddenly there is a sharp spike of pain in your head.
-When it is over you are back on the bed, panting.""")
+            game.rolltext("{DOOR_1}")
             return False
         else:
-            game.rolltext("""
-You walk to the door.
-Your head is starting to clear up.
-You open the door, and walk out.
-            """)
+            game.rolltext("{DOOR_2}")
             return True
         #endregion door()
 
@@ -158,15 +141,15 @@ You open the door, and walk out.
     navdata.closed = True
     navdata.navtext = T("APT_NAVTEXT_2")
     choices = (
-        ("WINDOW", "look out the window"),
-        ("TABLE", "examine the table"),
-        ("SINK", "examine the sink"),
-        ("DOOR", "go to the door")
+        ("WINDOW", "{APT_OPTION_WINDOW}"),
+        ("TABLE", "{APT_OPTION_TABLE}"),
+        ("SINK", "{APT_OPTION_SINK}"),
+        ("DOOR", "{APT_OPTION_DOOR}")
         )
     end = False
     while not end:
-        game.showtext("You are sitting on the side of the bed")
-        game.choose(choices, "What do you wish to do?")
+        game.showtext("{APT_BED}")
+        game.choose(choices, "{APT_BED_QUEST}")
         data = game.wait()
         if data.Type != "action":
             continue

@@ -71,6 +71,18 @@ is very important to
 Small apartment
 </APT_NAVTEXT_2>
 
+<APT_OPTION_WINDOW>look out the window</APT_OPTION_WINDOW>
+<APT_OPTION_TABLE>examine the table</APT_OPTION_TABLE>
+<APT_OPTION_SINK>examine the sink</APT_OPTION_SINK>
+<APT_OPTION_DOOR>go to the door</APT_OPTION_DOOR>
+
+<APT_BED>
+You are sitting on the side of the bed
+</APT_BED>
+<APT_BED_QUEST>
+What do you wish to do?
+</APT_BED_QUEST>
+
 <APT_DREAM>
 Weeeee.. you are flying through the sky!
 Below you is a beautiful forest, as green as anything you could ever imagine!
@@ -178,6 +190,46 @@ One with a cyan frame, one with a golden frame.
 <APT_GLASS_4>you drank the rest. The glass is now empty.</APT_GLASS_4>
 <APT_GLASS_5>you left the glass alone</APT_GLASS_5>
 <APT_GLASS_6>The glass is empty</APT_GLASS_6>
+
+<APT_CYAN_1>
+You stare closely at the man in the cyan framed picture.
+He looks familiar. Very familiar.
+You seem to remember he insisted you did not need some expensive frame for his picture.
+You study his features closely.
+Suddenly it clicks in your mind.
+You recognize him now. You think you remeber his name.
+</APT_CYAN_1>
+<APT_CYAN_SUBMIT>That's his name.</APT_CYAN_SUBMIT>
+<APT_CYAN_2>
+That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!
+</APT_CYAN_2>
+<APT_CYAN_3>
+It is {game.MaleFam.name} your {game.MaleFam.GenderedRole}.
+</APT_CYAN_3>
+<APT_GOLD_1>
+You stare closely at the lady in the gold framed picture.
+You study her close, trying to remember who she is.
+As you are looking in her eyes when you realize who she is.
+You suddenly recall her name!
+</APT_GOLD_1>
+<APT_GOLD_SUBMIT>That's her name.</APT_GOLD_SUBMIT>
+<APT_GOLD_2>
+{game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?
+</APT_GOLD_2>
+<APT_GOLD_3>
+It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}.
+</APT_GOLD_3>
+
+<DOOR_1>
+You walk towards the door.
+Suddenly there is a sharp spike of pain in your head.
+When it is over you are back on the bed, panting.
+</DOOR_1>
+<DOOR_2>
+You walk to the door.
+Your head is starting to clear up.
+You open the door, and walk out.
+</DOOR_2>
 
 <BATH_INTRO>
 You stand in front of the bathrooms. There are two doors in front of you.
