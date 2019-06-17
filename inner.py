@@ -1,34 +1,12 @@
-import game_utilities as game
+import Game
 import random
-import dialoges
-def main(save):
-    sectionA = []
-    sectionB = []
-    class outerRoomNAV(game.RoomNav1D):
-        termPlus = "GO LEFT"   #
-        termMinus = "GO RIGHT" #
-        roomname = "inner" #
+import General
+from General import Runner_WheelC_Rings as Runner
 
-        sec = "A" #current location, section
-        #Override
-        def runAction(self):
-            act,_,_ = self.getPlace()
-            #note: ticks the reactorC counter if enabled.
-            status = game.updateCounter(save, "reactorC", -1)
-            if status == "death": #if reactor counter reach 0, and the game ends.
-                self.running = False
-            else:
-                act()
-        def setSection(self, newSec, newInd):
-            if newSec == "A":
-                self.places = sectionA
-            elif newSec == "B":
-                self.places = sectionB
-            else:
-                raise("INVALID ROOM SECTION LABEL")
-            self.sec = newSec
-            self.ind = newInd
-
+def main(game:Game.Game):
+    runner = Runner(game)
+    #OLD CODE, to be rewritten
+    
     nav = outerRoomNAV.GET_NAV(save)
     intro = "place holder corridor intro text (should not show up in the game)"
     #region actions and places

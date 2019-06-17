@@ -46,3 +46,18 @@ def elevator(game:Game.Game):
                 game.rolltext("{ELEVATOR_OPTION_CARGO}")
     return content
 #endregion elevator
+
+class Runner_WheelC_Rings(Game.PlaceRunner1D):
+    def __init__(self, game:Game.Game):
+        super().__init__(game, 'x', 'left', 'right')
+    def onTravel(self, previndex:int):
+        if previndex == self.index:
+            print("Null travel error ? ignoring")
+        pass
+        #check for section passage
+    def runaction(self, action):
+        status = self.game.updateCounter("reactorC", -1)
+        if status == "death":
+            self.running = False
+            return
+        super().runaction(action)

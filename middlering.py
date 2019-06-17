@@ -1,6 +1,7 @@
 import random
 import General
 import Game
+from General import Runner_WheelC_Rings as Runner
 
 class MiddleRunner(Game.PlaceRunner1D):
     def __init__(self, game:Game.Game):
@@ -19,9 +20,9 @@ class MiddleRunner(Game.PlaceRunner1D):
 
 def main(game:Game.Game):
     T = Game.Gettexter(game)
-
+    
     navdata = game.Navdata
-    runner:MiddleRunner = MiddleRunner(game)
+    runner:Runner = Runner(game)
     #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
     #region places and actions
@@ -45,9 +46,9 @@ def main(game:Game.Game):
     def cafeteria():
         game.showtext("The Cafeteria is closed!") #TODO: write cafeteria
     def sectionBdoor():
-        pass
+        pass #TODO: write description of passage
     def sectionAdoor():
-        pass
+        pass #TODO: write description of passage
     def auxcom_repair():
         #grabbing some data from game
         #redwhiteblue = game.getdata("auxcom:redwhiteinblue")
@@ -421,7 +422,7 @@ def main(game:Game.Game):
     
     #Import Elevator event from General
     elevator = General.elevator(game)
-    
+
     #endregion places and actions
     #----------------------------
     #local shorthand.
