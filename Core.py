@@ -1,8 +1,11 @@
 import Game
-import dialoges
+import General
 
 def Core(game:Game.Game):
     T = Game.Gettexter(game)
+    #importing elevator from General
+    elevator = General.elevator(game)
+
     frags = {}
     intro = ""
     prevplave = game.prevPlace
@@ -38,7 +41,7 @@ def Core(game:Game.Game):
         elif data.tag == "ELEVATOR_SEC_A":
             game.rolltext("{CORE_TO_ELE_A}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
-                dialoges.elevator(game)
+                elevator()
         elif data.tag == "ELEVATOR_SEC_C":
             game.rolltext("{CORE_TO_ELE_C}")
             if(game.yesno("{FLOAT_TO_QUEST}")):

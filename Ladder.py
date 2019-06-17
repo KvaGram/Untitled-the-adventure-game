@@ -1,5 +1,5 @@
 import Game
-import dialoges
+import General
 
 #The Ladder
 class LadderRunner(Game.PlaceRunner1D):
@@ -59,3 +59,5 @@ def Main(game):
         ]
     setupRunner()
     runner.run()
+
+
