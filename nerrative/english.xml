@@ -1296,6 +1296,182 @@ As the room spins around you, you take note of the clearly labled entry points a
 
 <CORE_QUEST>What do you wish to do?</CORE_QUEST>
 
+<CORE_WINDOW_1>
+You climb, or rather push and drag your way to the window at one end of the pole.
+The pole connected to a set of handrails, rotating with the wall.
+It was a awkward transision, but you are now looking out a solid thick window.
+{_WINDOW_PART}
+You took some time to enjoy the view.
+...
+.....
+... ...
+Some debris hit the solid window.
+You figure this was your cue to leave and focus on the imminent threat on hand.
+...
+As you push and drag your way back, you hear a odd bang.
+Then an alarm starts howling.
+You look back, and see the shutters close.
+You hear more bangs, debris hitting the shutters.
+Might be a good idea to get out of there.
+</CORE_WINDOW_1>
+<CORE_WINDOW_1_PART_A>
+Unlike the 'window' in the room you woke up in, this window was at least not holographic.
+You could tell by the lack of lag when you moved your head, the large solid sliding shutters on both sides of the window
+uh and the fact you are looking out into space, and not an idyllic forest.
+</CORE_WINDOW_1_PART_A>
+<CORE_WINDOW_1_PART_B>
+The window gives you a great view into space, it is quite impressive view.
+You take note of the large solid sliding shutters on both sides of the window.
+</CORE_WINDOW_1_PART_B>
+<CORE_WINDOW_2>
+You look back at the window area. The window is closed by the huge metal shutter.
+You still hear the occational clang and bang.
+You decide not to get closer, just in case.
+</CORE_WINDOW_2>
+
+<FLOAT_TO_QUEST>
+Float over to it?
+</FLOAT_TO_QUEST>
+
+<CORE_TO_ELE_A>
+You look at the elevator access rotating around.
+A huge A is painted on it.
+</CORE_TO_ELE_A>
+<CORE_TO_ELE_C>
+You look at the elevator access rotating around.
+A huge C is painted on it.
+</CORE_TO_ELE_C>
+<CORE_TO_LADDER_B>
+You look over to the ladder access rotating around.
+It has a huge B painted on it.
+</CORE_TO_LADDER_B>
+<CORE_TO_LADDER_D>
+You look over to the ladder access rotating around.
+It has a huge D painted on it.
+</CORE_TO_LADDER_D>
+
+<CORE_ELE_C>
+You push off and float to the elevator.
+When you got there, you noticed a flashing electoric board flashing a read light
+and text in english and in alien script:
+BRECH DETECTED! NO ACCESS!
+You take off back to the pole.
+</CORE_ELE_C>
+<CORE_LADDER_D>
+You push off and float to the ladder.
+When you got there, you noticed a flashing electoric board flashing a read light and the text:
+BRECH DETECTED! NO ACCESS!
+You took off back to the pole.
+</CORE_LADDER_D>
+
+<CORE_AIRLOCK_1>
+You look "down" towards the huge door "below".
+Taking in the details, you see the pole ending a bit before it, splitting into 4 aches around the doorway.
+Like the pole itself, the doorway was fixed, and not rotating with the room.
+On a closer look, there is a secund doorway past it, and two more again, with only some small gap of room between them.
+The inner-most door are closed, but has some large windows where you can see the area past it, clearly.
+</CORE_AIRLOCK_1>
+<CORE_AIRLOCK_1_QUEST>
+Take off towards the doorway?
+</CORE_AIRLOCK_1_QUEST>
+<CORE_AIRLOCK_2>
+You rotate yourself so the doorway was now "above" you.
+You take off, pushing and dragging along the pole untill you reach the doorway.
+</CORE_AIRLOCK_2>
+<CORE_AIRLOCK_2_QUEST>
+enter the doorway?
+</CORE_AIRLOCK_2_QUEST>
+<CORE_AIRLOCK_3A>
+You enter through the first two doorways.
+you note the middle section between the doors were diffrent than the other two.
+It was shorter and had a seam down the middle.
+As you were floating though, you were greeted by someone who suddenly floated into view.
+</CORE_AIRLOCK_3A>
+<CORE_AIRLOCK_3B>
+For whatever reason, you decide to drag yourself back to the pole.
+As you turned around, you noticed some people float into view on the, with confused looks.
+</CORE_AIRLOCK_3B>
+
+<!--FRAGS:
+
+-->
+<CARGOBAY_ENDING>
+As you appreach the innermost door, you hear a muffled barely audiable voice from the other side.
+{_INTRO_PART}
+
+Are you alright there {0}? The door is a bit broken,
+so I need you to hold down that lever there while we open the door
+
+{_REACTION}
+
+{_FOLLOWUP}
+
+{_END}
+        END OF CHAPTER 1
+</CARGOBAY_ENDING>
+<CARGOBAY_INTRO_PART_A>
+Hey, you must be {_P}!
+</CARGOBAY_INTRO_PART_A>
+<CARGOBAY_INTRO_PART_B>
+What the? A survivor! Quick, let's open the door and get {_P} inside!
+</CARGOBAY_INTRO_PART_B>
+
+<CARGOBAY_REACTION_A>
+Well, you saved a few people, {_NUM_PEOPLE_SAVED} by last count, that would otherwise die.
+I suppose that's something we can be thankfull for. Sad there are still so many more stuck down there.
+</CARGOBAY_REACTION_A>
+<CARGOBAY_REACTION_B>
+Thank you {_P}. We never expected you to evacuate so many people on your lonesome. Sorry we could not help.
+By our last count, we're at {_NUM_PEOPLE_SAVED}, excluding you.
+</CARGOBAY_REACTION_B>
+<CARGOBAY_REACTION_C>
+What happened? You fixed the reactor. Was there something wrong with the stasis chambers? Why haven't you evacuated anyone, {_P}?
+</CARGOBAY_REACTION_C>
+<CARGOBAY_REACTION_D>
+Well, at least we got you out of there in time.
+</CARGOBAY_REACTION_D>
+
+<CARGOBAY_FOLLOWUP_A>
+Well, proper congratulations will have to wait.
+You should join the others in the infirmary.
+And we need to detatch the module now! Hurry on now!
+</CARGOBAY_FOLLOWUP_A>
+<CARGOBAY_FOLLOWUP_B>
+Wish we could get more people out of there, but it's too late now.
+Without that improvised dead-man switch on the other side there, this door is locked for good.
+You best head to the infirmary.
+We need to detach the module before it's too late.
+</CARGOBAY_FOLLOWUP_B>
+
+<CARGOBAY_ENDING_A>
+You push and drag your way following the signs to the infirmary in wheel A section A1
+You try not to think about how maybe you could have saved some of the people stuck in stasis.
+You excuse it in your mind by saying to yourself that there was nothing you could have done for them.
+Though in a way, you know that's a lie.
+</CARGOBAY_ENDING_A>
+<CARGOBAY_ENDING_B>
+You push and drag your way following the signs to the infirmary in wheel A section A1
+You try not to think about all the people you left behind, focusing instead on the few you did save
+</CARGOBAY_ENDING_B>
+<CARGOBAY_ENDING_C>
+You join the last group of surviors you saved on the way to the infirmary.
+Pushing and dragging your ways to wheel A, you meet a crew-member.
+You get told that the wheel A infirmary is full, so you change course to Wheel D.
+As if from nowhere, {game.MaleFam.name}, your {game.MaleFam.GenderedRole} pokes you on your shoulder.
+Apperently, he was in the last group, and you had not even noticed.
+Neither had he. Stasis sickness being what it is.
+Passing the computer core on the way, you got reaquiented with your {game.FemaleFam.GenderedRole} {game.FemaleFam.name} too, who pushed out of the room below you and hugged you.
+putting both of you in a real awkward spin in the microgravity, untill she got a hold on the railing, stopping you both.
+</CARGOBAY_ENDING_C>
+<CARGOBAY_ENDING_D>
+Hearing that comment, you got an odd feeling. How could you have known there were more people missing?
+And that you could have helped them? As you push and drag your way to the infirmary in wheel A,
+you conclude there was no way you could have known.
+...
+It is of little comfort.
+</CARGOBAY_ENDING_D>
+
+
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
 <YES>Yes</YES>
