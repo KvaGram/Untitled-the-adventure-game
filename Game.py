@@ -32,6 +32,7 @@ class Game:
         ItemDB.SET("ASSHOLE", T("ITEM_ASSHOLE_NAME"), T("ITEM_ASSHOLE_DESC"), "asshole.gif")
         ItemDB.SET("KEYCODE", T("ITEM_KEYCODE_NAME"), T("ITEM_KEYCODE_DESC"), "note.gif")
         ItemDB.SET("KEEPSAKE", T("ITEM_KEEPSAKE_NAME"), T("ITEM_KEEPSAKE_DESC"), "smallbox.gif")
+        ItemDB.SET("BROKE_TRANSLATOR", T("ITEM_BROKE_TRANSLATOR_NAME"), T("ITEM_BROKE_TRANSLATOR_DESC"), "brokentranslator.gif")
 
         self.GeneralList = {
             "credits"        : Game.runCredits,
@@ -373,7 +374,36 @@ def Gettexter(game:Game):
         fallback = "(({0}))".format(storytag)
         return game.story.get(storytag, fallback)
     return T
+class OptionList(list):
+    def __init__(self, iterable):
+        super().__init__(iterable)
+    def GetAct(self, indTag):
+        if type(indTag) == ActDataInput:
+            indTag = indTag.index
+        elif type(indTag) != int:
+            indTag = self.GetInd(indTag)
+        if indTag not in range(self.Len):
+            return None
+        try:
+            return self[indTag][2]
+        except:
+            return None
+    def RunAct(self, indTag, **kwargs):
+        try:
+            self.GetAct(indTag)(**kwargs)
+        except:
+            return
+    def GetInd(self, tag):
+        for i in range(self.Len):
+            if self[i][0] == tag:
+                return i
+        return -1
+    @property
+    def Len(self):
+        return len(self)
 
+
+    
 class Counterdata:
     def __init__(self, game:Game, **args):
         self.enabled = args.get("enabled", False)

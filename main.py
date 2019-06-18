@@ -17,6 +17,7 @@ import middlering
 import Bathrooms
 import Ladder
 import Core
+import Cafeteria
 #import outer
 #import inner
 
