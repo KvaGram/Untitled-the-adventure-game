@@ -32,16 +32,38 @@ def start():
     tkRoot.geometry("1600x900")
 
     game = Game.Game(tkRoot, VERSION, "english")
-    running = True
-    while running:
+    while True:
         try:
             titleMenu(game)
         except (SystemExit):
-            running = False
+            break
 
             
+def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
+    frags = {'_NAME':name}
+    Datacall()
+    game.rolltext("""
+    -----------------------------------------------
+    THIS IS A MODULE TEST FOR {_NAME}.
+    FOR FULL PLAY, PLEASE RUN FROM main.py INSTEAD.
+    -----------------------------------------------""",frags=frags)
+    while True:
+        try:
+            Testcall(game)
+        except (SystemExit):
+            break
+        game.rolltext("""
+        ------------------------------------
+        END OF MODULE TEST FOR {_NAME}.
+        ------------------------------------""",frags=frags)
+        if game.yesno(message="REPEAT TEST?"):
+            if game.yesno(message="CLEAN THE SAVEDATA?"):
+                Datacall()
+        else:
+            break
 
-def game_loop(game:Game.Game):
+
+def game_loop(game:Game):
     world = {
         "apartment" : room_apartment.main,
         #"core"      : Core.Core,

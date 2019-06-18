@@ -375,8 +375,6 @@ def Gettexter(game:Game):
         return game.story.get(storytag, fallback)
     return T
 class OptionList(list):
-    def __init__(self, iterable):
-        super().__init__(iterable)
     def GetAct(self, indTag):
         if type(indTag) == ActDataInput:
             indTag = indTag.index
@@ -390,9 +388,9 @@ class OptionList(list):
             return None
     def RunAct(self, indTag, **kwargs):
         try:
-            self.GetAct(indTag)(**kwargs)
+            return self.GetAct(indTag)(**kwargs)
         except:
-            return
+            return None
     def GetInd(self, tag):
         for i in range(self.Len):
             if self[i][0] == tag:

@@ -5,6 +5,7 @@ import random
 _LIT = "cafeteria:lit"
 
 def Main(game:Game.Game):
+    T = Game.Gettexter(game)
     def start():
         if not game.getdata(_LIT, False):
             darkness()
@@ -13,14 +14,15 @@ def Main(game:Game.Game):
             lit()
     def lit():
         options = [
-            ["BODY",      "{CAFE_LIT_OPTION_1}", lit_body],
-            ["LAMP",      "{CAFE_LIT_OPTION_2}", lit_lamp],
-            ["TABLE",     "{CAFE_LIT_OPTION_3}", lit_table],
-            ["COUNTER",   "{CAFE_LIT_OPTION_4}", lit_counter],
-            ["RACK",      "{CAFE_LIT_OPTION_5}", trans_rack],
+            ["BODY",      T("CAFE_LIT_OPTION_1"), lit_body],
+            ["LAMP",      T("CAFE_LIT_OPTION_2"), lit_lamp],
+            ["TABLE",     T("CAFE_LIT_OPTION_3"), lit_table],
+            ["COUNTER",   T("CAFE_LIT_OPTION_4"), lit_counter],
+            ["RACK",      T("CAFE_LIT_OPTION_5"), trans_rack],
         ]
-        options = Game.OptionList(random.shuffle(options))
-        options.append(["EXIT", "{CAFE_LIT_OPTION_EXIT}", lit_exit])
+        random.shuffle(options)
+        options = Game.OptionList(options)
+        options.append(["EXIT", T("CAFE_LIT_OPTION_EXIT"), lit_exit])
         while(True):
             game.choose(options)
             data:Game.ActDataInput = game.wait()
@@ -35,13 +37,14 @@ def Main(game:Game.Game):
     def darkness():
         game.rolltext("{CAFE_DARK_1}")
         options = [
-            ["BODY",      "{CAFE_DARK_OPTION_1}", dark_body],
-            ["LAMP",      "{CAFE_DARK_OPTION_2}", dark_lamp],
-            ["TABLE",     "{CAFE_DARK_OPTION_3}", dark_table],
-            ["COUNTER",   "{CAFE_DARK_OPTION_4}", dark_counter],
+            ["BODY",      T("CAFE_DARK_OPTION_1"), dark_body],
+            ["LAMP",      T("CAFE_DARK_OPTION_2"), dark_lamp],
+            ["TABLE",     T("CAFE_DARK_OPTION_3"), dark_table],
+            ["COUNTER",   T("CAFE_DARK_OPTION_4"), dark_counter],
         ]
-        options = Game.OptionList(random.shuffle(options))
-        options.append(["EXIT", "{CAFE_DARK_OPTION_EXIT}", dark_exit])
+        random.shuffle(options)
+        options = Game.OptionList(options)
+        options.append(["EXIT", T("CAFE_DARK_OPTION_EXIT"), dark_exit])
         while(True):
             game.choose(options)
             data:Game.ActDataInput = game.wait()
@@ -78,7 +81,6 @@ def Main(game:Game.Game):
         game.setInventory("BROKE_TRANSLATOR", True)
         game.rolltext("{CAFE_LIT_BODY}")
         #TODO:some kind of short story where the translator is examined.
-        game.setInventory("BROKE_TRANSLATOR", False)
         return False
     def lit_lamp():
         game.rolltext("{CAFE_LIT_LAMP}")
@@ -104,5 +106,10 @@ def Main(game:Game.Game):
 if __name__ == "__main__":
     import tkinter
     from main import VERSION
+    from main import _testloop
+
     tkRoot = tkinter.Tk(screenName="DEBUG! Cafeteria scene")
     game = Game.Game(tkRoot, VERSION, "english")
+    def testdata():
+        game.newgame()
+    _testloop(game, Main, testdata, "CAFETERIA")
