@@ -66,13 +66,14 @@ def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
 def game_loop(game:Game):
     world = {
         "apartment" : room_apartment.main,
-        #"core"      : Core.Core,
+        "core"      : Core.Core,
         #"inner"     : inner.main,
         "middle"    : middlering.main,
         #"outer"     : outer.main,
         "ladder"    : Ladder.Main,
         "bathrooms" : Bathrooms.main,
-        #"cargobay"  : Core.Cargobay
+        "cargobay"  : Core.Cargobay,
+        "cafeteria" : Cafeteria.Main
     }
 
     while True:

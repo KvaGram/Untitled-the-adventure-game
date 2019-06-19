@@ -35,7 +35,7 @@ def main(game:Game.Game):
     def bathrooms():
         goto("bathrooms")
     def door_2A68():
-        game.showtext("You open the door to your apartment and go inside.")
+        game.showtext("{MIDDLE_ENTER_ROOM_2A68}")
         goto("apartment")
     def Read_door_2A68():
         game.rolltext("{MIDDLE_READ_ROOM_2A68}")
@@ -44,7 +44,8 @@ def main(game:Game.Game):
             knowledge = 1
         game.setdata("wheelC:knowledge", knowledge)
     def cafeteria():
-        game.showtext("The Cafeteria is closed!") #TODO: write cafeteria
+        game.showtext("{MIDDLE_CAFE}")
+        goto("cafeteria")
     def sectionBdoor():
         pass #TODO: write description of passage
     def sectionAdoor():
@@ -487,6 +488,9 @@ def main(game:Game.Game):
         elif prevplace == "bathrooms":
             runner.index = "BATHROOMS"
             intro = "{MIDDLE_INTRO_4}"
+        elif prevplace == "cafeteria":
+            runner.index = "CAFE"
+            intro = "{MIDDLE_INTRO_5}"
         else:
             #using the existing index (nav.x) from save or testcode as default.
             intro = "{MIDDLE_INTRO_5}"

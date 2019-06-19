@@ -538,6 +538,10 @@ You exit the bathrooms and returned to the corridor.
 You are standing in the long corridor
 </MIDDLE_INTRO_5>
 
+<MIDDLE_CAFE>
+You enter the door to the cafeteria.
+</MIDDLE_CAFE>
+
 <MIDDLE_LADDER_INTRO_1>
 The corridor gives way to a large column, splitting the corridor to go around it on both sides.
 On two sides of the column you find large hatches with a colored engraving
@@ -582,6 +586,9 @@ The sign on the door reads
     |         068        |
     ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 </MIDDLE_READ_ROOM_2A68>
+<MIDDLE_ENTER_ROOM_2A68>
+You open the door to your apartment and go inside.
+</MIDDLE_ENTER_ROOM_2A68>
 
 <MIDDLE_SEC_D_DOOR>
 You stare at the large solid door in front of you.
