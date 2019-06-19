@@ -424,21 +424,12 @@ Sector B
 <!-- this navtext is to be replaced by above template
      {0} is sector letter (A or B)
      {1} is name of local node/place (see below) -->
-<OUTER_NAV_DESC_1>
- - Habitat Wheel C
- - Outer ring
- - sector {0}
- {1}
-</OUTER_NAV_DESC_1>
-<OUTER_NAV_DESC_2>
- - Habitat Wheel C
- - {OUTER_RING_NAME}
- - sector {0}
- {1}
-</OUTER_NAV_DESC_2>
 <OUTER_RING_NAME>
 Maintenence and disections ring
 </OUTER_RING_NAME>
+<INNER_RING_NAME>
+Stasis and healthcare ring
+</INNER_RING_NAME>
 
 <MIDDLE_NAV_DESC_1>
  - Unknown place
@@ -457,19 +448,6 @@ Maintenence and disections ring
  - Sector {0}
  {1}
 </MIDDLE_NAV_DESC_3>
-
-<INNER_NAV_DESC_1>
- - Habitat Wheel C
- - Inner ring 
- - Sector {0}
- {1} 
-</INNER_NAV_DESC_1>
-<INNER_NAV_DESC_2>
- - Habitat Wheel C
- - Human cryogenics
- - Sector {0}
- {1}
-</INNER_NAV_DESC_2>
 
 <PASS_SECTOR_DOORWAY>
 You pass through the open door separating the two sectors
@@ -1584,6 +1562,15 @@ It is of little comfort.
 
 <!--Inner ring section-->
 
+<INNER_INTRO_1>
+You have walked around aimlessly for a bit, you don't know for how long
+And oof! You just walked streight into a large closed door.
+</INNER_INTRO_1>
+<INNER_INTRO_2>
+You close the emergency ladder's hatch.
+You are now at the inner level ring.
+</INNER_INTRO_2>
+
 <INNER_SEC_C_DOOR>
 You stare at the large solid door in front of you.
 There is a painted engraving on the door, it reads
@@ -1613,9 +1600,99 @@ except, it is littered by dead people, and remains from broken stasis chambers.
 What happened here?
 </INNER_SEC_D_DOOR>
 
-<INNER_LADDER>
+<INNER_TUBES_LOCKED>
+A panel of the door indicates the chamber is closed down by emergency lockdown.
+You would need an override key to open it.
+</INNER_TUBES_LOCKED>
+<INNER_TUBES_VISITED>
+You have already cleared this chamber.
+</INNER_TUBES_VISITED>
 
-</INNER_LADDER>
+
+<INNER_NAV_ELE>
+A set of elevators
+</INNER_NAV_ELE>
+
+<INNER_NAV_LADDER>
+Emergency access ladder
+</INNER_NAV_LADDER>
+
+<INNER_NAV_TO_SEC_A>Large open doorway to sector A</INNER_NAV_TO_SEC_A>
+<INNER_NAV_TO_SEC_B>Large open doorway to sector B</INNER_NAV_TO_SEC_B>
+<INNER_NAV_TO_SEC_C>Large closed blastdoor to sector C</INNER_NAV_TO_SEC_C>
+<INNER_NAV_TO_SEC_D>Large closed blastdoor to sector D</INNER_NAV_TO_SEC_D>
+
+<INNER_NAV_ROOM_A>Stasis room A</INNER_NAV_ROOM_A>
+<INNER_NAV_ROOM_B>Stasis room B</INNER_NAV_ROOM_B>
+<INNER_NAV_ROOM_C>Stasis room C</INNER_NAV_ROOM_C>
+
+
+<INNER_NAV_ROOM_D>Stasis room D</INNER_NAV_ROOM_D>
+<INNER_NAV_ROOM_E>Stasis room E</INNER_NAV_ROOM_E>
+<INNER_NAV_ROOM_F>Stasis room F</INNER_NAV_ROOM_F>
+
+<INNER_NAV_ROOM_G>Stasis room G</INNER_NAV_ROOM_G>
+<INNER_NAV_ROOM_H>Stasis room H</INNER_NAV_ROOM_H>
+<INNER_NAV_ROOM_I>Stasis room I</INNER_NAV_ROOM_I>
+
+<INNER_NAV_ROOM_J>Stasis room J</INNER_NAV_ROOM_J>
+<INNER_NAV_ROOM_K>Stasis room K</INNER_NAV_ROOM_K>
+<INNER_NAV_ROOM_L>Stasis room L</INNER_NAV_ROOM_L>
+
+<INNER_TO_ROOM_QUEST>Enter stasis room</INNER_TO_ROOM_QUEST>
+
+<INNER_TUBES_1>
+You enter the chamber, checking each of the stasis tubes.
+Most of them are empty. But not all.
+So many dead people.
+Dead..
+Empty, empty, dead,
+empty, empty..
+You were about to give up when one chamber your almost passed as empty had someone inside it.
+You activated the emergency defrost, and resuced a small child.
+You told the kid to evacuate.    
+</INNER_TUBES_1>
+<INNER_TUBES_2>
+You enter the chamber, checking each of the stasis tubes.
+Only some of them are empty.
+So many people are dead.
+You found 17 people alive.
+As you retrived them, none of them were in any condition to help you out.
+You just told them to evacuate as you hurried on with your business.
+</INNER_TUBES_2>
+<INNER_TUBES_3>
+You enter the chamber, checking each of the statis tubes.
+All of them are empty!
+Well, that's good news.
+</INNER_TUBES_3>
+<INNER_TUBES_4>
+You enter the chamber, you were about the check the tubes when you stumbed on someone.
+A man. He is unconscious, but alive.
+You decide to ingore him for now, to check on the stasis tubes.
+In this chamber, it seems a number of the people died during the evacuation.
+You found 4 people still alive in stasis.
+You brought them out. It took a moment, but you them to help the unconscious man to evacuate.
+</INNER_TUBES_4>
+<INNER_TUBES_5>
+You enter the chamber, checking each of the chambers.
+What you saw almost mad.. scatch that. it did make you puke.
+All of them were dead. All of them.
+</INNER_TUBES_5>
+<INNER_TUBES_6>
+The room is chamber with smoke! You fight your way though taking longer
+than normal to check all the tubes.
+It seems the automatic system that was supposed to wake this group shut itself down
+due to the smoke. This smoke would likly kill anyone coming out of stasis unasisted.
+That might have been a mixed blessing, as you found most of the occupants still alive.
+
+You took care to help everyone out of stasis, and on their way out to evacuate.
+</INNER_TUBES_6>
+<INNER_TUBES_7>
+You enter the chamber checking each tube.
+A found a uneasy number of dead people.
+But 12 people were still alive to be revived from stasis.
+</INNER_TUBES_7>
+
 
 
 <!--Basic terms -->

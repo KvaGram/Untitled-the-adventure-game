@@ -1,5 +1,5 @@
 import Game
-def main(game:Game.Game):
+def Start(game:Game.Game):
     def bathrooms1():
         while True:
             game.rolltext("{BATH_INTRO}")

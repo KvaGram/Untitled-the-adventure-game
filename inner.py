@@ -3,15 +3,16 @@ import random
 import General
 from General import Runner_WheelC_Rings as Runner
 
-def main(game:Game.Game):
+def Main(game:Game.Game):
+    T = Game.Gettexter(game)   
     runner = Runner(game)
-    #OLD CODE, to be rewritten
-    
+
+    def goto(place):
+        runner.stop()
+        game.place = place
+
     #region actions and places
-    def sectionDdoor():
-        game.rolltext("{INNER_SEC_D_DOOR}")
-    def sectionCdoor():
-        game.rolltext("{INNER_SEC_C_DOOR}")
+
 
     #importing elevator event
     elevator = General.elevator(game)
@@ -26,145 +27,138 @@ def main(game:Game.Game):
         game.showtext("PLACEHOLDER")
     def sectionAdoor_read():
         game.showtext("PLACEHOLDER")
+    def sectionDdoor_read():
+        game.rolltext("{INNER_SEC_D_DOOR}")
+    def sectionCdoor_read():
+        game.rolltext("{INNER_SEC_C_DOOR}")
 
     #groups that can be saved.
     #126 people can be saved.
     def tubes(num):
         def chamberRoom():
-            key = save.getdata("auxcom:stasispasskey", False)
-            visited = save.getdata("inner:stasisroom:"+str(num), False)
-            peopleSaved = save.getdata("stasis:peopleSaved", 0)
-            if key == False:
-                game.rolltext("""
-A panel of the door indicates the chamber is closed down by emergency lockdown.
-You would need an override key to open it.""")
-                game.updateCounter(save, "reactorC", 1) #refunded time cost.
+            key = game.getInventory("KEYCODE")
+            visited = game.getdata("inner:stasisroom:"+str(num), False)
+            peopleSaved = game.getdata("stasis:peopleSaved", 0)
+            if not key:
+                game.rolltext("{INNER_TUBES_LOCKED}")
+                game.updateCounter("reactorC", 1) #refunded time cost.
                 return
             elif visited:
-                game.showtext("You have already cleared this chamber.")
-                game.updateCounter(save, "reactorC", 1) #refunded time cost.
+                game.showtext("{INNER_TUBES_VISITED}")
+                game.updateCounter("reactorC", 1) #refunded time cost.
             else:
                 if num == 0:
-                    game.rolltext("""
-You enter the chamber, checking each of the stasis tubes.
-Most of them are empty. But not all.
-So many dead people.
-Dead..
-Empty, empty, dead,
-empty, empty..
-You were about to give up when one chamber your almost passed as empty had someone inside it.
-You activated the emergency defrost, and resuced a small child.
-You told the kid to evacuate.
-                    """)
+                    game.rolltext("{INNER_TUBES_1}")
                     peopleSaved += 1
                 elif num == 1 or num == 7 or num == 11:
-                    game.rolltext("""
-You enter the chamber, checking each of the stasis tubes.
-Only some of them are empty.
-So many people are dead.
-You found 17 people alive.
-As you retrived them, none of them were in any condition to help you out.
-You just told them to evacuate as you hurried on with your business.
-                    """)
+                    game.rolltext("{INNER_TUBES_2}")
                     peopleSaved += 17
                 elif num == 2 or num == 6:
-                    game.rolltext("""
-You enter the chamber, checking each of the statis tubes.
-All of them are empty!
-Well, that's good news.
-                    """)
+                    game.rolltext("{INNER_TUBES_3}")
                     peopleSaved += 0
                 elif num == 3:
-                    game.rolltext("""
-You enter the chamber, you were about the check the tubes when you stumbed on someone.
-A man. He is unconscious, but alive.
-You decide to ingore him for now, to check on the stasis tubes.
-In this chamber, it seems a number of the people died during the emergency wakeup.
-You found 4 people still alive in stasis.
-You brought them out. It took a moment, but you them to help the unconscious man to evacuate.
-                    """)
+                    game.rolltext("{INNER_TUBES_4}")
                     peopleSaved += 5
                 elif num == 4 or num == 9:
-                    game.rolltext("""
-You enter the chamber, checking each of the chambers.
-What you saw almost mad.. scatch that. it did make you puke.
-All of them were dead. All of them.
-                    """)
+                    game.rolltext("{INNER_TUBES_5}")
                     peopleSaved += 0
                 elif num == 5:
-                    game.rolltext("""
-The room is chamber with smoke! You fight your way though taking longer
-than normal to check all the tubes.
-It seems the automatic system that was supposed to wake this group shut itself down
-due to the smoke. This smoke would likly kill anyone coming out of stasis unasisted.
-That might have been a mixed blessing, as you found most of the occupants still alive.
-
-You took care to help everyone out of stasis, and on their way out to evacuate.
-                    """)
-                status = game.updateCounter(save, "reactorC", -1)
-                peopleSaved += 45
-                if status == "death": #if reactor counter reach 0, and the game ends.
-                    nav.running = False
-                    return
+                    game.rolltext("{INNER_TUBES_6}")
+                    peopleSaved += 45
                 elif num == 8 or num == 10:
-                    game.rolltext("""
-You enter the chamber checking each tube.
-A found a uneasy number of dead people.
-But 12 people were still alive to be revived from stasis.
-                    """)
+                    game.rolltext("{INNER_TUBES_7}")
                     peopleSaved += 12
-                
-            save.setdata("inner:stasisroom:"+str(num), True)
-            save.setdata("stasis:peopleSaved", peopleSaved)
+            status = game.updateCounter("reactorC", -1)
+            if status == "death": #if reactor counter reach 0, and the game ends.
+                runner.running = False
+                return
+            game.setdata("inner:stasisroom:"+str(num), True)
+            game.setdata("stasis:peopleSaved", peopleSaved)
         return chamberRoom
 
     
 
     #endregion actions and places
     #---------------------------
-    def goto(room):
-        nav.running = False
-        save.goto(room)
-    def initNav():
-        sectionA.append((sectionDdoor, "Section D door", "examine"))        #A 0
-        sectionA.append((tubes(0), "Stasis tubes 000 - 049", "enter"))      #A 1
-        sectionA.append((tubes(1), "Stasis tubes 050 - 099", "enter"))      #A 2
-        sectionA.append((tubes(2), "Stasis tubes 100 - 149", "enter"))      #A 3
-        sectionA.append((elevator, "Elevator C1A", "use"))                  #A 4
-        sectionA.append((tubes(3), "Stasis tubes 150 - 199", "enter"))      #A 5
-        sectionA.append((tubes(4), "Stasis tubes 200 - 249", "enter"))      #A 6
-        sectionA.append((tubes(5), "Stasis tubes 250 - 299", "enter"))      #A 7
-        sectionA.append((sectionBdoor, "Section B door", "enter"))          #A 8
+    def setupRunner():
+        base_navtext = T("NAV_DESC_TEMPLATE")
+        base_frags = {"_WHEEL":"{WHEEL_C_NAME_1}", "_RINGNAME":T("INNER_RING_NAME"), "_SECTORNAME" : T("SECTOR_A_TERM_1")}
+        runner.nodes = []
+        runner.nodes += [
+             Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_D}"), [
+                ("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
 
-        sectionB.append((sectionAdoor, "Section A door", "enter"))          #B 0
-        sectionB.append((tubes(6), "Stasis tubes 300 - 349", "enter"))      #B 1
-        sectionB.append((tubes(7), "Stasis tubes 350 - 399", "enter"))      #B 2
-        sectionB.append((tubes(8), "Stasis tubes 400 - 449", "enter"))      #B 3
-        sectionB.append((ladder, "Emergency escape ladder hatch", "open"))  #B 4 (entry and exit to and from other rings in the wheel)
-        sectionB.append((tubes(9), "Stasis tubes 450 - 499", "enter"))      #B 5
-        sectionB.append((tubes(10), "Stasis tubes 500 - 549", "enter"))     #B 6
-        sectionB.append((tubes(11), "Stasis tubes 650 - 699", "enter"))     #B 7
-        sectionB.append((sectionCdoor, "Section C", "examine"))             #B 8
+             Game.PlaceNode(game, "TO_ROOM_A",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_A}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(0))]),
+             Game.PlaceNode(game, "TO_ROOM_B",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_B}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(1))]),
+             Game.PlaceNode(game, "TO_ROOM_C",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_C}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(2))]),
 
-        prevroom = save.getdata("prevroom")
-        if prevroom == "laddershaft":
-            nav.setSection("B", 4)
-            intro = """
-You close the emergency ladder's hatch.
-You are now at the inner level ring.
-            """
-        else:
-            nav.setSection("A", 0)
-            intro = """
-You have walked around aimlessly for a bit, you don't know for how long
-And oof! You just walked streight into a large closed door.
-            """
-        game.rolltext(intro, 0.3)
-    if not nav.running:
-        initNav()
-    nav.loop(save)
+             Game.PlaceNode(game, "TO_ELEVATOR",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ELE}"), [
+                ("_", T("ACT_USE"), elevator)]),
+
+             Game.PlaceNode(game, "TO_ROOM_D",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_D}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(3))]),
+             Game.PlaceNode(game, "TO_ROOM_E",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_E}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(4))]),
+             Game.PlaceNode(game, "TO_ROOM_F",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_F}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(5))]),
+            
+            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_B}"), [
+                ("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
+        ]
+        base_frags["_SECTORNAME"] = T("SECTOR_B_TERM")
+        runner.nodes += [
+             Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_A}"), [
+                ("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
+
+             Game.PlaceNode(game, "TO_ROOM_G",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_G}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(6))]),
+             Game.PlaceNode(game, "TO_ROOM_H",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_H}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(7))]),
+             Game.PlaceNode(game, "TO_ROOM_I",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_I}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(8))]),
+
+             Game.PlaceNode(game, "TO_LADDER",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_LADDER}"), [
+                ("_", T("ACT_USE"), ladder)]),
+
+             Game.PlaceNode(game, "TO_ROOM_J",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_J}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(9))]),
+             Game.PlaceNode(game, "TO_ROOM_K",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_K}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(10))]),
+             Game.PlaceNode(game, "TO_ROOM_L",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_L}"), [
+                ("_", T("INNER_TO_ROOM_QUEST"), tubes(11))]),
+            
+            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_C}"), [
+                ("_", T("ACT_READ_SIGN"), sectionCdoor_read )]),
+        ]
+        
+        runner.passActs = [
+            ("TO_SEC_B","TO_SEC_A", sectionBdoor_pass),
+            ("TO_SEC_A","TO_SEC_B", sectionAdoor_pass)
+        ]
+
+        runner.index, intro = {
+            "ladder" : ("TO_LADDER","{INNER_INTRO_2}"),
+        }.get(game.prevPlace, ("TO_SEC_C", "{INNER_INTRO_1}"))
+
+        game.rolltext(intro)
+    setupRunner()
+    runner.run()
     
 if __name__ == "__main__":
-    #testers, feel free to enter your testcode here.
-    #if your only change is in this code-block, feel free to commit.
-    game.showtext("Testcode for this room is not written yet.\nPlease run from main.py instead.")
+    import tkinter
+    from main import VERSION
+    from main import _testloop
+
+    tkRoot = tkinter.Tk(screenName="TEST! inner ring")
+    game:Game.Game = Game.Game(tkRoot, VERSION, "english")
+    def testdata():
+        game.newgame()
+        #setting prevplace and place
+        game.place = "ladder"
+        game.place = "inner"
+        if game.yesno(message="ADD KEYCODE?"):
+            game.setInventory("KEYCODE", True)
+    _testloop(game, Main, testdata, "INNER RING")

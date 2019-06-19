@@ -1,7 +1,7 @@
 import Game
 import random
 
-def main(game:Game.Game):
+def Start(game:Game.Game):
     navdata:Game.Navdata = game.Navdata
     T = Game.Gettexter(game)
     def newgame():

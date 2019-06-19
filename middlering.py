@@ -18,7 +18,7 @@ class MiddleRunner(Game.PlaceRunner1D):
             return
         super().runaction(action)
 
-def main(game:Game.Game):
+def Start(game:Game.Game):
     T = Game.Gettexter(game)
     
     navdata = game.Navdata
@@ -355,7 +355,6 @@ def main(game:Game.Game):
                     elif data.tag == "EXIT":
                         game.rolltext("{AUXCOM_DIALOGE_2B_EXIT}")
                         break
-                game.setdata("auxcom:stasispasskey", True)
                 game.setdata("auxcom:cargo", True)
                 game.setdata("auxcom:react_thanks", True)
             
@@ -391,6 +390,11 @@ def main(game:Game.Game):
                     continue
         game.setdata("auxcom:cargo", True)
         game.setdata("auxcom:react_thanks", thankedForReactor)
+
+    def sectionBdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
+    def sectionAdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
 
     def sectionCdoor():
         game.rolltext("{MIDDLE_SEC_C_DOOR}")
@@ -432,30 +436,30 @@ def main(game:Game.Game):
                 ("_", T("ACT_READ_SIGN"), Read_door_2A68)
             ]),
             Game.PlaceNode(game, "ELE",         base_navtext.format("A", "{MIDDLE_NAV_ELE}"), [
-                ("_", T("ACT_USE")), #elevator
+                ("_", T("ACT_USE"), elevator),
             ]),
             Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "{MIDDLE_NAV_CAFE}"), [
-                ("_", ("ACT_ENTER_ROOM")), #cafeteria
+                ("_", ("ACT_ENTER_ROOM"), cafeteria),
             ]),
             Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_B}"), [
-                ("_", T("ACT_READ_SIGN")), #sectionBdoor
+                ("_", T("ACT_READ_SIGN"), sectionBdoor),
             ]),
             Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_A}"), [
-                ("_", T("ACT_READ_SIGN")), #sectionAdoor
+                ("_", T("ACT_READ_SIGN"), sectionAdoor), 
             ]),
             Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "{MIDDLE_NAV_AUXCOM}"), [
-                ("_", T("ACT_USE")), #auxcom_repair
+                ("_", T("ACT_USE"), auxcom_repair),
             ]),
             Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "{MIDDLE_NAV_LADDER}"), [
-                ("_", T("ACT_USE")), #ladder
+                ("_", T("ACT_USE"), ladder),
             ]),
             Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_C}"), [
-                ("_", T("ACT_READ_SIGN")), #sectionCdoor
+                ("_", T("ACT_READ_SIGN"), sectionCdoor),
             ])
         ]
         runner.passActs = [
-            ("TO_SEC_B","TO_SEC_A", None),
-            ("TO_SEC_A","TO_SEC_B", None)
+            ("TO_SEC_B","TO_SEC_A", sectionBdoor_pass),
+            ("TO_SEC_A","TO_SEC_B", sectionAdoor_pass)
         ]
         prevplace = game.prevPlace
         if prevplace == "apartment" and game.getdata("apartment:left", False):

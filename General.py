@@ -86,7 +86,7 @@ def LadderAccess(game:Game.Game, goto:callable):
     return content
 
 class Runner_WheelC_Rings(Game.PlaceRunner1D):
-    def __init__(self, game:Game.Game, passActs:list):
+    def __init__(self, game:Game.Game, passActs:list=[]):
         super().__init__(game, 'x', 'left', 'right')
         self.passActs = passActs
     def onTravel(self, previndex:int):

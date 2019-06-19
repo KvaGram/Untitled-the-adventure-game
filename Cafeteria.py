@@ -4,7 +4,7 @@ import random
 
 _LIT = "cafeteria:lit"
 
-def Main(game:Game.Game):
+def Start(game:Game.Game):
     T = Game.Gettexter(game)
     def start():
         if not game.getdata(_LIT, False):
@@ -108,8 +108,8 @@ if __name__ == "__main__":
     from main import VERSION
     from main import _testloop
 
-    tkRoot = tkinter.Tk(screenName="DEBUG! Cafeteria scene")
+    tkRoot = tkinter.Tk(screenName="TEST! Cafeteria scene")
     game = Game.Game(tkRoot, VERSION, "english")
     def testdata():
         game.newgame()
-    _testloop(game, Main, testdata, "CAFETERIA")
+    _testloop(game, Start, testdata, "CAFETERIA")

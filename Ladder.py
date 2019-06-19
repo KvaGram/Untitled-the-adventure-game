@@ -19,7 +19,7 @@ class LadderRunner(Game.PlaceRunner1D):
             self.running = False
             return
         super().runaction(action)
-def Main(game):
+def Start(game):
     T = Game.Gettexter(game)
     runner = LadderRunner(game)
 

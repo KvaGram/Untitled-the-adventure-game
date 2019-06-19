@@ -27,7 +27,6 @@ VERSION = [1, 0, 0]
 DEV = True
 
 def start():
-    global tkRoot, running
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1600x900")
 
@@ -65,15 +64,15 @@ def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
 
 def game_loop(game:Game):
     world = {
-        "apartment" : room_apartment.main,
+        "apartment" : room_apartment.Start,
         "core"      : Core.Core,
         #"inner"     : inner.main,
-        "middle"    : middlering.main,
+        "middle"    : middlering.Start,
         #"outer"     : outer.main,
-        "ladder"    : Ladder.Main,
-        "bathrooms" : Bathrooms.main,
-        "cargobay"  : Core.Cargobay,
-        "cafeteria" : Cafeteria.Main
+        "ladder"    : Ladder.Start,
+        "bathrooms" : Bathrooms.Start,
+        "cargobay"  : Core.Cargobay, 
+        "cafeteria" : Cafeteria.Start
     }
 
     while True:
