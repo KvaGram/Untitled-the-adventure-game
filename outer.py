@@ -3,34 +3,26 @@ import random
 import General
 from General import Runner_WheelC_Rings as Runner
 
-def main(game:Game.Game):
+def Start(game:Game.Game):
     runner:Runner = Runner(game)
+    T = Game.Gettexter(game)
 
+    def goto(place):
+        runner.stop()
+        game.place = place
     #Import Elevator event from General
     elevator = General.elevator(game)
     #importing ladder
     ladder = General.LadderAccess(game, goto)
 
+    
     #OLD CODE, to be rewritten
 
     nav = outerRoomNAV.GET_NAV(save)
-    intro = "place holder corridor intro text (should not show up in the game)"
     #---------------------------
     #region actions and places
     def sectionDdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C3 SECTOR D    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door. There is a faint glow coming from the window.
-You look through the window.
-On the other side you see a corridor much like the one you are in
-except, its on fire!
-What happened here?
-        """)
+        game.rolltext("""{OUTER_SEC_D_DOOR}""")
     def sectionBdoor_pass():
         game.showtext("{PASS_SECTOR_DOORWAY}")
     def sectionAdoor_pass():
@@ -40,62 +32,34 @@ What happened here?
     def sectionAdoor_read():
         game.showtext("PLACEHOLDER")
     def sectionCdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C3 SECTOR C    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look through it.
-On the other side you see.. nothing. just blackness.
-No, that's not quite right. As your eyes get used to the dark,
-you see the walls on the other side of the door.
-They go on for a bit over a meter, then abruptly ends in uneven bent metal.
-After that, aside from what looks to be some solid tick tube, there is nothing but darkness.
-darkness and... lights. moving lights.
-Stars, you realize. Stars flying upwards. You are staring into space!
-    """)
+        game.rolltext("{OUTER_SEC_C_DOOR}")
 
     def reactNode():
-        game.rolltext("""
-The door in front of you are full of warning and hazard signs.
-Reactor-ring control node, radiation hazard, chemical hazard, tachyon hazard.
-        """)
-        if save.getdata("reactorC:fixed", False):
-            game.rolltext("""You peek inside.
-You catch a brief glimse of yourself operating the control system.
-The reactor may not be entierly stable, but you have done what you could.
-You closed the door so not to disturb yourself.""")
+        frags = {}
+        hasTrans = game.getInventory("TRANSLATOR")
+        if(hasTrans):
+            game.rolltext("{REACTORNODE_1A}")
+        else:
+            game.rolltext("{REACTORNODE_1B}")
+        if game.getdata("reactorC:fixed", False):
+            game.rolltext("{REACTORNODE_1C}")
             return
-        if not game.yesno("Are you sure you want to go inside?"):
+        if not game.yesno("{REACTORNODE_1_QUEST}"):
             return
         #Idea:
         # The reactor may have one day been a marvel of tachyon engineering.
         #A machine that could beat entropy to a pulp, now dieing to it.
-        g = game.getGender(save)
-        p1 = "man" if g == "male" else "woman"
-        p2 = "he" if g == "male" else "she"
-        p3 = "his" if g == "male" else "her"
-        #reason why this shutdwn could not be done remotly: temperal bleeding corrupted all data packages, repeating the signals randomly.
-        game.rolltext("""
-Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
-As you enter the room you instinctivly step aside to let a oddly familiar {0} out of the room.
-Suprisingly, {1} looked oddly familiar. Looking up from {2} hands and at you, the {0} looks as shocked as you.
-But as suddenly as {1} appeared, the {0} suddenly dissappeard.
-
-What was {1}? A ghost?
-
-You sit down on the chair in front of the controls.
-You look around at all the virtual knobs and dials on the control-screen.
-
-Looking to your left, you find a manua.. wait.
-..
-it's gone.
-no, now it's there again.
-..and it's gone!
-        """.format(p1, p2, p3))
-        ind, val = game.choose2(("try to snatch the manual next time it appears", "randomly enter data into the control-screen"), "What will you do?")
+        if game.PlayerGender == "male":
+            frags["_P2"] = T("GENDERED_1_MALE") #man
+            frags["_P3"] = T("GENDERED_3_MALE") #his
+            frags["_P4"] = T("GENDERED_4_MALE") #he
+        else:
+            frags["_P2"] = T("GENDERED_1_FEMALE") #lady
+            frags["_P3"] = T("GENDERED_3_FEMALE") #her
+            frags["_P4"] = T("GENDERED_4_FEMALE") #she
+        
+        game.rolltext("{REACTORNODE_2}", frags=frags)
+        ind, val = game.choose2(("try to snatch the manual next time it appears", "randomly enter data into the controls"), "What will you do?")
         #stupid choice resulting in a game over:
         if(ind == 1):
             game.setGameover(save, "You got yourself trapped in a timeloop")
@@ -394,7 +358,20 @@ And oof! You just walked streight into a large closed door.
         initNav()
     nav.loop(save)
     
+#This is the testcode for the module.
+#Testers - feel free to edit this code to fit whatever test you need.
 if __name__ == "__main__":
-    #testers, feel free to enter your testcode here.
-    #if your only change is in this code-block, feel free to commit.
-    game.showtext("Testcode for this room is not written yet.\nPlease run from main.py instead.")
+    import tkinter
+    from main import VERSION
+    from main import _testloop
+
+    tkRoot = tkinter.Tk(screenName="TEST! outer ring")
+    game:Game.Game = Game.Game(tkRoot, VERSION, "english")
+    def testdata():
+        game.newgame()
+        #setting prevplace and place
+        game.place = "ladder"
+        game.place = "outer"
+        if game.yesno(message="ADD KEYCODE?"):
+            game.setInventory("KEYCODE", True)
+    _testloop(game, Start, testdata, "OUTER RING")

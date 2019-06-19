@@ -1693,7 +1693,105 @@ A found a uneasy number of dead people.
 But 12 people were still alive to be revived from stasis.
 </INNER_TUBES_7>
 
+<!--Outer ring section-->
+<OUTER_NAV_ELE>
+A set of elevators
+</OUTER_NAV_ELE>
 
+<OUTER_NAV_LADDER>
+Emergency access ladder
+</OUTER_NAV_LADDER>
+
+<OUTER_NAV_TO_SEC_A>Large open doorway to sector A</OUTER_NAV_TO_SEC_A>
+<OUTER_NAV_TO_SEC_B>Large open doorway to sector B</OUTER_NAV_TO_SEC_B>
+<OUTER_NAV_TO_SEC_C>Large closed blastdoor to sector C</OUTER_NAV_TO_SEC_C>
+<OUTER_NAV_TO_SEC_D>Large closed blastdoor to sector D</OUTER_NAV_TO_SEC_D>
+
+<OUTER_SEC_D_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+        _____________________
+        |    C3 SECTOR D    |
+        |   EMERGENCY DOOR  |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door. There is a faint glow coming from the window.
+You look through the window.
+On the other side you see a corridor much like the one you are in
+except, its on fire!
+What happened here?
+</OUTER_SEC_D_DOOR>
+<OUTER_SEC_C_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+        _____________________
+        |    C3 SECTOR C    |
+        |   EMERGENCY DOOR  |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door, you look through it.
+On the other side you see.. nothing. just blackness.
+No, that's not quite right. As your eyes get used to the dark,
+you see the walls on the other side of the door.
+They go on for a bit over a meter, then abruptly ends in uneven bent metal.
+After that, aside from what looks to be some solid tick tube, there is nothing but darkness.
+darkness and... lights. moving lights.
+Stars, you realize. Stars flying upwards. You are staring into space!
+</OUTER_SEC_C_DOOR>
+
+<REACTORNODE_1A>
+The door in front of you are full of danger-looking signs.
+You activate the translator, and read the signs as
+* Reactor-ring control node
+* WARNING! radiation hazard
+* WARNING! chemical hazard
+* WARNING! tachyon hazard.
+</REACTORNODE_1A>
+<REACTORNODE_1B>
+The door in front of you are full of danger-looking signs.
+All the signs are in some alien language. You can't read them.
+</REACTORNODE_1B>
+<REACTORNODE_1C>
+You peek inside.
+You catch a brief glimse of yourself operating the control system.
+The reactor may not be entierly stable, but you have done what you could.
+You closed the door so not to disturb yourself.
+</REACTORNODE_1C>
+<REACTORNODE_1_QUEST>Are you sure you want to go inside?</REACTORNODE_1_QUEST>
+
+<!--
+Fragments:
+_P1
+_P3
+_P4
+see GENDERED_ 1, 3 and 4
+-->
+<REACTORNODE_2>
+Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
+As you enter the room you instinctivly step aside to let a oddly familiar {_P1} out of the room.
+Suprisingly, {_P4} looked oddly familiar. Looking up from {_P3} hands and at you, the {_P1} looks as shocked as you.
+But as suddenly as {_P3} appeared, the {_P1} suddenly dissappeard.
+
+What was {_P4}? A ghost?
+
+You sit down on the chair in front of the controls.
+You look around at all the virtual knobs and dials on the control-screen.
+
+Looking to your left, you find a manua.. wait.
+..
+it's gone.
+no, now it's there again.
+..and it's gone!
+</REACTORNODE_2>
+
+<REACTORNODE_2_OPTION_1>Try to snatch the manual next time it appears</REACTORNODE_2_OPTION_1>
+<REACTORNODE_2_OPTION_2>Randomly enter data into the controls</REACTORNODE_2_OPTION_2>
+<REACTORNODE_2_OPTION_3>Get out of there</REACTORNODE_2_OPTION_3>
+
+<REACTORNODE_2_QUEST>What will you do?</REACTORNODE_2_QUEST>
+
+<REACTORNODE_ESCAPE>
+((NOT WRITTEN YET))
+((By the way, you die escaping, so.. Game over))
+</REACTORNODE_ESCAPE>
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
@@ -1714,5 +1812,10 @@ But 12 people were still alive to be revived from stasis.
 <GENDERED_2_MALE>man</GENDERED_2_MALE>
 <GENDERED_2_FEMALE>lady</GENDERED_2_FEMALE>
 
+<GENDERED_3_MALE>his</GENDERED_3_MALE>
+<GENDERED_3_FEMALE>her</GENDERED_3_FEMALE>
+
+<GENDERED_4_MALE>he</GENDERED_4_MALE>
+<GENDERED_4_FEMALE>she</GENDERED_4_FEMALE>
 <!--End of file-->
 </story>

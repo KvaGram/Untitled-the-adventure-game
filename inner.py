@@ -3,7 +3,7 @@ import random
 import General
 from General import Runner_WheelC_Rings as Runner
 
-def Main(game:Game.Game):
+def Start(game:Game.Game):
     T = Game.Gettexter(game)   
     runner = Runner(game)
 
@@ -147,6 +147,8 @@ def Main(game:Game.Game):
     setupRunner()
     runner.run()
     
+#This is the testcode for the module.
+#Testers - feel free to edit this code to fit whatever test you need.
 if __name__ == "__main__":
     import tkinter
     from main import VERSION
@@ -159,6 +161,6 @@ if __name__ == "__main__":
         #setting prevplace and place
         game.place = "ladder"
         game.place = "inner"
-        if game.yesno(message="ADD KEYCODE?"):
-            game.setInventory("KEYCODE", True)
-    _testloop(game, Main, testdata, "INNER RING")
+        #if game.yesno(message="..."):
+        #   pass
+    _testloop(game, Start, testdata, "INNER RING")

@@ -164,6 +164,8 @@ class Game:
         for l in lines:
             self.showtext(l)
             time.sleep(linepause)
+        self.showtext("") #a single line-shift in the end, to break things up.
+
     #runs as rolltext, but yields if an input is pressed.
     #For use in skippable text, and/or some action can be done while it runs.
     #Yields first the input data, then the list and next index.
@@ -179,7 +181,9 @@ class Game:
             self.ui.writeToDisplay(l)
             self.update()
             time.sleep(linepause)
+        self.showtext("") #a single line-shift in the end, to break things up.
 
+        
     #region dictionaries
     #TODO: get terms from some sort of resource file
     def getGenderedRole(self, role:str, gender:str) -> str:

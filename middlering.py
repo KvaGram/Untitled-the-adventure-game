@@ -486,5 +486,17 @@ def Start(game:Game.Game):
     setupRunner()
     runner.run()
 if __name__ == "__main__":
-    # No testcode
-    print("No testcode, please run main.py")
+    import tkinter
+    from main import VERSION
+    from main import _testloop
+
+    tkRoot = tkinter.Tk(screenName="TEST! middle ring")
+    game:Game.Game = Game.Game(tkRoot, VERSION, "english")
+    def testdata():
+        game.newgame()
+        #setting prevplace and place
+        game.place = "ladder"
+        game.place = "middle"
+        #if game.yesno(message="..."):
+        #   pass
+    _testloop(game, Start, testdata, "MIDDLE RING")
