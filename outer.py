@@ -10,7 +10,7 @@ def main(game:Game.Game):
     elevator = General.elevator(game)
     #importing ladder
     ladder = General.LadderAccess(game, goto)
-    
+
     #OLD CODE, to be rewritten
 
     nav = outerRoomNAV.GET_NAV(save)
@@ -31,48 +31,14 @@ On the other side you see a corridor much like the one you are in
 except, its on fire!
 What happened here?
         """)
-    def elevator():
-        dialoges.elevator(save)
-    def sectionBdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("B", 0)
-    def sectionAdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("A", 2)
-    #def auxcom():
-    #    game.showtext("This auxillary comunication system on this level is broken.")
-    #    #TODO: idea: attempt to connect to this from middle level to activiate this one
-    def ladder():
-        text = """
-The corridor gives way to a large column, splitting the corridor to go around it on both sides.
-On two sides of the column you find large hatches with a colored engraving
-        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |    EMERGENCY ESCAPE   |
-        |      WHEEL C RING 3   |
-        |                       |
-        |      BREAK GLASS      |
-        |          AND          |
-        |       PULL LEVER      |
-        |        TO OPEN        |
-        |_______________________|
-
-You locate the panel as indicated on the engraving.
-        """
-        if save.getdata("WheelCOuterLadder") == "open":
-            text += "\nThe glass is already broken."
-            enterText = "You reach in the panel, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Pull the lever?"
-        else:
-            text += "\nThe glass look thin and you feel an odd temtation to smash it.\nWritten on the glass is a warning."
-            text += "\nFOR EMERGENCIES ONLY.\nSECURITY WILL BE ALERTED TO MISUSE!"
-            enterText = "You smash the glass, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Smash the glass?"
-        game.rolltext(text)
-        if(game.yesno(openText)):
-            if save.getdata("WheelCOuterLadder") == None:
-                save.setdata("WheelCOuterLadder", "open")
-            game.rolltext(enterText)
-            goto("ladder")
+    def sectionBdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
+    def sectionAdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
+    def sectionBdoor_read():
+        game.showtext("PLACEHOLDER")
+    def sectionAdoor_read():
+        game.showtext("PLACEHOLDER")
     def sectionCdoor():
         game.rolltext("""
 You stare at the large solid door in front of you.

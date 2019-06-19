@@ -227,16 +227,16 @@ You suddenly recall her name!
 It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}.
 </APT_GOLD_3>
 
-<DOOR_1>
+<APT_DOOR_1>
 You walk towards the door.
 Suddenly there is a sharp spike of pain in your head.
 When it is over you are back on the bed, panting.
-</DOOR_1>
-<DOOR_2>
+</APT_DOOR_1>
+<APT_DOOR_2>
 You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
-</DOOR_2>
+</APT_DOOR_2>
 
 <BATH_INTRO>
 You stand in front of the bathrooms. There are two doors in front of you.
@@ -470,6 +470,10 @@ Maintenence and disections ring
  - Sector {0}
  {1}
 </INNER_NAV_DESC_2>
+
+<PASS_SECTOR_DOORWAY>
+You pass through the open door separating the two sectors
+</PASS_SECTOR_DOORWAY>
 
 <MIDDLE_NAV_TO_SEC_D>
  - Large closed blastdoor

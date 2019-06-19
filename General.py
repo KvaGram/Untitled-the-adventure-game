@@ -86,13 +86,20 @@ def LadderAccess(game:Game.Game, goto:callable):
     return content
 
 class Runner_WheelC_Rings(Game.PlaceRunner1D):
-    def __init__(self, game:Game.Game):
+    def __init__(self, game:Game.Game, passActs:list):
         super().__init__(game, 'x', 'left', 'right')
+        self.passActs = passActs
     def onTravel(self, previndex:int):
         if previndex == self.index:
             print("Null travel error ? ignoring")
-        pass
-        #check for section passage
+        pNodeID = self.nodes[previndex].id
+        nNodeID = self.nodes[self.index].id
+        for p in self.passActs:
+            if (p[0], p[1]) == (pNodeID, nNodeID):
+                try:
+                    p[2]()
+                except:
+                    pass
     def runaction(self, action):
         status = self.game.updateCounter("reactorC", -1)
         if status == "death":

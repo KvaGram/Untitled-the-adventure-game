@@ -18,12 +18,14 @@ def main(game:Game.Game):
     #importing ladder
     ladder = General.LadderAccess(game, goto)
 
-    def sectionBdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("B", 0)
-    def sectionAdoor():
-        game.showtext("You pass through the open door separating the two sectors")
-        nav.setSection("A", 8)
+    def sectionBdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
+    def sectionAdoor_pass():
+        game.showtext("{PASS_SECTOR_DOORWAY}")
+    def sectionBdoor_read():
+        game.showtext("PLACEHOLDER")
+    def sectionAdoor_read():
+        game.showtext("PLACEHOLDER")
 
     #groups that can be saved.
     #126 people can be saved.

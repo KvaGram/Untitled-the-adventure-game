@@ -453,6 +453,10 @@ def main(game:Game.Game):
                 ("_", T("ACT_READ_SIGN")), #sectionCdoor
             ])
         ]
+        runner.passActs = [
+            ("TO_SEC_B","TO_SEC_A", None),
+            ("TO_SEC_A","TO_SEC_B", None)
+        ]
         prevplace = game.prevPlace
         if prevplace == "apartment" and game.getdata("apartment:left", False):
             game.setdata("apartment:left", True)

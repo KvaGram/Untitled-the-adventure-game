@@ -129,10 +129,10 @@ def main(game:Game.Game):
         if left:
             return True
         elif ache:
-            game.rolltext("{DOOR_1}")
+            game.rolltext("{APT_DOOR_1}")
             return False
         else:
-            game.rolltext("{DOOR_2}")
+            game.rolltext("{APT_DOOR_2}")
             return True
         #endregion door()
 
