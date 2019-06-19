@@ -542,43 +542,6 @@ You are standing in the long corridor
 You enter the door to the cafeteria.
 </MIDDLE_CAFE>
 
-<MIDDLE_LADDER_INTRO_1>
-The corridor gives way to a large column, splitting the corridor to go around it on both sides.
-On two sides of the column you find large hatches with a colored engraving
-        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |    EMERGENCY ESCAPE   |
-        |      WHEEL C RING 2   |
-        |                       |
-        |      BREAK GLASS      |
-        |          AND          |
-        |       PULL LEVER      |
-        |        TO OPEN        |
-        |_______________________|
-
-You locate the panel as indicated on the engraving.
-</MIDDLE_LADDER_INTRO_1>
-<MIDDLE_LADDER_INTRO_2>
-The glass is already broken.
-</MIDDLE_LADDER_INTRO_2>
-<MIDDLE_LADDER_INTRO_3>
-The glass look thin and you feel an odd temtation to smash it.
-Written on the glass is a warning.
-    FOR EMERGENCIES ONLY!
-    SECURITY WILL BE ALERTED TO MISUSE!
-</MIDDLE_LADDER_INTRO_3>
-
-<MIDDLE_LADDER_ENTERQUEST_1>Smash the glass?</MIDDLE_LADDER_ENTERQUEST_1>
-<MIDDLE_LADDER_ENTERQUEST_2>Pull the lever?</MIDDLE_LADDER_ENTERQUEST_2>
-
-<MIDDLE_LADDER_ENTER_1>
-You reach in the panel, and pull the lever.
-The hatch opens and you go inside.
-</MIDDLE_LADDER_ENTER_1>
-<MIDDLE_LADDER_ENTER_2>
-You smash the glass, and pull the lever.
-The hatch opens and you go inside.
-</MIDDLE_LADDER_ENTER_2>
-
 <MIDDLE_READ_ROOM_2A68>
 The sign on the door reads
     ______________________
@@ -700,6 +663,53 @@ You fumble though the darkness out the exit with little difficulty.
 You exit out of the cafeteria.
 </CAFE_LIT_EXIT>
 
+<!-- Ladder access section.
+frags:
+_PLACENAME see x_NAME_LADDER below
+_INTROPART see INTRO_2 and _3. Alternates if you have accessed this ladder access yet.
+Please ensure the names are alligned, so they fit the sign-art in LADDER_ACCESS_INTRO_1-->
+<MIDDLE_NAME_LADDER>WHEEL C RING 2</MIDDLE_NAME_LADDER>
+<INNER_NAME_LADDER >WHEEL C RING 1</INNER_NAME_LADDER>
+<OUTER_NAME_LADDER >WHEEL C RING 3</OUTER_NAME_LADDER>
+
+<LADDER_ACCESS_INTRO_1>
+The corridor gives way to a large column, splitting the corridor to go around it on both sides.
+On two sides of the column you find large hatches with a colored engraving
+        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+        |    EMERGENCY ESCAPE   |
+        |     {_PLACENAME}    |
+        |                       |
+        |      BREAK GLASS      |
+        |          AND          |
+        |       PULL LEVER      |
+        |        TO OPEN        |
+        |_______________________|
+
+You locate the panel as indicated on the engraving.
+
+{_INTROPART}
+</LADDER_ACCESS_INTRO_1>
+<LADDER_ACCESS_INTRO_2>
+The glass is already broken.
+</LADDER_ACCESS_INTRO_2>
+<LADDER_ACCESS_INTRO_3>
+The glass look thin and you feel an odd temtation to smash it.
+Written on the glass is a warning.
+    FOR EMERGENCIES ONLY!
+    SECURITY WILL BE ALERTED TO MISUSE!
+</LADDER_ACCESS_INTRO_3>
+
+<LADDER_ACCESS_ENTERQUEST_1>Smash the glass?</LADDER_ACCESS_ENTERQUEST_1>
+<LADDER_ACCESS_ENTERQUEST_2>Pull the lever?</LADDER_ACCESS_ENTERQUEST_2>
+
+<LADDER_ACCESS_ENTER_1>
+You reach in the panel, and pull the lever.
+The hatch opens and you go inside.
+</LADDER_ACCESS_ENTER_1>
+<LADDER_ACCESS_ENTER_2>
+You smash the glass, and pull the lever.
+The hatch opens and you go inside.
+</LADDER_ACCESS_ENTER_2>
 
 <AUXCOM_INTRO>
 You find a large panel with a screen on wall next to you.
@@ -1567,6 +1577,41 @@ you conclude there was no way you could have known.
 ...
 It is of little comfort.
 </CARGOBAY_ENDING_D>
+
+<!--Inner ring section-->
+
+<INNER_SEC_C_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+        _____________________
+        |    C1 SECTOR C    |
+        |   EMERGENCY DOOR  |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door, you look through it.
+You see the roof and most of the frame of the corridor ahead go on,
+with the occational blink from the roof light.
+Most of the corridor is blown open to darkness.
+And you see some small faint light far back in the darknes, moving.
+Stars, you realize. Stars flying upwards. You are staring into space!
+</INNER_SEC_C_DOOR>
+
+<INNER_SEC_D_DOOR>
+You stare at the large solid door in front of you.
+There is a painted engraving on the door, it reads
+        _____________________
+        |    C1 SECTOR D    |
+        |   EMERGENCY DOOR  |
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+There is a small reinforced window on the door. There is a faint glow coming from the window.
+You look through the window.
+On the other side you see a corridor much like the one you are in
+except, it is littered by dead people, and remains from broken stasis chambers.
+What happened here?
+</INNER_SEC_D_DOOR>
+
+<INNER_LADDER>
+
+</INNER_LADDER>
 
 
 <!--Basic terms -->

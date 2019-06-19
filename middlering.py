@@ -391,28 +391,6 @@ def main(game:Game.Game):
                     continue
         game.setdata("auxcom:cargo", True)
         game.setdata("auxcom:react_thanks", thankedForReactor)
-    def ladder():
-        if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
-            game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
-        text = "{MIDDLE_LADDER_INTRO}"
-        knowledge = game.getdata("wheelC:knowledge", 0)
-        if knowledge < 1:
-            knowledge = 1
-        game.setdata("wheelC:knowledge", knowledge)
-        if game.getdata("WheelCMiddleLadder") == "open":
-            text += "\n{MIDDLE_LADDER_INTRO_2}"
-            enterText = "{MIDDLE_LADDER_ENTERQUEST_1}"
-            openText = "{}"
-        else:
-            text += "\n{MIDDLE_LADDER_INTRO_3}"
-            enterText = "{}"
-            openText = "{MIDDLE_LADDER_ENTERQUEST_1}"
-        game.rolltext(text)
-        if(game.yesno(openText)):
-            if game.getdata("WheelCMiddleLadder") == None:
-                game.setdata("WheelCMiddleLadder", "open")
-            game.rolltext(enterText)
-            goto("ladder")
 
     def sectionCdoor():
         game.rolltext("{MIDDLE_SEC_C_DOOR}")
@@ -423,6 +401,8 @@ def main(game:Game.Game):
     
     #Import Elevator event from General
     elevator = General.elevator(game)
+    #importing ladder
+    ladder = General.LadderAccess(game, goto)
 
     #endregion places and actions
     #----------------------------

@@ -7,74 +7,16 @@ def main(game:Game.Game):
     runner = Runner(game)
     #OLD CODE, to be rewritten
     
-    nav = outerRoomNAV.GET_NAV(save)
-    intro = "place holder corridor intro text (should not show up in the game)"
     #region actions and places
     def sectionDdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C1 SECTOR D    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door. There is a faint glow coming from the window.
-You look through the window.
-On the other side you see a corridor much like the one you are in
-except, it is littered by dead people, and remains from broken stasis chambers.
-What happened here?
-        """)
+        game.rolltext("{INNER_SEC_D_DOOR}")
     def sectionCdoor():
-        game.rolltext("""
-You stare at the large solid door in front of you.
-There is a painted engraving on the door, it reads
-        _____________________
-        |    C1 SECTOR C    |
-        |   EMERGENCY DOOR  |
-        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-There is a small reinforced window on the door, you look through it.
-You see the roof and most of the frame of the corridor ahead go on,
-with the occational blink from the roof light.
-Most of the corridor is blown open to darkness.
-And you see some small faint light far back in the darknes, moving.
-Stars, you realize. Stars flying upwards. You are staring into space!
-    """)
+        game.rolltext("{INNER_SEC_C_DOOR}")
 
-    def elevator():
-        dialoges.elevator(save)
-    
-    def ladder():
-        text = """
-The corridor gives way to a large column, splitting the corridor to go around it on both sides.
-On two sides of the column you find large hatches with a colored engraving
-        |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |    EMERGENCY ESCAPE   |
-        |      WHEEL C RING 1   |
-        |                       |
-        |      BREAK GLASS      |
-        |          AND          |
-        |       PULL LEVER      |
-        |        TO OPEN        |
-        |_______________________|
-
-You locate the panel as indicated on the engraving.
-        """
-        if save.getdata("WheelCInnerLadder") == "open":
-            text += "\nThe glass is already broken."
-            enterText = "You reach in the panel, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Pull the lever?"
-        else:
-            text += "\nThe glass look thin and you feel an odd temtation to smash it.\nWritten on the glass is a warning."
-            text += "\nFOR EMERGENCIES ONLY.\nSECURITY WILL BE ALERTED TO MISUSE!"
-            enterText = "You smash the glass, and pull the lever.\nThe hatch opens and you go inside."
-            openText = "Smash the glass?"
-        game.rolltext(text, 0.3)
-        if(game.yesno(openText)):
-            if save.getdata("WheelCInnerLadder") == None:
-                save.setdata("WheelCInnerLadder", "open")
-            game.rolltext(enterText,0.5)
-            goto("ladder")
-
+    #importing elevator event
+    elevator = General.elevator(game)
+    #importing ladder
+    ladder = General.LadderAccess(game, goto)
 
     def sectionBdoor():
         game.showtext("You pass through the open door separating the two sectors")

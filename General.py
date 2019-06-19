@@ -47,6 +47,44 @@ def elevator(game:Game.Game):
     return content
 #endregion elevator
 
+def LadderAccess(game:Game.Game, goto:callable):
+    frags = {}
+    frags["_PLACENAME"] = {
+        "middle" : "{MIDDLE_NAME_LADDER}",
+        "inner"  : "{INNER_NAME_LADDER}",
+        "outer"  : "{OUTER_NAME_LADDER}",
+        "core"   : "{CORE_NAME_LADDER}"
+    }[game.place]
+    varname = {
+        "middle" : "WheelCMiddleLadder",
+        "inner"  : "WheelCInnerLadder",
+        "outer"  : "WheelCOuterLadder",
+        "core"   : "WheelCCoreLadder"
+    }
+    def content():
+        if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
+            game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+        text = "{LADDER_ACCESS_INTRO}"
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
+        if game.getdata(varname) == "open":
+            frags["_INTROPART"] = "{LADDER_ACCESS_INTRO_2}"
+            enterText = "{LADDER_ACCESS_ENTERQUEST_1}"
+            openText = "{LADDER_ACCESS_ENTER_1}"
+        else:
+            frags["_INTROPART"] = "{LADDER_ACCESS_INTRO_3}"
+            enterText = "{LADDER_ACCESS_ENTER_2}"
+            openText = "{LADDER_ACCESS_ENTERQUEST_1}"
+        game.rolltext(text, frags=frags)
+        if(game.yesno(openText)):
+            if game.getdata(varname) == None:
+                game.setdata(varname, "open")
+            game.rolltext(enterText)
+            goto("ladder")
+    return content
+
 class Runner_WheelC_Rings(Game.PlaceRunner1D):
     def __init__(self, game:Game.Game):
         super().__init__(game, 'x', 'left', 'right')

@@ -5,6 +5,12 @@ from General import Runner_WheelC_Rings as Runner
 
 def main(game:Game.Game):
     runner:Runner = Runner(game)
+
+    #Import Elevator event from General
+    elevator = General.elevator(game)
+    #importing ladder
+    ladder = General.LadderAccess(game, goto)
+    
     #OLD CODE, to be rewritten
 
     nav = outerRoomNAV.GET_NAV(save)
