@@ -15,15 +15,15 @@ def elevator(game:Game.Game):
         if place == "outer":
             frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_BOTTOM}"
             frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
-            choices = (("UP", "{ELEVATOR_OPTION_UP}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
+            choices = (("UP", T("ELEVATOR_OPTION_UP")), ("CARGO",T("ELEVATOR_OPTION_CARGO")), ("EXIT",T("ELEVATOR_OPTION_EXIT")))
         elif place == "core":
             frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_CORE}"
             frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
-            choices = (("DOWN", "{ELEVATOR_OPTION_DOWN}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
+            choices = (("DOWN", T("ELEVATOR_OPTION_DOWN")), ("CARGO",T("ELEVATOR_OPTION_CARGO")), ("EXIT",T("ELEVATOR_OPTION_EXIT")))
         else:
             frags["_BUTTONSET"] = "{ELEVATOR_BUTTONSET_MID}"
             frags["_DESC"] = "{ELEVATOR_DESC_CORRIDOR}"
-            choices = (("UP", "{ELEVATOR_OPTION_UP}"), ("DOWN", "{ELEVATOR_OPTION_DOWN}"), ("CARGO","{ELEVATOR_OPTION_CARGO}"), ("EXIT","{ELEVATOR_OPTION_EXIT}"))
+            choices = (("UP", T("ELEVATOR_OPTION_UP")), ("DOWN", T("ELEVATOR_OPTION_DOWN")), ("CARGO",T("ELEVATOR_OPTION_CARGO")), ("EXIT",T("ELEVATOR_OPTION_EXIT")))
         game.rolltext("{ELEVATOR_DESC}", frags=frags)
         
         while True:
@@ -35,15 +35,13 @@ def elevator(game:Game.Game):
                 game.showtext("{ELEVATOR_EXIT}")
                 break
             elif game.getdata("WheelC_elevator") == "dead":
-                game.rolltext("{ELEVATOR_PRESS_DEAD}")
-                
-            game.setdata("WheelC_elevator", "dead")
-            if   data.tag == "UP":
-                game.rolltext("{ELEVATOR_OPTION_UP}")
-            elif data.tag == "DOWN":
-                game.rolltext("{ELEVATOR_OPTION_DOWN}")
+                game.rolltext("{ELEVATOR_PRESS_DEAD}")                
+            elif data.tag == "UP" or data.tag == "DOWN":
+                game.rolltext("{ELEVATOR_PRESS_NORM}")
+                game.setdata("WheelC_elevator", "dead")
             elif data.tag == "CARGO":
-                game.rolltext("{ELEVATOR_OPTION_CARGO}")
+                game.rolltext("{ELEVATOR_PRESS_CARGO}")
+                game.setdata("WheelC_elevator", "dead")
     return content
 #endregion elevator
 
@@ -60,11 +58,12 @@ def LadderAccess(game:Game.Game, goto:callable):
         "inner"  : "WheelCInnerLadder",
         "outer"  : "WheelCOuterLadder",
         "core"   : "WheelCCoreLadder"
-    }
+    }[game.place]
     def content():
-        if not game.getdata("reactorC:fixed", False) and not game.getCounter(game, "reactorC")[0]: #if counter reactorC is not enabled
-            game.setCounter(game, "reactorC", "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
-        text = "{LADDER_ACCESS_INTRO}"
+        counter = game.getCounter("reactorC")
+        if not game.getdata("reactorC:fixed", False) and not counter.enabled: #if counter reactorC is not enabled
+            game.setCounter("reactorC",  "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.
+        text = "{LADDER_ACCESS_INTRO_1}"
         knowledge = game.getdata("wheelC:knowledge", 0)
         if knowledge < 1:
             knowledge = 1

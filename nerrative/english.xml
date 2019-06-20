@@ -1706,6 +1706,16 @@ Emergency access ladder
 <OUTER_NAV_TO_SEC_B>Large open doorway to sector B</OUTER_NAV_TO_SEC_B>
 <OUTER_NAV_TO_SEC_C>Large closed blastdoor to sector C</OUTER_NAV_TO_SEC_C>
 <OUTER_NAV_TO_SEC_D>Large closed blastdoor to sector D</OUTER_NAV_TO_SEC_D>
+<OUTER_NAV_TO_NODE>Reactor-ring access node</OUTER_NAV_TO_NODE>
+
+<OUTER_INTRO_1>
+You have walked around aimlessly for a bit, you don't know for how long
+And oof! You just walked streight into a large closed door.
+</OUTER_INTRO_1>
+<OUTER_INTRO_2>
+You close the emergency ladder's hatch.
+You are now at the outer level ring.
+</OUTER_INTRO_2>
 
 <OUTER_SEC_D_DOOR>
 You stare at the large solid door in front of you.
@@ -1803,9 +1813,9 @@ only to dissappear, and reappear.
 You decide to ignore this odd phenomenon, as you focus on your task.
 </REACTORNODE_3A>
 
-<REACTORNODE_3B_GAMEOVER>
+<REACTORNODE_TIMELOOP_GAMEOVER>
 You got yourself trapped in a timeloop, forever
-</REACTORNODE_3B_GAMEOVER>
+</REACTORNODE_TIMELOOP_GAMEOVER>
 <REACTORNODE_3B>
 Not knowing what to do, you start hammering on the controls.
 You tried adjesting that sqiggly thing, you tried to increase that number, you tried to stop that ticking..
@@ -1861,7 +1871,7 @@ Without anything to translate the alien script, you cannot know for sure.
 
 <REACTORNODE_5_QUEST>
 What procedure will you attept?
-<REACTORNODE_5_QUEST>
+</REACTORNODE_5_QUEST>
 <!--REACTORNODE_5A and 5B
 are lists seperated by line.
 Do not add or remove a line in this list
@@ -1876,7 +1886,6 @@ Engage accellerator fire suppression system
 Engage control room fire suppression system
 Run automatic diagnostics
 Engage emergency overload
-Depolorize the tacheon emitter
 Shutdown tacheon emitter array
 Get out of there
 </REACTORNODE_5A_OPTION_LIST>
@@ -1888,7 +1897,6 @@ Start sparks on red circle procedure
 Start sparks on red triangle procedure
 Start white line on blue triangle procedure
 Start red line on black circle procedure
-Start red line crossing white line procedure
 Start blue line on black squere on red line procedure
 Get out of there
 </REACTORNODE_5B_OPTION_LIST>
@@ -1903,6 +1911,241 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
 You attempt to follow the instructions for initiating emergency cooling,
 unfortunalty, it seems the fire is making it more or less impossible to initiate the cooling system.
 </REACTORNODE_COOLDOWN_2_A>
+<REACTORNODE_COOLDOWN_3_A>
+As you were about to start following the instructions,
+you realized you have already done this. There is no need to do it again.
+</REACTORNODE_COOLDOWN_3_A>
+
+<REACTORNODE_COOLDOWN_1_B>
+{REACTORNODE_CLUELESS}
+You notice a dial going down in one direction. some of the alarms stops bleeping, and you notice the previusly looping instruction manual disappeard.
+Well, your fingers somewhy still remained there, looping as creepy as before, but now they were reaching for nothing.
+</REACTORNODE_COOLDOWN_1_B>
+<REACTORNODE_COOLDOWN_2_B>
+{REACTORNODE_CLUELESS}
+But nothing happend.
+</REACTORNODE_COOLDOWN_2_B>
+<REACTORNODE_COOLDOWN_3_B>
+{REACTORNODE_CLUELESS}
+But nothing happend.
+</REACTORNODE_COOLDOWN_3_B>
+
+<!--SLOWDOWN-->
+<REACTORNODE_SLOWDOWN_1_A>
+You followed the instructions to decelerate the accellerator.
+...
+It seems to work, for a while. Then suddenly a new alarm starts bleeping.
+Fire. There is a fire in the accellerator now.
+</REACTORNODE_SLOWDOWN_1_A>
+<REACTORNODE_SLOWDOWN_2_A>
+You typed in the final instructions for decellerating the system.
+...
+You check the readouts, and several alarms stops beeping.
+The reactor is no longer critical, but that might change.
+</REACTORNODE_SLOWDOWN_2_A>
+<REACTORNODE_SLOWDOWN_3_A>
+As you were about to start following the instructions,
+you realized you have already done this. There is no need to do it again.
+</REACTORNODE_SLOWDOWN_3_A>
+
+<REACTORNODE_SLOWDOWN_1_B>
+{REACTORNODE_CLUELESS}
+You notice a dial start going slowly in one direction.
+Then suddenly another dial goes to its end in a blink of a eye,
+as a new alarm starts bleeping.
+You feel the room starting to heat up.
+</REACTORNODE_SLOWDOWN_1_B>
+<REACTORNODE_SLOWDOWN_2_B>
+{REACTORNODE_CLUELESS}
+Suprisingly this seem to have done it.
+most of the alarms stops bleeping.
+It seems the reactor is stable for now.
+</REACTORNODE_SLOWDOWN_2_B>
+<REACTORNODE_SLOWDOWN_3_B>
+{REACTORNODE_CLUELESS}
+But nothing happend.
+</REACTORNODE_SLOWDOWN_3_B>
+
+<REACTORNODE_HURRY_A>
+The instructions for accellerating the accellerator were quite easy to follow.
+you just adjusted that sqiggly thing, increased that varible,
+pressed that confirm button, changed that dial, adjusted that sqiggly thing,
+increased that varia.. wait.. wha
+you adjusted that sqiggly thing, incr..
+you just had a sudden feeling of déjà vu, as you again adjusted that sqiggly thing.
+
+uh no, you realize, as you got your thinking stright again.
+you try to undo what you did when.. you followed instructions to adjust that sqiggly thi..
+
+'shit' you managed to think as you suddenly find yourself adjusting that squigg..
+and again.. at shorter and shorter intervals.
+
+The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
+And you soon realied why.
+
+Aside from your little looping bobble, everything was gone.
+You aren't dead. Not really. But by now, you wish you were.
+</REACTORNODE_HURRY_A>
+<REACTORNODE_HURRY_B>
+{REACTORNODE_CLUELESS}
+you just adjusted that sqiggly thing, increased that varible,
+pressed that confirm button, changed that dial, adjusted that sqiggly thing,
+increased that varia.. wait.. wha
+you adjusted that sqiggly thing, incr..
+you just had a sudden feeling of déjà vu, as you again adjusted that sqiggly thing.
+
+uh no, you realize, as you got your thinking stright again.
+you try to undo what you did when.. you followed instructions to adjust that sqiggly thi..
+
+'shit' you managed to think as you suddenly find yourself adjusting that squigg..
+and again.. at shorter and shorter intervals.
+
+The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
+And you soon realied why.
+
+Aside from your little looping bobble, everything was gone.
+You aren't dead. Not really. But by now, you wish you were.
+</REACTORNODE_HURRY_B>
+
+<REACTORNODE_FIREACC_1_A>
+You followed the quite simple instruction,
+The fire in the accellerator ring went out.
+Unfortunatly this also made the accellerater accellerate back up.
+</REACTORNODE_FIREACC_1_A>
+<REACTORNODE_FIREACC_2_A>
+You followed the quite simple instruction,
+Nothing seems to have happened.
+</REACTORNODE_FIREACC_2_A>
+<REACTORNODE_FIREACC_B>
+{REACTORNODE_CLUELESS}
+You have no idea what this did,
+but a number of dials suddenly goes crazy for a short while.
+</REACTORNODE_FIREACC_B>
+
+<REACTORNODE_FIREROOM_A>
+You followed the quite simple instruction, and...
+the entire room just got sprayed by a dense foam, convering every surface.
+yuck.
+If there acually was a fire, you are convinved the fire would be gone by now.
+But there was no fire. 'Why did I do this?' you think to yourself while trying to get foam out of your hair.
+</REACTORNODE_FIREROOM_A>
+<REACTORNODE_FIREROOM_B>
+{REACTORNODE_CLUELESS}
+Suddenly, the entire room got sprayed by a dense foam, convering every surface.
+yuck.
+If there acually was a fire, you are convinved the fire would be gone by now.
+But there was no fire. You sigh while trying to get foam out of your hair.                
+</REACTORNODE_FIREROOM_B>
+
+
+<REACTORNODE_INFO_TEMP_1>SAFE</REACTORNODE_INFO_TEMP_1>
+<REACTORNODE_INFO_TEMP_2>HIGH!</REACTORNODE_INFO_TEMP_2>
+<REACTORNODE_INFO_TEMP_3>VERY HIGH!!!</REACTORNODE_INFO_TEMP_3>
+<REACTORNODE_INFO_FIREALERT>
+-       ALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {_SEC}{_NUM}
+</REACTORNODE_INFO_FIREALERT>
+<REACTORNODE_THATSME>
+It did not take long for you to realize that the 'operator' is you.
+This might explain the anomolies.
+You should be extra careful of what you do here.
+</REACTORNODE_THATSME>
+
+<REACTORNODE_INFO_A>
+You followed the instructions to initiate a diognastic of the reactor.
+...
+    STATUS: CRITICAL
+    TACHEON EMITTERS: ONLINE
+    TACHEON FLOW: IRREGULAR
+    TEMPERATURE: {_TEMP}
+    STRUCTURE INTEGRETY: COMPROMISED!
+    TEMPERAL INTEGRETY: COMPROMISED!
+
+{_FIRE_ALERTS}
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A06 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A12 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B04 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B08 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B12 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C01 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C02 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C06 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C09 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C11 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D01 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D02 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D03 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D04 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D07 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D08 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D09 - POTENTIAL TACHEON LEAK
+
+    WARNING: REACTOR BREACH(ES) DETECTED!
+    WARNING: MELTDOWN IMMINENT!
+    WARNING: OPERATOR DETECTED IN COMPROMIZED SUBSECTION B04! EVACUATION IS ADVICED!
+{_THATSME}
+</REACTORNODE_INFO_A>
+
+<REACTORNODE_INFO_B>
+{REACTORNODE_CLUELESS}
+The control system starts displaying a large stream of data.
+You have no idea what it says.
+</REACTORNODE_INFO_B>
+
+<REACTORNODE_OVERLOAD_GAMEOVER>
+You found a way to blow youself up. You are very VERY dead!
+</REACTORNODE_OVERLOAD_GAMEOVER>
+<REACTORNODE_OVERLOAD_A>
+You followed the instructions for initiating an emergency overload.
+Right after pressing the confirm key on the screen, you got an odd feeling.
+The reactor started humming. Did you just make a huge mis..
+...
+You never got to finish that thought. You just ceased to exist.
+To say you were atomized is not entierly accurate,
+but that may be the closest terminology to describe what happened to you.
+At least, there were no pain.
+</REACTORNODE_OVERLOAD_A>
+<REACTORNODE_OVERLOAD_B>
+{REACTORNODE_CLUELESS}
+Right after pressing the confirm key on the screen, you got an odd feeling.
+The reactor started humming. Did you just make a huge mis..
+...
+You never got to finish that thought. You just ceased to exist.
+To say you were atomized is not entierly accurate,
+but that may be the closest terminology to describe what happened to you.
+At least, there were no pain.
+</REACTORNODE_OVERLOAD_B>
+
+<REACTORNODE_SHUTDOWN_A>
+You followed the instructions to shut down the the tacheon emitter array.
+...
+The system register succesful, then not successful shutdown, then both at the same time.
+{_GOTINFO}
+
+You are completly baffled at what this. You ended the shutdown process.
+You decide to try something else.
+</REACTORNODE_SHUTDOWN_A>
+<REACTORNODE_SHUTDOWN_INFO>
+It took you a moment to see it, but you now realized why this is.
+Looking over the diagnatic data you retrived earlier,
+you see most of the emitters are stuck in time-loops.
+They are running perpetually.
+Trying to just shutting them down just won't work.
+</REACTORNODE_SHUTDOWN_INFO>
+<REACTORNODE_SHUTDOWN_B>
+{REACTORNODE_CLUELESS}
+It does not look like that did anything.
+</REACTORNODE_SHUTDOWN_B>
+
+<REACTORNODE_6>
+Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
+Suddenly you notice something.. someone in front of you.
+You look up at the stranger.
+It took you a bit by surprise, but then you remembered what happened when you first came in.
+And as before, the other person suddenly disappeared.
+You leave the room content you have done what you could to fix it up.
+</REACTORNODE_6>
 
 <!--Basic terms -->
 <LEAVE>Leave</LEAVE>
