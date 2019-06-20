@@ -183,7 +183,7 @@ class Game:
             time.sleep(linepause)
         self.showtext("") #a single line-shift in the end, to break things up.
 
-        
+
     #region dictionaries
     #TODO: get terms from some sort of resource file
     def getGenderedRole(self, role:str, gender:str) -> str:
@@ -400,6 +400,21 @@ class OptionList(list):
             if self[i][0] == tag:
                 return i
         return -1
+    def MoveItemFront(self, tag):
+        i = self.GetInd(tag)
+        if i == -1:
+            return False
+        opt = self.pop(i)
+        self.insert(0, opt)
+    def MoveItemBack(self, tag):
+        i = self.GetInd(tag)
+        if i == -1:
+            return False
+        opt = self.pop(i)
+        self.append(0, opt)
+        #wraps random.shuffle
+    def Randomize(self, r:float = None):
+        random.shuffle(self, r)
     @property
     def Len(self):
         return len(self)

@@ -59,52 +59,62 @@ def Start(game:Game.Game):
             frags["_P4"] = T("GENDERED_4_FEMALE") #she
         
         game.rolltext("{REACTORNODE_2}", frags=frags)
-        ind, val = game.choose2(("try to snatch the manual next time it appears", "randomly enter data into the controls"), "What will you do?")
-        #stupid choice resulting in a game over:
-        if(ind == 1):
-            game.setGameover(save, "You got yourself trapped in a timeloop")
-            game.rolltext("""
-Not knowing what to do, you start hammering on the controls.
-You tried adjesting that sqiggly thing, you tried to increase that number, you tried to stop that ticking..
-you tried any little thing you could think of..
-then you, without knowing what to do, start hammering on the controls.
-you tried adjusting that sq..
+        options3 = Game.OptionList([
+            ["MANUAL","{REACTORNODE_3_OPTION_1}"],
+            ["RANDOM","{REACTORNODE_3_OPTION_2}"],
+            ["ESCAPE","{REACTORNODE_3_OPTION_3}"],
+        ])
+        while True:
+            game.choose(options3, "{REACTORNODE_3_QUEST}")
+            data:Game.ActDataInput = game.wait()
+            if data.Type != "action":
+                continue
+            if data.tag == "MANUAL":
+                game.rolltext("{REACTORNODE_3A}")
+                break
+            elif data.tag == "RANDOM":
+                game.rolltext("{REACTORNODE_3B}")
+                game.setGameover("{REACTORNODE_3B_GAMEOVER}")
+                runner.stop()
+                return
+            elif data.tag == "ESCAPE":
+                game.rolltext("{REACTORNODE_ESCAPE}")
+                game.setGameover("{REACTORNODE_ESCAPE_GAMEOVER}")
+                runner.stop()
+                return
+        if hasTrans:
+            game.rolltext("{REACTORNODE_4A}")
+            options5List = T("REACTORNODE_5A_OPTION_LIST").split()
+        else:
+            game.rolltext("{REACTORNODE_4B}")
+            options5List = T("REACTORNODE_5B_OPTION_LIST").split()
+        options5 = Game.OptionList([
+            ["COOLDOWN" ,options5List[0]],
+            ["SLOWDOWN" ,options5List[1]],
+            ["HURRY"    ,options5List[2]],
+            ["FIRE_1"   ,options5List[3]],
+            ["FIRE_2"   ,options5List[4]],
+            ["INFO"     ,options5List[5]],
+            ["DEATH"    ,options5List[6]],
+            ["REVERSE"  ,options5List[7]],
+            ["SHUTDOWN" ,options5List[8]],
+            ["ESCAPE"   ,options5List[9]],
+        ])
+        options5.Randomize()
+        options5.MoveItemBack("ESCAPE")
+        while True:
+            game.choose(options5, "{REACTORNODE_5_QUEST}")
+            data:Game.ActDataInput = game.wait()
+            if data.Type != "action":
+                continue
+            if data.tag == "ESCAPE":
+                game.rolltext("{REACTORNODE_ESCAPE}")
+                game.setGameover("{REACTORNODE_ESCAPE_GAMEOVER}")
+                runner.stop()
+                return
+            
 
-you realized you were now doing what you did a minute ago. are you stu..
-tried adjusting that little sqiggly..
 
-uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you try adjusting that sqiggly thi..
-
-'shit' you managed to think as you suddenly find yourself trying to adjust that squigg..
-and again.. at shorter and shorter intervals.
-
-The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
-From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
-And you soon realied why.
-
-Aside from your little looping bobble, everything was gone.
-You aren't dead. Not really. But by now, you wish you were.
-            """)
-            nav.running = False
-            return
-        #end of game over stupity
-        game.rolltext("""
-You hover your hand over where the manual were a secund ago.
-...
-There it is! you snatch it!
-..!
-Ouch!
-You got the manual book in your hand, but your fingers are now covered in a layor of some oily substance.
-And they feel cold, really cold and numb.
-Looking at the where you picked up the manual, it suddenly flashed in again, despite also being in your hand.
-Moreover, there was now something else.. your fingers!
-your disenbodied fingers appearing out of nowhere to grab the manual,
-only to dissappear, and reappear.
-You decide to ignore this odd phenomenon, as you focus on your task.
-
-Browsing the manual you find instructions for a number of emergency procedures.
-        """)
         #You need to first initalize the emergency cooling system, then the emergency particle decelerator.
         choices = [
             ("COOL DOWN", "Initiate Emergency cooling system"),
@@ -252,14 +262,11 @@ you realized you have already done this. There is no need to do it again.
                     """)
                 elif slowedDown:
                     game.rolltext("""
-You attempt to follow the instructions for initiating emergency cooling,
-unfortunalty, it seems the fire is making it more or less impossible to initiate the cooling system.
+{REACTORNODE_COOLDOWN_2_A}
                     """)
                 else:
                     game.rolltext("""
-You follow the instructions, and soon the emergency cooling brought the temperature down.
-some of the alarms stops bleeping, and you notice the previusly looping instruction manual disappeard.
-Well, your fingers somewhy still remained there, looping as creepy as before, but now they were reaching for nothing.
+{REACTORNODE_COOLDOWN_1_A}
                     """)
                     cooledDown = True
             elif val == "INFO":
