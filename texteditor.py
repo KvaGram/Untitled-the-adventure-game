@@ -1,11 +1,13 @@
 import tkinter as TK
 import tkinter.ttk as TTK
+import tkentrycomplete as TKTC
 from tkinter import messagebox as TKmsg
 from tkinter import scrolledtext as TKS
 
 dummydata = {
     "TEST" : "Once opon a time there was a lot of text",
-    "BEST"  : "There is always more text to be found.."
+    "BEST"  : "There is always more text to be found..",
+    "REST"  : "There can never be too much dummy data"
 }
 
 class Editor(TK.Frame):
@@ -13,11 +15,12 @@ class Editor(TK.Frame):
         super().__init__(root)
         self.root:TK.Tk = root
         self.running = False
-        self.test = TextDisplay(self, dummydata, "TEST")
-        self.langlabel = TK.Label(text = "Language")
-        self.langBox = TTK.Combobox(self, values = ["test","best","rest","foo","bar","foobar"])
-        self.chooseEntryLabel = TK.Label(text = "Entry")
-        self.chooseEntryBox = TTK.Combobox(self, values = ["test","best","rest","foo","bar","foobar"])
+        self.test = TextDisplay(self, dummydata, "TEST", "ENGLISH")
+        self.langlabel = TK.Label(self, text = "Language")
+        self.langBox = TK.OptionMenu(self, values = ["test","best","rest","foo","bar","foobar"])
+        self.chooseEntryLabel = TK.Label(self, text = "Entry")
+        self.chooseEntryBox = TKTC.AutocompleteCombobox(self)
+        self.chooseEntryBox.set_completion_list(dummydata.keys)
 
         self.langlabel.grid(row = 0, column = 0)
         self.langBox.grid(row = 0, column = 1)
@@ -27,6 +30,7 @@ class Editor(TK.Frame):
         self.grid_columnconfigure(index = 0, weight = 1)
         self.grid_columnconfigure(index = 1, weight = 1)
         self.grid_rowconfigure(index = 0, weight = 1)
+
 
 
     def run(self):
@@ -41,9 +45,9 @@ class Editor(TK.Frame):
     def savetodisk(self):
         pass
         #TODO write code to save to disk.
-        
+
 class TextDisplay(TK.Frame):
-    def __init__(self, master, data, entryname):
+    def __init__(self, master, data, entryname, language):
         super().__init__(master)
         self.master = master
         self.data = data
