@@ -65,9 +65,9 @@ class Editor(TK.Frame):
         self.grid_columnconfigure(index = 0, weight = 1)
         self.grid_columnconfigure(index = 1, weight = 1)
         self.grid_rowconfigure(index = 0, weight = 1)
-    def OpenEntry(self, *_):
-        l = self.chooseLangBox.get()
-        e = self.chooseEntryBox.get()
+    def OpenEntry(self, *_, **args):
+        l = args.get("l",self.chooseLangBox.get())
+        e = args.get("e", self.chooseEntryBox.get())
         if(self.CheckSelected()):
             newEditor = EntryEditor(self.editors, self, self.seldata, e, l)
             newEditor.pack(side = TK.RIGHT)
@@ -75,9 +75,62 @@ class Editor(TK.Frame):
             self.openEntryBtn.config(state = TK.DISABLED)
 
         print("PLACEHOLDER: opens a new editor window for the selected entry")
-    def NewEntry(self, *_):
+    def NewEntry(self, event):
         print("PLACEHOLDER: Ads a new entry in the selected language, then opens a new editor window for the new entry")
         #adds new entry. asks if you want to add an empty entry for other langauges.
+        l = self.chooseLangBox.get()
+        e = self.chooseEntryBox.get()
+        result = self.askName("NEW ENTRY", "What do you wish name the entry?", l, e)
+        if result:
+            self.seldata[result] = ""
+        self.OpenEntry(l = l, e = e)
+
+    def RenameEntry(self, language, prevtext):
+        result = self.askName("RENAME ENTRY", f"What do you wish rename {prevtext} to?", language, prevtext)
+
+    def askName(self, title, message, langauge, startText):
+        askWindow = TK.Toplevel(master=self)
+        askWindow.title(title)
+        askMsg = TK.Label(askWindow, text=message)
+        askMsg.pack()
+        askAnswer = TK.StringVar(askWindow, value = startText)
+        askInput = TK.Entry(askWindow, textvariable = askAnswer)
+        askInput.pack()
+        askButtons = TK.Frame(askWindow)
+        askButtons.pack()
+        askErr = TK.Label(askWindow, text="")
+        askErr.pack()
+
+        data = self.getdata(langauge)
+
+        class Askdata:
+            ret = None
+            run = False
+        askData = Askdata()
+        
+        def askOK():
+            ans = askAnswer.get()
+            if ans in data.keys():
+                askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
+            elif re.match(ENTRY_NAME_PATTERN, ans):
+                askData.run = False
+                askData.ret = ans
+            else:
+                askErr.config(text="Entry name must start with a capital letter, and must contain only capitals, underscore and numbers! eg: SPACESHIP_TALK_8", fg = "red")
+        def askCANCEL():
+            askData.run = False
+            askData.ret = False
+        askOKbtn = TK.Button(askButtons, text = "OK", command = askOK)
+        askOKbtn.pack(side=TK.LEFT)
+        askCANCELbtn = TK.Button(askButtons, text = "CANCEL", command = askCANCEL)
+        askCANCELbtn.pack(side=TK.RIGHT)
+        
+        askData.run = True
+        while askData.run:
+            askWindow.update_idletasks()
+            askWindow.update()
+        askWindow.destroy()
+        return askData.ret
 
     def CheckSelected(self, *_):
         l = self.chooseLangBox.get()
@@ -90,7 +143,7 @@ class Editor(TK.Frame):
         self.openAddEntry.config(state = TK.NORMAL)
         if self.seldata.get(e):
             for o in self.openEntries:
-                if o.langauge == l and o.entryname == e:
+                if o.language == l and o.entryname == e:
                     self.openEntryBtn.config(state = TK.DISABLED)
                     return False
             self.openEntryBtn.config(state = TK.NORMAL)
@@ -101,7 +154,7 @@ class Editor(TK.Frame):
         else:
             self.openEntryBtn.config(state = TK.DISABLED)
             return True
-        print(f"Langauge{l} - entry {e}")
+        print(f"Language{l} - entry {e}")
         return True
 
     def run(self):
@@ -121,10 +174,12 @@ class Editor(TK.Frame):
     @property
     def seldata(self)->dict:
         l = self.chooseLangBox.get()
-        data = self.langdata.get(l)
+        return self.getdata(l)
+    def getdata(self, lang):
+        data = self.langdata.get(lang)
         if data == None:
-            self.langdata[l] = self.LoadLang(langList[l])
-            data = self.langdata[l]
+            self.langdata[lang] = self.LoadLang(langList[lang])
+            data = self.langdata[lang]
         return data
     
     @staticmethod
@@ -138,10 +193,7 @@ class Editor(TK.Frame):
         story = {}
         for element in tree.iter():
             story[element.tag] = element.text.strip()
-        return story   
-        
-
-#TODO: move select entry to the editors!
+        return story
 
 class EntryEditor(TK.Frame):
     def __init__(self, master, main:Editor, data, entryname, language):
@@ -178,20 +230,14 @@ class EntryEditor(TK.Frame):
             self.main.openEntries.remove(self)
         except:
             pass
-    def updateentry(self, evt):
-        if not self.liveUpdate.get():
-            return
-        self.entry = self.textfield.get('1.0', TK.END)
 
-    
+
     @property
     def entry(self):
         return self.data[self.entryname]
     @entry.setter
     def entry(self, val):
         self.data[self.entryname] = val
-
-
 
 
 def start():
