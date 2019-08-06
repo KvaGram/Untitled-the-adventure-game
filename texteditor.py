@@ -65,17 +65,15 @@ class Editor(TK.Frame):
         self.grid_columnconfigure(index = 0, weight = 1)
         self.grid_columnconfigure(index = 1, weight = 1)
         self.grid_rowconfigure(index = 0, weight = 1)
-    def OpenEntry(self, *_, **args):
+    def OpenEntry(self, **args):
         l = args.get("l",self.chooseLangBox.get())
         e = args.get("e", self.chooseEntryBox.get())
-        if(self.CheckSelected()):
+        if(self.CheckSelected(l = l, e = e)):
             newEditor = EntryEditor(self.editors, self, self.seldata, e, l)
             newEditor.pack(side = TK.RIGHT)
             self.openEntries.append(newEditor)
             self.openEntryBtn.config(state = TK.DISABLED)
-
-        print("PLACEHOLDER: opens a new editor window for the selected entry")
-    def NewEntry(self, event):
+    def NewEntry(self):
         print("PLACEHOLDER: Ads a new entry in the selected language, then opens a new editor window for the new entry")
         #adds new entry. asks if you want to add an empty entry for other langauges.
         l = self.chooseLangBox.get()
@@ -83,7 +81,7 @@ class Editor(TK.Frame):
         result = self.askName("NEW ENTRY", "What do you wish name the entry?", l, e)
         if result:
             self.seldata[result] = ""
-        self.OpenEntry(l = l, e = e)
+        self.OpenEntry(l = l, e = result)
 
     def RenameEntry(self, language, prevtext):
         result = self.askName("RENAME ENTRY", f"What do you wish rename {prevtext} to?", language, prevtext)
@@ -116,7 +114,7 @@ class Editor(TK.Frame):
                 askData.run = False
                 askData.ret = ans
             else:
-                askErr.config(text="Entry name must start with a capital letter, and must contain only capitals, underscore and numbers! eg: SPACESHIP_TALK_8", fg = "red")
+                askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK_8", fg = "red")
         def askCANCEL():
             askData.run = False
             askData.ret = False
@@ -132,29 +130,24 @@ class Editor(TK.Frame):
         askWindow.destroy()
         return askData.ret
 
-    def CheckSelected(self, *_):
-        l = self.chooseLangBox.get()
-        e = self.chooseEntryBox.get()
+    def CheckSelected(self, *_, **args):
+        l = args.get("l",self.chooseLangBox.get())
+        e = args.get("e", self.chooseEntryBox.get())
         self.chooseEntryBox.set_completion_list(self.seldata.keys())
         if not langList.get(l):
             self.openEntryBtn.config(state = TK.DISABLED)
             self.openAddEntry.config(state = TK.DISABLED)
             return False
         self.openAddEntry.config(state = TK.NORMAL)
-        if self.seldata.get(e):
+        if self.seldata.get(e) != None:
             for o in self.openEntries:
                 if o.language == l and o.entryname == e:
                     self.openEntryBtn.config(state = TK.DISABLED)
                     return False
             self.openEntryBtn.config(state = TK.NORMAL)
             return True
-        elif(re.match(ENTRY_NAME_PATTERN, l)):
-            self.openEntryBtn.config(state = TK.DISABLED)
-            return True
         else:
             self.openEntryBtn.config(state = TK.DISABLED)
-            return True
-        print(f"Language{l} - entry {e}")
         return True
 
     def run(self):
@@ -210,7 +203,7 @@ class EntryEditor(TK.Frame):
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.delete('1.0',TK.END)
         self.textfield.insert(TK.END, self.entry)
-        self.bind('<KeyRelease>', self.updateentry)
+        self.textfield.bind('<KeyRelease>', self.updateentry)
         self.savebtn = TK.Button(self, text = "SAVE", command = self.save, state = TK.DISABLED)
 
         self.liveUpdate = TK.BooleanVar()
@@ -221,15 +214,17 @@ class EntryEditor(TK.Frame):
         self.textfield.pack()
         self.savebtn.pack()
     def save(self):
+        self.entry = self.textfield.get('1.0', TK.END)
+        #TODO: call editor's call function to save self.langauge to file
         pass
-        #self.entry = self.textfield.get('1.0', TK.END)
-        #self.editor.savetodisk()
     def closeme(self):
+        self.entry = self.textfield.get('1.0', TK.END)
         try:
             self.pack_forget()
             self.main.openEntries.remove(self)
         except:
             pass
+        self.main.CheckSelected()
 
 
     @property
@@ -239,6 +234,10 @@ class EntryEditor(TK.Frame):
     def entry(self, val):
         self.data[self.entryname] = val
 
+    def updateentry(self, evt):
+        if False:#not self.liveUpdate.get():
+            return
+        self.entry = self.textfield.get('1.0', TK.END)
 
 def start():
 
