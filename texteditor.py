@@ -83,9 +83,6 @@ class Editor(TK.Frame):
             self.seldata[result] = ""
         self.OpenEntry(l = l, e = result)
 
-    def RenameEntry(self, language, prevtext):
-        result = self.askName("RENAME ENTRY", f"What do you wish rename {prevtext} to?", language, prevtext)
-
     def askName(self, title, message, langauge, startText):
         askWindow = TK.Toplevel(master=self)
         askWindow.title(title)
@@ -197,7 +194,12 @@ class EntryEditor(TK.Frame):
         self.entryname = entryname
         self.main = main
 
-        self.closebtn = TK.Button(self, text = "CLOSE", bg = "red", command = self.closeme)
+        self.buttongroup = TK.Frame(self)
+
+        self.closebtn = TK.Button(self.buttongroup, text = "CLOSE", bg = "red", command = self.closeme)
+        self.renamebtn = TK.Button(self.buttongroup, text = "RENAME", bg = "yellow", command = self.RenameEntry)
+        self.deletebtn = TK.Button(self.buttongroup, text = "DELETE", bg = "red4", command = self.DelMe)
+
         self.namelabel = TK.Label(master=self, text = entryname)
         self.textfield = TKS.ScrolledText(self)
         self.textfield.configure(bg='black', fg='cyan')
@@ -209,7 +211,11 @@ class EntryEditor(TK.Frame):
         self.liveUpdate = TK.BooleanVar()
         self.doLiveUpdate = TTK.Checkbutton(self, variable = self.liveUpdate, text = "Update text hash-table live")
 
-        self.closebtn.pack()
+        self.buttongroup.pack()
+        self.closebtn.pack(side = TK.RIGHT)
+        self.renamebtn.pack(side = TK.RIGHT)
+        self.deletebtn.pack(side = TK.RIGHT)
+
         self.namelabel.pack()
         self.textfield.pack()
         self.savebtn.pack()
@@ -225,7 +231,26 @@ class EntryEditor(TK.Frame):
         except:
             pass
         self.main.CheckSelected()
+    def RenameEntry(self):
 
+        result = self.main.askName("RENAME ENTRY", f"What do you wish rename {self.entryname} to?", self.language, self.entryname)
+        if not result:
+            return
+        self.data[result] = self.entry
+        self.data.pop(self.entryname, None)
+        self.entryname = result
+        self.namelabel.config(text = result)
+        self.main.CheckSelected()
+    def DelMe(self):
+        if not TKmsg.askquestion("Delete entry?", f"Are you sure you to delete {self.entryname} from the {self.language} language-file?"):
+            return
+        self.data.pop(self.entryname, None)
+        try:
+            self.pack_forget()
+            self.main.openEntries.remove(self)
+        except:
+            pass
+        self.main.CheckSelected()
 
     @property
     def entry(self):
