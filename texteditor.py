@@ -308,6 +308,8 @@ class Editor(TK.Toplevel):
         self._lang = lang
         self._entryName = entryName
 
+        self.protocol("WM_DELETE_WINDOW", self.OnClose)
+
         #Building menu
         menu = TK.Menu(self)
         self.config(menu = menu)
@@ -334,8 +336,26 @@ class Editor(TK.Toplevel):
         })
 
         #building UI
+        self.selectionZone = TK.Frame(self)
+        self.selectionZone.pack()
 
+        self.langlabel = TK.Label(self.selectionZone, text = "Language")
+        self.chooseLangBox = TKTC.AutocompleteCombobox(self.selectionZone)
+        self.chooseLangBox.set_completion_list(list(langList.keys()))
+        self.chooseLangBox.bind("<<ComboboxSelected>>", self.SetLang)
 
+        self.chooseEntryLabel = TK.Label(self.selectionZone, text = "Entry")
+        self.chooseEntryBox = TKTC.AutocompleteCombobox(self.selectionZone)
+        self.chooseEntryBox.bind("<<ComboboxSelected>>", self.SetEntry)
+
+    def SetLang(self):
+        NotAddedYet()
+    def SetEntry(self):
+        NotAddedYet()
+    def OnClose(self):
+        if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
+            Data.editors.remove(self)
+            self.destroy()
 
     @property
     def lang(self):
