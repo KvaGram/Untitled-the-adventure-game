@@ -288,16 +288,55 @@ class old_EntryEditor(TK.Frame):
         self.saved = False
         self.entry = self.textfield.get('1.0', TK.END)
 
-class EditorData():
+#static class for common data.
+class Data():
     editors = []
     langstory = {}
+    langEdited = {}
+    root = None
 
+def OpenEditor(lang:str, entry:str):
+    for e in Data.editors:
+        if e.entryName == entry and e.lang == lang:
+            e.lift()
+            return
+    Data.editors.append(Editor(lang, entry))
 
 class Editor(TK.Toplevel):
-    def __init__(self, master, data:EditorData, lang:str, entryName:str):
-        self.data = data
+    def __init__(self, lang:str, entryName:str):
+        super().__init__(Data.root)
         self._lang = lang
         self._entryName = entryName
+
+        #Building menu
+        menu = TK.Menu(self)
+        self.config(menu = menu)
+        fileMenu = TK.Menu(menu)
+        editMenu = TK.Menu(menu)
+        menu.add_cascade(label = "file", menu=fileMenu)
+        menu.add_cascade(label = "edit", menu=editMenu)
+
+        fileMenu.add_command(label = "VOID", command=None)
+        fileMenu.add_command(label = "VOID", command=None)
+        fileMenu.add_command(label = "VOID", command=None)
+        fileMenu.add_command(label = "VOID", command=None)
+
+        editMenu.add_command(label = "VOID", command=None)
+        editMenu.add_command(label = "VOID", command=None)
+        editMenu.add_command(label = "VOID", command=None)
+        editMenu.add_command(label = "VOID", command=None)
+
+        #manu refrence
+        self.menu = ({
+        'root':menu,
+        'file':fileMenu,
+        'edit':editMenu
+        })
+
+        #building UI
+
+
+
     @property
     def lang(self):
         return self._lang
@@ -305,12 +344,69 @@ class Editor(TK.Toplevel):
     def entryName(self):
         return self._entryName
     
-    
+
 
 
 def start():
     root = TK.Tk()
     root.withdraw()
+
+    cwd = os.getcwd()
+    for k, l in langList.items():
+        try: #if True:
+            tree = ElementTree.parse(cwd+"/nerrative/" + l + ".xml")
+        except Exception as e:
+            err = f"Error loading language file {l}: {e}"
+            TKmsg.showerror("LOADING-ERROR", err)
+            print (err, file=sys.stderr)
+            continue #if it fails, tell the user, and skip this one.        
+        story = {}
+        for element in tree.iter():
+            story[element.tag] = element.text.strip()
+        Data.langstory[k] = story
+        Data.langEdited[k] = False
+    
+    if len(Data.langstory) < 1:
+        if TKmsg.askokcancel(icon = TKmsg.ERROR, title="NO DATA ERROR!", message="""
+        No story datafile were found!
+        If there was an error during loading,
+        you may want to exit this program, and manually fix the issue.
+        Alternativly: do you wish to create an empty langauge file?
+        """.strip()):
+            NotAddedYet()
+        else:
+            pass
+        root.quit() #to be moved to the else-branch above when adding new language files are supported.
+        return
+    startlang = list(langList)[0]
+    if len(Data.langstory[startlang]) < 1:
+        if TKmsg.askokcancel(icon = TKmsg.ERROR, title="NO DATA ERROR!", message=f"""
+        No story-entries were found!
+        If there was an error during loading,
+        you may want to exit this program, and manually fix the issue.
+        Alternativly: do you wish to create a new entry in {startlang}?
+        """.strip()):
+            NotAddedYet()
+        else:
+            pass
+        root.quit() #To be moved to else branch once above action is supported.
+        return
+    startEntry = list(Data.langstory[startlang])[0]
+
+    OpenEditor(startlang, startEntry)
+
+    while True:
+        root.update()
+        root.update_idletasks()
+        if len(Data.editors) < 1:
+            root.quit()
+            return
+
+    
+
+
+def NotAddedYet():
+    TKmsg.showwarning("Sorry, that feature is not added yet.\nPlease be impatient.\nI am very lazy, and need the pressure.")
 
 
 
