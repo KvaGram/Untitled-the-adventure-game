@@ -347,22 +347,53 @@ class Editor(TK.Toplevel):
         self.chooseEntryLabel = TK.Label(self.selectionZone, text = "Entry")
         self.chooseEntryBox = TKTC.AutocompleteCombobox(self.selectionZone)
         self.chooseEntryBox.bind("<<ComboboxSelected>>", self.SetEntry)
+        self.chooseEntryBox.set_completion_list(list(self.Story.keys()))
+
+        self.langlabel.grid(row = 0, column = 0)
+        self.chooseEntryLabel.grid(row = 0, column = 1)
+
+        self.chooseLangBox.grid(row = 1, column = 0)
+        self.chooseEntryBox.grid(row = 1, column = 1)
+
+
+
+        self.textfield = TKS.ScrolledText(self)
+        self.textfield.configure(bg='black', fg='cyan')
+        self.textfield.delete('1.0',TK.END)
+        self.textfield.insert(TK.END, self.entry)
+        self.textfield.bind('<KeyRelease>', self.updateentry)
+
+        self.textfield.pack()
+
+    def OnClose(self):
+        if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
+            Data.editors.remove(self)
+            self.destroy()
+    def updateentry(self, evt=None):
+
+        Data.langEdited[self.lang] = True
+        self.entry = self.textfield.get('1.0', TK.END)
 
     def SetLang(self):
         NotAddedYet()
     def SetEntry(self):
         NotAddedYet()
-    def OnClose(self):
-        if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
-            Data.editors.remove(self)
-            self.destroy()
-
     @property
-    def lang(self):
+    def lang(self)->str:
         return self._lang
     @property
-    def entryName(self):
+    def entryName(self)->str:
         return self._entryName
+    @property
+    def entry(self)->str:
+        return self.Story.get(self._entryName, "")
+    @entry.setter
+    def entry(self, val):
+        e = "" #TODO - get string from text area
+        self.Story.get(self._lang, {})
+    @property
+    def Story(self)->dict:
+        return Data.langstory.get(self._lang, {})
     
 
 
@@ -382,6 +413,8 @@ def start():
             continue #if it fails, tell the user, and skip this one.        
         story = {}
         for element in tree.iter():
+            if element.tag == 'story':
+                continue #do not store the top-level element
             story[element.tag] = element.text.strip()
         Data.langstory[k] = story
         Data.langEdited[k] = False
@@ -411,7 +444,7 @@ def start():
             pass
         root.quit() #To be moved to else branch once above action is supported.
         return
-    startEntry = list(Data.langstory[startlang])[0]
+    startEntry = list(Data.langstory[startlang].keys())[0]
 
     OpenEditor(startlang, startEntry)
 
