@@ -27,6 +27,9 @@ class Editor(TK.Frame):
         self.running = False
         self.langdata = {}
         self.openEntries = []
+        self._langSaved = {}
+        for k in langList.keys():
+            self._langSaved[k] = True
 
         self.langlabel = TK.Label(self, text = "Language")
         self.chooseLangBox = TKTC.AutocompleteCombobox(self)
@@ -159,6 +162,15 @@ class Editor(TK.Frame):
     def savetodisk(self):
         pass
         #TODO write code to save to disk.
+    def setLangSaved(self, langauge, val):
+        self._langSaved[langauge] = val
+        for e in self.openEntries:
+            if not e.language == langauge:
+                continue
+            if val:
+                e.savebtn.config(state = TK.NORMAL)
+            else:
+                e.savebtn.config(state = TK.DISABLED)
     
     #The current selcted data
     @property
@@ -192,7 +204,7 @@ class EntryEditor(TK.Frame):
         self.data = data
         self.language = language
         self.entryname = entryname
-        self.main = main
+        self.main:Editor = main
 
         self.buttongroup = TK.Frame(self)
 
@@ -208,8 +220,8 @@ class EntryEditor(TK.Frame):
         self.textfield.bind('<KeyRelease>', self.updateentry)
         self.savebtn = TK.Button(self, text = "SAVE", command = self.save, state = TK.DISABLED)
 
-        self.liveUpdate = TK.BooleanVar()
-        self.doLiveUpdate = TTK.Checkbutton(self, variable = self.liveUpdate, text = "Update text hash-table live")
+        #self.liveUpdate = TK.BooleanVar()
+        #self.doLiveUpdate = TTK.Checkbutton(self, variable = self.liveUpdate, text = "Update text hash-table live")
 
         self.buttongroup.pack()
         self.closebtn.pack(side = TK.RIGHT)
@@ -220,9 +232,7 @@ class EntryEditor(TK.Frame):
         self.textfield.pack()
         self.savebtn.pack()
     def save(self):
-        self.entry = self.textfield.get('1.0', TK.END)
-        #TODO: call editor's call function to save self.langauge to file
-        pass
+        self.main.savefile(self.language)
     def closeme(self):
         self.entry = self.textfield.get('1.0', TK.END)
         try:
@@ -251,6 +261,24 @@ class EntryEditor(TK.Frame):
         except:
             pass
         self.main.CheckSelected()
+    def asksaveiflast(self):
+        if self.saved:
+            return
+        for e in self.main.openEntries:
+            if e == self:
+                continue
+            if e.language == self.language:
+                return
+        if TKmsg.askyesno("Save file?", f"Save langaugefile {self.language}?"):
+            self.save()
+
+    @property
+    def saved(self):
+        return self.main._langSaved[self.language]
+    @saved.setter
+    def saved(self, val):
+        self.main.setLangSaved(self.language, val)
+
 
     @property
     def entry(self):
@@ -262,6 +290,7 @@ class EntryEditor(TK.Frame):
     def updateentry(self, evt):
         if False:#not self.liveUpdate.get():
             return
+        self.saved = False
         self.entry = self.textfield.get('1.0', TK.END)
 
 def start():
