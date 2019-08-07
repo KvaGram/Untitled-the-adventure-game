@@ -11,16 +11,11 @@ import sys
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+_(?:[0-9]|_|[A-Z])*$'
 
-dummydata = {
-    "TEST" : "Once opon a time there was a lot of text",
-    "BEST"  : "There is always more text to be found..",
-    "REST"  : "There can never be too much dummy data"
-}
 #Display language : internal language (filename)
 langList = {"English" : "english"}
 
 
-class Editor(TK.Frame):
+class old_Editor(TK.Frame):
     def __init__(self, root:TK.Tk):
         super().__init__(root)
         self.root:TK.Tk = root
@@ -72,7 +67,7 @@ class Editor(TK.Frame):
         l = args.get("l",self.chooseLangBox.get())
         e = args.get("e", self.chooseEntryBox.get())
         if(self.CheckSelected(l = l, e = e)):
-            newEditor = EntryEditor(self.editors, self, self.seldata, e, l)
+            newEditor = old_EntryEditor(self.editors, self, self.seldata, e, l)
             newEditor.pack(side = TK.RIGHT)
             self.openEntries.append(newEditor)
             self.openEntryBtn.config(state = TK.DISABLED)
@@ -197,14 +192,14 @@ class Editor(TK.Frame):
             story[element.tag] = element.text.strip()
         return story
 
-class EntryEditor(TK.Frame):
-    def __init__(self, master, main:Editor, data, entryname, language):
+class old_EntryEditor(TK.Frame):
+    def __init__(self, master, main:old_Editor, data, entryname, language):
         super().__init__(master)
         self.master = master
         self.data = data
         self.language = language
         self.entryname = entryname
-        self.main:Editor = main
+        self.main:old_Editor = main
 
         self.buttongroup = TK.Frame(self)
 
@@ -293,11 +288,40 @@ class EntryEditor(TK.Frame):
         self.saved = False
         self.entry = self.textfield.get('1.0', TK.END)
 
+class EditorData():
+    editors = []
+    langstory = {}
+
+
+class Editor(TK.Toplevel):
+    def __init__(self, master, data:EditorData, lang:str, entryName:str):
+        self.data = data
+        self._lang = lang
+        self._entryName = entryName
+    @property
+    def lang(self):
+        return self._lang
+    @property
+    def entryName(self):
+        return self._entryName
+    
+    
+
+
 def start():
+    root = TK.Tk()
+    root.withdraw()
+
+
+
+
+
+    #old stuff, kept for refrence till everything is redone
+    return
 
     #setup
     tkRoot = TK.Tk(screenName="Text resource editor")
-    tkRoot.geometry("1600x900")
+    tkRoot.geometry("400x300")
     editor = Editor(tkRoot)
     editor.grid()
 
