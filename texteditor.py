@@ -300,12 +300,15 @@ def OpenEditor(lang:str, entry:str):
             return
     Data.editors.append(Editor(lang, entry))
 
-def NewEntry(lang:str, openNew:bool = True, entry = ""):
-    result = askName("NEW ENTRY", "What do you wish name the entry?", lang, entry)
-    if result:
-        Data.langstory.get(lang, {})[result] = " "
+def NewEntry(lang:str, openNew:bool, entry):
+    Data.langstory.get(lang, {})[entry] = " "
     if openNew:
         OpenEditor(lang, result)
+def AskNewEntry(lang:str, openNew:bool = True, entry = ""):
+    entry = askName("NEW ENTRY", "What do you wish name the entry?", lang, entry)
+    if entry:
+        return NewEntry(lang, openNew, entry)
+    return entry
 
 def askName(title, message, lang, startText):
     askWindow = TK.Toplevel(Data.root)
@@ -350,25 +353,6 @@ def askName(title, message, lang, startText):
         askWindow.update()
     askWindow.destroy()
     return askData.ret
-
-#-----------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class Editor(TK.Toplevel):
     def __init__(self, lang:str, entryName:str):
@@ -425,12 +409,15 @@ class Editor(TK.Toplevel):
 
         self.textfield = TKS.ScrolledText(self)
         self.textfield.configure(bg='black', fg='cyan')
-        self.resetTextfield()
         self.textfield.bind('<KeyRelease>', self.updateentry)
 
         self.textfield.pack()
+
+        TK.Label(self, text = "Tip: you can copy-paste the text using ctrl+")
         #last fix..
+        self.resetTextfield()
         self.resetSelectors()
+        self.setTitle()
 
     def OnClose(self):
         if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
@@ -438,7 +425,7 @@ class Editor(TK.Toplevel):
             self.destroy()
 
     def OnNewEntry(self):
-        NewEntry(self._lang)
+        AskNewEntry(self._lang)
     def updateentry(self, evt=None):
 
         Data.langEdited[self.lang] = True
@@ -446,6 +433,7 @@ class Editor(TK.Toplevel):
 
     def SetLang(self, evt=None):
         lang = self.chooseLangBox.get()
+        en = self._entryName
         if lang == self.lang:
             return
         d = Data.langstory.get(lang, None)
@@ -453,20 +441,20 @@ class Editor(TK.Toplevel):
             TKmsg.showwarning("NOT VALID LAGUAGE", "Langauge selected is not valid.")
             self.resetSelectors()
             return
-        e = d.get(self._entryName, None)
-        if e == None:
-            if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {self._entryName} was not found in {lang}.\nWould you like to add it?"):
-                NotAddedYet()
+        if d.get(en, None) == None:
+            if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {en} was not found in {lang}.\nWould you like to add it?"):
+                NewEntry(lang, False, en)
             else:
-                pass
-            self.resetSelectors()
-            return
+                self.resetSelectors()
+                return
         if self.edited:
             if TKmsg.askyesno("SAVE?", f"You have unsaved changes!\nDo you wish to save the {self._lang} languagefile before switching langauge?"):
                 self.save()
         self._lang = lang
+        self._entryName = en
         self.resetTextfield()
         self.resetSelectors()
+        self.setTitle()
     def SetEntry(self, evt=None):
         en = self.chooseEntryBox.get()
         if en == self._entryName:
@@ -474,7 +462,7 @@ class Editor(TK.Toplevel):
         entry = self.Story.get(en, None)
         if entry == None:
             if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {en} was not found.\nDo you wish to create it?"):
-                NotAddedYet()
+                NewEntry(self._lang, False, en)
             else:
                 pass
             self.resetSelectors()
@@ -482,12 +470,16 @@ class Editor(TK.Toplevel):
         self._entryName = en
         self.resetSelectors()
         self.resetTextfield()
+        self.setTitle()
     def resetTextfield(self):
         self.textfield.delete('1.0',TK.END)
         self.textfield.insert(TK.END, self.entry)
     def resetSelectors(self):
         self.chooseLangBox.set(self._lang)
         self.chooseEntryBox.set(self._entryName)
+        self.chooseEntryBox.set_completion_list(list(self.Story.keys()))
+    def setTitle(self):
+        self.title(f"Untitled! Storytext editor - {self._lang} - {self._entryName}")
     def save(self):
         NotAddedYet()
     @property
