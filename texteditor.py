@@ -154,7 +154,8 @@ class old_Editor(TK.Frame):
             except TK.TclError as err:
                 print(err)
                 self.running = False
-    def savetodisk(self):
+    def savetodisk(self, lang):
+
         pass
         #TODO write code to save to disk.
     def setLangSaved(self, langauge, val):
@@ -228,6 +229,7 @@ class old_EntryEditor(TK.Frame):
         self.savebtn.pack()
     def save(self):
         self.main.savefile(self.language)
+
     def closeme(self):
         self.entry = self.textfield.get('1.0', TK.END)
         try:
@@ -370,8 +372,8 @@ class Editor(TK.Toplevel):
         menu.add_cascade(label = "file", menu=fileMenu)
         menu.add_cascade(label = "edit", menu=editMenu)
 
+        fileMenu.add_command(label = "Save language file", command=self.save)
         fileMenu.add_command(label = "New Entry", command=self.OnNewEntry)
-        fileMenu.add_command(label = "VOID", command=None)
         fileMenu.add_command(label = "VOID", command=None)
         fileMenu.add_command(label = "VOID", command=None)
 
@@ -481,7 +483,7 @@ class Editor(TK.Toplevel):
     def setTitle(self):
         self.title(f"Untitled! Storytext editor - {self._lang} - {self._entryName}")
     def save(self):
-        NotAddedYet()
+        Savelang(self._lang)
     @property
     def lang(self)->str:
         return self._lang
@@ -503,28 +505,42 @@ class Editor(TK.Toplevel):
     
 
 
+def Savelang(lang:str):
+    cwd = os.getcwd()
+    filename = langList[lang]
+    story:dict = Data.langstory[lang]
+    with open(cwd+"/nerrative/" + filename + ".xml", "w+", encoding="utf-8") as datafile:
+        datafile.write("<story>\n")
+        for key, entry in story.items():
+            datafile.write(f"<{key}>\n{entry}\n</{key}>\n")
+        datafile.write("</story>")
+        datafile.close()
+
+def Loadlang(lang:str):
+    cwd = os.getcwd()
+    filename = langList[lang]
+    try:
+        tree = ElementTree.parse(cwd+"/nerrative/" + filename + ".xml")
+    except Exception as e:
+        err = f"Error loading language file {lang}: {e}"
+        TKmsg.showerror("LOADING-ERROR", err)
+        print (err, file=sys.stderr)
+        return False
+    story = {}
+    for element in tree.iter():
+        if element.tag == 'story':
+            continue #do not store the top-level element
+        story[element.tag] = element.text.strip()
+    Data.langstory[lang] = story
+    Data.langEdited[lang] = False
 
 def start():
     root = TK.Tk()
     root.withdraw()
 
-    cwd = os.getcwd()
-    for k, l in langList.items():
-        try: #if True:
-            tree = ElementTree.parse(cwd+"/nerrative/" + l + ".xml")
-        except Exception as e:
-            err = f"Error loading language file {l}: {e}"
-            TKmsg.showerror("LOADING-ERROR", err)
-            print (err, file=sys.stderr)
-            continue #if it fails, tell the user, and skip this one.        
-        story = {}
-        for element in tree.iter():
-            if element.tag == 'story':
-                continue #do not store the top-level element
-            story[element.tag] = element.text.strip()
-        Data.langstory[k] = story
-        Data.langEdited[k] = False
-    
+    for k in langList.keys():
+        Loadlang(k)
+
     if len(Data.langstory) < 1:
         if TKmsg.askokcancel(icon = TKmsg.ERROR, title="NO DATA ERROR!", message="""
         No story datafile were found!
@@ -566,26 +582,6 @@ def start():
 
 def NotAddedYet():
     TKmsg.showwarning("WOOPS..","Sorry, that feature is not added yet.\nPlease be impatient.\nI am very lazy, and need the pressure.")
-
-
-
-
-
-    #old stuff, kept for refrence till everything is redone
-    return
-
-    #setup
-    tkRoot = TK.Tk(screenName="Text resource editor")
-    tkRoot.geometry("400x300")
-    editor = Editor(tkRoot)
-    editor.grid()
-
-    #running
-    editor.run()
-
-    #Cleanup
-    editor.grid_forget()
-    tkRoot.destroy()
 
 if __name__ == "__main__":
     start()
