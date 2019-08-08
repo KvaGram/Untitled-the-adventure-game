@@ -273,8 +273,6 @@ class old_EntryEditor(TK.Frame):
     @saved.setter
     def saved(self, val):
         self.main.setLangSaved(self.language, val)
-
-
     @property
     def entry(self):
         return self.data[self.entryname]
@@ -302,6 +300,76 @@ def OpenEditor(lang:str, entry:str):
             return
     Data.editors.append(Editor(lang, entry))
 
+def NewEntry(lang:str, openNew:bool = True, entry = ""):
+    result = askName("NEW ENTRY", "What do you wish name the entry?", lang, entry)
+    if result:
+        Data.langstory.get(lang, {})[result] = " "
+    if openNew:
+        OpenEditor(lang, result)
+
+def askName(title, message, lang, startText):
+    askWindow = TK.Toplevel(Data.root)
+    askWindow.title(title)
+    askMsg = TK.Label(askWindow, text=message)
+    askMsg.pack()
+    askAnswer = TK.StringVar(askWindow, value = startText)
+    askInput = TK.Entry(askWindow, textvariable = askAnswer)
+    askInput.pack()
+    askButtons = TK.Frame(askWindow)
+    askButtons.pack()
+    askErr = TK.Label(askWindow, text="")
+    askErr.pack()
+
+    story = Data.langstory.get(lang, {})
+
+    class Askdata:
+        ret = None
+        run = False
+    askData = Askdata()
+    
+    def askOK():
+        ans = askAnswer.get()
+        if ans in story.keys():
+            askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
+        elif re.match(ENTRY_NAME_PATTERN, ans):
+            askData.run = False
+            askData.ret = ans
+        else:
+            askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK_8", fg = "red")
+    def askCANCEL():
+        askData.run = False
+        askData.ret = False
+    askOKbtn = TK.Button(askButtons, text = "OK", command = askOK)
+    askOKbtn.pack(side=TK.LEFT)
+    askCANCELbtn = TK.Button(askButtons, text = "CANCEL", command = askCANCEL)
+    askCANCELbtn.pack(side=TK.RIGHT)
+    
+    askData.run = True
+    while askData.run:
+        askWindow.update_idletasks()
+        askWindow.update()
+    askWindow.destroy()
+    return askData.ret
+
+#-----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Editor(TK.Toplevel):
     def __init__(self, lang:str, entryName:str):
         super().__init__(Data.root)
@@ -318,7 +386,7 @@ class Editor(TK.Toplevel):
         menu.add_cascade(label = "file", menu=fileMenu)
         menu.add_cascade(label = "edit", menu=editMenu)
 
-        fileMenu.add_command(label = "VOID", command=None)
+        fileMenu.add_command(label = "New Entry", command=self.OnNewEntry)
         fileMenu.add_command(label = "VOID", command=None)
         fileMenu.add_command(label = "VOID", command=None)
         fileMenu.add_command(label = "VOID", command=None)
@@ -368,6 +436,9 @@ class Editor(TK.Toplevel):
         if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
             Data.editors.remove(self)
             self.destroy()
+
+    def OnNewEntry(self):
+        NewEntry(self._lang)
     def updateentry(self, evt=None):
 
         Data.langEdited[self.lang] = True
