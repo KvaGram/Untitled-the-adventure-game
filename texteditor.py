@@ -12,7 +12,7 @@ import sys
 ENTRY_NAME_PATTERN = r'^[A-Z]+_(?:[0-9]|_|[A-Z])*$'
 
 #Display language : internal language (filename)
-langList = {"English" : "english"}
+langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
 
 
 class old_Editor(TK.Frame):
@@ -355,15 +355,14 @@ class Editor(TK.Toplevel):
         self.chooseLangBox.grid(row = 1, column = 0)
         self.chooseEntryBox.grid(row = 1, column = 1)
 
-
-
         self.textfield = TKS.ScrolledText(self)
         self.textfield.configure(bg='black', fg='cyan')
-        self.textfield.delete('1.0',TK.END)
-        self.textfield.insert(TK.END, self.entry)
+        self.resetTextfield()
         self.textfield.bind('<KeyRelease>', self.updateentry)
 
         self.textfield.pack()
+        #last fix..
+        self.resetSelectors()
 
     def OnClose(self):
         if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
@@ -374,9 +373,51 @@ class Editor(TK.Toplevel):
         Data.langEdited[self.lang] = True
         self.entry = self.textfield.get('1.0', TK.END)
 
-    def SetLang(self):
-        NotAddedYet()
-    def SetEntry(self):
+    def SetLang(self, evt=None):
+        lang = self.chooseLangBox.get()
+        if lang == self.lang:
+            return
+        d = Data.langstory.get(lang, None)
+        if d == None:
+            TKmsg.showwarning("NOT VALID LAGUAGE", "Langauge selected is not valid.")
+            self.resetSelectors()
+            return
+        e = d.get(self._entryName, None)
+        if e == None:
+            if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {self._entryName} was not found in {lang}.\nWould you like to add it?"):
+                NotAddedYet()
+            else:
+                pass
+            self.resetSelectors()
+            return
+        if self.edited:
+            if TKmsg.askyesno("SAVE?", f"You have unsaved changes!\nDo you wish to save the {self._lang} languagefile before switching langauge?"):
+                self.save()
+        self._lang = lang
+        self.resetTextfield()
+        self.resetSelectors()
+    def SetEntry(self, evt=None):
+        en = self.chooseEntryBox.get()
+        if en == self._entryName:
+            return
+        entry = self.Story.get(en, None)
+        if entry == None:
+            if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {en} was not found.\nDo you wish to create it?"):
+                NotAddedYet()
+            else:
+                pass
+            self.resetSelectors()
+            return
+        self._entryName = en
+        self.resetSelectors()
+        self.resetTextfield()
+    def resetTextfield(self):
+        self.textfield.delete('1.0',TK.END)
+        self.textfield.insert(TK.END, self.entry)
+    def resetSelectors(self):
+        self.chooseLangBox.set(self._lang)
+        self.chooseEntryBox.set(self._entryName)
+    def save(self):
         NotAddedYet()
     @property
     def lang(self)->str:
@@ -389,11 +430,13 @@ class Editor(TK.Toplevel):
         return self.Story.get(self._entryName, "")
     @entry.setter
     def entry(self, val):
-        e = "" #TODO - get string from text area
-        self.Story.get(self._lang, {})
+        self.Story[self._entryName] = val
     @property
     def Story(self)->dict:
         return Data.langstory.get(self._lang, {})
+    @property
+    def edited(self)->bool:
+        return Data.langEdited[self._lang]
     
 
 
@@ -459,7 +502,7 @@ def start():
 
 
 def NotAddedYet():
-    TKmsg.showwarning("Sorry, that feature is not added yet.\nPlease be impatient.\nI am very lazy, and need the pressure.")
+    TKmsg.showwarning("WOOPS..","Sorry, that feature is not added yet.\nPlease be impatient.\nI am very lazy, and need the pressure.")
 
 
 
