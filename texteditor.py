@@ -303,7 +303,7 @@ def OpenEditor(lang:str, entry:str):
 def NewEntry(lang:str, openNew:bool, entry):
     Data.langstory.get(lang, {})[entry] = " "
     if openNew:
-        OpenEditor(lang, result)
+        OpenEditor(lang, entry)
 def AskNewEntry(lang:str, openNew:bool = True, entry = ""):
     entry = askName("NEW ENTRY", "What do you wish name the entry?", lang, entry)
     if entry:
@@ -413,7 +413,7 @@ class Editor(TK.Toplevel):
 
         self.textfield.pack()
 
-        TK.Label(self, text = "Tip: you can copy-paste the text using ctrl+")
+        TK.Label(self, text = "Tip: you can copy-paste the text using keyboard shortcuts.\nthis way you can use external programs for spell checks.", fg = "gray").pack()
         #last fix..
         self.resetTextfield()
         self.resetSelectors()
