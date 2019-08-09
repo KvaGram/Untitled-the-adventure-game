@@ -362,6 +362,51 @@ def askName(title, message, lang, startText):
     askWindow.destroy()
     return askData.ret
 
+class EntrySelector(TK.Frame):
+    def __init__(self, master, onLangSelect, onEntrySelect):
+        super().__init__(master)
+
+        self.langlabel = TK.Label(self, text = "Language")
+        self.LangBox = TKTC.AutocompleteCombobox(self)
+        self.LangBox.set_completion_list(list(langList.keys()))
+        self.LangBox.bind("<<ComboboxSelected>>", onLangSelect)
+
+        self.EntryLabel = TK.Label(self, text = "Entry")
+        self.EntryBox = TKTC.AutocompleteCombobox(self, width = 80)
+        self.EntryBox.bind("<<ComboboxSelected>>", onEntrySelect)
+        self.selectionSep = TTK.Separator(self, orient="vertical")
+        
+        self.langlabel.grid(row = 0, column = 0)
+        self.EntryLabel.grid(row = 0, column = 3, columnspan = 2)
+        self.selectionSep.grid(row = 0, column = 1, rowspan=2, sticky = "news")
+        self.LangBox.grid(row = 1, column = 0)
+        self.EntryBox.grid(row = 1, column = 3, columnspan = 2)
+
+    def reset(self, lang, entry, entrylist):
+        self.Language = lang
+        self.Entry = entry
+        self.EntryBox.set_completion_list(entrylist)
+    
+    @property
+    def Entry(self):
+        return self.EntryBox.get()
+    @property
+    def Language(self):
+        return self.LangBox.get()
+    @property #becouse python @property NEEDS a get function to have a set function... :/
+    def EntryList(self):
+        return self.EntryBox._completion_list
+    @Entry.setter
+    def Entry(self, val):
+        self.EntryBox.set(val)
+    @Language.setter
+    def Language(self, val):
+        self.LangBox.set(val)
+    @EntryList.setter
+    def EntryList(self, val):
+        self.EntryBox.set_completion_list(val)
+    
+
 class Editor(TK.Toplevel):
     def __init__(self, lang:str, entryName:str):
         super().__init__(Data.root)
@@ -397,25 +442,10 @@ class Editor(TK.Toplevel):
         })
 
         #building UI
-        self.selectionZone = TK.Frame(self)
-        self.selectionZone.pack()
 
-        self.langlabel = TK.Label(self.selectionZone, text = "Language")
-        self.chooseLangBox = TKTC.AutocompleteCombobox(self.selectionZone)
-        self.chooseLangBox.set_completion_list(list(langList.keys()))
-        self.chooseLangBox.bind("<<ComboboxSelected>>", self.SetLang)
-
-        self.chooseEntryLabel = TK.Label(self.selectionZone, text = "Entry")
-        self.chooseEntryBox = TKTC.AutocompleteCombobox(self.selectionZone, width = 80)
-        self.chooseEntryBox.bind("<<ComboboxSelected>>", self.SetEntry)
-        self.chooseEntryBox.set_completion_list(list(self.Story.keys()))
-        self.selectionSep = TTK.Separator(self.selectionZone, orient="vertical")
-
-        self.langlabel.grid(row = 0, column = 0)
-        self.chooseEntryLabel.grid(row = 0, column = 3, columnspan = 2)
-        self.selectionSep.grid(row = 0, column = 1, rowspan=2, sticky = "news")
-        self.chooseLangBox.grid(row = 1, column = 0)
-        self.chooseEntryBox.grid(row = 1, column = 3, columnspan = 2)
+        self.selectors = EntrySelector(self, self.SetLang, self.SetEntry)
+        self.selectors.reset(self.lang, self.entryName, self.Story.keys())
+        self.selectors.pack()
 
         self.textfield = TKS.ScrolledText(self, width = 60)
         self.textfield.configure(bg='black', fg='cyan')
@@ -462,7 +492,7 @@ class Editor(TK.Toplevel):
         self.entry = self.textfield.get('1.0', TK.END)
 
     def SetLang(self, evt=None):
-        lang = self.chooseLangBox.get()
+        lang = self.selectors.Language
         en = self._entryName
         if lang == self.lang:
             return
@@ -486,7 +516,7 @@ class Editor(TK.Toplevel):
         self.resetSelectors()
         self.setTitle()
     def SetEntry(self, evt=None):
-        en = self.chooseEntryBox.get()
+        en = self.selectors.Entry
         if en == self._entryName:
             return
         entry = self.Story.get(en, None)
@@ -505,9 +535,7 @@ class Editor(TK.Toplevel):
         self.textfield.delete('1.0',TK.END)
         self.textfield.insert(TK.END, self.entry)
     def resetSelectors(self):
-        self.chooseLangBox.set(self._lang)
-        self.chooseEntryBox.set(self._entryName)
-        self.chooseEntryBox.set_completion_list(list(self.Story.keys()))
+        self.selectors.reset(self.lang, self.entryName, self.Story.keys())
     def setTitle(self):
         self.title(f"Untitled! Storytext editor - {self._lang} - {self._entryName}")
     def save(self):
