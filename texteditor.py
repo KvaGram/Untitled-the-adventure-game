@@ -14,7 +14,7 @@ ENTRY_NAME_PATTERN = r'^[A-Z]+_(?:[0-9]|_|[A-Z])*$'
 #Display language : internal language (filename)
 langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
 
-
+"""
 class old_Editor(TK.Frame):
     def __init__(self, root:TK.Tk):
         super().__init__(root)
@@ -287,7 +287,7 @@ class old_EntryEditor(TK.Frame):
             return
         self.saved = False
         self.entry = self.textfield.get('1.0', TK.END)
-
+"""
 #static class for common data.
 class Data():
     editors = []
@@ -399,21 +399,22 @@ class Editor(TK.Toplevel):
         self.chooseLangBox.bind("<<ComboboxSelected>>", self.SetLang)
 
         self.chooseEntryLabel = TK.Label(self.selectionZone, text = "Entry")
-        self.chooseEntryBox = TKTC.AutocompleteCombobox(self.selectionZone)
+        self.chooseEntryBox = TKTC.AutocompleteCombobox(self.selectionZone, width = 80)
         self.chooseEntryBox.bind("<<ComboboxSelected>>", self.SetEntry)
         self.chooseEntryBox.set_completion_list(list(self.Story.keys()))
+        self.selectionSep = TTK.Separator(self.selectionZone, orient="vertical")
 
         self.langlabel.grid(row = 0, column = 0)
-        self.chooseEntryLabel.grid(row = 0, column = 1)
-
+        self.chooseEntryLabel.grid(row = 0, column = 3, columnspan = 2)
+        self.selectionSep.grid(row = 0, column = 1, rowspan=2, sticky = "news")
         self.chooseLangBox.grid(row = 1, column = 0)
-        self.chooseEntryBox.grid(row = 1, column = 1)
+        self.chooseEntryBox.grid(row = 1, column = 3, columnspan = 2)
 
-        self.textfield = TKS.ScrolledText(self)
+        self.textfield = TKS.ScrolledText(self, width = 60)
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.bind('<KeyRelease>', self.updateentry)
 
-        self.textfield.pack()
+        self.textfield.pack(fill="both")
 
         TK.Label(self, text = "Tip: you can copy-paste the text using keyboard shortcuts.\nthis way you can use external programs for spell checks.", fg = "gray").pack()
         #last fix..
