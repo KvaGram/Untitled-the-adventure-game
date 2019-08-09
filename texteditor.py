@@ -295,6 +295,10 @@ class Data():
     langEdited = {}
     root = None
 
+def CloseAll():
+    for e in Data.editors:
+        e.OnClose()
+
 def OpenEditor(lang:str, entry:str):
     for e in Data.editors:
         if e.entryName == entry and e.lang == lang:
@@ -423,9 +427,29 @@ class Editor(TK.Toplevel):
         self.setTitle()
 
     def OnClose(self):
-        if TKmsg.askyesno("Close window?", "Are you sure you want to close this editorwindow?"):
-            Data.editors.remove(self)
-            self.destroy()
+        #if there are unsaved changes.
+        asksave = self.edited
+        if asksave:
+            #if no other entries uses thing langauge file
+            for e in Data.openEntries:
+                if e == self:
+                    continue
+                if e.lang == self.lang:
+                    asksave = False
+                    break
+        #then ask the user if they wish to save first.
+        if asksave:
+            ans = TKmsg.askyesnocancel(f"Close entry {self.entryName}?", f"You may have unsaved changes, and this is the last open editor in {self.lang}")
+            if ans == None:
+                return #this is the cancel option. Here the entry is not closed after all.
+            if ans == True:
+                self.save()
+            #if ans is False, "NO", then proceed with closing without saving.
+        
+        #removes refrence
+        Data.editors.remove(self)
+        #destroys entry / window
+        self.destroy()
 
     def OnNewEntry(self):
         AskNewEntry(self._lang)

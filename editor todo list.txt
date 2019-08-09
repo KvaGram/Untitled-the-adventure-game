@@ -40,6 +40,7 @@ Made a new general function to tell if an entry is open
 	Two variants. One to check entrygroup is open, one to check entryname is open.
 	They will check each open editor for a matching langauge and entry.
 	
+At close editor, ask user if they wish to save, but only is no other editor of this language is open.
 	
 
 
