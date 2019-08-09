@@ -9,7 +9,7 @@ from xml.etree import cElementTree as ElementTree
 import os
 import sys
 
-ENTRY_NAME_PATTERN = r'^[A-Z]+_(?:[0-9]|_|[A-Z])*$'
+ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
 
 #Display language : internal language (filename)
 langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
@@ -296,7 +296,8 @@ class Data():
     root = None
 
 def CloseAll():
-    for e in Data.editors:
+    e:Editor
+    for e in reversed(Data.editors):
         e.OnClose()
 
 def OpenEditor(lang:str, entry:str):
@@ -308,6 +309,7 @@ def OpenEditor(lang:str, entry:str):
 
 def NewEntry(lang:str, openNew:bool, entry):
     Data.langstory.get(lang, {})[entry] = " "
+    Data.langEdited[lang] = True
     if openNew:
         OpenEditor(lang, entry)
 def AskNewEntry(lang:str, openNew:bool = True, entry = ""):
@@ -378,8 +380,8 @@ class Editor(TK.Toplevel):
 
         fileMenu.add_command(label = "Save language file", command=self.save)
         fileMenu.add_command(label = "New Entry", command=self.OnNewEntry)
-        fileMenu.add_command(label = "VOID", command=None)
-        fileMenu.add_command(label = "VOID", command=None)
+        fileMenu.add_command(label = "Close", command=self.OnClose)
+        fileMenu.add_command(label = "Close All", command=CloseAll)
 
         editMenu.add_command(label = "VOID", command=None)
         editMenu.add_command(label = "VOID", command=None)
@@ -431,7 +433,7 @@ class Editor(TK.Toplevel):
         asksave = self.edited
         if asksave:
             #if no other entries uses thing langauge file
-            for e in Data.openEntries:
+            for e in Data.editors:
                 if e == self:
                     continue
                 if e.lang == self.lang:
