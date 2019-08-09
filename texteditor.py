@@ -290,6 +290,7 @@ class old_EntryEditor(TK.Frame):
 """
 #static class for common data.
 class Data():
+
     editors = []
     langstory = {}
     langEdited = {}
@@ -299,6 +300,49 @@ def CloseAll():
     e:Editor
     for e in reversed(Data.editors):
         e.OnClose()
+
+def askOpenEditor():
+    askwindow = TK.Toplevel(Data.root)
+    askwindow.title("Open entry")
+    running = TK.BooleanVar(askwindow, True)
+    def onOpen(*_):
+        if not validate():
+            return
+        OpenEditor(sel.Language, sel.Entry)
+        #askwindow.destroy()
+        running.set(False)
+    def onClose(*_):
+        #askwindow.destroy()
+        running.set(False)
+    openbtn = TK.Button(askwindow, text = "OPEN", command = onOpen)
+    closebtn = TK.Button(askwindow, text = "CLOSE", command = onClose)
+    def onLang(*_):
+        sel.EntryList = Data.langstory.get(sel.Language, {}).keys()
+        validate()
+    def validate(*_):
+        lang = sel.Language
+        entry = sel.Entry
+        e = Data.langstory.get(lang, {}).get(entry, None)
+        if e == None or checkEntryOpen(lang, entry):
+            openbtn.config(state = TK.DISABLED)
+            return False
+        
+        openbtn.config(state = TK.NORMAL)
+        return True
+    sel = EntrySelector(askwindow, onLang, validate)
+    sel.grid(row = 0, column = 0, columnspan=2)
+    openbtn.grid(row = 1, column = 0)
+    closebtn.grid(row = 1, column = 1)
+    validate()
+
+    while(running.get()):
+        askwindow.update()
+        askwindow.update_idletasks()
+    askwindow.destroy()
+def checkEntryOpen(lang:str, entry:str):
+    return False #TODO: write the check entry open function
+
+    
 
 def OpenEditor(lang:str, entry:str):
     for e in Data.editors:
@@ -423,6 +467,7 @@ class Editor(TK.Toplevel):
         menu.add_cascade(label = "file", menu=fileMenu)
         menu.add_cascade(label = "edit", menu=editMenu)
 
+        fileMenu.add_command(label = "open", command=askOpenEditor)
         fileMenu.add_command(label = "Save language file", command=self.save)
         fileMenu.add_command(label = "Save all", command=saveAll)
         fileMenu.add_command(label = "New Entry", command=self.OnNewEntry)
@@ -519,6 +564,9 @@ class Editor(TK.Toplevel):
         en = self.selectors.Entry
         if en == self._entryName:
             return
+        if checkEntryOpen(self.lang, en):
+            TKmsg.showinfo("Already open", f"Cannot open entry {en} from langauge {self.lang}. It is already open")
+            self.resetSelectors()
         entry = self.Story.get(en, None)
         if entry == None:
             if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {en} was not found.\nDo you wish to create it?"):
@@ -620,14 +668,13 @@ def start():
         you may want to exit this program, and manually fix the issue.
         Alternativly: do you wish to create a new entry in {startlang}?
         """.strip()):
-            NotAddedYet()
+            AskNewEntry(startlang)
         else:
             pass
         root.quit() #To be moved to else branch once above action is supported.
         return
-    startEntry = list(Data.langstory[startlang].keys())[0]
-
-    OpenEditor(startlang, startEntry)
+    if len(Data.editors) < 1:
+        askOpenEditor()
 
     while True:
         root.update()
