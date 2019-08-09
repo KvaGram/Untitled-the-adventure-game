@@ -1,11 +1,10 @@
 <story>
 <TITLE_TITLENAME>
-Unfarted! The adventure game
+Unfarted! The adventure gamesdfk
 
 </TITLE_TITLENAME>
 <TITLE_WELCOME>
 Welcome!! What do you wish to fail at?
-
 </TITLE_WELCOME>
 <TITLE_STARTNEW>
 Start new game
@@ -2220,4 +2219,7 @@ he
 <GENDERED_4_FEMALE>
 she
 </GENDERED_4_FEMALE>
+<QWER>
+ 
+</QWER>
 </story>

@@ -379,6 +379,7 @@ class Editor(TK.Toplevel):
         menu.add_cascade(label = "edit", menu=editMenu)
 
         fileMenu.add_command(label = "Save language file", command=self.save)
+        fileMenu.add_command(label = "Save all", command=saveAll)
         fileMenu.add_command(label = "New Entry", command=self.OnNewEntry)
         fileMenu.add_command(label = "Close", command=self.OnClose)
         fileMenu.add_command(label = "Close All", command=CloseAll)
@@ -531,7 +532,9 @@ class Editor(TK.Toplevel):
         return Data.langEdited[self._lang]
     
 
-
+def saveAll():
+    for k in langList.keys():
+        Savelang(k)
 def Savelang(lang:str):
     cwd = os.getcwd()
     filename = langList[lang]
@@ -542,6 +545,7 @@ def Savelang(lang:str):
             datafile.write(f"<{key}>\n{entry}\n</{key}>\n")
         datafile.write("</story>")
         datafile.close()
+    Data.langEdited[lang] = False
 
 def Loadlang(lang:str):
     cwd = os.getcwd()
