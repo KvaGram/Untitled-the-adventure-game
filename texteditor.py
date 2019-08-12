@@ -8,6 +8,7 @@ import xml
 from xml.etree import cElementTree as ElementTree
 import os
 import sys
+from scrollFrame import VerticalScrollFrame
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
 
@@ -350,6 +351,7 @@ def OpenEditor(lang:str, entry:str):
             e.lift()
             return
     Data.editors.append(Editor(lang, entry))
+    
 
 def NewEntry(lang:str, openNew:bool, entry):
     Data.langstory.get(lang, {})[entry] = " "
@@ -406,6 +408,10 @@ def askName(title, message, lang, startText):
     askWindow.destroy()
     return askData.ret
 
+class EntryText(TKS.ScrolledText):
+    def __init__(self, master, TargetEntry:str, **kw):
+        super().__init__(master=master, kw = kw)
+        self.TargetEntry = TargetEntry
 class EntrySelector(TK.Frame):
     def __init__(self, master, onLangSelect, onEntrySelect):
         super().__init__(master)
@@ -474,12 +480,14 @@ class Editor(TK.Toplevel):
         fileMenu.add_command(label = "Close", command=self.OnClose)
         fileMenu.add_command(label = "Close All", command=CloseAll)
 
-        editMenu.add_command(label = "VOID", command=None)
+
+        if(self.mode == Editmode.SINGLE):
+            editMenu.add_command(label = "Switch to multiedit", command = self.setMultimode)
         editMenu.add_command(label = "VOID", command=None)
         editMenu.add_command(label = "VOID", command=None)
         editMenu.add_command(label = "VOID", command=None)
 
-        #manu refrence
+        #menu refrence
         self.menu = ({
         'root':menu,
         'file':fileMenu,
@@ -498,12 +506,13 @@ class Editor(TK.Toplevel):
 
         self.textfield.pack(fill="both")
 
-        TK.Label(self, text = "Tip: you can copy-paste the text using keyboard shortcuts.\nthis way you can use external programs for spell checks.", fg = "gray").pack()
+        self.tooltip = TK.Label(self, text = "Tip: you can copy-paste the text using keyboard shortcuts.\nthis way you can use external programs for spell checks.", fg = "gray")
+        self.tooltip.pack(side=TK.BOTTOM)
         #last fix..
         self.resetTextfield()
         self.resetSelectors()
         self.setTitle()
-
+        self.lift()
     def OnClose(self):
         #if there are unsaved changes.
         asksave = self.edited
