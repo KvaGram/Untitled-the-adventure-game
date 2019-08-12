@@ -11,17 +11,43 @@ import sys
 from scrollFrame import VerticalScrollFrame
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
+SEPERATOR = "_"
 
 #Display language : internal language (filename)
 langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
 
 #static class for common data.
 class Data():
-
     editors = []
     langstory = {}
     langEdited = {}
     root = None
+
+def SplitGroupSubentry(entryname:str):
+    
+    segs = entryname.split(SEPERATOR)
+    subentry = segs.pop(-1)
+    groupname = SEPERATOR.join(segs)
+
+    return (groupname, subentry)
+    
+def GetGroupList(lang:str):
+    #TODO GetGroupList
+    #placeholder data
+    return ["foo", "bar", "foobar"]
+
+def GetEntriesByGroup(lang:str, groupname:str):
+    #TODO GetEntriesByGroup
+    #placeholder data
+    NUM_TEST_SAMPLE = 12
+    storykeys = Data.langstory.get(lang, {}).keys()
+    k2 = []
+    for k in storykeys:
+        k2.append(k)
+        if len(k2) >= NUM_TEST_SAMPLE:
+            break
+    return k2
+        
 
 def CloseAll():
     e:SingleEditor
@@ -134,10 +160,31 @@ def askName(title, message, lang, startText):
     askWindow.destroy()
     return askData.ret
 
-class EntryText(TKS.ScrolledText):
-    def __init__(self, master, TargetEntry:str, **kw):
-        super().__init__(master=master, kw = kw)
+class EntryText(TK.Frame):
+    def __init__(self, master, TargetEntry:str, lang:str):
+        super().__init__(master=master)
+        self.label = TK.Label(master=self, text = TargetEntry)
+        self.textfield = TKS.ScrolledText(self, width = 60, height = 3)
+        self.textfield.configure(bg='black', fg='cyan')
+        self.textfield.bind('<KeyRelease>', self.updateentry)
+        self.lang = lang
         self.TargetEntry = TargetEntry
+
+        self.label.pack()
+        self.textfield.pack()
+
+    def updateentry(self, evt=None):
+        Data.langEdited[self.lang] = True
+        self.entry = self.textfield.get('1.0', TK.END)
+    @property
+    def entry(self)->str:
+        return self.Story.get(self.TargetEntry, "")
+    @entry.setter
+    def entry(self, val):
+        self.Story[self.TargetEntry] = val
+    @property
+    def Story(self)->dict:
+        return Data.langstory.get(self.lang, {})
 class EntrySelector(TK.Frame):
     def __init__(self, master, onLangSelect, onEntrySelect):
         super().__init__(master)
@@ -216,9 +263,6 @@ class BaseEditor(TK.Toplevel):
         fileMenu.add_command(label = "Close", command=self.OnClose)
         fileMenu.add_command(label = "Close All", command=CloseAll)
 
-        editMenu.add_command(label = "VOID", command=None)
-        editMenu.add_command(label = "VOID", command=None)
-        editMenu.add_command(label = "VOID", command=None)
 
         #menu refrence
         self.menu = ({
@@ -269,6 +313,10 @@ class BaseEditor(TK.Toplevel):
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
         super().__init__(lang, groupName)
+
+        entrylist = GetEntriesByGroup(lang, groupName)
+
+        #TODO: continue work from here!
 
 class SingleEditor(BaseEditor):
     def __init__(self, lang:str, entryName:str):
