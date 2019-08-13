@@ -32,22 +32,21 @@ def SplitGroupSubentry(entryname:str):
     return (groupname, subentry)
     
 def GetGroupList(lang:str):
-    #TODO GetGroupList
-    #placeholder data
-    return ["foo", "bar", "foobar"]
+    lst = Data.langstory.get(lang, {})
+    lst2 = set()
+    for e in lst:
+        gn, _ = SplitGroupSubentry(e)
+        if not gn in lst2:
+            lst2.add(gn)
+    return lst2
 
 def GetEntriesByGroup(lang:str, groupname:str):
-    #TODO GetEntriesByGroup
-    #placeholder data
-    NUM_TEST_SAMPLE = 12
-    storykeys = Data.langstory.get(lang, {}).keys()
-    k2 = []
-    for k in storykeys:
-        k2.append(k)
-        if len(k2) >= NUM_TEST_SAMPLE:
-            break
-    return k2
-        
+    lst = Data.langstory.get(lang, {})
+    lst2 = set()
+    for e in lst:
+        if e.startswith(groupname):
+            lst2.add(e)
+    return lst2        
 
 def CloseAll():
     e:SingleEditor
@@ -58,34 +57,71 @@ def askOpenEditor():
     askwindow = TK.Toplevel(Data.root)
     askwindow.title("Open entry")
     running = TK.BooleanVar(askwindow, True)
+    editType = TK.IntVar(value = EditorType.SINGLE)
     def onOpen(*_):
         if not validate():
             return
-        OpenSingleEditor(sel.Language, sel.Entry)
+
+        if editType.get() == EditorType.SINGLE:
+            OpenSingleEditor(sel.Language, sel.Entry)
+        elif editType.get() == EditorType.MULTI:
+            OpenMultiEditor(sel.Language, sel.Entry)
         #askwindow.destroy()
         running.set(False)
     def onClose(*_):
         #askwindow.destroy()
         running.set(False)
+    askwindow.protocol("WM_DELETE_WINDOW", onClose)
     openbtn = TK.Button(askwindow, text = "OPEN", command = onOpen)
     closebtn = TK.Button(askwindow, text = "CLOSE", command = onClose)
     def onLang(*_):
-        sel.EntryList = Data.langstory.get(sel.Language, {}).keys()
+        if editType.get() == EditorType.SINGLE:
+            sel.EntryList = Data.langstory.get(sel.Language, {}).keys()
+        elif editType.get() == EditorType.MULTI:
+            sel.EntryList = GetGroupList(sel.Language)
+        else:
+            sel.EntryList = [] #this should never happen
         validate()
     def validate(*_):
         lang = sel.Language
-        entry = sel.Entry
-        e = Data.langstory.get(lang, {}).get(entry, None)
-        if e == None or getEntryOpen(lang, entry):
-            openbtn.config(state = TK.DISABLED)
-            return False
-        
-        openbtn.config(state = TK.NORMAL)
-        return True
+        target = sel.Entry
+        if editType.get() == EditorType.SINGLE:
+            e = Data.langstory.get(lang, {}).get(target, None)
+            if e == None or getEntryOpen(lang, target):
+                openbtn.config(state = TK.DISABLED)
+                return False
+            openbtn.config(state = TK.NORMAL)
+            return True
+        elif editType.get() == EditorType.MULTI:
+            if len(GetEntriesByGroup(lang, target)) < 1:
+                openbtn.config(state = TK.DISABLED)
+                return False
+            openbtn.config(state = TK.NORMAL)
+            return True
+        openbtn.config(state = TK.DISABLED)
+        return False
+    def toSingle():
+        editType.set(EditorType.SINGLE)
+        toSingleBtn.config(state = TK.DISABLED)
+        tomultiBtn.config(state = TK.NORMAL)
+
+        onLang()
+    def tomulti():
+        editType.set(EditorType.MULTI)
+        toSingleBtn.config(state = TK.NORMAL)
+        tomultiBtn.config(state = TK.DISABLED)
+        validate()
+
+        onLang()
+    toSingleBtn = TK.Button(master = askwindow, text = "Single-Editor", command = toSingle, state = TK.DISABLED)
+    tomultiBtn  = TK.Button(master = askwindow, text = "multi-Editor", command = tomulti, state = TK.NORMAL)
+    toSingleBtn.grid(row = 0, column = 0)
+    tomultiBtn.grid(row = 1, column = 0)
+
     sel = EntrySelector(askwindow, onLang, validate)
-    sel.grid(row = 0, column = 0, columnspan=2)
-    openbtn.grid(row = 1, column = 0)
-    closebtn.grid(row = 1, column = 1)
+    sel.grid(row = 0, column = 1, columnspan=2)
+    openbtn.grid(row = 1, column = 1)
+    closebtn.grid(row = 1, column = 2)
     validate()
 
     while(running.get()):
@@ -116,7 +152,7 @@ def OpenSingleEditor(lang:str, entry:str):
     #        e.lift()
     #        return
     Data.editors.append(SingleEditor(lang, entry))
-def OpenMiltiEditor(lang:str, group:str):
+def OpenMultiEditor(lang:str, group:str):
     e = getEntryOpen(lang, group)
     if e:
         e.lift()
@@ -182,7 +218,7 @@ class EntryText(TK.Frame):
     def __init__(self, master, TargetEntry:str, lang:str):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
-        self.textfield = TKS.ScrolledText(self, width = 80, height = 10)
+        self.textfield = TKS.ScrolledText(self, width = 70, height = 3)
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.bind('<KeyRelease>', self.updateentry)
         self.lang = lang
@@ -336,7 +372,6 @@ class MultiEditor(BaseEditor):
         super().__init__(lang, groupName, EditorType.MULTI)
         
         self.selectors = EntrySelector(self, self.SetLang, self.SetGroup)
-        self.selectors.reset(self.lang, self.GroupName, self.Story.keys())
         self.selectors.pack(side=TK.TOP)
 
         self.textfields:VerticalScrollFrame = None
@@ -410,10 +445,10 @@ class MultiEditor(BaseEditor):
         self._targetName = val
         self.UpdateEntries()
     def resetSelectors(self):
-        pass
+        self.selectors.reset(self.lang, self.GroupName, GetGroupList(self.lang))
     def resetTextfields(self):
         slave:EntryText
-        for slave in self.textfields.slaves():
+        for slave in self.textfields.viewPort.slaves():
             if type(slave) != EntryText:
                 continue
             slave.reset()
@@ -442,7 +477,7 @@ class SingleEditor(BaseEditor):
     def OnMultiMode(self):
         Data.editors.remove(self)
         self.destroy()
-        OpenMiltiEditor(self.lang, SplitGroupSubentry(self.entryName)[0] )
+        OpenMultiEditor(self.lang, SplitGroupSubentry(self.entryName)[0] )
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
         self.entry = self.textfield.get('1.0', TK.END)
