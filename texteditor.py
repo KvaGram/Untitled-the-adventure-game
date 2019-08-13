@@ -61,7 +61,7 @@ def askOpenEditor():
     def onOpen(*_):
         if not validate():
             return
-        OpenEditor(sel.Language, sel.Entry)
+        OpenSingleEditor(sel.Language, sel.Entry)
         #askwindow.destroy()
         running.set(False)
     def onClose(*_):
@@ -76,7 +76,7 @@ def askOpenEditor():
         lang = sel.Language
         entry = sel.Entry
         e = Data.langstory.get(lang, {}).get(entry, None)
-        if e == None or checkEntryOpen(lang, entry):
+        if e == None or getEntryOpen(lang, entry):
             openbtn.config(state = TK.DISABLED)
             return False
         
@@ -92,24 +92,42 @@ def askOpenEditor():
         askwindow.update()
         askwindow.update_idletasks()
     askwindow.destroy()
-def checkEntryOpen(lang:str, entry:str):
-    return False #TODO: write the check entry open function
-
+def getEntryOpen(lang:str, entry:str):
+    if(False):
+        e : SingleEditor
+        return e #placeholder to placade pylint. To be replaced!
+    else:
+        return None  #TODO: write the get entry open function
+def getGroupOpen(lang:str, group:str):
+    if(False):
+        e : SingleEditor
+        return e #placeholder to placade pylint. To be replaced!
+    else:
+        return None  #TODO: write the get entry open function
     
 
-def OpenEditor(lang:str, entry:str):
-    for e in Data.editors:
-        if e.entryName == entry and e.lang == lang:
-            e.lift()
-            return
+def OpenSingleEditor(lang:str, entry:str):
+    e = getEntryOpen(lang, entry)
+    if e:
+        e.lift()
+        return
+    #for e in Data.editors:
+    #    if e.entryName == entry and e.lang == lang:
+    #        e.lift()
+    #        return
     Data.editors.append(SingleEditor(lang, entry))
-    
+def OpenMiltiEditor(lang:str, group:str):
+    e = getEntryOpen(lang, group)
+    if e:
+        e.lift()
+        return
+    Data.editors.append(MultiEditor(lang, group))
 
 def NewEntry(lang:str, openNew:bool, entry):
     Data.langstory.get(lang, {})[entry] = " "
     Data.langEdited[lang] = True
     if openNew:
-        OpenEditor(lang, entry)
+        OpenSingleEditor(lang, entry)
 def AskNewEntry(lang:str, openNew:bool = True, entry = ""):
     entry = askName("NEW ENTRY", "What do you wish name the entry?", lang, entry)
     if entry:
@@ -164,18 +182,21 @@ class EntryText(TK.Frame):
     def __init__(self, master, TargetEntry:str, lang:str):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
-        self.textfield = TKS.ScrolledText(self, width = 60, height = 3)
+        self.textfield = TKS.ScrolledText(self, width = 80, height = 10)
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.bind('<KeyRelease>', self.updateentry)
         self.lang = lang
         self.TargetEntry = TargetEntry
 
         self.label.pack()
-        self.textfield.pack()
+        self.textfield.pack(fill = TK.BOTH, expand = True)
 
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
         self.entry = self.textfield.get('1.0', TK.END)
+    def reset(self):
+        self.textfield.delete('1.0',TK.END)
+        self.textfield.insert(TK.END, self.entry)
     @property
     def entry(self)->str:
         return self.Story.get(self.TargetEntry, "")
@@ -251,8 +272,8 @@ class BaseEditor(TK.Toplevel):
     def buildMenu(self):
         menu = TK.Menu(self)
         self.config(menu = menu)
-        fileMenu = TK.Menu(menu)
-        editMenu = TK.Menu(menu)
+        fileMenu = TK.Menu(tearoff = 0)#(menu)
+        editMenu = TK.Menu(tearoff = 0)#(menu)
         menu.add_cascade(label = "file", menu=fileMenu)
         menu.add_cascade(label = "edit", menu=editMenu)
 
@@ -312,17 +333,95 @@ class BaseEditor(TK.Toplevel):
         return Data.langEdited[self._lang]
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
-        super().__init__(lang, groupName)
+        super().__init__(lang, groupName, EditorType.MULTI)
+        
+        self.selectors = EntrySelector(self, self.SetLang, self.SetGroup)
+        self.selectors.reset(self.lang, self.GroupName, self.Story.keys())
+        self.selectors.pack(side=TK.TOP)
 
-        entrylist = GetEntriesByGroup(lang, groupName)
+        self.textfields:VerticalScrollFrame = None
+        self.menu['to_single'] = TK.Menu(self.menu['edit'], tearoff = 0)
+        self.menu['edit'].add_cascade(label = "Open in single-edit", menu = self.menu['to_single'])
+        self.UpdateEntries()
 
+
+        self.resetTextfields()
+        self.resetSelectors()
         #TODO: continue work from here!
+    def UpdateEntries(self):
+        if(self.textfields != None):
+            self.textfields.pack_forget()
+        entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+        self.textfields = VerticalScrollFrame(self)
+        for ename in entrylist:
+            entry = EntryText(self.textfields.viewPort, ename, self.lang)
+            entry.pack(fill = TK.X, expand=True)
+        self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
 
+    def SetLang(self, evt=None):
+        lang = self.selectors.Language
+        gn = self._targetName
+        if lang == self.lang:
+            return     
+        d = Data.langstory.get(lang, None)
+        if d == None:
+            TKmsg.showwarning("NOT VALID LAGUAGE", "Langauge selected is not valid.")
+            self.resetSelectors()
+            return
+        entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+        if len(entrylist) < 1:
+            if TKmsg.askyesno("NO ENTRIES FOUND", f"No entries of group {gn} in {lang}. Would you like to patch them over?"):
+                NotAddedYet()
+                #askPatchGroup(gn, self.lang, lang)
+            else:
+                pass
+            self.resetSelectors()
+            return
+        if self.edited:
+            if TKmsg.askyesno("SAVE?", f"You have unsaved changes!\nDo you wish to save the {self._lang} languagefile before switching langauge?"):
+                self.save()
+        self._lang = lang
+        self._targetName = gn
+        self.resetTextfields()
+        self.resetSelectors()
+        self.setTitle()
+    def SetGroup(self, evt=None):
+        gn = self.selectors.Entry
+        if gn == self._targetName:
+            return
+        if getEntryOpen(self.lang, gn):
+            TKmsg.showinfo("Already open", f"Cannot open entrygroup {gn} from langauge {self.lang}. One or more entries are already open.")
+            self.resetSelectors()
+            return
+        entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+        if len(entrylist) < 1:
+            TKmsg.showinfo("NO ENTRY FOUND", f"The entry {gn} was not found.")
+            self.resetSelectors()
+            return
+        self._targetName = gn
+        self.resetSelectors()
+        self.resetTextfields()
+        self.setTitle()
+    @property
+    def GroupName(self):
+        return self._targetName
+    @GroupName.setter
+    def GroupName(self, val):
+        self._targetName = val
+        self.UpdateEntries()
+    def resetSelectors(self):
+        pass
+    def resetTextfields(self):
+        slave:EntryText
+        for slave in self.textfields.slaves():
+            if type(slave) != EntryText:
+                continue
+            slave.reset()
 class SingleEditor(BaseEditor):
     def __init__(self, lang:str, entryName:str):
         super().__init__(lang, entryName, EditorType.SINGLE)
-
-        self.menu['edit'].add_command(label = "Switch to multiedit", command = self.OnMultiMode)
+        
+        self.menu['edit'].add_command(label = "Open in multiedit", command = self.OnMultiMode)
 
         #building UI
 
@@ -341,8 +440,9 @@ class SingleEditor(BaseEditor):
         self.resetSelectors()
 
     def OnMultiMode(self):
-        #TODO open new entry in multimode
-        pass
+        Data.editors.remove(self)
+        self.destroy()
+        OpenMiltiEditor(self.lang, SplitGroupSubentry(self.entryName)[0] )
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
         self.entry = self.textfield.get('1.0', TK.END)
@@ -375,7 +475,7 @@ class SingleEditor(BaseEditor):
         en = self.selectors.Entry
         if en == self._targetName:
             return
-        if checkEntryOpen(self.lang, en):
+        if getEntryOpen(self.lang, en):
             TKmsg.showinfo("Already open", f"Cannot open entry {en} from langauge {self.lang}. It is already open")
             self.resetSelectors()
         entry = self.Story.get(en, None)
