@@ -226,6 +226,94 @@ def askName(title, message, lang, startText):
     askWindow.destroy()
     return askData.ret
 
+def AskPatchLang(sourcelang = "", targetLang = ""):
+    askwindow = TK.Toplevel(Data.root)
+    askwindow.title("Patch language")
+    
+    clonevar = TK.BooleanVar(value = False)
+    runningvar = TK.BooleanVar(value = True)
+
+    langframe = TK.Frame(askwindow)
+    langframe.pack()
+    btnframe = TK.Frame(askwindow)
+    btnframe.pack()
+
+    langbox_1 = TKTC.AutocompleteCombobox(langframe)
+    langbox_2 = TKTC.AutocompleteCombobox(langframe)
+    
+    TK.Label(langframe, text = "source langauge").pack(side=TK.LEFT)
+    langbox_1.pack(side = TK.LEFT)
+    TTK.Separator(master = langframe, orient = TK.HORIZONTAL).pack(side = TK.LEFT)
+    langbox_2.pack(side = TK.RIGHT)
+    TK.Label(langframe, text = "target langauge").pack(side=TK.RIGHT)
+
+    def doPatch():
+        if not validate():
+            return
+
+        lang1 = langbox_1.get()
+        lang2 = langbox_2.get()
+        lang1Story = Data.langstory.get(lang1)
+        lang2Story = Data.langstory.get(lang2)
+        lang1Keys = lang1Story.keys()
+        lang2Keys = lang2Story.keys()
+
+        topatch = lang1Keys - lang2Keys
+        if clonevar.get():
+            clonetext = "entry-keys and entry-text"
+        else:
+            clonetext = "entry-keys (but not any text)"
+        if not TKmsg.askokcancel("Please confirm action", f"This will copy {len(topatch)} {clonetext} from {lang1} to {lang2}. Is this ok?"):
+            return
+        
+        for e in topatch:
+            if(clonevar.get()):
+                lang2Story[e] = lang1Story[e]
+            else:
+                lang2Story[e] = " "
+        if TKmsg.askyesno("save progress?", f"You have made changes to {lang2}. Would you like to save?"):
+            Savelang(lang2)
+        runningvar.set(False)
+    def doCancel():
+        runningvar.set(False)
+    
+    checkClone=TK.Checkbutton(btnframe, text="clone text", variable = clonevar)
+    btnPatch = TK.Button(btnframe, text="Patch", command = doPatch, state = TK.DISABLED)
+    btnCancel= TK.Button(btnframe, text="Cancel",command = doCancel)
+    
+    checkClone.pack(side = TK.LEFT)
+    btnCancel.pack(side = TK.LEFT)
+    btnPatch.pack(side = TK.LEFT)
+    def setFalse():
+        btnPatch.configure(state = TK.DISABLED)
+        return False
+    def setTrue():
+        btnPatch.configure(state = TK.NORMAL)
+        return True
+    def validate(*_):
+        lang1 = langbox_1.get()
+        lang2 = langbox_2.get()
+        if lang1 == lang2:
+            return setFalse()
+        if (lang1 in langList.keys()) and (lang2 in langList.keys()):
+            return setTrue()
+        else:
+            return setFalse()
+
+    langbox_1.set_completion_list(list(langList.keys()))
+    langbox_1.set(sourcelang)
+    langbox_1.bind("<<ComboboxSelected>>", validate)
+
+    langbox_2.set_completion_list(list(langList.keys()))
+    langbox_2.set(targetLang)
+    langbox_2.bind("<<ComboboxSelected>>", validate)
+
+    while(runningvar.get()):
+        askwindow.update()
+        askwindow.update_idletasks()
+    askwindow.destroy()
+
+
 class EntryText(TK.Frame):
     def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable):
         super().__init__(master=master)
@@ -333,6 +421,8 @@ class BaseEditor(TK.Toplevel):
         fileMenu.add_command(label = "Close", command=self.OnClose)
         fileMenu.add_command(label = "Close All", command=CloseAll)
 
+        editMenu.add_command(label = "Patch langauge", command = AskPatchLang)
+
 
         #menu refrence
         self.menu = ({
@@ -431,13 +521,12 @@ class MultiEditor(BaseEditor):
             return
         entrylist = GetEntriesByGroup(self.lang, self.GroupName)
         if len(entrylist) < 1:
-            if TKmsg.askyesno("NO ENTRIES FOUND", f"No entries of group {gn} in {lang}. Would you like to patch them over?"):
-                NotAddedYet()
-                #askPatchGroup(gn, self.lang, lang)
+            if TKmsg.askyesno("NO ENTRIES FOUND", f"No entries of group {gn} in {lang}. Would you like to patch {lang} from {self.lang}?"):
+                AskPatchLang(sourcelang=self.lang, targetLang=lang)
+                return self.SetLang() #restart from the top to confirm if the patch was completed succesfully.
             else:
-                pass
-            self.resetSelectors()
-            return
+                self.resetSelectors()
+                return
         if self.edited:
             if TKmsg.askyesno("SAVE?", f"You have unsaved changes!\nDo you wish to save the {self._lang} languagefile before switching langauge?"):
                 self.save()
