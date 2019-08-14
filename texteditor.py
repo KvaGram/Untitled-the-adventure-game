@@ -227,7 +227,7 @@ def askName(title, message, lang, startText):
     return askData.ret
 
 class EntryText(TK.Frame):
-    def __init__(self, master, TargetEntry:str, lang:str):
+    def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
         self.textfield = TKS.ScrolledText(self, width = 70, height = 3)
@@ -238,6 +238,7 @@ class EntryText(TK.Frame):
 
         self.label.pack()
         self.textfield.pack(fill = TK.BOTH, expand = True)
+        TK.Button(master = self, text="Open in\nsingle-edit", command = tosingle).pack(side=TK.RIGHT)
 
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
@@ -396,14 +397,22 @@ class MultiEditor(BaseEditor):
         self.resetSelectors()
         #TODO: continue work from here!
     def UpdateEntries(self):
+        TS = self.menu['to_single']
+        TS.delete(0, TS.index(TK.END))
+
         if(self.textfields != None):
             self.textfields.pack_forget()
         entrylist = GetEntriesByGroup(self.lang, self.GroupName)
         self.textfields = VerticalScrollFrame(self)
         for ename in entrylist:
-            entry = EntryText(self.textfields.viewPort, ename, self.lang)
+            TS_callback = lambda x = ename: self.onsinglemode(x)
+            entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback)
             entry.pack(fill = TK.X, expand=True)
+
+            TS.add_command(label = ename, command=TS_callback)
         self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
+
+        
 
     def SetLang(self, evt=None):
         lang = self.selectors.Language
@@ -471,6 +480,10 @@ class MultiEditor(BaseEditor):
             if type(slave) != EntryText:
                 continue
             slave.reset()
+    def onsinglemode(self, entryname):
+        Data.editors.remove(self)
+        self.destroy()
+        OpenSingleEditor(self.lang, entryname)
 class SingleEditor(BaseEditor):
     def __init__(self, lang:str, entryName:str):
         super().__init__(lang, entryName, EditorType.SINGLE)
