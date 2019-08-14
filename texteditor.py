@@ -93,7 +93,7 @@ def askOpenEditor():
             openbtn.config(state = TK.NORMAL)
             return True
         elif editType.get() == EditorType.MULTI:
-            if len(GetEntriesByGroup(lang, target)) < 1:
+            if len(GetEntriesByGroup(lang, target)) < 1 or getGroupOpen(lang, target):
                 openbtn.config(state = TK.DISABLED)
                 return False
             openbtn.config(state = TK.NORMAL)
@@ -129,17 +129,29 @@ def askOpenEditor():
         askwindow.update_idletasks()
     askwindow.destroy()
 def getEntryOpen(lang:str, entry:str):
-    if(False):
-        e : SingleEditor
-        return e #placeholder to placade pylint. To be replaced!
-    else:
-        return None  #TODO: write the get entry open function
+    gn, _ = SplitGroupSubentry(entry)
+    for e in Data.editors:
+        if(e.lang != lang):
+            continue
+        if e.editortype == EditorType.SINGLE:
+            if e.entryName == entry:
+                return e
+        elif e.editortype == EditorType.MULTI:
+            if e.GroupName == gn:
+                return e
+    return None
 def getGroupOpen(lang:str, group:str):
-    if(False):
-        e : SingleEditor
-        return e #placeholder to placade pylint. To be replaced!
-    else:
-        return None  #TODO: write the get entry open function
+    for e in Data.editors:
+        if(e.lang != lang):
+            continue
+        if e.editortype == EditorType.MULTI:
+            if e.GroupName == group:
+                return e
+        elif e.editortype == EditorType.SINGLE:
+            if SplitGroupSubentry(e.entryName)[0] == group:
+                return e
+    return None
+                
     
 
 def OpenSingleEditor(lang:str, entry:str):
@@ -397,7 +409,12 @@ class MultiEditor(BaseEditor):
         lang = self.selectors.Language
         gn = self._targetName
         if lang == self.lang:
-            return     
+            return
+        openE = getGroupOpen(lang, gn)
+        if(openE):
+            self.resetSelectors()
+            openE.lift()
+            return 
         d = Data.langstory.get(lang, None)
         if d == None:
             TKmsg.showwarning("NOT VALID LAGUAGE", "Langauge selected is not valid.")
@@ -422,11 +439,13 @@ class MultiEditor(BaseEditor):
         self.setTitle()
     def SetGroup(self, evt=None):
         gn = self.selectors.Entry
+        lang = self.lang
         if gn == self._targetName:
             return
-        if getEntryOpen(self.lang, gn):
-            TKmsg.showinfo("Already open", f"Cannot open entrygroup {gn} from langauge {self.lang}. One or more entries are already open.")
+        openE = getGroupOpen(lang, gn)
+        if(openE):
             self.resetSelectors()
+            openE.lift()
             return
         entrylist = GetEntriesByGroup(self.lang, self.GroupName)
         if len(entrylist) < 1:
@@ -487,6 +506,12 @@ class SingleEditor(BaseEditor):
         en = self._targetName
         if lang == self.lang:
             return
+        openE = getEntryOpen(lang, en)
+        if openE:
+            #TKmsg.showinfo("Already open", f"Cannot open entry {en} from langauge {self.lang}. It is already open")
+            openE.lift()
+            self.resetSelectors()
+            return 
         d = Data.langstory.get(lang, None)
         if d == None:
             TKmsg.showwarning("NOT VALID LAGUAGE", "Langauge selected is not valid.")
@@ -508,11 +533,15 @@ class SingleEditor(BaseEditor):
         self.setTitle()
     def SetEntry(self, evt=None):
         en = self.selectors.Entry
+        lang = self.lang
         if en == self._targetName:
             return
-        if getEntryOpen(self.lang, en):
-            TKmsg.showinfo("Already open", f"Cannot open entry {en} from langauge {self.lang}. It is already open")
+        openE = getEntryOpen(lang, en)
+        if openE:
+            #TKmsg.showinfo("Already open", f"Cannot open entry {en} from langauge {self.lang}. It is already open")
+            openE.lift()
             self.resetSelectors()
+            return 
         entry = self.Story.get(en, None)
         if entry == None:
             if TKmsg.askyesno("NO ENTRY FOUND", f"The entry {en} was not found.\nDo you wish to create it?"):
