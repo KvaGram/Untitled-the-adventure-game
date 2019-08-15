@@ -315,7 +315,7 @@ def AskPatchLang(sourcelang = "", targetLang = ""):
 
 
 class EntryText(TK.Frame):
-    def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable):
+    def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable, toDel:callable):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
         self.textfield = TKS.ScrolledText(self, width = 70, height = 3)
@@ -326,7 +326,8 @@ class EntryText(TK.Frame):
 
         self.label.pack()
         self.textfield.pack(fill = TK.BOTH, expand = True)
-        TK.Button(master = self, text="Open in\nsingle-edit", command = tosingle).pack(side=TK.RIGHT)
+        TK.Button(master = self, text="Open in\nsingle-edit", command = tosingle, bg="blue").pack(side=TK.RIGHT)
+        TK.Button(master = self, text="delete\nentry", command = toDel, bg="red").pack(side=TK.RIGHT)
 
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
@@ -480,12 +481,16 @@ class MultiEditor(BaseEditor):
         self.textfields:VerticalScrollFrame = None
         self.addEntry:TK.Button = None
         self.menu['to_single'] = TK.Menu(self.menu['edit'], tearoff = 0)
+        self.menu['del_entry'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['edit'].add_cascade(label = "Open in single-edit", menu = self.menu['to_single'])
+        self.menu['edit'].add_cascade(label = "Delete entry", menu = self.menu['del_entry'])
         self.UpdateEntries()
         self.resetSelectors()
     def UpdateEntries(self):
         TS = self.menu['to_single']
         TS.delete(0, TS.index(TK.END))
+        DE = self.menu['to_single']
+        DE.delete(0, DE.index(TK.END))
 
         if(self.textfields != None):
             self.textfields.pack_forget()
@@ -493,10 +498,12 @@ class MultiEditor(BaseEditor):
         self.textfields = VerticalScrollFrame(self)
         for ename in entrylist:
             TS_callback = lambda x = ename: self.onsinglemode(x)
-            entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback)
+            DE_callback = lambda x = ename: self.onDelEntry(x)
+            entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback)
             entry.pack(fill = TK.X, expand=True)
 
             TS.add_command(label = ename, command=TS_callback)
+            DE.add_command(label = ename, command=DE_callback)
         self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
         self.addEntry.pack(fill = TK.X)
         self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
@@ -505,7 +512,9 @@ class MultiEditor(BaseEditor):
     def OnNewEntryToGroup(self):
         AskNewEntry(self.lang, False, self.GroupName+"_")
         self.UpdateEntries()
-
+    def onDelEntry(self, entry):
+        askDeleteEntry(self.lang, entry)
+        self.UpdateEntries()
     def SetLang(self, evt=None):
         lang = self.selectors.Language
         gn = self._targetName
@@ -580,6 +589,7 @@ class SingleEditor(BaseEditor):
         super().__init__(lang, entryName, EditorType.SINGLE)
         
         self.menu['edit'].add_command(label = "Open in multiedit", command = self.OnMultiMode)
+        self.menu['edit'].add_command(label = "Delete Entry", command = self.onDelEntry)
 
         #building UI
 
@@ -665,6 +675,12 @@ class SingleEditor(BaseEditor):
         self.selectors.reset(self.lang, self.entryName, self.Story.keys())
     def save(self):
         Savelang(self._lang)
+    def onDelEntry(self):
+        askDeleteEntry(self.lang, self.entryName)
+        if self.entry == "":
+            Data.editors.remove(self)
+            self.destroy()
+        
     @property
     def lang(self)->str:
         return self._lang
@@ -678,7 +694,17 @@ class SingleEditor(BaseEditor):
     def entry(self, val):
         self.Story[self._targetName] = val
     
-
+def askDeleteEntry(lang, entryname):
+    if TKmsg.askokcancel("Delete entry", f"You are about to delete {entryname} from {lang}"):
+        Data.langstory.get(lang, {}).pop(entryname, None)
+        Data.langEdited[lang] = True
+        if TKmsg.askyesno("Save file?", f"The entry {entryname} has been deleted. Would you like to save?"):
+            Savelang(lang)
+        return True
+    return False
+def askRenameEntry(lang, oldname, newname):
+    #TODO
+    pass
 def saveAll():
     for k in langList.keys():
         Savelang(k)
