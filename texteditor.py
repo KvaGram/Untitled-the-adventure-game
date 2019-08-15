@@ -489,7 +489,7 @@ class MultiEditor(BaseEditor):
     def UpdateEntries(self):
         TS = self.menu['to_single']
         TS.delete(0, TS.index(TK.END))
-        DE = self.menu['to_single']
+        DE = self.menu['del_entry']
         DE.delete(0, DE.index(TK.END))
 
         if(self.textfields != None):
