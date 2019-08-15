@@ -14,10 +14,11 @@ ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
 SEPERATOR = "_"
 
 #Display language : internal language (filename)
-langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
+#langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
 
 #static class for common data.
 class Data():
+    langList = {}
     editors = []
     langstory = {}
     langEdited = {}
@@ -295,16 +296,16 @@ def AskPatchLang(sourcelang = "", targetLang = ""):
         lang2 = langbox_2.get()
         if lang1 == lang2:
             return setFalse()
-        if (lang1 in langList.keys()) and (lang2 in langList.keys()):
+        if (lang1 in Data.langList.keys()) and (lang2 in Data.langList.keys()):
             return setTrue()
         else:
             return setFalse()
 
-    langbox_1.set_completion_list(list(langList.keys()))
+    langbox_1.set_completion_list(list(Data.langList.keys()))
     langbox_1.set(sourcelang)
     langbox_1.bind("<<ComboboxSelected>>", validate)
 
-    langbox_2.set_completion_list(list(langList.keys()))
+    langbox_2.set_completion_list(list(Data.langList.keys()))
     langbox_2.set(targetLang)
     langbox_2.bind("<<ComboboxSelected>>", validate)
 
@@ -350,7 +351,7 @@ class EntrySelector(TK.Frame):
 
         self.langlabel = TK.Label(self, text = "Language")
         self.LangBox = TKTC.AutocompleteCombobox(self)
-        self.LangBox.set_completion_list(list(langList.keys()))
+        self.LangBox.set_completion_list(list(Data.langList.keys()))
         self.LangBox.bind("<<ComboboxSelected>>", onLangSelect)
 
         self.EntryLabel = TK.Label(self, text = "Entry")
@@ -423,6 +424,7 @@ class BaseEditor(TK.Toplevel):
         fileMenu.add_command(label = "Close All", command=CloseAll)
 
         editMenu.add_command(label = "Patch langauge", command = AskPatchLang)
+        editMenu.add_command(label = "Add new lanaguge", command = AskAddLanguage)
 
 
         #menu refrence
@@ -706,12 +708,12 @@ def askRenameEntry(lang, oldname, newname):
     #TODO
     pass
 def saveAll():
-    for k in langList.keys():
+    for k in Data.langList.keys():
         Savelang(k)
 def Savelang(lang:str):
     cwd = os.getcwd()
-    filename = langList[lang]
-    story:dict = Data.langstory[lang]
+    filename = Data.langList[lang]
+    story:dict = Data.langstory.get(lang, {})
     with open(cwd+"/nerrative/" + filename + ".xml", "w+", encoding="utf-8") as datafile:
         datafile.write("<story>\n")
         for key, entry in story.items():
@@ -719,10 +721,20 @@ def Savelang(lang:str):
         datafile.write("</story>")
         datafile.close()
     Data.langEdited[lang] = False
-
-def Loadlang(lang:str):
+def saveLangFile():
     cwd = os.getcwd()
-    filename = langList[lang]
+    rootname = "languages"
+    with open(cwd+"/nerrative/languages.xml", "w+", encoding="utf-8") as datafile:
+        datafile.write(f"<{rootname}>\n")
+        for key, filename in Data.langList.items():
+            datafile.write(f"<{key}>\n{filename}\n</{key}>\n")
+        datafile.write(f"</{rootname}>")
+        datafile.close()
+
+def LoadStory(lang:str):
+    rootname = "story"
+    cwd = os.getcwd()
+    filename = Data.langList[lang]
     try:
         tree = ElementTree.parse(cwd+"/nerrative/" + filename + ".xml")
     except Exception as e:
@@ -732,18 +744,94 @@ def Loadlang(lang:str):
         return False
     story = {}
     for element in tree.iter():
-        if element.tag == 'story':
+        if element.tag == rootname:
             continue #do not store the top-level element
         story[element.tag] = element.text.strip()
     Data.langstory[lang] = story
     Data.langEdited[lang] = False
 
+def LoadLangfile():
+    rootname = "languages"
+    cwd = os.getcwd()
+    try:
+        tree = ElementTree.parse(cwd+"/nerrative/languages.xml")
+    except Exception as e:
+        if TKmsg.askokcancel("Woops..","List of languages failed to load.\nDo you wish to generate new file by adding a language?"):
+            Data.langList = {}
+            AskAddLanguage()
+        if len(Data.langList) < 1:
+            return False
+        return True
+    Data.langList = {}
+    for element in tree.iter():
+        if element.tag == rootname:
+            continue
+        Data.langList[element.tag] = element.text.strip()
+    return True
+def AskAddLanguage():
+    LANG_NAME_PATTERN = r'^[A-Za-z]+(?:[0-9]|_|[A-Za-z])*$'
+
+    askwindow = TK.Toplevel(Data.root)
+    runningvar = TK.BooleanVar(value=True)
+    returnvar = TK.BooleanVar(value=False)
+    keynamevar = TK.StringVar(value="")
+    filenamevar = TK.StringVar(value="")
+    
+    frames = [TK.Frame(askwindow),TK.Frame(askwindow),TK.Frame(askwindow),TK.Frame(askwindow)]
+    for f in frames:
+        f.pack()
+
+    TK.Label(frames[0], text="Display/key name").pack(side=TK.LEFT)
+    TK.Entry(frames[0], textvariable = keynamevar).pack(side=TK.RIGHT)
+    TK.Label(frames[1], text="Filename").pack(side=TK.LEFT)
+    TK.Entry(frames[1], textvariable = filenamevar).pack(side=TK.LEFT)
+    TK.Label(frames[1], text=".xml").pack(side=TK.RIGHT)
+    def onOK():
+        kname = keynamevar.get()
+        fname = filenamevar.get()
+
+        if len(kname) < 1 or len(fname) < 1:
+            errMessage.config(text = "Please fill in both fields.")
+            return
+        for l in Data.langList.keys():
+            if l == kname:
+                errMessage.config(text = "Sorry, this langauge key already exist.")
+                return
+        for l in Data.langList.values():
+            if l == fname:
+                errMessage.config(text = "Sorry, this langauge key already exist.")
+                return
+        if not re.match(string=kname, pattern=LANG_NAME_PATTERN) or not re.match(string=fname, pattern=LANG_NAME_PATTERN):
+            errMessage.config(text = "Sorry, you got a poorly formatted name or displayname/key. Please rename.\nPlease avoid space, special and extended alphabet characters")
+            return
+        Data.langList[kname] = fname
+        saveLangFile()
+        Savelang(kname) #this will generate the langauge file
+        runningvar.set(False)
+        returnvar.set(True)
+    def onCancel():
+        runningvar.set(False)
+        returnvar.set(False)
+    TK.Button(frames[2], text="OK", command = onOK).pack(side=TK.LEFT)
+    TK.Button(frames[2], text="CANCEL", command = onCancel).pack(side=TK.LEFT)
+    errMessage = TK.Label(frames[3], text = "", fg="red")
+    errMessage.pack(side=TK.LEFT)
+    while(runningvar.get()):
+        askwindow.update()
+        askwindow.update_idletasks()
+    askwindow.destroy()
+    return returnvar.get()
+
+
+
 def start():
     root = TK.Tk()
     root.withdraw()
 
-    for k in langList.keys():
-        Loadlang(k)
+    LoadLangfile()
+
+    for k in Data.langList.keys():
+        LoadStory(k)
 
     if len(Data.langstory) < 1:
         if TKmsg.askokcancel(icon = TKmsg.ERROR, title="NO DATA ERROR!", message="""
@@ -752,12 +840,12 @@ def start():
         you may want to exit this program, and manually fix the issue.
         Alternativly: do you wish to create an empty langauge file?
         """.strip()):
-            NotAddedYet()
+            Savelang(list(Data.langList.keys())[0])
+            LoadStory(list(Data.langList.keys())[0])
         else:
-            pass
-        root.quit() #to be moved to the else-branch above when adding new language files are supported.
-        return
-    startlang = list(langList)[0]
+            root.quit() #to be moved to the else-branch above when adding new language files are supported.
+            return
+    startlang = list(Data.langList)[0]
     if len(Data.langstory[startlang]) < 1:
         if TKmsg.askokcancel(icon = TKmsg.ERROR, title="NO DATA ERROR!", message=f"""
         No story-entries were found!
@@ -767,9 +855,8 @@ def start():
         """.strip()):
             AskNewEntry(startlang)
         else:
-            pass
-        root.quit() #To be moved to else branch once above action is supported.
-        return
+            root.quit() #To be moved to else branch once above action is supported.
+            return
     if len(Data.editors) < 1:
         askOpenEditor()
 
