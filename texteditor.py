@@ -478,14 +478,11 @@ class MultiEditor(BaseEditor):
         self.selectors.pack(side=TK.TOP)
 
         self.textfields:VerticalScrollFrame = None
+        self.addEntry:TK.Button = None
         self.menu['to_single'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['edit'].add_cascade(label = "Open in single-edit", menu = self.menu['to_single'])
         self.UpdateEntries()
-
-
-        self.resetTextfields()
         self.resetSelectors()
-        #TODO: continue work from here!
     def UpdateEntries(self):
         TS = self.menu['to_single']
         TS.delete(0, TS.index(TK.END))
@@ -500,9 +497,14 @@ class MultiEditor(BaseEditor):
             entry.pack(fill = TK.X, expand=True)
 
             TS.add_command(label = ename, command=TS_callback)
+        self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
+        self.addEntry.pack(fill = TK.X)
         self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
 
-        
+        self.resetTextfields()
+    def OnNewEntryToGroup(self):
+        AskNewEntry(self.lang, False, self.GroupName+"_")
+        self.UpdateEntries()
 
     def SetLang(self, evt=None):
         lang = self.selectors.Language
