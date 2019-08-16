@@ -485,12 +485,85 @@ class BaseEditor(TK.Toplevel):
     @property
     def edited(self)->bool:
         return Data.langEdited[self._lang]
+
+
+#TODO: ItemEditor
+#Lists ALL items in a scrollframe.
+#Each item has a name, desc and icon
+
+class ItemEntry(TK.Frame):
+    def __init__(self, master, lang:str, itemname:str):
+        super().__init__(master = master)
+
+        self.frames = [
+            TK.Frame(master = self), #left side master
+            TK.Frame(master = self), #right side master
+            TK.Frame(master = self), 
+            TK.Frame(master = self),
+        ]
+        for f in self.frames:
+            f.pack()
+
+        
+        self.keyname =      TK.Frame(master = self)
+        self.nameField =    TK.Entry(master = self)
+        self.iconNme =      TK.Entry(master = self)
+        self.nameLabel =    TK.Label(master = self)
+        self.iconLabel =    TK.Label(master = self)
+        self.iconPreview =  TK.Label(master = self)
+        self.description =  TK.Label(master = self)
+        self.renameBtn =    TK.Label(master = self)
+        self.deleteBtn =    TK.Label(master = self)
+
+
+
 class ItemEditor(MultiEditor):
     def __init__(self, lang:str, itemname:str):
         super().__init__(self, lang, "ITEM_"+itemname)
 
-    def resetSelectors(self):
-        self.selectors.reset(self.lang, self.GroupName, GetitemsList(self.lang))
+    def SetGroup(self, *_):
+        gn = self.selectors.Entry
+        lang = self.lang
+        if gn == self._targetName:
+            return
+        openE = getGroupOpen(lang, gn)
+        if(openE):
+            self.resetSelectors()
+            openE.lift()
+            return
+        entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+        if len(entrylist) < 1:
+            TKmsg.showinfo("NO ENTRY FOUND", f"The entry {gn} was not found.")
+            self.resetSelectors()
+            return
+        def UpdateEntries(self):
+            TS = self.menu['to_single']
+            TS.delete(0, TS.index(TK.END))
+            DE = self.menu['del_entry']
+            DE.delete(0, DE.index(TK.END))
+            RE = self.menu['ren_entry']
+            RE.delete(0, DE.index(TK.END))
+    
+            if(self.textfields != None):
+                self.textfields.pack_forget()
+            entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+            self.textfields = VerticalScrollFrame(self)
+            for ename in entrylist:
+                TS_callback = lambda x = ename: self.onsinglemode(x)
+                DE_callback = lambda x = ename: self.onDelEntry(x)
+                RE_callback = lambda x = ename: self.onRenEntry(x)
+                entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback, RE_callback)
+                entry.pack(fill = TK.X, expand=True)
+    
+                TS.add_command(label = ename, command=TS_callback)
+                DE.add_command(label = ename, command=DE_callback)
+                RE.add_command(label = ename, command=RE_callback)
+            self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
+            self.addEntry.pack(fill = TK.X)
+            self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
+    
+            self.resetTextfields()        
+
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
         super().__init__(lang, groupName, EditorType.MULTI)
