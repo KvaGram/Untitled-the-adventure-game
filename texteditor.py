@@ -316,7 +316,7 @@ def AskPatchLang(sourcelang = "", targetLang = ""):
 
 
 class EntryText(TK.Frame):
-    def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable, toDel:callable):
+    def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable, toDel:callable, torename:callable):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
         self.textfield = TKS.ScrolledText(self, width = 70, height = 3)
@@ -328,7 +328,8 @@ class EntryText(TK.Frame):
         self.label.pack()
         self.textfield.pack(fill = TK.BOTH, expand = True)
         TK.Button(master = self, text="Open in\nsingle-edit", command = tosingle, bg="blue").pack(side=TK.RIGHT)
-        TK.Button(master = self, text="delete\nentry", command = toDel, bg="red").pack(side=TK.RIGHT)
+        TK.Button(master = self, text="Delete\nentry", command = toDel, bg="red").pack(side=TK.RIGHT)
+        TK.Button(master = self, text="Rename\nentry", command = torename, bg="yellow").pack(side = TK.RIGHT)
 
     def updateentry(self, evt=None):
         Data.langEdited[self.lang] = True
@@ -495,7 +496,7 @@ class MultiEditor(BaseEditor):
         TS.delete(0, TS.index(TK.END))
         DE = self.menu['del_entry']
         DE.delete(0, DE.index(TK.END))
-        RE = self.menu['del_entry']
+        RE = self.menu['ren_entry']
         RE.delete(0, DE.index(TK.END))
 
         if(self.textfields != None):
@@ -506,7 +507,7 @@ class MultiEditor(BaseEditor):
             TS_callback = lambda x = ename: self.onsinglemode(x)
             DE_callback = lambda x = ename: self.onDelEntry(x)
             RE_callback = lambda x = ename: self.onRenEntry(x)
-            entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback)
+            entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback, RE_callback)
             entry.pack(fill = TK.X, expand=True)
 
             TS.add_command(label = ename, command=TS_callback)
@@ -693,11 +694,12 @@ class SingleEditor(BaseEditor):
             Data.editors.remove(self)
             self.destroy()
     def onRenEntry(self):
-        askRenameEntry(self.lang, self.entryName, self.entryName)
-        if self.entry == "":
-            Data.editors.remove(self)
-            self.destroy()
-        
+        newname = askRenameEntry(self.lang, self.entryName, self.entryName)
+        if newname:
+            self._targetName = newname
+            self.resetSelectors()
+            self.resetTextfield()
+            self.setTitle()        
     @property
     def lang(self)->str:
         return self._lang
@@ -722,10 +724,12 @@ def askDeleteEntry(lang, entryname):
 def askRenameEntry(lang, oldname, newname=""):
     newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname)
     if newname:
-        doRenameEntry(lang, oldname, newname)
+        return doRenameEntry(lang, oldname, newname)
+    return False
 def doRenameEntry(lang, oldname, newname):
     story = Data.langstory.get(lang, {})
-    story[newname] = story.pop(oldname, None)
+    story[newname] = story.pop(oldname)
+    return newname
 def saveAll():
     for k in Data.langList.keys():
         Savelang(k)
@@ -774,7 +778,7 @@ def LoadLangfile():
     cwd = os.getcwd()
     try:
         tree = ElementTree.parse(cwd+"/nerrative/languages.xml")
-    except Exception as e:
+    except:# Exception as e:
         if TKmsg.askokcancel("Woops..","List of languages failed to load.\nDo you wish to generate new file by adding a language?"):
             Data.langList = {}
             AskAddLanguage()
