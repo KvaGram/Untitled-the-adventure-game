@@ -50,7 +50,7 @@ def GetEntriesByGroup(lang:str, groupname:str):
     return lst2        
 
 def CloseAll():
-    e:SingleEditor
+    e:BaseEditor
     for e in reversed(Data.editors):
         e.OnClose()
 
@@ -484,8 +484,10 @@ class MultiEditor(BaseEditor):
         self.addEntry:TK.Button = None
         self.menu['to_single'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['del_entry'] = TK.Menu(self.menu['edit'], tearoff = 0)
+        self.menu['ren_entry'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['edit'].add_cascade(label = "Open in single-edit", menu = self.menu['to_single'])
         self.menu['edit'].add_cascade(label = "Delete entry", menu = self.menu['del_entry'])
+        self.menu['edit'].add_cascade(label = "Rename entry", menu = self.menu['ren_entry'])
         self.UpdateEntries()
         self.resetSelectors()
     def UpdateEntries(self):
@@ -493,6 +495,8 @@ class MultiEditor(BaseEditor):
         TS.delete(0, TS.index(TK.END))
         DE = self.menu['del_entry']
         DE.delete(0, DE.index(TK.END))
+        RE = self.menu['del_entry']
+        RE.delete(0, DE.index(TK.END))
 
         if(self.textfields != None):
             self.textfields.pack_forget()
@@ -501,11 +505,13 @@ class MultiEditor(BaseEditor):
         for ename in entrylist:
             TS_callback = lambda x = ename: self.onsinglemode(x)
             DE_callback = lambda x = ename: self.onDelEntry(x)
+            RE_callback = lambda x = ename: self.onRenEntry(x)
             entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback)
             entry.pack(fill = TK.X, expand=True)
 
             TS.add_command(label = ename, command=TS_callback)
             DE.add_command(label = ename, command=DE_callback)
+            RE.add_command(label = ename, command=RE_callback)
         self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
         self.addEntry.pack(fill = TK.X)
         self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
@@ -516,6 +522,9 @@ class MultiEditor(BaseEditor):
         self.UpdateEntries()
     def onDelEntry(self, entry):
         askDeleteEntry(self.lang, entry)
+        self.UpdateEntries()
+    def onRenEntry(self, entry):
+        askRenameEntry(self.lang, entry, entry)
         self.UpdateEntries()
     def SetLang(self, evt=None):
         lang = self.selectors.Language
@@ -592,6 +601,7 @@ class SingleEditor(BaseEditor):
         
         self.menu['edit'].add_command(label = "Open in multiedit", command = self.OnMultiMode)
         self.menu['edit'].add_command(label = "Delete Entry", command = self.onDelEntry)
+        self.menu['edit'].add_command(label = "Rename Entry", command = self.onRenEntry)
 
         #building UI
 
@@ -682,6 +692,11 @@ class SingleEditor(BaseEditor):
         if self.entry == "":
             Data.editors.remove(self)
             self.destroy()
+    def onRenEntry(self):
+        askRenameEntry(self.lang, self.entryName, self.entryName)
+        if self.entry == "":
+            Data.editors.remove(self)
+            self.destroy()
         
     @property
     def lang(self)->str:
@@ -704,9 +719,13 @@ def askDeleteEntry(lang, entryname):
             Savelang(lang)
         return True
     return False
-def askRenameEntry(lang, oldname, newname):
-    #TODO
-    pass
+def askRenameEntry(lang, oldname, newname=""):
+    newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname)
+    if newname:
+        doRenameEntry(lang, oldname, newname)
+def doRenameEntry(lang, oldname, newname):
+    story = Data.langstory.get(lang, {})
+    story[newname] = story.pop(oldname, None)
 def saveAll():
     for k in Data.langList.keys():
         Savelang(k)
