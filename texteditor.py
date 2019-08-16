@@ -40,6 +40,17 @@ def GetGroupList(lang:str):
         if not gn in lst2:
             lst2.add(gn)
     return lst2
+def GetitemsList(lang:str):
+    lst = Data.langstory.get(lang, {})
+    lst2 = set()
+    for e in lst:
+        segs = e.split(SEPERATOR)
+        if segs[0] != "ITEM":
+            continue
+        group = "_".join((segs[0], segs[1]))
+        if not group in lst2:
+            lst2.add(group)
+    return lst2
 
 def GetEntriesByGroup(lang:str, groupname:str):
     lst = Data.langstory.get(lang, {})
@@ -474,6 +485,12 @@ class BaseEditor(TK.Toplevel):
     @property
     def edited(self)->bool:
         return Data.langEdited[self._lang]
+class ItemEditor(MultiEditor):
+    def __init__(self, lang:str, itemname:str):
+        super().__init__(self, lang, "ITEM_"+itemname)
+
+    def resetSelectors(self):
+        self.selectors.reset(self.lang, self.GroupName, GetitemsList(self.lang))
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
         super().__init__(lang, groupName, EditorType.MULTI)
