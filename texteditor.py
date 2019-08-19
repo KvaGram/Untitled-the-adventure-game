@@ -495,19 +495,56 @@ class ItemEntry(TK.Frame):
     def __init__(self, master, lang:str, itemname:str):
         super().__init__(master = master)
 
-        self.frames = [
-            TK.Frame(master = self), #left side master
-            TK.Frame(master = self), #right side master
-            TK.Frame(master = self), 
-            TK.Frame(master = self),
-        ]
-        for f in self.frames:
-            f.pack()
+        self._displayName  = TK.StringVar(value="")
+        self._iconfileName = TK.StringVar(value="")
+
+        frame_header  = TK.Frame(master = self) # header (icon, internal name)
+        frame_content = TK.Frame(master = self) # main content (disp name, icon-filename, description)
+        frame_footer  = TK.Frame(master = self) # footer (buttons)
+
+        frame_header.pack (fill = TK.BOTH,side = TK.TOP)
+        frame_content.pack(fill = TK.BOTH)
+        frame_footer.pack (fill = TK.BOTH,side = TK.BOTTOM)
+
+        frame_disp = TK.Frame(master = frame_content)# Display-data, labels and inputs for icon-file and display name
+        frame_desc = TK.Frame(master = frame_content)# Content-data, label and text-area for item description
+
+        frame_disp.pack(fill = TK.BOTH, side = TK.LEFT)
+        frame_desc.pack(fill = TK.BOTH, side = TK.RIGHT)
+
+
+        label_icon = TK.Label(master = frame_header, image = self.HeaderIcon)
+        label_key = TK.Label(master = frame_header, text = self.HeaderTitle)
+
+        label_icon.pack(side = TK.LEFT)
+        label_key.pack(side = TK.LEFT)
+
+        label_dispname = TK.Label(master = frame_disp, text = "Display name")
+        label_iconname = TK.Label(master = frame_disp, text = "Icon filename")
+
+        entry_dispname = TK.Entry(master = frame_disp, textentry = self._displayName)
+        entry_iconname = TK.Entry(master = frame_disp, textentry = self._iconfileName)
+
+        label_dispname.grid(row = 0, column = 0)
+        label_iconname.grid(row = 1, column = 0)
+
+        entry_dispname.grid(row = 0, column = 1, columnspan = 2)
+        entry_iconname.grid(row = 1, column = 1, columnspan = 2)
+
+        label_desc = TK.Label(master=frame_desc, text = "Description")
+        text_desc  = TK.Text( master=frame_desc)
+
+        label_desc.pack(side = TK.TOP)
+        text_desc.pack (side = TK.BOTTOM, fill = TK.BOTH)
+
+
+
+
 
         
-        self.keyname =      TK.Frame(master = self)
+
+        
         self.nameField =    TK.Entry(master = self)
-        self.iconNme =      TK.Entry(master = self)
         self.nameLabel =    TK.Label(master = self)
         self.iconLabel =    TK.Label(master = self)
         self.iconPreview =  TK.Label(master = self)
