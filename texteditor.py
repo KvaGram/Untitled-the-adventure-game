@@ -492,65 +492,85 @@ class BaseEditor(TK.Toplevel):
 #Each item has a name, desc and icon
 
 class ItemEntry(TK.Frame):
+    _FALLBACK_ICON = "empty.gif"
+    _IMAGE_DIR = "images/"
     def __init__(self, master, lang:str, itemname:str):
         super().__init__(master = master)
+
+        self._lang = lang
+        self._target = itemname
 
         self._displayName  = TK.StringVar(value="")
         self._iconfileName = TK.StringVar(value="")
 
-        frame_header  = TK.Frame(master = self) # header (icon, internal name)
-        frame_content = TK.Frame(master = self) # main content (disp name, icon-filename, description)
-        frame_footer  = TK.Frame(master = self) # footer (buttons)
+        self.frame_header  = TK.Frame(master = self) # header (icon, internal name)
+        self.frame_content = TK.Frame(master = self) # main content (disp name, icon-filename, description)
+        self.frame_footer  = TK.Frame(master = self) # footer (buttons)
 
-        frame_header.pack (fill = TK.BOTH,side = TK.TOP)
-        frame_content.pack(fill = TK.BOTH)
-        frame_footer.pack (fill = TK.BOTH,side = TK.BOTTOM)
+        self.frame_header.pack (fill = TK.BOTH,side = TK.TOP)
+        self.frame_content.pack(fill = TK.BOTH)
+        self.frame_footer.pack (fill = TK.BOTH,side = TK.BOTTOM)
 
-        frame_disp = TK.Frame(master = frame_content)# Display-data, labels and inputs for icon-file and display name
-        frame_desc = TK.Frame(master = frame_content)# Content-data, label and text-area for item description
+        self.frame_disp = TK.Frame(master = self.frame_content)# Display-data, labels and inputs for icon-file and display name
+        self.frame_desc = TK.Frame(master = self.frame_content)# Content-data, label and text-area for item description
 
-        frame_disp.pack(fill = TK.BOTH, side = TK.LEFT)
-        frame_desc.pack(fill = TK.BOTH, side = TK.RIGHT)
+        self.frame_disp.pack(fill = TK.BOTH, side = TK.LEFT)
+        self.frame_desc.pack(fill = TK.BOTH, side = TK.RIGHT)
+
+        self.label_icon = TK.Label(master = self.frame_header, image = self.HeaderIcon)
+        self.label_key = TK.Label(master = self.frame_header, text = self.HeaderTitle)
+        self.Img_icon = TK.PhotoImage(master=self.label_icon, file = )
+
+        self.label_icon.pack(side = TK.LEFT)
+        self.label_key.pack(side = TK.LEFT)
+
+        self.label_dispname = TK.Label(master = self.frame_disp, text = "Display name")
+        self.label_iconname = TK.Label(master = self.frame_disp, text = "Icon filename")
+
+        self.entry_dispname = TK.Entry(master = self.frame_disp, textentry = self._displayName)
+        self.entry_iconname = TK.Entry(master = self.frame_disp, textentry = self._iconfileName)
+
+        self.label_dispname.grid(row = 0, column = 0)
+        self.label_iconname.grid(row = 1, column = 0)
+
+        self.entry_dispname.grid(row = 0, column = 1, columnspan = 2)
+        self.entry_iconname.grid(row = 1, column = 1, columnspan = 2)
+
+        self.label_desc = TK.Label(master=self.frame_desc, text = "Description")
+        self.text_desc  = TK.Text( master=self.frame_desc)
+
+        self.label_desc.pack(side = TK.TOP)
+        self.text_desc.pack (side = TK.BOTTOM, fill = TK.BOTH)
+
+        self.btn_rename = TK.Button(master=self.frame_footer, text="Rename", bg = "yellow", command = OnRename, state = TK.NORMAL)
+        self.btn_delete = TK.Button(master=self.frame_footer, text="Delete", bg = "red",    command = OnDelete, state = TK.NORMAL)
+
+        self.btn_rename.pack(side=TK.LEFT)
+        self.btn_delete.pack(side=TK.LEFT)
+
+    def reset(self, *_):
+        self.text_desc.delete('1.0',TK.END)
+        self.text_desc.insert(TK.END, self.Description)
+        self._displayName.set(self.Displayname)
+        self._iconfileName.set(self.Iconfilename)
+        self.label_icon.config(image = self.HeaderIcon)
+        self.label_key.config(text = self.HeaderTitle)
+    def update(self, *_):
+        self.Description = self.text_desc.get('1.0',TK.END)
+        self.Displayname = self._displayName.get()
+        self.Iconfilename = self._iconfileName.get()
+
+    @property
+    def HeaderTitle(self):
+        f" - {self._taget} - "
+    @property
+    def HeaderIcon(self):
+        try:
+            self.Img_icon.config(file = _IMAGE_DIR + self.Iconfilename.get())
+
+    
 
 
-        label_icon = TK.Label(master = frame_header, image = self.HeaderIcon)
-        label_key = TK.Label(master = frame_header, text = self.HeaderTitle)
-
-        label_icon.pack(side = TK.LEFT)
-        label_key.pack(side = TK.LEFT)
-
-        label_dispname = TK.Label(master = frame_disp, text = "Display name")
-        label_iconname = TK.Label(master = frame_disp, text = "Icon filename")
-
-        entry_dispname = TK.Entry(master = frame_disp, textentry = self._displayName)
-        entry_iconname = TK.Entry(master = frame_disp, textentry = self._iconfileName)
-
-        label_dispname.grid(row = 0, column = 0)
-        label_iconname.grid(row = 1, column = 0)
-
-        entry_dispname.grid(row = 0, column = 1, columnspan = 2)
-        entry_iconname.grid(row = 1, column = 1, columnspan = 2)
-
-        label_desc = TK.Label(master=frame_desc, text = "Description")
-        text_desc  = TK.Text( master=frame_desc)
-
-        label_desc.pack(side = TK.TOP)
-        text_desc.pack (side = TK.BOTTOM, fill = TK.BOTH)
-
-
-
-
-
-        
-
-        
-        self.nameField =    TK.Entry(master = self)
-        self.nameLabel =    TK.Label(master = self)
-        self.iconLabel =    TK.Label(master = self)
-        self.iconPreview =  TK.Label(master = self)
-        self.description =  TK.Label(master = self)
-        self.renameBtn =    TK.Label(master = self)
-        self.deleteBtn =    TK.Label(master = self)
 
 
 
