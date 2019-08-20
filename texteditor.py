@@ -494,11 +494,17 @@ class BaseEditor(TK.Toplevel):
 class ItemEntry(TK.Frame):
     _FALLBACK_ICON = "empty.gif"
     _IMAGE_DIR = "images/"
-    def __init__(self, master, lang:str, itemname:str):
+
+    _DATATERM_NAME = "_NAME"
+    _DATATERM_DESCRIPTION = "_DESC"
+    _DATATERM_ICON = "_ICON"
+
+    def __init__(self, master, lang:str, itemname:str, resetCall:callable):
         super().__init__(master = master)
 
         self._lang = lang
         self._target = itemname
+        self.resetCall = resetCall()
 
         self._displayName  = TK.StringVar(value="")
         self._iconfileName = TK.StringVar(value="")
@@ -519,7 +525,7 @@ class ItemEntry(TK.Frame):
 
         self.label_icon = TK.Label(master = self.frame_header, image = self.HeaderIcon)
         self.label_key = TK.Label(master = self.frame_header, text = self.HeaderTitle)
-        self.Img_icon = TK.PhotoImage(master=self.label_icon, file = )
+        self.Img_icon = TK.PhotoImage(master=self.label_icon, file = None)
 
         self.label_icon.pack(side = TK.LEFT)
         self.label_key.pack(side = TK.LEFT)
@@ -542,8 +548,8 @@ class ItemEntry(TK.Frame):
         self.label_desc.pack(side = TK.TOP)
         self.text_desc.pack (side = TK.BOTTOM, fill = TK.BOTH)
 
-        self.btn_rename = TK.Button(master=self.frame_footer, text="Rename", bg = "yellow", command = OnRename, state = TK.NORMAL)
-        self.btn_delete = TK.Button(master=self.frame_footer, text="Delete", bg = "red",    command = OnDelete, state = TK.NORMAL)
+        self.btn_rename = TK.Button(master=self.frame_footer, text="Rename", bg = "yellow", command = self.OnRename, state = TK.NORMAL)
+        self.btn_delete = TK.Button(master=self.frame_footer, text="Delete", bg = "red",    command = self.OnDelete, state = TK.NORMAL)
 
         self.btn_rename.pack(side=TK.LEFT)
         self.btn_delete.pack(side=TK.LEFT)
@@ -562,64 +568,72 @@ class ItemEntry(TK.Frame):
 
     @property
     def HeaderTitle(self):
-        f" - {self._taget} - "
+        f" - {self._target} - "
     @property
     def HeaderIcon(self):
         try:
             self.Img_icon.config(file = _IMAGE_DIR + self.Iconfilename.get())
+        except:
+            pass
+    def OnDelete(self, *_):
+        pass
 
-    
-
-
+        self.resetCall()
+    def OnRename(self, *_):
+        pass
+        self.resetCall()
 
 
 
 class ItemEditor(MultiEditor):
     def __init__(self, lang:str, itemname:str):
         super().__init__(self, lang, "ITEM_"+itemname)
+        pass
 
-    def SetGroup(self, *_):
-        gn = self.selectors.Entry
-        lang = self.lang
-        if gn == self._targetName:
-            return
-        openE = getGroupOpen(lang, gn)
-        if(openE):
-            self.resetSelectors()
-            openE.lift()
-            return
-        entrylist = GetEntriesByGroup(self.lang, self.GroupName)
-        if len(entrylist) < 1:
-            TKmsg.showinfo("NO ENTRY FOUND", f"The entry {gn} was not found.")
-            self.resetSelectors()
-            return
-        def UpdateEntries(self):
-            TS = self.menu['to_single']
-            TS.delete(0, TS.index(TK.END))
-            DE = self.menu['del_entry']
-            DE.delete(0, DE.index(TK.END))
-            RE = self.menu['ren_entry']
-            RE.delete(0, DE.index(TK.END))
-    
-            if(self.textfields != None):
-                self.textfields.pack_forget()
-            entrylist = GetEntriesByGroup(self.lang, self.GroupName)
-            self.textfields = VerticalScrollFrame(self)
-            for ename in entrylist:
-                TS_callback = lambda x = ename: self.onsinglemode(x)
-                DE_callback = lambda x = ename: self.onDelEntry(x)
-                RE_callback = lambda x = ename: self.onRenEntry(x)
-                entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback, RE_callback)
-                entry.pack(fill = TK.X, expand=True)
-    
-                TS.add_command(label = ename, command=TS_callback)
-                DE.add_command(label = ename, command=DE_callback)
-                RE.add_command(label = ename, command=RE_callback)
-            self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
-            self.addEntry.pack(fill = TK.X)
-            self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
-    
-            self.resetTextfields()        
+
+    # def SetGroup(self, *_):
+    #     gn = self.selectors.Entry
+    #     lang = self.lang
+    #     if gn == self._targetName:
+    #         return
+    #     openE = getGroupOpen(lang, gn)
+    #     if(openE):
+    #         self.resetSelectors()
+    #         openE.lift()
+    #         return
+    #     entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+    #     if len(entrylist) < 1:
+    #         TKmsg.showinfo("NO ENTRY FOUND", f"The entry {gn} was not found.")
+    #         self.resetSelectors()
+    #         return
+    # def UpdateEntries(self, *_):
+    #     TS = self.menu['to_single']
+    #     TS.delete(0, TS.index(TK.END))
+    #     DE = self.menu['del_entry']
+    #     DE.delete(0, DE.index(TK.END))
+    #     RE = self.menu['ren_entry']
+    #     RE.delete(0, DE.index(TK.END))
+
+    #     if(self.textfields != None):
+    #         self.textfields.pack_forget()
+    #     entrylist = GetEntriesByGroup(self.lang, self.GroupName)
+    #     self.textfields = VerticalScrollFrame(self)
+        
+    #     for ename in entrylist:
+    #         TS_callback = lambda x = ename: self.onsinglemode(x)
+    #         DE_callback = lambda x = ename: self.onDelEntry(x)
+    #         RE_callback = lambda x = ename: self.onRenEntry(x)
+    #         entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback, RE_callback)
+    #         entry.pack(fill = TK.X, expand=True)
+
+    #         TS.add_command(label = ename, command=TS_callback)
+    #         DE.add_command(label = ename, command=DE_callback)
+    #         RE.add_command(label = ename, command=RE_callback)
+    #     self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
+    #     self.addEntry.pack(fill = TK.X)
+    #     self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
+
+    #     self.resetTextfields()        
 
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
