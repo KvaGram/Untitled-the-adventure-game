@@ -11,7 +11,16 @@ import sys
 from scrollFrame import VerticalScrollFrame
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
-SEPERATOR = "_"
+_SEPERATOR = "_"
+
+_FALLBACK_ICON = "empty.gif"
+_IMAGE_DIR = "images/"
+
+_DATATERM_ITEM = "ITEM"
+
+_DATATERM_NAME = "_NAME"
+_DATATERM_DESCRIPTION = "_DESC"
+_DATATERM_ICON = "_ICON"
 
 #Display language : internal language (filename)
 #langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
@@ -26,9 +35,9 @@ class Data():
 
 def SplitGroupSubentry(entryname:str):
     
-    segs = entryname.split(SEPERATOR)
+    segs = entryname.split(_SEPERATOR)
     subentry = segs.pop(-1)
-    groupname = SEPERATOR.join(segs)
+    groupname = _SEPERATOR.join(segs)
 
     return (groupname, subentry)
     
@@ -44,8 +53,8 @@ def GetitemsList(lang:str):
     lst = Data.langstory.get(lang, {})
     lst2 = set()
     for e in lst:
-        segs = e.split(SEPERATOR)
-        if segs[0] != "ITEM":
+        segs = e.split(_SEPERATOR)
+        if segs[0] != _DATATERM_ITEM or len(segs) < 3:
             continue
         group = "_".join((segs[0], segs[1]))
         if not group in lst2:
@@ -405,6 +414,7 @@ class EditorType:
     NONE = 0 #not set
     SINGLE = 1
     MULTI = 2
+    ITEM = 3
 
 class BaseEditor(TK.Toplevel):
     def __init__(self, lang, targetname:str, editortype):
@@ -492,13 +502,6 @@ class BaseEditor(TK.Toplevel):
 #Each item has a name, desc and icon
 
 class ItemEntry(TK.Frame):
-    _FALLBACK_ICON = "empty.gif"
-    _IMAGE_DIR = "images/"
-
-    _DATATERM_NAME = "_NAME"
-    _DATATERM_DESCRIPTION = "_DESC"
-    _DATATERM_ICON = "_ICON"
-
     def __init__(self, master, lang:str, itemname:str, resetCall:callable):
         super().__init__(master = master)
 
@@ -572,7 +575,7 @@ class ItemEntry(TK.Frame):
     @property
     def HeaderIcon(self):
         try:
-            self.Img_icon.config(file = _IMAGE_DIR + self.Iconfilename.get())
+            self.Img_icon.config(file = _IMAGE_DIR + self.Iconfilename)
         except:
             pass
     def OnDelete(self, *_):
@@ -583,57 +586,26 @@ class ItemEntry(TK.Frame):
         pass
         self.resetCall()
 
+    #TODO: Add property getter and setter for Name, Iconfilename and Description
 
 
-class ItemEditor(MultiEditor):
-    def __init__(self, lang:str, itemname:str):
-        super().__init__(self, lang, "ITEM_"+itemname)
-        pass
+class ItemEditor(BaseEditor):
+    def __init__(self, lang:str):
+        super().__init__(self, lang, _DATATERM_ITEM, EditorType.ITEM)
+        story = Data.langstory.get(lang, {})      
+        self.itemEntries:VerticalScrollFrame = None
+        #Add general menu options here
 
-
-    # def SetGroup(self, *_):
-    #     gn = self.selectors.Entry
-    #     lang = self.lang
-    #     if gn == self._targetName:
-    #         return
-    #     openE = getGroupOpen(lang, gn)
-    #     if(openE):
-    #         self.resetSelectors()
-    #         openE.lift()
-    #         return
-    #     entrylist = GetEntriesByGroup(self.lang, self.GroupName)
-    #     if len(entrylist) < 1:
-    #         TKmsg.showinfo("NO ENTRY FOUND", f"The entry {gn} was not found.")
-    #         self.resetSelectors()
-    #         return
-    # def UpdateEntries(self, *_):
-    #     TS = self.menu['to_single']
-    #     TS.delete(0, TS.index(TK.END))
-    #     DE = self.menu['del_entry']
-    #     DE.delete(0, DE.index(TK.END))
-    #     RE = self.menu['ren_entry']
-    #     RE.delete(0, DE.index(TK.END))
-
-    #     if(self.textfields != None):
-    #         self.textfields.pack_forget()
-    #     entrylist = GetEntriesByGroup(self.lang, self.GroupName)
-    #     self.textfields = VerticalScrollFrame(self)
-        
-    #     for ename in entrylist:
-    #         TS_callback = lambda x = ename: self.onsinglemode(x)
-    #         DE_callback = lambda x = ename: self.onDelEntry(x)
-    #         RE_callback = lambda x = ename: self.onRenEntry(x)
-    #         entry = EntryText(self.textfields.viewPort, ename, self.lang, TS_callback, DE_callback, RE_callback)
-    #         entry.pack(fill = TK.X, expand=True)
-
-    #         TS.add_command(label = ename, command=TS_callback)
-    #         DE.add_command(label = ename, command=DE_callback)
-    #         RE.add_command(label = ename, command=RE_callback)
-    #     self.addEntry = TK.Button(self.textfields.viewPort, text = "Add new entry to group", command=self.OnNewEntryToGroup)
-    #     self.addEntry.pack(fill = TK.X)
-    #     self.textfields.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
-
-    #     self.resetTextfields()        
+        self.UpdateEntries()
+    def UpdateEntries(self, *_):
+        #Add entry spesiffic menu options here.
+        if(self.itemEntries != None):
+            self.itemEntries.pack_forget()
+        itemlist:set = GetitemsList(lang)
+        self.itemEntries:VerticalScrollFrame = VerticalScrollFrame(self)
+        for entry in itemlist:
+            itementry = ItemEntry(self.itemEntries.viewPort, self.lang, entry, self.UpdateEntries)
+            itementry.pack()
 
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
