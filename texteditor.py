@@ -11,6 +11,8 @@ import sys
 from scrollFrame import VerticalScrollFrame
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
+ITEM_NAME_PATTERN = r'^[A-Z]+(+[A-Z])*$' #strictly only capital characters
+
 _SEPERATOR = "_"
 
 _FALLBACK_ICON = "empty.gif"
@@ -87,6 +89,8 @@ def askOpenEditor():
             OpenSingleEditor(sel.Language, sel.Entry)
         elif editType.get() == EditorType.MULTI:
             OpenMultiEditor(sel.Language, sel.Entry)
+        elif editType.get() == EditorType.ITEM:
+            OpenItemEditor(sel.Language)
         #askwindow.destroy()
         running.set(False)
     def onClose(*_):
@@ -97,9 +101,15 @@ def askOpenEditor():
     closebtn = TK.Button(askwindow, text = "CLOSE", command = onClose)
     def onLang(*_):
         if editType.get() == EditorType.SINGLE:
+            sel.EntryBox.config(state = TK.NORMAL)
             sel.EntryList = Data.langstory.get(sel.Language, {}).keys()
         elif editType.get() == EditorType.MULTI:
+            sel.EntryBox.config(state = TK.NORMAL)
             sel.EntryList = GetGroupList(sel.Language)
+        elif editType.get() == EditorType.ITEM:
+            sel.EntryBox.config(state = TK.DISABLED)
+            sel.EntryList = ["ITEM"]
+            sel.EntryBox.set("ITEM")
         else:
             sel.EntryList = [] #this should never happen
         validate()
@@ -119,25 +129,42 @@ def askOpenEditor():
                 return False
             openbtn.config(state = TK.NORMAL)
             return True
+        elif editType.get() == EditorType.ITEM:
+            if not lang in Data.langList.keys() or getGroupOpen(lang, "ITEM"):
+                openbtn.config(state = TK.DISABLED)
+                return False
+            openbtn.config(state = TK.NORMAL)
+            return True
         openbtn.config(state = TK.DISABLED)
         return False
     def toSingle():
         editType.set(EditorType.SINGLE)
         toSingleBtn.config(state = TK.DISABLED)
         tomultiBtn.config(state = TK.NORMAL)
+        toItemBtn.config(state = TK.NORMAL)
 
         onLang()
     def tomulti():
         editType.set(EditorType.MULTI)
         toSingleBtn.config(state = TK.NORMAL)
         tomultiBtn.config(state = TK.DISABLED)
-        validate()
+        toItemBtn.config(state = TK.NORMAL)
 
         onLang()
+    def toItem():
+        editType.set(EditorType.ITEM)
+        toSingleBtn.config(state = TK.NORMAL)
+        tomultiBtn.config(state = TK.NORMAL)
+        toItemBtn.config(state = TK.DISABLED)
+
+        onLang()
+
     toSingleBtn = TK.Button(master = askwindow, text = "Single-Editor", command = toSingle, state = TK.DISABLED)
-    tomultiBtn  = TK.Button(master = askwindow, text = "multi-Editor", command = tomulti, state = TK.NORMAL)
+    tomultiBtn  = TK.Button(master = askwindow, text = "Multi-Editor", command = tomulti, state = TK.NORMAL)
+    toItemBtn  = TK.Button(master = askwindow, text = "Item-Editor", command = toItem, state = TK.NORMAL)
     toSingleBtn.grid(row = 0, column = 0)
     tomultiBtn.grid(row = 1, column = 0)
+    toItemBtn.grid(row = 2, column = 0)
 
     sel = EntrySelector(askwindow, onLang, validate)
     sel.grid(row = 0, column = 1, columnspan=2)
@@ -173,8 +200,12 @@ def getGroupOpen(lang:str, group:str):
                 return e
     return None
                 
-    
-
+def OpenItemEditor(lang):
+    e = getEntryOpen(lang, "ITEM")
+    if e:
+        e.lift()
+        return
+    Data.editors.append(ItemEditor(lang))
 def OpenSingleEditor(lang:str, entry:str):
     e = getEntryOpen(lang, entry)
     if e:
@@ -591,22 +622,74 @@ class ItemEntry(TK.Frame):
 
 class ItemEditor(BaseEditor):
     def __init__(self, lang:str):
-        super().__init__(self, lang, _DATATERM_ITEM, EditorType.ITEM)
-        story = Data.langstory.get(lang, {})      
+        super().__init__(lang, _DATATERM_ITEM, EditorType.ITEM)
+        def _VOID():
+            pass
+        self.selectors = EntrySelector(self, self.SetLang, _VOID)
+        self.selectors.pack(side=TK.TOP)  
         self.itemEntries:VerticalScrollFrame = None
+
+        self.newItemName = TK.StringVar()
+
+        self.newItemFrame:TK.Frame = None
+        self.btnNewItem:TK.Button = None
+        self.newErrMsg:TK.Label = None
         #Add general menu options here
 
         self.UpdateEntries()
+        self.resetSelectors()
     def UpdateEntries(self, *_):
         #Add entry spesiffic menu options here.
         if(self.itemEntries != None):
             self.itemEntries.pack_forget()
-        itemlist:set = GetitemsList(lang)
+        itemlist:set = GetitemsList(self.lang)
         self.itemEntries:VerticalScrollFrame = VerticalScrollFrame(self)
         for entry in itemlist:
+            self.addpatchItem(entry)
             itementry = ItemEntry(self.itemEntries.viewPort, self.lang, entry, self.UpdateEntries)
             itementry.pack()
 
+        self.newItemFrame = TK.Frame(self.itemEntries.viewPort)
+        self.newItemFrame.pack(fill = TK.X)
+        TK.Entry(master=self.newItemFrame, textvariable=self.newItemName).pack(side=TK.LEFT, fill = TK.X)
+        self.btnNewItem =  TK.Button(self.newItemFrame, text="Add item", command = self.OnAddItem)
+        self.btnNewItem.pack(side=TK.RIGHT, fill = TK.X)
+        self.newErrMsg = TK.Label(master=self.itemEntries.viewPort, fg = "red", text = "...")
+        self.newErrMsg.pack(side=TK.BOTTOM, fill = TK.X)
+
+        self.itemEntries.pack()
+    def OnAddItem(self, *_):
+        itemkey = self.newItemName.get()
+        if not re.match(ITEM_NAME_PATTERN, itemkey):
+            self.newErrMsg.config(text="Error: Bad name key format. Ensure it is a single word all caps no space or underscore.")
+            return False
+        if itemkey in GetitemsList(self.lang):
+            self.newErrMsg.config(text="Error: Name key already exist.")
+            return False
+        self.addpatchItem(itemkey)
+        self.UpdateEntries()
+        return True
+    def addpatchItem(self, itemkey):
+        name = _DATATERM_ITEM + "_" + itemkey + _DATATERM_NAME
+        icon = _DATATERM_ITEM + "_" + itemkey + _DATATERM_ICON
+        desc = _DATATERM_ITEM + "_" + itemkey + _DATATERM_DESCRIPTION
+        contents = (name, icon, desc)
+
+        for content in contents:
+            if content not in self.Story:
+                self.Story[content] = " "
+                self.edited = True
+    def SetLang(self, lang):
+        lang = self.selectors.Language
+        if lang == self.lang:
+            return
+        self.UpdateEntries()
+        self.resetSelectors()
+
+    def resetSelectors(self):
+        self.selectors.reset(self.lang, _DATATERM_ITEM, GetGroupList(self.lang))
+        self.selectors.EntryBox.config(state=TK.DISABLED)
+        
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
         super().__init__(lang, groupName, EditorType.MULTI)
