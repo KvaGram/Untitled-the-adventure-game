@@ -1,3 +1,5 @@
+#TODO: rewrite askdelete to also handle groups and items
+
 import tkinter as TK
 import tkinter.ttk as TTK
 import tkentrycomplete as TKTC
@@ -238,7 +240,7 @@ def AskNewEntry(lang:str, openNew:bool = True, entry = ""):
         return NewEntry(lang, openNew, entry)
     return entry
 
-def askName(title, message, lang, startText):
+def askName(title, message, lang, startText, isGroup = False):
     askWindow = TK.Toplevel(Data.root)
     askWindow.title(title)
     askMsg = TK.Label(askWindow, text=message)
@@ -260,13 +262,24 @@ def askName(title, message, lang, startText):
     
     def askOK():
         ans = askAnswer.get()
-        if ans in story.keys():
-            askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
-        elif re.match(ENTRY_NAME_PATTERN, ans):
-            askData.run = False
-            askData.ret = ans
+        if isGroup:
+            for e in story.keys():
+                if e.startswith(ans):
+                    askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
+                    return
+            if re.match(ENTRY_NAME_PATTERN, ans):
+                askData.run = False
+                askData.ret = ans
+            else:
+                askErr.config(text="Group name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK", fg = "red")   
         else:
-            askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK_8", fg = "red")
+            if ans in story.keys():
+                askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
+            elif re.match(ENTRY_NAME_PATTERN, ans):
+                askData.run = False
+                askData.ret = ans
+            else:
+                askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK_8", fg = "red")
     def askCANCEL():
         askData.run = False
         askData.ret = False
@@ -401,6 +414,13 @@ class EntryText(TK.Frame):
     @property
     def Story(self)->dict:
         return Data.langstory.get(self.lang, {})
+    
+    @property
+    def edited(self)->bool:
+        return Data.langEdited[self.lang]
+    @edited.setter
+    def edited(self, val):
+        Data.langEdited[self.lang] = val
 class EntrySelector(TK.Frame):
     def __init__(self, master, onLangSelect, onEntrySelect):
         super().__init__(master)
@@ -546,21 +566,6 @@ class ItemEntry(TK.Frame):
         self._displayName  = TK.StringVar(value="")
         self._iconfileName = TK.StringVar(value="")
 
-        """
-        self.frame_header  = TK.Frame(master = self) # header (icon, internal name)
-        self.frame_content = TK.Frame(master = self) # main content (disp name, icon-filename, description)
-        self.frame_footer  = TK.Frame(master = self) # footer (buttons)
-
-        self.frame_header.pack (fill = TK.BOTH,side = TK.TOP)
-        self.frame_content.pack(fill = TK.BOTH)
-        self.frame_footer.pack (fill = TK.BOTH,side = TK.BOTTOM)
-
-        self.frame_disp = TK.Frame(master = self)# Display-data, labels and inputs for icon-file and display name
-        self.frame_desc = TK.Frame(master = self)# Content-data, label and text-area for item description
-
-        self.frame_disp.grid()#.pack(fill = TK.BOTH, side = TK.LEFT)
-        self.frame_desc.grid()#.pack(fill = TK.BOTH, side = TK.RIGHT)"""
-
         self.label_icon = TK.Label(master = self, image = self.HeaderIcon)
         self.label_key = TK.Label(master = self, text = self.HeaderTitle)
 
@@ -657,7 +662,17 @@ class ItemEntry(TK.Frame):
         self.Story[self.IconTerm] = val    
 
     def OnDelete(self, *_):
-        self.resetCall()
+        if TKmsg.askyesno("Delete item entries?", f"Are you sure you wish to delete {self._target}?"):
+            name = _DATATERM_ITEM + "_" + self._target + _DATATERM_NAME
+            icon = _DATATERM_ITEM + "_" + self._target + _DATATERM_ICON
+            desc = _DATATERM_ITEM + "_" + self._target + _DATATERM_DESCRIPTION
+            self.Story.pop(name, None)
+            self.Story.pop(icon, None)
+            self.Story.pop(desc, None)
+            self.resetCall()
+            self.edited = True
+
+        
     def OnRename(self, *_):
         self.resetCall()
 
@@ -972,20 +987,28 @@ class SingleEditor(BaseEditor):
     def entry(self, val):
         self.Story[self._targetName] = val
     
-def askDeleteEntry(lang, entryname):
+def askDeleteEntry(lang, entryname, isGroup = False):
     if TKmsg.askokcancel("Delete entry", f"You are about to delete {entryname} from {lang}"):
+
         Data.langstory.get(lang, {}).pop(entryname, None)
         Data.langEdited[lang] = True
         if TKmsg.askyesno("Save file?", f"The entry {entryname} has been deleted. Would you like to save?"):
             Savelang(lang)
         return True
     return False
-def askRenameEntry(lang, oldname, newname=""):
-    newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname)
+def askRenameEntry(lang, oldname, newname="", isGroup = False):
+    newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname, isGroup)
     if newname:
-        return doRenameEntry(lang, oldname, newname)
+        return doRenameEntry(lang, oldname, newname, isGroup)
     return False
-def doRenameEntry(lang, oldname, newname):
+
+def doRenameEntry(lang, oldname, newname, isGroup = False):
+    if isGroup:
+        entries = GetEntriesByGroup(lang, oldname)
+        for entry in entries:
+            newname2 = entry.replace(oldname, newname)
+            doRenameEntry(lang, entry, newname2, False)
+        return        
     story = Data.langstory.get(lang, {})
     story[newname] = story.pop(oldname)
     return newname
