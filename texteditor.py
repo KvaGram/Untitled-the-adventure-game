@@ -11,7 +11,9 @@ import sys
 from scrollFrame import VerticalScrollFrame
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
-ITEM_NAME_PATTERN = r'^[A-Z]+(+[A-Z])*$' #strictly only capital characters
+ITEM_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
+
+_CWR = os.getcwd()
 
 _SEPERATOR = "_"
 
@@ -58,7 +60,9 @@ def GetitemsList(lang:str):
         segs = e.split(_SEPERATOR)
         if segs[0] != _DATATERM_ITEM or len(segs) < 3:
             continue
-        group = "_".join((segs[0], segs[1]))
+        segs.pop(0)
+        segs.pop()
+        group = "_".join(segs)
         if not group in lst2:
             lst2.add(group)
     return lst2
@@ -526,23 +530,23 @@ class BaseEditor(TK.Toplevel):
     @property
     def edited(self)->bool:
         return Data.langEdited[self._lang]
-
-
-#TODO: ItemEditor
-#Lists ALL items in a scrollframe.
-#Each item has a name, desc and icon
-
+    @edited.setter
+    def edited(self, val):
+        Data.langEdited[self._lang] = val
 class ItemEntry(TK.Frame):
     def __init__(self, master, lang:str, itemname:str, resetCall:callable):
         super().__init__(master = master)
 
         self._lang = lang
         self._target = itemname
-        self.resetCall = resetCall()
+        self.resetCall = resetCall
+
+        self._headerIcon:TK.PhotoImage = None
 
         self._displayName  = TK.StringVar(value="")
         self._iconfileName = TK.StringVar(value="")
 
+        """
         self.frame_header  = TK.Frame(master = self) # header (icon, internal name)
         self.frame_content = TK.Frame(master = self) # main content (disp name, icon-filename, description)
         self.frame_footer  = TK.Frame(master = self) # footer (buttons)
@@ -551,74 +555,111 @@ class ItemEntry(TK.Frame):
         self.frame_content.pack(fill = TK.BOTH)
         self.frame_footer.pack (fill = TK.BOTH,side = TK.BOTTOM)
 
-        self.frame_disp = TK.Frame(master = self.frame_content)# Display-data, labels and inputs for icon-file and display name
-        self.frame_desc = TK.Frame(master = self.frame_content)# Content-data, label and text-area for item description
+        self.frame_disp = TK.Frame(master = self)# Display-data, labels and inputs for icon-file and display name
+        self.frame_desc = TK.Frame(master = self)# Content-data, label and text-area for item description
 
-        self.frame_disp.pack(fill = TK.BOTH, side = TK.LEFT)
-        self.frame_desc.pack(fill = TK.BOTH, side = TK.RIGHT)
+        self.frame_disp.grid()#.pack(fill = TK.BOTH, side = TK.LEFT)
+        self.frame_desc.grid()#.pack(fill = TK.BOTH, side = TK.RIGHT)"""
 
-        self.label_icon = TK.Label(master = self.frame_header, image = self.HeaderIcon)
-        self.label_key = TK.Label(master = self.frame_header, text = self.HeaderTitle)
-        self.Img_icon = TK.PhotoImage(master=self.label_icon, file = None)
+        self.label_icon = TK.Label(master = self, image = self.HeaderIcon)
+        self.label_key = TK.Label(master = self, text = self.HeaderTitle)
 
-        self.label_icon.pack(side = TK.LEFT)
-        self.label_key.pack(side = TK.LEFT)
+        self.label_icon.grid(column = 0, row = 1, rowspan=5)#.pack(side = TK.LEFT)
+        self.label_key.grid(column = 0, row = 0, columnspan=4)#.pack(side = TK.LEFT)
 
-        self.label_dispname = TK.Label(master = self.frame_disp, text = "Display name")
-        self.label_iconname = TK.Label(master = self.frame_disp, text = "Icon filename")
+        self.label_dispname = TK.Label(master = self, text = "Display name")
+        self.label_iconname = TK.Label(master = self, text = "Icon filename")
 
-        self.entry_dispname = TK.Entry(master = self.frame_disp, textentry = self._displayName)
-        self.entry_iconname = TK.Entry(master = self.frame_disp, textentry = self._iconfileName)
+        self.label_dispname.grid(column = 2, row = 1)
+        self.label_iconname.grid(column = 2, row = 3)
 
-        self.label_dispname.grid(row = 0, column = 0)
-        self.label_iconname.grid(row = 1, column = 0)
+        self.entry_dispname = TK.Entry(master = self, textvariable = self._displayName)
+        self.entry_iconname = TK.Entry(master = self, textvariable = self._iconfileName)
+        self.entry_dispname.bind('<KeyRelease>', self.updateEntry)
+        self.entry_iconname.bind('<KeyRelease>', self.updateEntry)
 
-        self.entry_dispname.grid(row = 0, column = 1, columnspan = 2)
-        self.entry_iconname.grid(row = 1, column = 1, columnspan = 2)
+        self.entry_dispname.grid(column = 2, row = 2)
+        self.entry_iconname.grid(column = 2, row = 4)
 
-        self.label_desc = TK.Label(master=self.frame_desc, text = "Description")
-        self.text_desc  = TK.Text( master=self.frame_desc)
+        self.label_desc = TK.Label(master=self, text = "Description")
+        self.text_desc  = TK.Text( master=self, width = 20, height = 3)
+        self.text_desc.bind('<KeyRelease>', self.updateEntry)
 
-        self.label_desc.pack(side = TK.TOP)
-        self.text_desc.pack (side = TK.BOTTOM, fill = TK.BOTH)
+        self.label_desc.grid(column = 3, row = 1)#.pack(side = TK.TOP)
+        self.text_desc.grid(column = 3, row = 2, rowspan = 4)#.pack (side = TK.BOTTOM, fill = TK.BOTH)
 
-        self.btn_rename = TK.Button(master=self.frame_footer, text="Rename", bg = "yellow", command = self.OnRename, state = TK.NORMAL)
-        self.btn_delete = TK.Button(master=self.frame_footer, text="Delete", bg = "red",    command = self.OnDelete, state = TK.NORMAL)
+        self.btn_rename = TK.Button(master=self, text="Rename", bg = "yellow", command = self.OnRename, state = TK.NORMAL)
+        self.btn_delete = TK.Button(master=self, text="Delete", bg = "red",    command = self.OnDelete, state = TK.NORMAL)
 
-        self.btn_rename.pack(side=TK.LEFT)
-        self.btn_delete.pack(side=TK.LEFT)
+        self.btn_rename.grid(column = 2, row = 6)#.pack(side=TK.LEFT)
+        self.btn_delete.grid(column = 3, row = 6)#.pack(side=TK.LEFT)
 
+        self.reset()
     def reset(self, *_):
         self.text_desc.delete('1.0',TK.END)
         self.text_desc.insert(TK.END, self.Description)
         self._displayName.set(self.Displayname)
-        self._iconfileName.set(self.Iconfilename)
+        self._iconfileName.set(self.IconFilename)
         self.label_icon.config(image = self.HeaderIcon)
         self.label_key.config(text = self.HeaderTitle)
-    def update(self, *_):
+    def updateEntry(self, *_):
         self.Description = self.text_desc.get('1.0',TK.END)
         self.Displayname = self._displayName.get()
-        self.Iconfilename = self._iconfileName.get()
+        self.IconFilename = self._iconfileName.get()
+        self.label_icon.config(image = self.HeaderIcon)
+
 
     @property
     def HeaderTitle(self):
-        f" - {self._target} - "
+        return f" - {self._target} - "
     @property
     def HeaderIcon(self):
         try:
-            self.Img_icon.config(file = _IMAGE_DIR + self.Iconfilename)
-        except:
-            pass
-    def OnDelete(self, *_):
-        pass
+            self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+self.IconFilename.strip())
+        except Exception as err:
+            print(err)
+            self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+_FALLBACK_ICON)
+        return self._headerIcon
+    @property
+    def Story(self):
+        return Data.langstory.get(self._lang)
+    @property
+    def NameTerm(self):
+        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_NAME}"
+    @property
+    def DescTerm(self):
+        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_DESCRIPTION}"
+    @property
+    def IconTerm(self):
+        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_ICON}"
 
+    @property
+    def KeyName(self):
+        return self._target
+    @property
+    def Displayname(self):
+        return self.Story.get(self.NameTerm)
+    @property
+    def Description(self):
+        return self.Story.get(self.DescTerm)
+    @property
+    def IconFilename(self):
+        return self.Story.get(self.IconTerm)
+    
+    @Displayname.setter
+    def Displayname(self, val):
+        self.Story[self.NameTerm] = val
+    @Description.setter
+    def Description(self, val):
+        self.Story[self.DescTerm] = val
+    @IconFilename.setter
+    def IconFilename(self, val):
+        self.Story[self.IconTerm] = val    
+
+    def OnDelete(self, *_):
         self.resetCall()
     def OnRename(self, *_):
-        pass
         self.resetCall()
-
-    #TODO: Add property getter and setter for Name, Iconfilename and Description
-
 
 class ItemEditor(BaseEditor):
     def __init__(self, lang:str):
@@ -653,7 +694,7 @@ class ItemEditor(BaseEditor):
         self.newItemFrame.pack(fill = TK.X)
         TK.Entry(master=self.newItemFrame, textvariable=self.newItemName).pack(side=TK.LEFT, fill = TK.X)
         self.btnNewItem =  TK.Button(self.newItemFrame, text="Add item", command = self.OnAddItem)
-        self.btnNewItem.pack(side=TK.RIGHT, fill = TK.X)
+        self.btnNewItem.pack(side=TK.LEFT, fill = TK.X)
         self.newErrMsg = TK.Label(master=self.itemEntries.viewPort, fg = "red", text = "...")
         self.newErrMsg.pack(side=TK.BOTTOM, fill = TK.X)
 
@@ -661,7 +702,7 @@ class ItemEditor(BaseEditor):
     def OnAddItem(self, *_):
         itemkey = self.newItemName.get()
         if not re.match(ITEM_NAME_PATTERN, itemkey):
-            self.newErrMsg.config(text="Error: Bad name key format. Ensure it is a single word all caps no space or underscore.")
+            self.newErrMsg.config(text="Error: Bad name key format. Only allowed:\nupper case, numbers and underscore")
             return False
         if itemkey in GetitemsList(self.lang):
             self.newErrMsg.config(text="Error: Name key already exist.")
@@ -689,6 +730,8 @@ class ItemEditor(BaseEditor):
     def resetSelectors(self):
         self.selectors.reset(self.lang, _DATATERM_ITEM, GetGroupList(self.lang))
         self.selectors.EntryBox.config(state=TK.DISABLED)
+    def save(self):
+        Savelang(self._lang)
         
 class MultiEditor(BaseEditor):
     def __init__(self, lang:str, groupName:str):
@@ -950,10 +993,9 @@ def saveAll():
     for k in Data.langList.keys():
         Savelang(k)
 def Savelang(lang:str):
-    cwd = os.getcwd()
     filename = Data.langList[lang]
     story:dict = Data.langstory.get(lang, {})
-    with open(cwd+"/nerrative/" + filename + ".xml", "w+", encoding="utf-8") as datafile:
+    with open(_CWR+"/nerrative/" + filename + ".xml", "w+", encoding="utf-8") as datafile:
         datafile.write("<story>\n")
         for key, entry in story.items():
             datafile.write(f"<{key}>\n{entry}\n</{key}>\n")
@@ -961,9 +1003,8 @@ def Savelang(lang:str):
         datafile.close()
     Data.langEdited[lang] = False
 def saveLangFile():
-    cwd = os.getcwd()
     rootname = "languages"
-    with open(cwd+"/nerrative/languages.xml", "w+", encoding="utf-8") as datafile:
+    with open(_CWR+"/nerrative/languages.xml", "w+", encoding="utf-8") as datafile:
         datafile.write(f"<{rootname}>\n")
         for key, filename in Data.langList.items():
             datafile.write(f"<{key}>\n{filename}\n</{key}>\n")
@@ -972,10 +1013,9 @@ def saveLangFile():
 
 def LoadStory(lang:str):
     rootname = "story"
-    cwd = os.getcwd()
     filename = Data.langList[lang]
     try:
-        tree = ElementTree.parse(cwd+"/nerrative/" + filename + ".xml")
+        tree = ElementTree.parse(_CWR+"/nerrative/" + filename + ".xml")
     except Exception as e:
         err = f"Error loading language file {lang}: {e}"
         TKmsg.showerror("LOADING-ERROR", err)
@@ -991,9 +1031,8 @@ def LoadStory(lang:str):
 
 def LoadLangfile():
     rootname = "languages"
-    cwd = os.getcwd()
     try:
-        tree = ElementTree.parse(cwd+"/nerrative/languages.xml")
+        tree = ElementTree.parse(_CWR+"/nerrative/languages.xml")
     except:# Exception as e:
         if TKmsg.askokcancel("Woops..","List of languages failed to load.\nDo you wish to generate new file by adding a language?"):
             Data.langList = {}

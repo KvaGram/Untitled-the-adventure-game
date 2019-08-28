@@ -1,7 +1,6 @@
 <story>
 <TITLE_TITLENAME>
 Unfarted! The adventure gamesdfk
-
 </TITLE_TITLENAME>
 <TITLE_WELCOME>
 Welcome!! What do you wish to fail at?
@@ -24,6 +23,7 @@ Headache
 <ITEM_HEADACHE_DESC>
 A painfull headache
 hindering your thinking
+
 </ITEM_HEADACHE_DESC>
 <ITEM_TRANSLATOR_NAME>
 Translation device
@@ -32,6 +32,7 @@ Translation device
 An alien device
 that translates
 both text and speech
+
 </ITEM_TRANSLATOR_DESC>
 <ITEM_BROKE_TRANSLATOR_NAME>
 Broken device
@@ -41,6 +42,7 @@ A broken alien device.
 The insides circutry seem to be
 a mix of electronics
 and clockwork analogues
+
 </ITEM_BROKE_TRANSLATOR_DESC>
 <ITEM_ASSHOLE_NAME>
 Asshole reputation
@@ -50,6 +52,7 @@ It seems I got
 a reputation for
 being a bit of an
 asshole.
+
 </ITEM_ASSHOLE_DESC>
 <ITEM_KEEPSAKE_NAME>
 {game.Spouse.name}'s keepsake
@@ -58,12 +61,14 @@ asshole.
 A box that you seem to remember
 is very important to
 {game.Spouse.name}
+
 </ITEM_KEEPSAKE_DESC>
 <ITEM_KEYCODE_NAME>
 Human habitat security keycode
 </ITEM_KEYCODE_NAME>
 <ITEM_KEYCODE_DESC>
 0-0-0-0-0
+
 </ITEM_KEYCODE_DESC>
 <GAME_PLEASESEL>
 Please select
@@ -2220,6 +2225,24 @@ he
 she
 </GENDERED_4_FEMALE>
 <QWER>
- 
+
 </QWER>
+<ITEM_TRANSLATOR_ICON>
+ translator.gif
+</ITEM_TRANSLATOR_ICON>
+<ITEM_KEEPSAKE_ICON>
+ smallbox.gif
+</ITEM_KEEPSAKE_ICON>
+<ITEM_HEADACHE_ICON>
+ headache.gif
+</ITEM_HEADACHE_ICON>
+<ITEM_ASSHOLE_ICON>
+ asshole.gif
+</ITEM_ASSHOLE_ICON>
+<ITEM_BROKE_TRANSLATOR_ICON>
+ brokentranslator.gif
+</ITEM_BROKE_TRANSLATOR_ICON>
+<ITEM_KEYCODE_ICON>
+ note.gif
+</ITEM_KEYCODE_ICON>
 </story>

@@ -6,10 +6,12 @@ class VerticalScrollFrame(TK.Frame):
     def __init__(self, parent, **kw):
         super().__init__(parent, kw) # create a frame (self)
 
-        self.canvas = ResizingCanvas(self, borderwidth=0, background="#ffffff")          #place canvas on self
+        self.canvas = TK.Canvas(self, borderwidth=0, background="#ffffff")          #place canvas on self
         self.viewPort = TK.Frame(self.canvas, background="#ffffff")                    #place a frame on the canvas, this frame will hold the child widgets 
         self.vsb = TK.Scrollbar(self, orient="vertical", command=self.canvas.yview) #place a scrollbar on self 
         self.canvas.configure(yscrollcommand=self.vsb.set)                          #attach scrollbar action to scroll of canvas
+
+        self.viewPort.pack(side=TK.TOP, fill=TK.BOTH, expand=True)
 
         self.vsb.pack(side="right", fill="y")                                       #pack scrollbar to right of self
         self.canvas.pack(side="left", fill="both", expand=True)                     #pack canvas to left of self and expand to fil
