@@ -1,5 +1,3 @@
-#TODO: rewrite askdelete to also handle groups and items
-
 import tkinter as TK
 import tkinter.ttk as TTK
 import tkentrycomplete as TKTC
@@ -190,7 +188,7 @@ def getEntryOpen(lang:str, entry:str):
         if e.editortype == EditorType.SINGLE:
             if e.entryName == entry:
                 return e
-        elif e.editortype == EditorType.MULTI:
+        elif e.editortype == EditorType.MULTI or e.editortype == EditorType.ITEM:
             if e.GroupName == gn:
                 return e
     return None
@@ -201,7 +199,7 @@ def getGroupOpen(lang:str, group:str):
         if e.editortype == EditorType.MULTI:
             if e.GroupName == group:
                 return e
-        elif e.editortype == EditorType.SINGLE:
+        elif e.editortype == EditorType.SINGLE or e.editortype == EditorType.ITEM:
             if SplitGroupSubentry(e.entryName)[0] == group:
                 return e
     return None
@@ -566,6 +564,9 @@ class ItemEntry(TK.Frame):
         self._displayName  = TK.StringVar(value="")
         self._iconfileName = TK.StringVar(value="")
 
+        self.iconErrMsg = TK.Label(master = self, fg = "red", text = "")
+        self.iconErrMsg.grid(column = 0, row = 7, columnspan = 4)
+
         self.label_icon = TK.Label(master = self, image = self.HeaderIcon)
         self.label_key = TK.Label(master = self, text = self.HeaderTitle)
 
@@ -599,6 +600,8 @@ class ItemEntry(TK.Frame):
         self.btn_rename.grid(column = 2, row = 6)#.pack(side=TK.LEFT)
         self.btn_delete.grid(column = 3, row = 6)#.pack(side=TK.LEFT)
 
+
+
         self.reset()
     def reset(self, *_):
         self.text_desc.delete('1.0',TK.END)
@@ -621,8 +624,9 @@ class ItemEntry(TK.Frame):
     def HeaderIcon(self):
         try:
             self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+self.IconFilename.strip())
+            self.iconErrMsg.config(text = "")
         except Exception as err:
-            print(err)
+            self.iconErrMsg.config(text = err)
             self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+_FALLBACK_ICON)
         return self._headerIcon
     @property
@@ -662,6 +666,11 @@ class ItemEntry(TK.Frame):
         self.Story[self.IconTerm] = val    
 
     def OnDelete(self, *_):
+        full_target = _DATATERM_ITEM + "_" + self._target
+        if askDeleteEntry(self._lang, full_target, True):
+            self.resetCall()
+            self.edited = True
+        """ #Alternate code
         if TKmsg.askyesno("Delete item entries?", f"Are you sure you wish to delete {self._target}?"):
             name = _DATATERM_ITEM + "_" + self._target + _DATATERM_NAME
             icon = _DATATERM_ITEM + "_" + self._target + _DATATERM_ICON
@@ -671,10 +680,12 @@ class ItemEntry(TK.Frame):
             self.Story.pop(desc, None)
             self.resetCall()
             self.edited = True
-
+        """
         
     def OnRename(self, *_):
-        self.resetCall()
+        full_target = _DATATERM_ITEM + "_" + self._target
+        if askRenameEntry(self._lang, full_target, full_target, True):
+            self.resetCall()
 
 class ItemEditor(BaseEditor):
     def __init__(self, lang:str):
@@ -988,18 +999,37 @@ class SingleEditor(BaseEditor):
         self.Story[self._targetName] = val
     
 def askDeleteEntry(lang, entryname, isGroup = False):
-    if TKmsg.askokcancel("Delete entry", f"You are about to delete {entryname} from {lang}"):
-
-        Data.langstory.get(lang, {}).pop(entryname, None)
+    title1 = ""
+    msg1 = ""
+    msg2 = ""
+    if isGroup:
+        title1 = "Delete entries?"
+        msg1 =  f"You are about to delete all entries starting with '{entryname}'' from {lang}"
+        msg2 = f"All entries starting with {entryname} has been deleted!\nWould you like to save?"
+    else:
+        title1 = "Delete entry?"
+        msg1 = f"You are about to delete {entryname} from {lang}"
+        msg2 = f"The entry {entryname} has been deleted. Would you like to save?"
+    
+    if TKmsg.askokcancel(title1, msg1, icon = TKmsg.WARNING):
+        if isGroup:
+            story = Data.langstory.get(lang, {})
+            for e in story.keys():
+                if e.startswith(entryname):
+                    story.pop(e, None)
+        else:
+            Data.langstory.get(lang, {}).pop(entryname, None)
         Data.langEdited[lang] = True
-        if TKmsg.askyesno("Save file?", f"The entry {entryname} has been deleted. Would you like to save?"):
+
+        if TKmsg.askyesno("Save file?", msg2):
             Savelang(lang)
         return True
     return False
 def askRenameEntry(lang, oldname, newname="", isGroup = False):
     newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname, isGroup)
     if newname:
-        return doRenameEntry(lang, oldname, newname, isGroup)
+        doRenameEntry(lang, oldname, newname, isGroup)
+        return True
     return False
 
 def doRenameEntry(lang, oldname, newname, isGroup = False):
