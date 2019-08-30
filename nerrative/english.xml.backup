@@ -2171,25 +2171,5 @@ You leave the room content you have done what you could to fix it up.
 
 <GENDERED_4_MALE>he</GENDERED_4_MALE>
 <GENDERED_4_FEMALE>she</GENDERED_4_FEMALE>
-
-<ITEM_TRANSLATOR_ICON>
- translator.gif
-</ITEM_TRANSLATOR_ICON>
-<ITEM_KEEPSAKE_ICON>
- smallbox.gif
-</ITEM_KEEPSAKE_ICON>
-<ITEM_HEADACHE_ICON>
- headache.gif
-</ITEM_HEADACHE_ICON>
-<ITEM_ASSHOLE_ICON>
- asshole.gif
-</ITEM_ASSHOLE_ICON>
-<ITEM_BROKE_TRANSLATOR_ICON>
- brokentranslator.gif
-</ITEM_BROKE_TRANSLATOR_ICON>
-<ITEM_KEYCODE_ICON>
- note.gif
-</ITEM_KEYCODE_ICON>
-
 <!--End of file-->
 </story>

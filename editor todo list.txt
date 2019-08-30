@@ -1,0 +1,56 @@
+Add a seperator between lanaguge and entry selectors & enlarge entry selector
+
+Add a null-state on an editor as startup state, where an entry has not yet been set.
+Add a save function in the file menu.
+Add a save all function in the file menu.
+Add a close function in the file menu
+Add a close all function in the file menu
+
+
+Add a patch langauge function in the edit menu
+	This will open a dialoge window.
+	It will add every entry that exist in the source langauge to the target langauge.
+	It will also ask if you also want to clone the text from the source.
+	It will not override existing text in the target language
+	(this triggers an event that refresh the textfields of all open editors)
+Add a clone-to function in the edit menu
+	opens a dialoge window asking the target language file and entry / entrygroup.
+	This copies the content to the target entry in the target language.
+	If this will override existing content, the user must be warned.
+	(this triggers an event that refresh the textfields of all open editors)(this triggers an event that refresh the textfields of all open editors)
+Add a multi-edit mode.
+	This mode groups the entries by name.
+	Every entryname is split on the last underscore
+		The first part is its groupname, the last its sub-entry
+	A new list is compiled by the group names.
+	If a group has more entries that what is reasonable to display on screen, there should be a scrollbar.
+	
+Add a switch to multi-edit mode function in the file menu.
+	This will attempt to open current entry's entrygroup in multi-edit.
+	If an other editor has another entry in this group open, a dialoge will ask if it is ok to close that editor.
+		If the user declines, the operation shall be aborted.
+	The editor will then close, and the new window in multi-edit mode will open.
+Add a switch to single-edit mode button in multi-edit mode entries.
+	This mode will close the multi-edit window, and open the selected entry in a single-edit mode.
+Add a add entry function to multi-edit mode edit option.
+	This will request a sub-entry-name, and will be named based on the open entrygroup name.
+	
+
+Made a new general function to tell if an entry is open
+	Two variants. One to check entrygroup is open, one to check entryname is open.
+	They will check each open editor for a matching langauge and entry.
+	
+At close editor, ask user if they wish to save, but only is no other editor of this language is open.
+	
+
+
+Maybe-list:
+Add a note system refrensing the tags in use in a text.
+Add a way of linking tags to related entries so such entries can be accessed easy.
+
+Add a side-by-side mode.
+	This requires a rewrite of EntryEditor to be a TK.Frame.
+	This requires adding a new parent class inherting TK.TopLevel to host one or more EntryEditors.
+
+Add an internal spellchecker
+	There exist libraries for this, but implementation may be complicated
