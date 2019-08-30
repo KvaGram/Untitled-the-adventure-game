@@ -1,3 +1,5 @@
+from untitled_const import DATATERM_ITEM, DATATERM_NAME, DATATERM_DESCRIPTION, DATATERM_ICON
+
 class _ItemDB(object):
     _ITEMS = []
     def __new__(cls, name:str, dName:str, desc:str, image:str):
@@ -30,6 +32,15 @@ class _ItemDB(object):
             cls._ITEMS.remove(i)
             return True
         return False
+
+def SETUP(T:callable, *itemkey:str):
+    items = []
+    for i in itemkey:
+        n_key = f"{DATATERM_ITEM}_{i}{DATATERM_NAME}"
+        d_key = f"{DATATERM_ITEM}_{i}{DATATERM_DESCRIPTION}"
+        i_key = f"{DATATERM_ITEM}_{i}{DATATERM_ICON}"
+        items.append(_ItemDB(i, T(n_key), T(d_key), T(i_key)))
+    pass
 
 #wrapper for _ItemDB.__new__
 def SET(name:str, displayname:str, desc:str, image:str)->_ItemDB:

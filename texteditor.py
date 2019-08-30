@@ -9,22 +9,9 @@ from xml.etree import cElementTree as ElementTree
 import os
 import sys
 from scrollFrame import VerticalScrollFrame
+from untitled_const import *
 
-ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
-ITEM_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
-
-_CWR = os.getcwd()
-
-_SEPERATOR = "_"
-
-_FALLBACK_ICON = "empty.gif"
-_IMAGE_DIR = "images/"
-
-_DATATERM_ITEM = "ITEM"
-
-_DATATERM_NAME = "_NAME"
-_DATATERM_DESCRIPTION = "_DESC"
-_DATATERM_ICON = "_ICON"
+_CWR = os.getcwd() 
 
 #Display language : internal language (filename)
 #langList = {"English" : "english", "Testlang Alpha" : "test1", "Testlang Beta" : "test2"}
@@ -39,9 +26,9 @@ class Data():
 
 def SplitGroupSubentry(entryname:str):
     
-    segs = entryname.split(_SEPERATOR)
+    segs = entryname.split(SEPERATOR)
     subentry = segs.pop(-1)
-    groupname = _SEPERATOR.join(segs)
+    groupname = SEPERATOR.join(segs)
 
     return (groupname, subentry)
     
@@ -57,8 +44,8 @@ def GetitemsList(lang:str):
     lst = Data.langstory.get(lang, {})
     lst2 = set()
     for e in lst:
-        segs = e.split(_SEPERATOR)
-        if segs[0] != _DATATERM_ITEM or len(segs) < 3:
+        segs = e.split(SEPERATOR)
+        if segs[0] != DATATERM_ITEM or len(segs) < 3:
             continue
         segs.pop(0)
         segs.pop()
@@ -623,24 +610,24 @@ class ItemEntry(TK.Frame):
     @property
     def HeaderIcon(self):
         try:
-            self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+self.IconFilename.strip())
+            self._headerIcon = TK.PhotoImage(file = IMAGE_DIR + self.IconFilename.strip())
             self.iconErrMsg.config(text = "")
         except Exception as err:
             self.iconErrMsg.config(text = err)
-            self._headerIcon = TK.PhotoImage(file = _IMAGE_DIR+_FALLBACK_ICON)
+            self._headerIcon = TK.PhotoImage(file = IMAGE_DIR +FALLBACK_ICON)
         return self._headerIcon
     @property
     def Story(self):
         return Data.langstory.get(self._lang)
     @property
     def NameTerm(self):
-        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_NAME}"
+        return f"{DATATERM_ITEM}_{self.KeyName}{DATATERM_NAME}"
     @property
     def DescTerm(self):
-        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_DESCRIPTION}"
+        return f"{DATATERM_ITEM}_{self.KeyName}{DATATERM_DESCRIPTION}"
     @property
     def IconTerm(self):
-        return f"{_DATATERM_ITEM}_{self.KeyName}{_DATATERM_ICON}"
+        return f"{DATATERM_ITEM}_{self.KeyName}{DATATERM_ICON}"
 
     @property
     def KeyName(self):
@@ -666,15 +653,15 @@ class ItemEntry(TK.Frame):
         self.Story[self.IconTerm] = val    
 
     def OnDelete(self, *_):
-        full_target = _DATATERM_ITEM + "_" + self._target
+        full_target = DATATERM_ITEM + "_" + self._target
         if askDeleteEntry(self._lang, full_target, True):
             self.resetCall()
             self.edited = True
         """ #Alternate code
         if TKmsg.askyesno("Delete item entries?", f"Are you sure you wish to delete {self._target}?"):
-            name = _DATATERM_ITEM + "_" + self._target + _DATATERM_NAME
-            icon = _DATATERM_ITEM + "_" + self._target + _DATATERM_ICON
-            desc = _DATATERM_ITEM + "_" + self._target + _DATATERM_DESCRIPTION
+            name = DATATERM_ITEM + "_" + self._target + DATATERM_NAME
+            icon = DATATERM_ITEM + "_" + self._target + DATATERM_ICON
+            desc = DATATERM_ITEM + "_" + self._target + DATATERM_DESCRIPTION
             self.Story.pop(name, None)
             self.Story.pop(icon, None)
             self.Story.pop(desc, None)
@@ -683,13 +670,13 @@ class ItemEntry(TK.Frame):
         """
         
     def OnRename(self, *_):
-        full_target = _DATATERM_ITEM + "_" + self._target
+        full_target = DATATERM_ITEM + "_" + self._target
         if askRenameEntry(self._lang, full_target, full_target, True):
             self.resetCall()
 
 class ItemEditor(BaseEditor):
     def __init__(self, lang:str):
-        super().__init__(lang, _DATATERM_ITEM, EditorType.ITEM)
+        super().__init__(lang, DATATERM_ITEM, EditorType.ITEM)
         def _VOID():
             pass
         self.selectors = EntrySelector(self, self.SetLang, _VOID)
@@ -737,9 +724,9 @@ class ItemEditor(BaseEditor):
         self.UpdateEntries()
         return True
     def addpatchItem(self, itemkey):
-        name = _DATATERM_ITEM + "_" + itemkey + _DATATERM_NAME
-        icon = _DATATERM_ITEM + "_" + itemkey + _DATATERM_ICON
-        desc = _DATATERM_ITEM + "_" + itemkey + _DATATERM_DESCRIPTION
+        name = DATATERM_ITEM + "_" + itemkey + DATATERM_NAME
+        icon = DATATERM_ITEM + "_" + itemkey + DATATERM_ICON
+        desc = DATATERM_ITEM + "_" + itemkey + DATATERM_DESCRIPTION
         contents = (name, icon, desc)
 
         for content in contents:
@@ -754,7 +741,7 @@ class ItemEditor(BaseEditor):
         self.resetSelectors()
 
     def resetSelectors(self):
-        self.selectors.reset(self.lang, _DATATERM_ITEM, GetGroupList(self.lang))
+        self.selectors.reset(self.lang, DATATERM_ITEM, GetGroupList(self.lang))
         self.selectors.EntryBox.config(state=TK.DISABLED)
     def save(self):
         Savelang(self._lang)

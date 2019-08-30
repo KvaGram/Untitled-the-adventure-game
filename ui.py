@@ -4,19 +4,23 @@ from tkinter import scrolledtext as TKS
 import time
 from typing import List
 import ItemDB
+from untitled_const import IMAGE_DIR, FALLBACK_ICON
 
 class inventoryItem(TK.Frame):
     def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, **args):
         super(inventoryItem, self).__init__(master = root, **args)
         if itemtype:
             displayName = itemtype.dName
-            displayImag = itemtype.image
+            displayImag = IMAGE_DIR + itemtype.image
             displayDesc = itemtype.desc
         else:
             displayName = "((ERROR))"
-            displayImag = "empty.gif"
+            displayImag = IMAGE_DIR + FALLBACK_ICON
             displayDesc = " - "
-        self.imageData = TK.PhotoImage(file = displayImag)
+        try:
+            self.imageData = TK.PhotoImage(file = displayImag)
+        except:
+            self.imageData = TK.PhotoImage(file = IMAGE_DIR + FALLBACK_ICON)
         self.toplabel = TK.Label(master=self, text = displayName)
         self.midlabel = TK.Label(master=self, image = self.imageData)
         self.buttomlabel = TK.Label(master=self, text= displayDesc)

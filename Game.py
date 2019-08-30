@@ -7,7 +7,7 @@ import random
 import sys
 import re
 
-import ItemDB
+import ItemDB 
 import Storyloader
 from tkinter import messagebox as TKmsg
 
@@ -26,14 +26,15 @@ class Game:
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
         self.destroyed = False 
 
-        
+        ItemDB.SETUP(T, "HEADACHE", "TRANSLATOR","ASSHOLE","KEYCODE","KEEPSAKE","BROKE_TRANSLATOR")
+        """
         ItemDB.SET("HEADACHE", T("ITEM_HEADACHE_NAME"), T("ITEM_HEADACHE_DESC"), "headache.gif")
         ItemDB.SET("TRANSLATOR", T("ITEM_TRANSLATOR_NAME"), T("ITEM_TRANSLATOR_DESC"), "translator.gif")
         ItemDB.SET("ASSHOLE", T("ITEM_ASSHOLE_NAME"), T("ITEM_ASSHOLE_DESC"), "asshole.gif")
         ItemDB.SET("KEYCODE", T("ITEM_KEYCODE_NAME"), T("ITEM_KEYCODE_DESC"), "note.gif")
         ItemDB.SET("KEEPSAKE", T("ITEM_KEEPSAKE_NAME"), T("ITEM_KEEPSAKE_DESC"), "smallbox.gif")
         ItemDB.SET("BROKE_TRANSLATOR", T("ITEM_BROKE_TRANSLATOR_NAME"), T("ITEM_BROKE_TRANSLATOR_DESC"), "brokentranslator.gif")
-
+        """
         self.GeneralList = {
             "credits"        : Game.runCredits,
             "onReactorCTime" : Game.onReactorCTime
