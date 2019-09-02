@@ -6,6 +6,8 @@ import time
 import random
 import sys
 import re
+from untitled_const import ReturnToMain
+from untitled_const import ReturnToTitle
 
 import ItemDB 
 import Storyloader
@@ -15,7 +17,7 @@ from tkinter import messagebox as TKmsg
 class Game:
     def __init__(self, tkroot:TK.Tk, version:(int,int,int), language:str = "english"):
         T = Gettexter(self)
-        self.ui:ui.UntitledUI = ui.UntitledUI(tkroot)
+        self.ui:ui.UntitledUI = ui.UntitledUI(tkroot, savecall = self.savegame, loadcall = self.loadgame, newcall = self.restartGame)
         self.tkroot:TK.Tk = tkroot
         self.version = version
         self.langauge = language
@@ -24,7 +26,10 @@ class Game:
         self.runner:PlaceRunner = None
 
         self.tkroot.protocol("WM_DELETE_WINDOW", self.onExit)
-        self.destroyed = False 
+        self.destroyed = False
+
+        self.returnToTitle = False
+        self.returnToMain = False
 
         ItemDB.SETUP(T, "HEADACHE", "TRANSLATOR","ASSHOLE","KEYCODE","KEEPSAKE","BROKE_TRANSLATOR")
         """
@@ -53,16 +58,19 @@ class Game:
         self.quit()
         sys.exit()
     def opengamemenu(self):
-        raise NotImplementedError
+        NotAddedYet()
         #TODO: implement open game menu
     def newgame(self):
         self.savedata = {}
         self.setdata("navdata", Navdata())
+    def restartGame(self):
+        self.newgame()
+        self.returnToMain = True
     def loadgame(self):
-        raise NotImplementedError
+        NotAddedYet()
         #TODO: implement loadgame
     def savegame(self):
-        raise NotImplementedError
+        NotAddedYet()
         #TODO: implement savegame
 
     def update(self):
@@ -82,6 +90,12 @@ class Game:
             self.tkroot.update_idletasks()
         except (TK.TclError):
             return
+        if self.returnToMain:
+            self.returnToMain = False
+            raise ReturnToMain()
+        if self.returnToTitle:
+            self.returnToTitle = False
+            raise ReturnToTitle()
     # retext runs format_map untill the text is formatted (or up to 5 times)
     # Fills inn all the tags that may show up:
     # game tags: example {game.PlayerSomething} - always starts with 'game.'
@@ -105,7 +119,7 @@ class Game:
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
         if data and data.Type == "game":
-            raise NotImplementedError() #TODO: handle gamemenu events
+            NotAddedYet() #TODO: handle gamemenu events
         return data
     
     def runGeneral(self, call):
@@ -113,7 +127,7 @@ class Game:
         if call:
             call()
         else:
-            raise NotImplementedError
+            NotAddedYet()
 
     def choose(self, _list, message = "{GAME_MAKECHOICE}", wait = False, frags = {}):
         _list = self.retext(_list, frags)
@@ -671,3 +685,6 @@ class PlaceNode:
 class formatdict(dict):
     def __missing__(self, key):
         return "{"+key+"}"
+
+def NotAddedYet():
+    TKmsg.showwarning("WOOPS..","Sorry, that feature is not added yet.\nPlease be impatient.\nI am very lazy, and need the pressure.")

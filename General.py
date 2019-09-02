@@ -6,14 +6,6 @@
 
 import Game
 
-class ReturnToMain(Exception):
-    def __init__(self, args, kwargs):
-        super().__init__(args, kwargs)
-class ReturnToTitle(Exception):
-    def __init__(self, args, kwargs):
-        super().__init__(args, kwargs)
-
-
 def elevator(game:Game.Game):
     def content():
         T = Game.Gettexter(game)

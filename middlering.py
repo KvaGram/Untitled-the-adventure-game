@@ -21,7 +21,6 @@ class MiddleRunner(Game.PlaceRunner1D):
 def Start(game:Game.Game):
     T = Game.Gettexter(game)
     
-    navdata = game.Navdata
     runner:Runner = Runner(game)
     #intro = "place holder corridor intro text (should not show up in the game)"
     #----------------------------
@@ -402,7 +401,14 @@ def Start(game:Game.Game):
         if knowledge < 1:
             knowledge = 1
         game.setdata("wheelC:knowledge", knowledge)
-    
+
+
+    #local shorthand.
+    #Stops loop and sets next place in the game.
+    def goto(place):
+        runner.stop()
+        game.place = place
+
     #Import Elevator event from General
     elevator = General.elevator(game)
     #importing ladder
@@ -410,11 +416,7 @@ def Start(game:Game.Game):
 
     #endregion places and actions
     #----------------------------
-    #local shorthand.
-    #Stops loop and sets next place in the game.
-    def goto(place):
-        runner.stop()
-        game.place = place
+
     def setupRunner():
         knowledge = game.getdata("wheelC:knowledge", 0)
         game.setdata("wheelC:knowledge", knowledge)

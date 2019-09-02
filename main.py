@@ -11,8 +11,8 @@ from tkinter import messagebox as TKmsg
 import ui
 import Game
 import Storyloader
-from general import ReturnToMain
-from general import ReturnToTitle
+from untitled_const import ReturnToMain
+from untitled_const import ReturnToTitle
 
 import room_apartment 
 import middlering
@@ -36,9 +36,9 @@ def start():
     while True:
         try:
             titleMenu(game)
-        except (ReturnToTitle):
+        except ReturnToTitle:
             continue
-        except (SystemExit):
+        except SystemExit:
             break
 
             

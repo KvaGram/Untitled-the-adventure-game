@@ -20,7 +20,8 @@ class inventoryItem(TK.Frame):
             displayDesc = " - "
         try:
             self.imageData = TK.PhotoImage(file = displayImag)
-        except:
+        except Exception as err:
+            print(err)
             self.imageData = TK.PhotoImage(file = IMAGE_DIR + FALLBACK_ICON)
         self.toplabel = TK.Label(master=self, text = displayName)
         self.midlabel = TK.Label(master=self, image = self.imageData)
