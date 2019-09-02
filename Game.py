@@ -67,10 +67,19 @@ class Game:
         self.newgame()
         self.returnToMain = True
     def loadgame(self):
-        NotAddedYet()
+        path = self.ui.selectSaveFile()
+        if path:
+            NotAddedYet()
+        else:
+            pass
         #TODO: implement loadgame
     def savegame(self):
-        NotAddedYet()
+        path = self.ui.askSaveFile()
+        if path:
+            NotAddedYet()
+        else:
+            pass
+
         #TODO: implement savegame
 
     def update(self):

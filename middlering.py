@@ -441,7 +441,7 @@ def Start(game:Game.Game):
                 ("_", T("ACT_USE"), elevator),
             ]),
             Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "{MIDDLE_NAV_CAFE}"), [
-                ("_", ("ACT_ENTER_ROOM"), cafeteria),
+                ("_", T("ACT_ENTER_ROOM"), cafeteria),
             ]),
             Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_B}"), [
                 ("_", T("ACT_READ_SIGN"), sectionBdoor),

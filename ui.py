@@ -307,6 +307,14 @@ class UntitledUI:
         
 
         self.root.config(menu = rootmenu)
+    def selectSaveFile(self):
+        return False
+        #TODO: write function that search for savefiles, and lets the user select one to load the game from.
+        # Must return: full system path
+    def askSaveFile(self):
+        return False #TODO: write function that lets the player write a name for a savefile. Must seach for existing files as suggestions.
+        # must return: full system path (maybe also file exist warning)
+
 
 class NavButton(TK.Button):
     def __init__(self, master=None, cnf={}, **kwargs):
