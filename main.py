@@ -11,6 +11,8 @@ from tkinter import messagebox as TKmsg
 import ui
 import Game
 import Storyloader
+from general import ReturnToMain
+from general import ReturnToTitle
 
 import room_apartment 
 import middlering
@@ -18,8 +20,8 @@ import Bathrooms
 import Ladder
 import Core
 import Cafeteria
-#import outer
-#import inner
+import outer
+import inner
 
 #version number. Major, minor, hotfix.
 VERSION = [1, 0, 0]
@@ -34,6 +36,8 @@ def start():
     while True:
         try:
             titleMenu(game)
+        except (ReturnToTitle):
+            continue
         except (SystemExit):
             break
 
@@ -66,9 +70,9 @@ def game_loop(game:Game):
     world = {
         "apartment" : room_apartment.Start,
         "core"      : Core.Core,
-        #"inner"     : inner.main,
+        "inner"     : inner.Start,
         "middle"    : middlering.Start,
-        #"outer"     : outer.main,
+        "outer"     : outer.Start,
         "ladder"    : Ladder.Start,
         "bathrooms" : Bathrooms.Start,
         "cargobay"  : Core.Cargobay, 
@@ -95,7 +99,12 @@ _________________________________________________
         except:
             place = None
         if(place):
-            place(game)
+            try:
+                place(game)
+            except (ReturnToMain):
+                #ReturnToMain is called when new game or load game is called from outside the title menu.
+                continue
+            
             game_over = game.getGameover()
         else:
             game.showtext("""
