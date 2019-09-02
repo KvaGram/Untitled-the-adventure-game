@@ -1,6 +1,7 @@
 import tkinter as TK
 from tkinter import font as TKF
 from tkinter import scrolledtext as TKS
+from tkinter import messagebox as TKmsg
 import time
 from typing import List
 import ItemDB
@@ -68,6 +69,7 @@ class UntitledUI:
         self.draw_inventory()
         self.draw_navtext()
         self.draw_navkeys()
+        self.draw_menu(**args)
 
         self.main.grid_columnconfigure(0, weight=10)
         self.main.grid_columnconfigure(1, weight=1)
@@ -288,6 +290,22 @@ class UntitledUI:
         self.nav_right .config(font = font, text = text_right, state = state_right)
         self.nav_down  .config(font = font, text = text_down, state = state_down)
         self.nav_45    .config(font = font, text = text_upright)
+    def draw_menu(self, **args):
+        def voidcall():
+            TKmsg.showinfo("Sorry", "Sorry!\nSomething went wrong\nor this is just a placeholder.")
+        saveCall = args.get("savecall", voidcall)
+        loadCall = args.get("loadcall", voidcall)
+        newCall = args.get("newcall", voidcall)
+
+        rootmenu = TK.Menu(tearoff = False)
+        gamemenu = TK.Menu(tearoff = False)
+        rootmenu.add_cascade(label="Game", menu = gamemenu)
+        gamemenu.add_command(label="Save", command=saveCall)
+        gamemenu.add_command(label="Load", command=loadCall)
+        gamemenu.add_command(label="New Game", command=newCall)
+        
+
+        self.root.config(menu = rootmenu)
 
 class NavButton(TK.Button):
     def __init__(self, master=None, cnf={}, **kwargs):
