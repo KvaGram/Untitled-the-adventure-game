@@ -1,11 +1,13 @@
+import os
 import tkinter as TK
 from tkinter import font as TKF
 from tkinter import scrolledtext as TKS
 from tkinter import messagebox as TKmsg
+import tkentrycomplete as TKTC
 import time
 from typing import List
 import ItemDB
-from untitled_const import IMAGE_DIR, FALLBACK_ICON
+from untitled_const import IMAGE_DIR, FALLBACK_ICON, SAVE_DIR, SAVE_FILETYPE
 
 class inventoryItem(TK.Frame):
     def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, **args):
@@ -307,13 +309,63 @@ class UntitledUI:
         
 
         self.root.config(menu = rootmenu)
-    def selectSaveFile(self):
-        return False
-        #TODO: write function that search for savefiles, and lets the user select one to load the game from.
-        # Must return: full system path
-    def askSaveFile(self):
-        return False #TODO: write function that lets the player write a name for a savefile. Must seach for existing files as suggestions.
-        # must return: full system path (maybe also file exist warning)
+    def askSaveFile(self, loadMode:bool):
+        class AskData:
+            running:bool = True
+            ret:tuple = None
+        askData = AskData()
+        sel = None
+
+        savefiles = []
+        savedir = os.path.join(os.getcwd(), SAVE_DIR)
+        if not os.path.exists(savedir):
+            os.makedirs(savedir)
+        for _, _, f in os.walk(savedir):
+            for file in f:
+                if SAVE_FILETYPE in file:
+                    savefiles.append(file.replace(SAVE_FILETYPE, ""))
+        
+
+        def onOK():
+            if loadMode and not getExists():
+                err.config(text="File not found")
+                return
+            if not loadMode and len(sel.get()) < 1:
+                err.config(text="Filename not valid")
+                return
+            askData.ret = (getFullPath(), getExists())
+            askData.running = False
+
+        def onCancel():
+            askData.ret = False
+            askData.running = None
+        def getFullPath():
+            return os.path.join(savedir, sel.get() + SAVE_FILETYPE)
+        def getExists():
+            return sel.get() in savefiles
+        
+        askwindow = TK.Toplevel(master=self.root)
+        
+        if (loadMode):
+            sel = TKTC.AutocompleteCombobox(askwindow)
+            askwindow.title("Load Game")
+        else:
+            sel = TKTC.AutocompleteEntry(askwindow)
+            askwindow.title("Save Game")
+        sel.set_completion_list(savefiles)
+
+        sel.grid(column = 0, row = 0, columnspan = 3)
+        TK.Label (master = askwindow, text = SAVE_FILETYPE).grid(column = 3, row = 0)
+        err = TK.Label(master = askwindow, text = "", fg = "red")
+        err.grid(row = 1, column = 0, columnspan = 4)
+        TK.Button(master = askwindow, text = "OK", command = onOK).grid(row = 2, columnspan = 2)
+        TK.Button(master = askwindow, text = "CANCEL", command = onCancel).grid(row = 2, column = 2, columnspan = 2)
+
+        while(askData.running):
+            askwindow.update_idletasks()
+            askwindow.update()
+        askwindow.destroy()
+        return askData.ret
 
 
 class NavButton(TK.Button):

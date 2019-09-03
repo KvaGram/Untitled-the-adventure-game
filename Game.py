@@ -67,10 +67,14 @@ class Game:
     def restartGame(self):
         self.newgame()
         self.returnToMain = True
-    def loadgame(self):
-        path = self.ui.selectSaveFile()
-        if not path or path == "":
-            return
+    def loadgame(self, fromTitle = False):
+        res = self.ui.askSaveFile(True)
+        if not res:
+            return False
+        path, exists = res
+        if not exists:
+            return False
+        
         ldata = {}
         with open(path, "r") as f:
             ldata = json.load(f)
@@ -97,19 +101,31 @@ class Game:
         else:
             TKmsg.showwarning("Load Game", "The save is OLD! The game may not run correctly with this savefile.")
         self.savedata = ldata
-        self.returnToMain = True
+        self.setdata("navdata", Navdata())
+        self.ui.draw_inventory(itemlist = self.getAllInventory())
+        if not fromTitle:
+            self.returnToMain = True
+        return True
     def savegame(self):
-        path = self.ui.askSaveFile()
-        if path:
-            #NotAddedYet()
-            self.setdata("version", self.version)
-            with open(path, "w+") as f:
-                json.dump(self.savedata, f)
-                f.close()
-        else:
-            pass
-
-        #TODO: implement savegame
+        res = self.ui.askSaveFile(False)
+        if not res:
+            return False
+        path, exists = res
+        if(exists):
+            if not TKmsg.askokcancel("Override save", "Do you wish to override this savefile?"):
+                return False
+        toSave = {}
+        toSave["version"] = self.version
+        _filter = ("navdata",)
+        for key, val in self.savedata.items():
+            if key in _filter:
+                continue
+            toSave[key] = val
+        self.setdata("version", self.version)
+        with open(path, "w+") as f:
+            json.dump(toSave, f)
+            f.close()
+        return True
 
     def update(self):
         if self.destroyed:
@@ -126,7 +142,7 @@ class Game:
         try:
             self.tkroot.update()
             self.tkroot.update_idletasks()
-        except (TK.TclError):
+        except (TK.TclError): 
             return
         if self.returnToMain:
             self.returnToMain = False

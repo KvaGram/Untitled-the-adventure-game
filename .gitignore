@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 *.odt#
 texteditor.py.backup.py
+/saves

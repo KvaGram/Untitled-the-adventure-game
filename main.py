@@ -41,7 +41,7 @@ import types
 import tkinter as TK
 from tkinter import messagebox as TKmsg
 
-import ui
+import ui 
 import Game
 import Storyloader
 from untitled_const import ReturnToMain
@@ -188,7 +188,7 @@ def titleMenu(game:Game.Game):
             game.runGeneral("credits")
             return
         if r == "LOADGAME":
-            if game.loadgame():
+            if game.loadgame(fromTitle = True):
                 game_loop(game)
             return
         if r == "NEWGAME":

@@ -1,11 +1,20 @@
-#sonstants for Untitled! The adventure game and text editor
+#constants for Untitled! The adventure game and text editor
+import sys
 
 ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
 ITEM_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
 SEPERATOR = "_"
 
 FALLBACK_ICON = "empty.gif"
-IMAGE_DIR = "images/"
+
+#bizarro windows world...
+if sys.platform.startswith("win"):
+    IMAGE_DIR = "images\\"
+    SAVE_DIR = "saves\\"
+else: # or normal?
+    IMAGE_DIR = "images/"
+    SAVE_DIR = "saves/"
+SAVE_FILETYPE = ".uagsave"
 
 DATATERM_ITEM = "ITEM"
 
