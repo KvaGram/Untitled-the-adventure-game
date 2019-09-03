@@ -1,5 +1,6 @@
 # Merging the utility functions, savedata and UI into one nice and convinient class.
 from typing import List
+import json
 import ui
 import tkinter as TK
 import time
@@ -68,15 +69,43 @@ class Game:
         self.returnToMain = True
     def loadgame(self):
         path = self.ui.selectSaveFile()
-        if path:
-            NotAddedYet()
+        if not path or path == "":
+            return
+        ldata = {}
+        with open(path, "r") as f:
+            ldata = json.load(f)
+            f.close()
+        if len(ldata) < 1:
+            return
+        #comparing versions.
+        lversion = ldata.get("version")
+        if not lversion:
+            return
+        major  = lversion[0] - self.version[0]
+        minor  = lversion[1] - self.version[1]
+        #hotfix = lversion[2] - self.version[2]
+        if major == 0:
+            if minor == 0:
+                #not worth comparing a hotfix
+                pass
+            elif minor > 0:
+                TKmsg.showinfo("Load Game", "This save was made with a newer version of the game. This may cause problems.")
+            else:
+                TKmsg.showinfo("Load Game", "This save was made with a older version of the game. This should be fine, but could cause issues.")
+        elif major > 0:
+            TKmsg.showwarning("Load Game", "This save is FROM THE FUTURE! You should run a newer version of the game instead.")
         else:
-            pass
-        #TODO: implement loadgame
+            TKmsg.showwarning("Load Game", "The save is OLD! The game may not run correctly with this savefile.")
+        self.savedata = ldata
+        self.returnToMain = True
     def savegame(self):
         path = self.ui.askSaveFile()
         if path:
-            NotAddedYet()
+            #NotAddedYet()
+            self.setdata("version", self.version)
+            with open(path, "w+") as f:
+                json.dump(self.savedata, f)
+                f.close()
         else:
             pass
 

@@ -1,3 +1,36 @@
+#NOTE: idea for fixing the break to title or brake to main functions without needing to use exception calls.
+# Use genertors. Like in a previus version of this project, have a yield statement on every call that invokes game.update.
+# Problem 1: What will the generators yield? Just a "everything is ok here"-true boolean?
+# problem 2: What about sub-processes that invoke game.update?
+# 1: void. It should not matter what the yield it, as long as the chain can be broken in the game loop.
+# 2: Their function can be yielded to the game loop, where they will be put on a stack and ran as the current function.
+#!!! ding ding! There it is. I just re-invented the call stack. But this might just be what I need.
+
+# The outer game loop would work thusly:
+# * Get place (function / generator)
+#   * end game with error if not found
+# * Check for game over
+#   * end game if game over
+# * start new call-stack
+# * insert place-generator in stack
+# * start inner game loop
+
+# The inner game loop would work like this:
+# * Check if stack is empty
+#   * if so, break out of inner loop (return)
+# * try
+#   * fetch next element in current function
+#   * check if element is a generator.
+#   *   if so, add element to top of stack
+#   * check if break to main or break to title is triggured
+#       * if so, break out of inner game loop (return)
+# * catch/except - end of function error
+#   * remove current function from stack.
+#
+   
+# But what if I could access the call stack directly? If I could, then maybe I won't even need to make generator functions.
+# Must be reseached!
+
 import os
 import time
 import random
@@ -24,7 +57,7 @@ import outer
 import inner
 
 #version number. Major, minor, hotfix.
-VERSION = [1, 0, 0]
+VERSION = [1, 2, 0]
 #if dev is on, some debug info may be displayed in the game
 DEV = True
 
