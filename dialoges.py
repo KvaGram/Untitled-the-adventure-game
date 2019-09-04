@@ -1,5 +1,5 @@
 #dialoges
-#for long dialoges or nerratives that take up much space in a module, or that could be called from multible places.
+#for long dialogues or narratives that take up much space in a module, or that could be called from multiple places.
 import game_utilities as game
 
 def auxcom_contact(save):
