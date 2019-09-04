@@ -48,6 +48,7 @@ Proper walkthough
      - Agree to help, recive keycode.
      - Alternativly, politly decline, recive keycode
      - Alternativly, rudely decline, reciving "asshole" effect
-     
+
+*(walkthough incomplete)*
 Please note: Some of the steps can be done in a diffrent order, and some can be entierly skipped.
 Doing so may lead to an altered ending. Please explore and give suggestions on what can be improved.
