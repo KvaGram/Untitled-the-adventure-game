@@ -41,7 +41,6 @@ Proper walkthough
  6. Travel to the auxillary communication station.
      - Repair the system by opening the panel
            - putting the black cable in your mouth will award you a Darwin Award
-           - (not really, but I should add that. Still game over though)
            - Plug the blue cable into white socket
            - Put the yellow cable in your mouth
  7. Contact the cargo bay for help
