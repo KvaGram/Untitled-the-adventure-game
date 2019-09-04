@@ -469,7 +469,7 @@ You pass through the open door separating the two sectors
  - elevators
 </MIDDLE_NAV_ELE>
 <MIDDLE_NAV_CAFE>
- - A cafeteria
+ - A Diner
 </MIDDLE_NAV_CAFE>
 <MIDDLE_NAV_TO_SEC_B>
  - Large open doorway
@@ -521,7 +521,7 @@ You are standing in the long corridor
 </MIDDLE_INTRO_5>
 
 <MIDDLE_CAFE>
-You enter the door to the cafeteria.
+You enter the door to the diner.
 </MIDDLE_CAFE>
 
 <MIDDLE_READ_ROOM_2A68>
@@ -564,7 +564,7 @@ Stars, you realize. Stars flying upwards. You are staring into space!
 </MIDDLE_SEC_C_DOOR>
 
 <CAFE_DARK_1>
-You entered the door labeled 'Cafeteria'.
+You entered the door labeled 'Habitat diner'.
 The lights are off. You walk in, fumbeling for a lightswitch or something alike.
 You see a faint blue light, and walk towards it.
 
@@ -583,14 +583,14 @@ You cannot make out much in the dark.
 But you can make out some faint shapes in the dark.
 You can make out a table
 You see a long cyninder, maybe a support column?
-There is a large opening, maybe a cafeteria counter, in the back.
+There is a large opening, maybe a diner counter, in the back.
 
 -- (This part of the story is not fully written yet, expect parts of this to be barebones)
 </CAFE_DARK_1>
 
 
 <CAFE_INTRO_LIT>
-You enter the cafeteria. It is still a real mess.
+You enter the diner. It is still a real mess.
 But at least the lights are still on.
 </CAFE_INTRO_LIT>
 <CAFE_DARK_QUEST>
@@ -605,9 +605,9 @@ What will you do?
 <CAFE_LIT_OPTION_1>Search the alien body</CAFE_LIT_OPTION_1>
 <CAFE_LIT_OPTION_2>Examine the lamp</CAFE_LIT_OPTION_2>
 <CAFE_LIT_OPTION_3>Search the table</CAFE_LIT_OPTION_3>
-<CAFE_LIT_OPTION_4>Search the cafeteria counter</CAFE_LIT_OPTION_4>
+<CAFE_LIT_OPTION_4>Search the diner counter</CAFE_LIT_OPTION_4>
 <CAFE_LIT_OPTION_5>Search the mysterius rack</CAFE_LIT_OPTION_5>
-<CAFE_LIT_OPTION_EXIT>Exit the cafeteria</CAFE_LIT_OPTION_EXIT>
+<CAFE_LIT_OPTION_EXIT>Exit the diner</CAFE_LIT_OPTION_EXIT>
 
 <CAFE_DARK_BODY>
 -- Placeholder text, finding broken translator. You examine and drop it. --
@@ -642,7 +642,7 @@ You fumble though the darkness out the exit with little difficulty.
 -- Placeholder text, found nothing of interest --
 </CAFE_LIT_COUNTER>
 <CAFE_LIT_EXIT>
-You exit out of the cafeteria.
+You exit out of the diner.
 </CAFE_LIT_EXIT>
 
 <!-- Ladder access section.
@@ -1048,7 +1048,7 @@ See you soon!
 <AUXCOM_DIALOGE_2A_YES>
 Thanks for doing this!
 Ok, there won't be much time, but we will hold off detaching the module as long as we can.
-First of, you need a translation device. There should be a few in the cafeteria.
+First of, you need a translation device. There should be a few in the diner.
 Without one, you would have a hard time reading the manuals and displays.
 Once you have one, you need to get down to the outer ring.
 Do not use the elevators, that system is down. You will need to climb the emergency ladders
