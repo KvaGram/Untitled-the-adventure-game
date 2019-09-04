@@ -20,7 +20,7 @@ To run this, clone or download the project, open a commandline, change directory
 Known issues as of now:
  * None, please report.
  
- A perfect walkthough
+Proper walkthough
  1. Enter your character's name when promted
      - alternativly you can accept the default placeholder name
  2. Examine the room you are in.
@@ -40,6 +40,14 @@ Known issues as of now:
     - Enter the locker room to retrive a special item.
  6. Travel to the auxillary communication station.
      - Repair the system by opening the panel
-     - putting the black cable in your mouth will award you a Darwin Award
+           - putting the black cable in your mouth will award you a Darwin Award
            - (not really, but I should add that. Still game over though)
+           - Plug the blue cable into white socket
+           - Put the yellow cable in your mouth
+ 7. Contact the cargo bay for help
+     - Agree to help, recive keycode.
+     - Alternativly, politly decline, recive keycode
+     - Alternativly, rudely decline, reciving "asshole" effect
      
+Please note: Some of the steps can be done in a diffrent order, and some can be entierly skipped.
+Doing so may lead to an altered ending. Please explore and give suggestions on what can be improved.
