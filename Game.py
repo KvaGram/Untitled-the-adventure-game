@@ -164,7 +164,13 @@ class Game:
             i = 0
             reg = r'(?<=(?<!\{)\{)[^{}]*(?=\}(?!\}))'
             while i < 5 and re.search(reg, text):
-                text = text.format_map(formatdict(game = self, **self.story, **frags))
+                try:
+                    text = text.format_map(formatdict(game = self, **self.story, **frags))
+                except ValueError as err:
+                    print("ERR: There was something wrong with this text:")
+                    print(text)
+                    print(err)
+                    break
                 i += 1
         elif type(text) == list:
             for i in range(len(text)):
