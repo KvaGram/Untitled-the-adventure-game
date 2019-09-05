@@ -758,6 +758,8 @@ class MultiEditor(BaseEditor):
         self.menu['to_single'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['del_entry'] = TK.Menu(self.menu['edit'], tearoff = 0)
         self.menu['ren_entry'] = TK.Menu(self.menu['edit'], tearoff = 0)
+        self.menu['edit'].add_command(label = "Rename entry group", command=self.OnRenameGroup)
+        self.menu['edit'].add_command(label = "Delete entry group", command=self.OnDeleteGroup)
         self.menu['edit'].add_cascade(label = "Open in single-edit", menu = self.menu['to_single'])
         self.menu['edit'].add_cascade(label = "Delete entry", menu = self.menu['del_entry'])
         self.menu['edit'].add_cascade(label = "Rename entry", menu = self.menu['ren_entry'])
@@ -868,6 +870,17 @@ class MultiEditor(BaseEditor):
         Data.editors.remove(self)
         self.destroy()
         OpenSingleEditor(self.lang, entryname)
+    def OnRenameGroup(self):
+        res = askRenameEntry(self.lang, self.GroupName, self.GroupName, True)
+        if res:
+            self._targetName = res
+            self.UpdateEntries()
+            self.resetSelectors()
+            self.edited = True
+    def OnDeleteGroup(self):
+        res = askDeleteEntry(self.lang, self.GroupName, True)
+        if res:
+            self.OnClose()
 class SingleEditor(BaseEditor):
     def __init__(self, lang:str, entryName:str):
         super().__init__(lang, entryName, EditorType.SINGLE)
@@ -990,9 +1003,10 @@ def askDeleteEntry(lang, entryname, isGroup = False):
     msg1 = ""
     msg2 = ""
     if isGroup:
+        count = len(GetEntriesByGroup(lang, entryname))
         title1 = "Delete entries?"
-        msg1 =  f"You are about to delete all entries starting with '{entryname}'' from {lang}"
-        msg2 = f"All entries starting with {entryname} has been deleted!\nWould you like to save?"
+        msg1 =  f"You are about to delete all {count} entries starting with '{entryname}'' from {lang}"
+        msg2 = f"All {count} entries starting with {entryname} has been deleted!\nWould you like to save?"
     else:
         title1 = "Delete entry?"
         msg1 = f"You are about to delete {entryname} from {lang}"
@@ -1015,8 +1029,7 @@ def askDeleteEntry(lang, entryname, isGroup = False):
 def askRenameEntry(lang, oldname, newname="", isGroup = False):
     newname = askName("RENAME ENTRY", f"What do you wish rename {oldname} to?", lang, newname, isGroup)
     if newname:
-        doRenameEntry(lang, oldname, newname, isGroup)
-        return True
+        return doRenameEntry(lang, oldname, newname, isGroup)
     return False
 
 def doRenameEntry(lang, oldname, newname, isGroup = False):
@@ -1025,7 +1038,7 @@ def doRenameEntry(lang, oldname, newname, isGroup = False):
         for entry in entries:
             newname2 = entry.replace(oldname, newname)
             doRenameEntry(lang, entry, newname2, False)
-        return        
+        return newname
     story = Data.langstory.get(lang, {})
     story[newname] = story.pop(oldname)
     return newname
