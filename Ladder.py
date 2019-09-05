@@ -19,7 +19,7 @@ class LadderRunner(Game.PlaceRunner1D):
             self.running = False
             return
         super().runaction(action)
-def Start(game):
+def Start(game:Game.Game):
     T = Game.Gettexter(game)
     runner = LadderRunner(game)
 
@@ -58,6 +58,13 @@ def Start(game):
             ]),
         ]
     setupRunner()
+    runner.index =  (
+        {
+            "core":"TO_CORE",
+            "inner":"TO_INNER",
+            "middle":"TO_MID",
+            "outer":"TO_OUT",
+        }.get(game.prevPlace, 0))
     runner.run()
 
 

@@ -463,27 +463,18 @@ def Start(game:Game.Game):
             ("TO_SEC_B","TO_SEC_A", sectionBdoor_pass),
             ("TO_SEC_A","TO_SEC_B", sectionAdoor_pass)
         ]
-        prevplace = game.prevPlace
-        if prevplace == "apartment" and game.getdata("apartment:left", False):
+
+        runner.index, intro =  (
+        {
+            "apartment":("DOOR_2A68", "{MIDDLE_INTRO_2}"),
+            "ladder":("LADDER", "{MIDDLE_INTRO_3}"),
+            "bathrooms":("BATHROOMS", "{MIDDLE_INTRO_4}"),
+            "cafeteria":("CAFE", "{MIDDLE_INTRO_5}"),
+        }.get(game.prevPlace, (runner.index, "{MIDDLE_INTRO_5}")))
+
+        if game.getdata("apartment:left", False):
             game.setdata("apartment:left", True)
-            runner.index = "DOOR_2A68"
             intro = "{MIDDLE_INTRO_1}"
-        elif prevplace == "apartment":
-            intro = "{MIDDLE_INTRO_2}"
-            runner.index = "DOOR_2A68"
-            pass
-        elif prevplace == "ladder":
-            runner.index = "LADDER"
-            intro = "{MIDDLE_INTRO_3}"
-        elif prevplace == "bathrooms":
-            runner.index = "BATHROOMS"
-            intro = "{MIDDLE_INTRO_4}"
-        elif prevplace == "cafeteria":
-            runner.index = "CAFE"
-            intro = "{MIDDLE_INTRO_5}"
-        else:
-            #using the existing index (nav.x) from save or testcode as default.
-            intro = "{MIDDLE_INTRO_5}"
         game.rolltext(intro)
     setupRunner()
     runner.run()
