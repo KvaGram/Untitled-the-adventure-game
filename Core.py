@@ -49,7 +49,7 @@ def Core(game:Game.Game):
         elif data.tag == "LADDER_SEC_B":
             game.rolltext("{CORE_TO_LADDER_B}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
-                game.goto("ladder")
+                game.place = "ladder"
                 running = False
         elif data.tag == "LADDER_SEC_D":
             game.rolltext("{CORE_TO_LADDER_D}")
@@ -64,7 +64,7 @@ def Core(game:Game.Game):
                 game.rolltext("{CORE_AIRLOCK_3B}")
                 continue
             game.rolltext("{CORE_AIRLOCK_3A}")
-            game.goto("cargobay")
+            game.place = "cargobay"
             running = False
             return
             
