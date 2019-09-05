@@ -1495,7 +1495,7 @@ As you turned around, you noticed some people float into view on the, with confu
 As you appreach the innermost door, you hear a muffled barely audiable voice from the other side.
 {_INTRO_PART}
 
-Are you alright there {0}? The door is a bit broken,
+Are you alright there {_P}? The door is a bit broken,
 so I need you to hold down that lever there while we open the door
 
 {_REACTION}
