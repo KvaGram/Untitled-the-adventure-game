@@ -603,6 +603,11 @@ class Navdata:
             self.right = val
         elif dir == "down":
             self.down = val
+    def resetDirs(self):
+        self.up = False
+        self.down = False
+        self.left = False
+        self.right = False
     #endregion setters
 
 class PlaceRunner:
@@ -627,6 +632,7 @@ class PlaceRunner1D(PlaceRunner):
             return
         #ensure the nav is open
         self.nav.closed = False
+        self.nav.resetDirs()
         # ensure the index is valid.
         self.index = self.index
         self.running = True
