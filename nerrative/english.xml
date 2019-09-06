@@ -1,95 +1,102 @@
 <story>
-<!--
-README:
-This document contains all text that are displayed in Untitled!
-If you work on this, take case to preserve the integrety of the outer tags
-        start < TAG > end </ TAG >
-Please also respect the inner tags when reworking text. {TAG}
-Inner tags are filled in by the game as loaded.
-There are three types or inner tag
-
- game tags: example {game.PlayerSomething} - always starts with 'game.'
-        Game tags gets data from the game state.
- story tags example {EPIC_PART_9} - Always all caps
-        Story tags gets data from the nerrative text (this document)
- fragment parts {*OPTIONAL_3} - Always starts with star*
-        fragment tags gets data from the module code
-        usually a story tag that may alternate between playthoughs
-
--->
-
-
 <TITLE_TITLENAME>
 Untitled! The adventure game
 </TITLE_TITLENAME>
 <TITLE_WELCOME>
 Welcome!! What do you wish to do?
 </TITLE_WELCOME>
-
-<TITLE_STARTNEW>Start new game</TITLE_STARTNEW>
-<TITLE_LOADASAVE>Load a save</TITLE_LOADASAVE>
-<TITLE_RUNCREDITS>Run credits</TITLE_RUNCREDITS>
-<TITLE_EXITGAME>Exit Game</TITLE_EXITGAME>
-
-<ITEM_HEADACHE_NAME>Headache</ITEM_HEADACHE_NAME>
+<TITLE_STARTNEW>
+Start new game
+</TITLE_STARTNEW>
+<TITLE_LOADASAVE>
+Load a save
+</TITLE_LOADASAVE>
+<TITLE_RUNCREDITS>
+Run credits
+</TITLE_RUNCREDITS>
+<TITLE_EXITGAME>
+Exit Game
+</TITLE_EXITGAME>
+<ITEM_HEADACHE_NAME>
+Headache
+</ITEM_HEADACHE_NAME>
 <ITEM_HEADACHE_DESC>
 A painfull headache
 hindering your thinking
 </ITEM_HEADACHE_DESC>
-<ITEM_TRANSLATOR_NAME>Translation device</ITEM_TRANSLATOR_NAME>
+<ITEM_TRANSLATOR_NAME>
+Translation device
+</ITEM_TRANSLATOR_NAME>
 <ITEM_TRANSLATOR_DESC>
 An alien device
 that translates
 both text and speech
 </ITEM_TRANSLATOR_DESC>
-<ITEM_BROKE_TRANSLATOR_NAME>Broken device</ITEM_BROKE_TRANSLATOR_NAME>
+<ITEM_BROKE_TRANSLATOR_NAME>
+Broken device
+</ITEM_BROKE_TRANSLATOR_NAME>
 <ITEM_BROKE_TRANSLATOR_DESC>
 A broken alien device.
 The insides circutry seem to be
 a mix of electronics
 and clockwork analogues
 </ITEM_BROKE_TRANSLATOR_DESC>
-<ITEM_ASSHOLE_NAME>Asshole reputation</ITEM_ASSHOLE_NAME>
+<ITEM_ASSHOLE_NAME>
+Asshole reputation
+</ITEM_ASSHOLE_NAME>
 <ITEM_ASSHOLE_DESC>
 It seems I got
 a reputation for
 being a bit of an
 asshole.
 </ITEM_ASSHOLE_DESC>
-<ITEM_KEEPSAKE_NAME>{game.Spouse.name}'s keepsake</ITEM_KEEPSAKE_NAME>
+<ITEM_KEEPSAKE_NAME>
+{game.Spouse.name}'s keepsake
+</ITEM_KEEPSAKE_NAME>
 <ITEM_KEEPSAKE_DESC>
 A box that you seem to remember
 is very important to
 {game.Spouse.name}
 </ITEM_KEEPSAKE_DESC>
-<ITEM_KEYCODE_NAME>Human habitat security keycode</ITEM_KEYCODE_NAME>
+<ITEM_KEYCODE_NAME>
+Human habitat security keycode
+</ITEM_KEYCODE_NAME>
 <ITEM_KEYCODE_DESC>
 0-0-0-0-0
 </ITEM_KEYCODE_DESC>
-
-<GAME_PLEASESEL>Please select</GAME_PLEASESEL>
-<GAME_MAKECHOICE>Please make a choice</GAME_MAKECHOICE>
-<GAME_MAKECHOICE2>What do you want to do?</GAME_MAKECHOICE2>
-
+<GAME_PLEASESEL>
+Please select
+</GAME_PLEASESEL>
+<GAME_MAKECHOICE>
+Please make a choice
+</GAME_MAKECHOICE>
+<GAME_MAKECHOICE2>
+What do you want to do?
+</GAME_MAKECHOICE2>
 <APT_NAVTEXT_1>
 ???
 </APT_NAVTEXT_1>
 <APT_NAVTEXT_2>
 Small apartment
 </APT_NAVTEXT_2>
-
-<APT_OPTION_WINDOW>look out the window</APT_OPTION_WINDOW>
-<APT_OPTION_TABLE>examine the table</APT_OPTION_TABLE>
-<APT_OPTION_SINK>examine the sink</APT_OPTION_SINK>
-<APT_OPTION_DOOR>go to the door</APT_OPTION_DOOR>
-
+<APT_OPTION_WINDOW>
+look out the window
+</APT_OPTION_WINDOW>
+<APT_OPTION_TABLE>
+examine the table
+</APT_OPTION_TABLE>
+<APT_OPTION_SINK>
+examine the sink
+</APT_OPTION_SINK>
+<APT_OPTION_DOOR>
+go to the door
+</APT_OPTION_DOOR>
 <APT_BED>
 You are sitting on the side of the bed
 </APT_BED>
 <APT_BED_QUEST>
 What do you wish to do?
 </APT_BED_QUEST>
-
 <APT_DREAM>
 Weeeee.. you are flying through the sky!
 Below you is a beautiful forest, as green as anything you could ever imagine!
@@ -102,8 +109,6 @@ It seems so nice, yet something seems off. Everything seems off.
 You even struggle to remember your own name... 
 What.. was.. what was your name?
 </APT_DREAM>
-
-<!--NOTE: This is list. It is split by lines. Keep each excuse as a one-liner.-->
 <APT_NAME_EXCUSES>
 or maybe it was
 no why would.. that be my name.. no it must be
@@ -111,15 +116,12 @@ no.. ugh.. why can't I remember my name. Maybe it was
 no no no no! That can't be right, so it must be
 no, I think that's my best friend's name. wait, I got a best friend?? ugh.. what is my name??
 </APT_NAME_EXCUSES>
-
 <APT_NAME_SUBMIT>
 This is my name
 </APT_NAME_SUBMIT>
-
 <APT_NAME_CONFIRM>
 ugh.. Was it {game.PlayerName}?
 </APT_NAME_CONFIRM>
-
 <APT_NAME_CONFIRMED>
 Yes {game.PlayerName} the.. uhh.. something something title titles..
 You are sure you'll remember soon enough. Your head is quite foggy.
@@ -131,7 +133,6 @@ At the head end of the bed there is a window.
 Towards the end of the room there is a sink with a mirror.
 At the end is a door, probably the exit by the looks of it.
 </APT_NAME_CONFIRMED>
-
 <APT_SINK_1>
 You walk to the sink.
 You see glass shards in the sink.
@@ -142,7 +143,6 @@ You might want to find a proper bathroom and freshen up a bit.
 <APT_SINK_2>
 The mirror is still broken.
 </APT_SINK_2>
-
 <APT_WINDOW_1>
 You look through the window into the lush forest landscape.
 ...
@@ -169,35 +169,54 @@ a holographic deer just walked past.
 ....
 Time to go.
 </APT_WINDOW_2>
-
-<APT_GLASS_1>a full glass of water</APT_GLASS_1>
-<APT_GLASS_2>a half full glass of water</APT_GLASS_2>
-<APT_GLASS_3>an empty glass</APT_GLASS_3>
-<APT_PILLS>, some small white pills</APT_PILLS>
-
+<APT_GLASS_1>
+You take the white pills and drink from the glass.
+</APT_GLASS_1>
+<APT_GLASS_2>
+You did not take the pills
+</APT_GLASS_2>
+<APT_GLASS_3>
+The glass is half empty. Or is it half full?
+</APT_GLASS_3>
+<APT_PILLS>
+, some small white pills
+</APT_PILLS>
 <APT_TABLE>
 You look at the nightstand table.
 You see {_GLASS}{_PILLS}
 and two framed pictures.
 One with a cyan frame, one with a golden frame.
 </APT_TABLE>
-
-<APT_TABLE_QUEST>What do you wan to do?</APT_TABLE_QUEST>
-<APT_TABLE_OPTION_GLASS>Examine the glass</APT_TABLE_OPTION_GLASS>
-<APT_TABLE_OPTION_CYAN>Examine the cyan framed picture</APT_TABLE_OPTION_CYAN>
-<APT_TABLE_OPTION_GOLD>Examine the gold framed picture</APT_TABLE_OPTION_GOLD>
-<APT_TABLE_OPTION_BACK>Back off from the table</APT_TABLE_OPTION_BACK>
-
-<APT_GLASS_QUEST_1>Take the pills?</APT_GLASS_QUEST_1>
-<APT_GLASS_QUEST_2>Drink from the glass?</APT_GLASS_QUEST_2>
-
-<APT_GLASS_1>You take the white pills and drink from the glass.</APT_GLASS_1>
-<APT_GLASS_2>You did not take the pills</APT_GLASS_2>
-<APT_GLASS_3>The glass is half empty. Or is it half full?</APT_GLASS_3>
-<APT_GLASS_4>you drank the rest. The glass is now empty.</APT_GLASS_4>
-<APT_GLASS_5>you left the glass alone</APT_GLASS_5>
-<APT_GLASS_6>The glass is empty</APT_GLASS_6>
-
+<APT_TABLE_QUEST>
+What do you wan to do?
+</APT_TABLE_QUEST>
+<APT_TABLE_OPTION_GLASS>
+Examine the glass
+</APT_TABLE_OPTION_GLASS>
+<APT_TABLE_OPTION_CYAN>
+Examine the cyan framed picture
+</APT_TABLE_OPTION_CYAN>
+<APT_TABLE_OPTION_GOLD>
+Examine the gold framed picture
+</APT_TABLE_OPTION_GOLD>
+<APT_TABLE_OPTION_BACK>
+Back off from the table
+</APT_TABLE_OPTION_BACK>
+<APT_GLASS_QUEST_1>
+Take the pills?
+</APT_GLASS_QUEST_1>
+<APT_GLASS_QUEST_2>
+Drink from the glass?
+</APT_GLASS_QUEST_2>
+<APT_GLASS_4>
+you drank the rest. The glass is now empty.
+</APT_GLASS_4>
+<APT_GLASS_5>
+you left the glass alone
+</APT_GLASS_5>
+<APT_GLASS_6>
+The glass is empty
+</APT_GLASS_6>
 <APT_CYAN_1>
 You stare closely at the man in the cyan framed picture.
 He looks familiar. Very familiar.
@@ -206,7 +225,9 @@ You study his features closely.
 Suddenly it clicks in your mind.
 You recognize him now. You think you remeber his name.
 </APT_CYAN_1>
-<APT_CYAN_SUBMIT>That's his name.</APT_CYAN_SUBMIT>
+<APT_CYAN_SUBMIT>
+That's his name.
+</APT_CYAN_SUBMIT>
 <APT_CYAN_2>
 That's right! It's {game.MaleFam.name} your {game.MaleFam.GenderedRole}!
 </APT_CYAN_2>
@@ -219,14 +240,15 @@ You study her close, trying to remember who she is.
 As you are looking in her eyes when you realize who she is.
 You suddenly recall her name!
 </APT_GOLD_1>
-<APT_GOLD_SUBMIT>That's her name.</APT_GOLD_SUBMIT>
+<APT_GOLD_SUBMIT>
+That's her name.
+</APT_GOLD_SUBMIT>
 <APT_GOLD_2>
 {game.FemaleFam.name} was her name! It's {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}! How could you have forgotten?
 </APT_GOLD_2>
 <APT_GOLD_3>
 It is {game.FemaleFam.name} your {game.FemaleFam.GenderedRole}.
 </APT_GOLD_3>
-
 <APT_DOOR_1>
 You walk towards the door.
 Suddenly there is a sharp spike of pain in your head.
@@ -237,22 +259,31 @@ You walk to the door.
 Your head is starting to clear up.
 You open the door, and walk out.
 </APT_DOOR_2>
-
 <BATH_INTRO>
 You stand in front of the bathrooms. There are two doors in front of you.
 One door with a depiction of a man, one depicting a woman.
 </BATH_INTRO>
-<BATH_WHATDOOR>What door do you enter</BATH_WHATDOOR>
-<BATH_CHOICEMENS>Enter men's room</BATH_CHOICEMENS>
-<BATH_CHOICELADIES>Enter ladies' room</BATH_CHOICELADIES>
-
-
-<BATH_MENS_ENTERING>You enter the Men's room.</BATH_MENS_ENTERING>
-<BATH_LADIES_ENTERING>You enter the Ladies's room.</BATH_LADIES_ENTERING>
-
-<BATH_MENS_LEAVING>You leave the Men's room.</BATH_MENS_LEAVING>
-<BATH_LADIES_LEAVING>You leave the Ladies's room.</BATH_LADIES_LEAVING>
-
+<BATH_WHATDOOR>
+What door do you enter
+</BATH_WHATDOOR>
+<BATH_CHOICEMENS>
+Enter men's room
+</BATH_CHOICEMENS>
+<BATH_CHOICELADIES>
+Enter ladies' room
+</BATH_CHOICELADIES>
+<BATH_MENS_ENTERING>
+You enter the Men's room.
+</BATH_MENS_ENTERING>
+<BATH_LADIES_ENTERING>
+You enter the Ladies's room.
+</BATH_LADIES_ENTERING>
+<BATH_MENS_LEAVING>
+You leave the Men's room.
+</BATH_MENS_LEAVING>
+<BATH_LADIES_LEAVING>
+You leave the Ladies's room.
+</BATH_LADIES_LEAVING>
 <BATH_MENS_WRONGROOM>
 You're not exacly sure why you went into the men's room, and not the ladies' room.
 Though you suppose it doesn't really matter. There is nobody here anyways.
@@ -261,7 +292,6 @@ Though you suppose it doesn't really matter. There is nobody here anyways.
 A man going inside the ladies room would normally be seen as quite perverted.
 But as it is, the ladies is as vacant of people as the rest of this place.
 </BATH_LADIES_WRONGROOM>
-
 <BATH_MENS_DESCRIPTION>
 What you see is a line of toilet stalls, a large urinal, a few changing rooms, a locker room,
 showers, couple of them private, and a dispenser of hygine products.
@@ -269,7 +299,6 @@ showers, couple of them private, and a dispenser of hygine products.
 Finding yourself in front of the large array of sinks and mirrors.
 Some of the mirrors are broken, but you found one that was relativly intact.
 </BATH_MENS_DESCRIPTION>
-
 <BATH_LADIES_DESCRIPTION>
 What you see is a line of toilet stalls, a few changing rooms, a looker room, showers, couple of them private
 and a hygine despenser with varius.. products...
@@ -277,25 +306,21 @@ and a hygine despenser with varius.. products...
 Finding yourself in front of the large array of sinks and mirrors.
 Some of the mirrors are broken, but you found one that was relativly intact.
 </BATH_LADIES_DESCRIPTION>
-
 <BATH_MIRROR_MALE>
 You have a look at yourself.
 What you see is a rugged man with a stubby beard.
 You look about as shitty as you feel, yet it does look familiar.
 That's a good thing, right?
 </BATH_MIRROR_MALE>
-
 <BATH_MIRROR_FEMALE>
 You have a look at yourself.
 What you see is a tired looking woman with clear bags under they eyes.
 You look about as shitty as you feel, yet it does look familiar.
 That's a good thing, right?
 </BATH_MIRROR_FEMALE>
-
 <BATH_WASHFACE>
 You splash some water on your face. It feels refreshing.
 </BATH_WASHFACE>
-
 <BATH_TOILET1>
 You locate a nice toilet booth, and sit down on a porcelain throne.
 Well, ok, not porcelain, these toilets are made of metal.
@@ -308,7 +333,6 @@ Well, ok, not porcelain, these toilets are made of metal.
 You sit for a bit, resting. You don't feel the need to 'do' anything.
 After a while you decide it is time to get back up
 </BATH_TOILET2>
-
 <BATH_URINAL1>
 You instinctively unzip and relive youself down the uninal.
 it was quickly done.
@@ -317,15 +341,12 @@ But soon you realize you have 'other' needs to relive youself of.
 <BATH_URINAL2>
 you stand over by the urinal for a bit, but you don't feel any need to use it.
 </BATH_URINAL2>
-
 <BATH_URINAL_FEM1>
 As you approach the urinal, you wondered how it was like for men to use contraptions like this.
 </BATH_URINAL_FEM1>
-
 <BATH_URINAL_FEMQUEST>
 Try to piss in it?
 </BATH_URINAL_FEMQUEST>
-
 <BATH_URINAL_FEM2>
 You awkwardly posision yourself,
 and partially relive youself down the urinal.
@@ -335,31 +356,24 @@ mostly..
 
 Still, having done that, you realize you have 'other' needs to relive youself of.
 </BATH_URINAL_FEM2>
-
 <BATH_URINAL_DUMPQUEST>
 Take a dump in the urinal?
 </BATH_URINAL_DUMPQUEST>
-
 <BATH_URINAL_FEM_DUMP>
 You did the deed in the urinal. you slowly back off, giggling a bit as your inner girl got her wicked wish.
 </BATH_URINAL_FEM_DUMP>
-
 <BATH_URINAL_MALE_DUMP>
 You did the deed in the urinal. you slowly back off, giggling a bit as your inner child got his very childish wish.
 </BATH_URINAL_MALE_DUMP>
-
 <BATH_URINAL_LEAVE>
 You left the urinal alone.
 </BATH_URINAL_LEAVE>
-
 <BATH_HYGINE_MENS>
 You examine the dispenser. You find some soaps, condoms, razor blades. Nothing you really need right now.
 </BATH_HYGINE_MENS>
-
 <BATH_HYGINE_LADIES>
 You examine the dispenser. You find some soaps, tampons, manual razor blades, a few female condoms. Nothing you really need right now
 </BATH_HYGINE_LADIES>
-
 <BATH_SHOWER1>
 You enter one of the private show stalls.
 You undress, and turn on the shower
@@ -369,11 +383,9 @@ you feel a lot better now.
 ...
 you dry up, dress yourself and again, and leave the shower.
 </BATH_SHOWER1>
-
 <BATH_SHOWER2>
 You go over to the showers. But you already feel clean, so you go back.
 </BATH_SHOWER2>
-
 <BATH_LOCKERS1>
 You take a walk along the lockers
 There was not much more to see.
@@ -385,111 +397,107 @@ Inside you find a small box.
 It feels important.
 You take it with you.
 </BATH_LOCKERS2>
-
-<BATH_OPTION_SINK>Spash water in your face</BATH_OPTION_SINK>
-<BATH_OPTION_TOILET>Visit a toilet booth</BATH_OPTION_TOILET>
-<BATH_OPTION_URINAL>Visit the urinal</BATH_OPTION_URINAL>
-<BATH_OPTION_HYGINE>open the hygine dispenser</BATH_OPTION_HYGINE>
-<BATH_OPTION_SHOWER>Go the the showers</BATH_OPTION_SHOWER>
-<BATH_OPTION_LOCKERS>Go to the locker room</BATH_OPTION_LOCKERS>
-
-<!--  -->
+<BATH_OPTION_SINK>
+Spash water in your face
+</BATH_OPTION_SINK>
+<BATH_OPTION_TOILET>
+Visit a toilet booth
+</BATH_OPTION_TOILET>
+<BATH_OPTION_URINAL>
+Visit the urinal
+</BATH_OPTION_URINAL>
+<BATH_OPTION_HYGINE>
+open the hygine dispenser
+</BATH_OPTION_HYGINE>
+<BATH_OPTION_SHOWER>
+Go the the showers
+</BATH_OPTION_SHOWER>
+<BATH_OPTION_LOCKERS>
+Go to the locker room
+</BATH_OPTION_LOCKERS>
 <NAV_DESC_TEMPLATE>
- - {_WHEEL}
+- {_WHEEL}
  - {_RINGNAME}
  - {_SECTORNAME}
  - {_LOCAL_NAME}
 </NAV_DESC_TEMPLATE>
-
 <WHEEL_C_NAME_1>
 Habitat Wheel C
 </WHEEL_C_NAME_1>
-
 <WHEEL_C_NAME_2>
 Unknown place
 </WHEEL_C_NAME_2>
-
 <SECTOR_A_TERM_1>
 Sector A
 </SECTOR_A_TERM_1>
-
 <SECTOR_A_TERM_2>
 Mysterius corridor
 </SECTOR_A_TERM_2>
-
 <SECTOR_B_TERM>
 Sector B
 </SECTOR_B_TERM>
-
-<!-- this navtext is to be replaced by above template
-     {0} is sector letter (A or B)
-     {1} is name of local node/place (see below) -->
 <OUTER_RING_NAME>
 Maintenence and disections ring
 </OUTER_RING_NAME>
 <INNER_RING_NAME>
 Stasis and healthcare ring
 </INNER_RING_NAME>
-
 <MIDDLE_NAV_DESC_1>
- - Unknown place
+- Unknown place
  - Mysterius corridor
  {1}
 </MIDDLE_NAV_DESC_1>
 <MIDDLE_NAV_DESC_2>
- - Habitat Wheel C
+- Habitat Wheel C
  - Middle ring
  - Sector {0}
- {1} 
+ {1}
 </MIDDLE_NAV_DESC_2>
 <MIDDLE_NAV_DESC_3>
- - Habitat Wheel C
+- Habitat Wheel C
  - Human habitat
  - Sector {0}
  {1}
 </MIDDLE_NAV_DESC_3>
-
 <PASS_SECTOR_DOORWAY>
 You pass through the open door separating the two sectors
 </PASS_SECTOR_DOORWAY>
-
 <MIDDLE_NAV_TO_SEC_D>
- - Large closed blastdoor
+- Large closed blastdoor
  - To sector D
 </MIDDLE_NAV_TO_SEC_D>
 <MIDDLE_NAV_TO_BATH>
- - Outside a
+- Outside a
  - Public bathroom
 </MIDDLE_NAV_TO_BATH>
 <MIDDLE_NAV_DOOR_2A68>
- - A familiar door
+- A familiar door
 </MIDDLE_NAV_DOOR_2A68>
 <MIDDLE_NAV_ELE>
- - A set of
+- A set of
  - elevators
 </MIDDLE_NAV_ELE>
 <MIDDLE_NAV_CAFE>
- - A Diner
+- A Diner
 </MIDDLE_NAV_CAFE>
 <MIDDLE_NAV_TO_SEC_B>
- - Large open doorway
+- Large open doorway
  - To sector B
 </MIDDLE_NAV_TO_SEC_B>
 <MIDDLE_NAV_TO_SEC_A>
- - Large open doorway
+- Large open doorway
  - To sector A
 </MIDDLE_NAV_TO_SEC_A>
 <MIDDLE_NAV_AUXCOM>
- - Auxillary communications console
+- Auxillary communications console
 </MIDDLE_NAV_AUXCOM>
 <MIDDLE_NAV_LADDER>
- - Emergency access ladder
+- Emergency access ladder
 </MIDDLE_NAV_LADDER>
 <MIDDLE_NAV_TO_SEC_C>
- - Large closed blastdoor
+- Large closed blastdoor
  - To sector C
 </MIDDLE_NAV_TO_SEC_C>
-
 <ACT_READ_SIGN>
 Read sign
 </ACT_READ_SIGN>
@@ -499,7 +507,6 @@ Enter room
 <ACT_USE>
 Use
 </ACT_USE>
-
 <MIDDLE_INTRO_1>
 You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
 The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
@@ -519,11 +526,9 @@ You exit the bathrooms and returned to the corridor.
 <MIDDLE_INTRO_5>
 You are standing in the long corridor
 </MIDDLE_INTRO_5>
-
 <MIDDLE_CAFE>
 You enter the door to the diner.
 </MIDDLE_CAFE>
-
 <MIDDLE_READ_ROOM_2A68>
 The sign on the door reads
     ______________________
@@ -534,7 +539,6 @@ The sign on the door reads
 <MIDDLE_ENTER_ROOM_2A68>
 You open the door to your apartment and go inside.
 </MIDDLE_ENTER_ROOM_2A68>
-
 <MIDDLE_SEC_D_DOOR>
 You stare at the large solid door in front of you.
 There is a painted engraving on the door, it reads
@@ -562,7 +566,6 @@ They go on for a bit over a meter, then abruptly ends in uneven bent metal.
 And you see some small faint light far back in the darknes, moving.
 Stars, you realize. Stars flying upwards. You are staring into space!
 </MIDDLE_SEC_C_DOOR>
-
 <CAFE_DARK_1>
 You entered the door labeled 'Habitat diner'.
 The lights are off. You walk in, fumbeling for a lightswitch or something alike.
@@ -587,8 +590,6 @@ There is a large opening, maybe a diner counter, in the back.
 
 -- (This part of the story is not fully written yet, expect parts of this to be barebones)
 </CAFE_DARK_1>
-
-
 <CAFE_INTRO_LIT>
 You enter the diner. It is still a real mess.
 But at least the lights are still on.
@@ -596,41 +597,118 @@ But at least the lights are still on.
 <CAFE_DARK_QUEST>
 What will you do?
 </CAFE_DARK_QUEST>
-<CAFE_DARK_OPTION_1>Search the alien body</CAFE_DARK_OPTION_1>
-<CAFE_DARK_OPTION_2>Fumble over to the cylindrical shape</CAFE_DARK_OPTION_2>
-<CAFE_DARK_OPTION_3>Fumble over to the nearby table</CAFE_DARK_OPTION_3>
-<CAFE_DARK_OPTION_4>Fumble over to the counter</CAFE_DARK_OPTION_4>
-<CAFE_DARK_OPTION_EXIT>Fumble out the exit</CAFE_DARK_OPTION_EXIT>
-
-<CAFE_LIT_OPTION_1>Search the alien body</CAFE_LIT_OPTION_1>
-<CAFE_LIT_OPTION_2>Examine the lamp</CAFE_LIT_OPTION_2>
-<CAFE_LIT_OPTION_3>Search the table</CAFE_LIT_OPTION_3>
-<CAFE_LIT_OPTION_4>Search the diner counter</CAFE_LIT_OPTION_4>
-<CAFE_LIT_OPTION_5>Search the mysterius rack</CAFE_LIT_OPTION_5>
-<CAFE_LIT_OPTION_EXIT>Exit the diner</CAFE_LIT_OPTION_EXIT>
-
+<CAFE_DARK_OPTION_1>
+Search the alien body
+</CAFE_DARK_OPTION_1>
+<CAFE_DARK_OPTION_2>
+Fumble over to the cylindrical shape
+</CAFE_DARK_OPTION_2>
+<CAFE_DARK_OPTION_3>
+Fumble over to the nearby table
+</CAFE_DARK_OPTION_3>
+<CAFE_DARK_OPTION_4>
+Fumble over to the counter
+</CAFE_DARK_OPTION_4>
+<CAFE_DARK_OPTION_EXIT>
+Fumble out the exit
+</CAFE_DARK_OPTION_EXIT>
+<CAFE_LIT_OPTION_1>
+Search the alien body
+</CAFE_LIT_OPTION_1>
+<CAFE_LIT_OPTION_2>
+Examine the lamp
+</CAFE_LIT_OPTION_2>
+<CAFE_LIT_OPTION_3>
+Search the table
+</CAFE_LIT_OPTION_3>
+<CAFE_LIT_OPTION_4>
+Search the diner counter
+</CAFE_LIT_OPTION_4>
+<CAFE_LIT_OPTION_5>
+Search the mysterius rack
+</CAFE_LIT_OPTION_5>
+<CAFE_LIT_OPTION_EXIT>
+Exit the diner
+</CAFE_LIT_OPTION_EXIT>
 <CAFE_DARK_BODY>
--- Placeholder text, finding broken translator. You examine and drop it. --
+You fumble around the still cold body on the floor.
+It is clearly not human, based on the general shape you can feel it has.
+You look for where that faint light come from. You make out some kind of small box.
+
+It is held in some tini small appendeges, almost like fingers.
+You can't make out what the box is, so you leave it where you found it.
+
+You can't make out much more about the not-human body.
+
+
 </CAFE_DARK_BODY>
 <CAFE_DARK_LAMP>
--- Placeholder text, cylinder is a lamp. room is now lit --
+The faint cyllindrical outline looks at first to be a support pillar of sorts.
+But as you funble closer to it, you touch it.
+The texture is smooth and it feels a bit warm.
+Feeling around on it you find something that feels like a button.
+You accidentally press it. Suddenly a flash of light blind you.
+As you recover, you find the room suddenly lit.
+
+You walk back to where the blue light was, the light now invisible compared to the bright support pillar lamp.
+
 </CAFE_DARK_LAMP>
 <CAFE_DARK_TABLE>
--- Placeholder text, found nothing of interest --
+You funble a few steps in the darkness to the nearby table.
+
+There is something wet on the table. Someone must have spilled something.
+You find a plate, on it you found a fork stuck in something.
+You accidentally tipped a glass or cup, luckly it seems it was empty.
+You can't make out anything that seems important, so you make your back back to the faint light.
+
 </CAFE_DARK_TABLE>
 <CAFE_DARK_COUNTER>
--- Placeholder text, found nothing of interest --
+You funble around and found what appers to be the serving table. 
+In fact you are pretty sure it is a serving table, as your hand landed in a bowl containing something wet and mushy.
+It's stew. You hand is now covered in some cold old stew.
+
+Finding some paper towels, or at lest you hope it's paper towels,
+as you can't tell in the dark, you clean the stew off your hand.
+You find some serving plates, cups, cuttlery. Nothing to make light though.
+You fumble back to the faint blue light.
+
+
 </CAFE_DARK_COUNTER>
 <CAFE_DARK_EXIT>
 You fumble though the darkness out the exit with little difficulty.
 </CAFE_DARK_EXIT>
-
 <CAFE_TRANS_RACK>
 -- placeholder text, you find an intact translator device. --
 </CAFE_TRANS_RACK>
-
 <CAFE_LIT_BODY>
--- Placeholder text, finding broken translator. You examine and keep it --
+You examine the alien creature.
+It lays leanig, almost sitting, against the wall.
+It seems short right now, but looking at the tose, it looks as it could stretch and fold like an accordion.
+The creature has six limbs that look almost like tentacles, but with more tentacles branching out in the ends of them.
+You find a small box or maybe a tablet in the "hand" of one of those limbs.
+
+You pick up the thing and examine it.
+
+As you do so, you hear a sudden cackle from it. As you life it further up, the cackle stops.
+Moving it around, you find the sound stongest near a disk-shaped appendege.
+Moving it closer, you suddenly hear a voice.
+
+ - so dark. It is dark.(uintellible cackling noice) Was there an alarm? What is an alarm? (noise) Why is it dark? what... why..
+ - so dark. So very hungry. So very very (more noise) extreme. Extreme soemthing. (more noise)  hurt? Pain?
+ - pain. pain. pain. pain. dark. pain dark. dark. dark. pain.
+
+The voice stops up more, only occatioanlly repeating the words "dark" and "pain".
+
+Not knowing what you can do to help the poor thing, you leave it to rest in peace.
+
+examining the small tablet you notice a part of it is broken. The front panel, you suppose.
+You find some text written on it "point this end towards.." the rest it cut off where the panel is broken.
+The exposed insides seems to be void of electronics.
+All you see are moving gears, tini shafts, and other tini mechanical clockwork parts.
+Some small metal spikes are moving in and out of where the panal would be.
+
+You decide to keep the broken device for now, at least untill you find an intect one.
+
 </CAFE_LIT_BODY>
 <CAFE_LIT_LAMP>
 -- Placeholder text, cylinder is a lamp. room is now lit --
@@ -644,16 +722,15 @@ You fumble though the darkness out the exit with little difficulty.
 <CAFE_LIT_EXIT>
 You exit out of the diner.
 </CAFE_LIT_EXIT>
-
-<!-- Ladder access section.
-frags:
-_PLACENAME see x_NAME_LADDER below
-_INTROPART see INTRO_2 and _3. Alternates if you have accessed this ladder access yet.
-Please ensure the names are alligned, so they fit the sign-art in LADDER_ACCESS_INTRO_1-->
-<MIDDLE_NAME_LADDER>WHEEL C RING 2</MIDDLE_NAME_LADDER>
-<INNER_NAME_LADDER >WHEEL C RING 1</INNER_NAME_LADDER>
-<OUTER_NAME_LADDER >WHEEL C RING 3</OUTER_NAME_LADDER>
-
+<MIDDLE_NAME_LADDER>
+WHEEL C RING 2
+</MIDDLE_NAME_LADDER>
+<INNER_NAME_LADDER>
+WHEEL C RING 1
+</INNER_NAME_LADDER>
+<OUTER_NAME_LADDER>
+WHEEL C RING 3
+</OUTER_NAME_LADDER>
 <LADDER_ACCESS_INTRO_1>
 The corridor gives way to a large column, splitting the corridor to go around it on both sides.
 On two sides of the column you find large hatches with a colored engraving
@@ -680,10 +757,12 @@ Written on the glass is a warning.
     FOR EMERGENCIES ONLY!
     SECURITY WILL BE ALERTED TO MISUSE!
 </LADDER_ACCESS_INTRO_3>
-
-<LADDER_ACCESS_ENTERQUEST_1>Smash the glass?</LADDER_ACCESS_ENTERQUEST_1>
-<LADDER_ACCESS_ENTERQUEST_2>Pull the lever?</LADDER_ACCESS_ENTERQUEST_2>
-
+<LADDER_ACCESS_ENTERQUEST_1>
+Smash the glass?
+</LADDER_ACCESS_ENTERQUEST_1>
+<LADDER_ACCESS_ENTERQUEST_2>
+Pull the lever?
+</LADDER_ACCESS_ENTERQUEST_2>
 <LADDER_ACCESS_ENTER_1>
 You reach in the panel, and pull the lever.
 The hatch opens and you go inside.
@@ -692,7 +771,6 @@ The hatch opens and you go inside.
 You smash the glass, and pull the lever.
 The hatch opens and you go inside.
 </LADDER_ACCESS_ENTER_2>
-
 <AUXCOM_INTRO>
 You find a large panel with a screen on wall next to you.
 It has the following text painted and engraved under it
@@ -750,19 +828,36 @@ You take a moment to brainstorm ideas on what do with with the cables.
 .
 You made a list of things you could try.
 </AUXCOM_STATUS_6>
-
-<AUXCOM_WIREOPTION_1>Disconnect thick black cable and plug it into white socket</AUXCOM_WIREOPTION_1>
-<AUXCOM_WIREOPTION_2>Plug blue cable into blue socket</AUXCOM_WIREOPTION_2>
-<AUXCOM_WIREOPTION_3>disconnect red/white striped cable and plug it in white socket</AUXCOM_WIREOPTION_3>
-<AUXCOM_WIREOPTION_4>disconnect red/white striped cable and plug it in blue socket</AUXCOM_WIREOPTION_4>
-<AUXCOM_WIREOPTION_5>Disconnect thick Blue cable and plug it into white socket</AUXCOM_WIREOPTION_5>
-<AUXCOM_WIREOPTION_6>disconnect thick black cable and taste it.</AUXCOM_WIREOPTION_6>
-<AUXCOM_WIREOPTION_7>plug yellow cable into black socket</AUXCOM_WIREOPTION_7>
-<AUXCOM_WIREOPTION_8>taste yellow cable</AUXCOM_WIREOPTION_8>
-<AUXCOM_WIREOPTION_9>close panel</AUXCOM_WIREOPTION_9>
-
-<AUXCOM_WIREOPTION_CHOOSE>What will you try next?</AUXCOM_WIREOPTION_CHOOSE>
-
+<AUXCOM_WIREOPTION_1>
+Disconnect thick black cable and plug it into white socket
+</AUXCOM_WIREOPTION_1>
+<AUXCOM_WIREOPTION_2>
+Plug blue cable into blue socket
+</AUXCOM_WIREOPTION_2>
+<AUXCOM_WIREOPTION_3>
+disconnect red/white striped cable and plug it in white socket
+</AUXCOM_WIREOPTION_3>
+<AUXCOM_WIREOPTION_4>
+disconnect red/white striped cable and plug it in blue socket
+</AUXCOM_WIREOPTION_4>
+<AUXCOM_WIREOPTION_5>
+Disconnect thick Blue cable and plug it into white socket
+</AUXCOM_WIREOPTION_5>
+<AUXCOM_WIREOPTION_6>
+disconnect thick black cable and taste it.
+</AUXCOM_WIREOPTION_6>
+<AUXCOM_WIREOPTION_7>
+plug yellow cable into black socket
+</AUXCOM_WIREOPTION_7>
+<AUXCOM_WIREOPTION_8>
+taste yellow cable
+</AUXCOM_WIREOPTION_8>
+<AUXCOM_WIREOPTION_9>
+close panel
+</AUXCOM_WIREOPTION_9>
+<AUXCOM_WIREOPTION_CHOOSE>
+What will you try next?
+</AUXCOM_WIREOPTION_CHOOSE>
 <AUXCOM_WIREACTION_1A>
 You disconnect the think black cable, and plug it into the white socket.
 </AUXCOM_WIREACTION_1A>
@@ -777,7 +872,6 @@ Then a speaker explodes, and the system goes black.
 You quickly disconnect the black cable, and put it back to where it was.
 You decide not to try that again.
 </AUXCOM_WIREACTION_1C>
-
 <AUXCOM_WIREACTION_2>
 You insert the blue cable in the blue socket.
 ...
@@ -787,7 +881,6 @@ You insert the blue cable in the blue socket.
 Nothing...
 Other than a faint blip, nothing happened. You scratch this off the list.
 </AUXCOM_WIREACTION_2>
-
 <AUXCOM_WIREACTION_3A>
 You plug the red-white striped cable in the white socket.
 </AUXCOM_WIREACTION_3A>
@@ -807,7 +900,6 @@ Well, that's very 'useful'
 You disconnect the red-white striped cable.
 That was a blind end.
 </AUXCOM_WIREACTION_3D>
-
 <AUXCOM_WIREACTION_4A>
 You plug the red-white striped cable in the blue socket.
 </AUXCOM_WIREACTION_4A>
@@ -827,7 +919,6 @@ Well, that's.. colorful...
 You disconnect the red-white striped cable.
 That was a blind end.
 </AUXCOM_WIREACTION_4D>
-
 <AUXCOM_WIREACTION_5A>
 You unplug the thick blue cable, and plug it back in.
 </AUXCOM_WIREACTION_5A>
@@ -850,7 +941,6 @@ You notise the screen suddenly stopped displaying static.
 You check the screen, and find it now displays a black background with a text in white
         'ERROR - PLEASE REBOOT'
 </AUXCOM_WIREACTION_5E>
-
 <AUXCOM_WIREACTION_6>
 You unplug the big thick black cable, and stuck out your tongue to lick it.
 You're not sure why you just did that.
@@ -866,7 +956,6 @@ When your cause of death were discovered you were post-humerusly given the Darwi
 <AUXCOM_WIREACTION_6_GAMEOVER>
 You put a live power-cable in your mouth. Yeah, you're dead.
 </AUXCOM_WIREACTION_6_GAMEOVER>
-
 <AUXCOM_WIREACTION_7A>
 You unplug the cable in the black slot, and plug in the yellow.
 Nothing happened, and the system is still shut down.
@@ -877,7 +966,6 @@ You unplug the cable in the black slot, and plug in the yellow.
 As you plug in the yellow cable, there was a breif spark, then system shuts down.
 You decide to undo it, and never try that again, putting the black cable back in.
 </AUXCOM_WIREACTION_7B>
-
 <AUXCOM_WIREACTION_8A>
 You decide to try and lick the yellow cable again.
 ...
@@ -899,26 +987,46 @@ Though it is back to just beeps and static
 The system blinks and reboots.
 Nothing seems to have changed though, still just beeps and static.
 </AUXCOM_WIREACTION_8E>
-
 <AUXCOM2_INTRO>
 A list of communication nodes show up on the screen.
 Some of them with an error-message saying they are offline
 </AUXCOM2_INTRO>
-
-<AUXCOM2_CONTACTQUEST>Who do you wish to contact?</AUXCOM2_CONTACTQUEST>
-
-<AUXCOM2_COMOP_1>Connect to main bridge com system</AUXCOM2_COMOP_1>
-<AUXCOM2_COMOP_2>Connect to main engineering</AUXCOM2_COMOP_2>
-<AUXCOM2_COMOP_3>Connect to radiation shelter One</AUXCOM2_COMOP_3>
-<AUXCOM2_COMOP_4>Connect to radiation shelter Two</AUXCOM2_COMOP_4>
-<AUXCOM2_COMOP_5>Connect to radiation shelter Three</AUXCOM2_COMOP_5>
-<AUXCOM2_COMOP_6>Connect to radiation shetter Four</AUXCOM2_COMOP_6>
-<AUXCOM2_COMOP_7>Connect to Auxillary coms, wheel One</AUXCOM2_COMOP_7>
-<AUXCOM2_COMOP_8>Connect to Auxillary coms, wheel two</AUXCOM2_COMOP_8>
-<AUXCOM2_COMOP_9>Connect to Auxillary coms, wheel four</AUXCOM2_COMOP_9>
-<AUXCOM2_COMOP_CARGO>Connect to main cargo bay</AUXCOM2_COMOP_CARGO>
-<AUXCOM2_COMOP_EXIT>Exit the auxillary com system</AUXCOM2_COMOP_EXIT>
-
+<AUXCOM2_CONTACTQUEST>
+Who do you wish to contact?
+</AUXCOM2_CONTACTQUEST>
+<AUXCOM2_COMOP_1>
+Connect to main bridge com system
+</AUXCOM2_COMOP_1>
+<AUXCOM2_COMOP_2>
+Connect to main engineering
+</AUXCOM2_COMOP_2>
+<AUXCOM2_COMOP_3>
+Connect to radiation shelter One
+</AUXCOM2_COMOP_3>
+<AUXCOM2_COMOP_4>
+Connect to radiation shelter Two
+</AUXCOM2_COMOP_4>
+<AUXCOM2_COMOP_5>
+Connect to radiation shelter Three
+</AUXCOM2_COMOP_5>
+<AUXCOM2_COMOP_6>
+Connect to radiation shetter Four
+</AUXCOM2_COMOP_6>
+<AUXCOM2_COMOP_7>
+Connect to Auxillary coms, wheel One
+</AUXCOM2_COMOP_7>
+<AUXCOM2_COMOP_8>
+Connect to Auxillary coms, wheel two
+</AUXCOM2_COMOP_8>
+<AUXCOM2_COMOP_9>
+Connect to Auxillary coms, wheel four
+</AUXCOM2_COMOP_9>
+<AUXCOM2_COMOP_CARGO>
+Connect to main cargo bay
+</AUXCOM2_COMOP_CARGO>
+<AUXCOM2_COMOP_EXIT>
+Exit the auxillary com system
+</AUXCOM2_COMOP_EXIT>
 <AUXCOM2_NO_RESP_1>
 You attempt to make your connection.
 ...
@@ -928,7 +1036,6 @@ You attempt to make your connection.
 ... .... .....
 ERROR: CONNECTION TIMED OUT, SYSTEM MAY BE OFFLINE!
 </AUXCOM2_NO_RESP_1>
-
 <AUXCOM2_RESP_CARGO>
 You attempt to make your connection.
 ...
@@ -936,16 +1043,13 @@ You attempt to make your connection.
 .. '-oming from inside Wheel C!' 'What?! Hello, who's there!?'
 You hear two voices from the com system.
 </AUXCOM2_RESP_CARGO>
-
 <AUXCOM2_RESP_EXIT>
 You close the lower panel, shutting down the system
 </AUXCOM2_RESP_EXIT>
-
 <AUXCOM3_INTRO_ASS>
 What? You again? uhm.. sorry, just lost connection!
 (call disconnected!)
 </AUXCOM3_INTRO_ASS>
-
 <AUXCOM3_INTRO_THANKS>
 Hey! Good job with the reactor!
 The accellerator seems to be running stable for now.
@@ -955,39 +1059,35 @@ Looks like we got maybe two hours. Though bestnot wait that long.
 Alright, what I need you to do now, is to rescue everyone who is stuck in stasis.
 Any questions?
 </AUXCOM3_INTRO_THANKS>
-
 <AUXCOM3_INTRO_RETURN>
 Hello again.
 Again, thanks for fixing the reactor. We still got some time.
 Did you have more questions?
 </AUXCOM3_INTRO_RETURN>
-
 <AUXCOM3_INTRO_PLZFIX>
 Hi?
 Look, our systems say the reactor is still in a bad condition!
 We don't have time to chat!
 Either fix the reactor, or get out of there!
 </AUXCOM3_INTRO_PLZFIX>
-
 <AUXCOM_CONTACT_MADE>
 The people on the other side of the call is waiting for you to answer.
 </AUXCOM_CONTACT_MADE>
-
 <AUXCOM_DIALOGE_1_QUEST>
 What do you say?
 </AUXCOM_DIALOGE_1_QUEST>
-
-<AUXCOM_DIALOGE_1_OPTION_1>I'm {game.PlayerName}. I'm lost, where am I?</AUXCOM_DIALOGE_1_OPTION_1>
-<AUXCOM_DIALOGE_1_OPTION_2>Help, I don't know who or where I am!</AUXCOM_DIALOGE_1_OPTION_2>
-<AUXCOM_DIALOGE_1_OPTION_3>uhh</AUXCOM_DIALOGE_1_OPTION_3>
-<AUXCOM_DIALOGE_1_OPTION_4>I.. I think my name is {game.PlayerName}. I find it hard to remember.</AUXCOM_DIALOGE_1_OPTION_4>
-
-<!-- AUXCOM_DIALOGE_1 fragments
-{_P} - player name or (mister/miss) See GENDERED_1
-{_REACT_1} see AUXCOM_DIALOGE_1B_PART_1 A and B
-{_REACT_2} see AUXCOM_DIALOGE_1B_PART_2 A and B
--->
-
+<AUXCOM_DIALOGE_1_OPTION_1>
+I'm {game.PlayerName}. I'm lost, where am I?
+</AUXCOM_DIALOGE_1_OPTION_1>
+<AUXCOM_DIALOGE_1_OPTION_2>
+Help, I don't know who or where I am!
+</AUXCOM_DIALOGE_1_OPTION_2>
+<AUXCOM_DIALOGE_1_OPTION_3>
+uhh
+</AUXCOM_DIALOGE_1_OPTION_3>
+<AUXCOM_DIALOGE_1_OPTION_4>
+I.. I think my name is {game.PlayerName}. I find it hard to remember.
+</AUXCOM_DIALOGE_1_OPTION_4>
 <AUXCOM_DIALOGE_1A>
 Ok. {_P}, I need you to stay calm. I'm gonna get some help
 (The woman you were talking leaves)
@@ -1008,12 +1108,9 @@ There are still lots of people stuck in stasis in the upper ring!
 
 Look, {game.PlayerName}, I woulden't blame you for just making a run for the ladder to save yourself, but you could save those people!
 </AUXCOM_DIALOGE_1A>
-
 <AUXCOM_DIALOGE_2A_QUEST>
 How do you respond?
 </AUXCOM_DIALOGE_2A_QUEST>
-
-<!-- Going 'down' is not an error. The player character acually makes this mistake in this option. -->
 <AUXCOM_DIALOGE_2A_OPTION_1>
 Screw them! I'm out of here! I'm gonna climb down and get out of here!
 </AUXCOM_DIALOGE_2A_OPTION_1>
@@ -1026,7 +1123,6 @@ Alright, how do I get to the reactor?
 <AUXCOM_DIALOGE_2A_OPTION_4>
 What exacly happened?
 </AUXCOM_DIALOGE_2A_OPTION_4>
-
 <AUXCOM_DIALOGE_2A_SCREWIT>
 Well, ehm.. that's rude. ..
 uh well, sure go DOWN the ladder. Uh, and take your good time too.
@@ -1064,8 +1160,6 @@ You need to hurry! Get back and contact us again once you have done it!
 
 (The call has ended)
 </AUXCOM_DIALOGE_2A_YES>
-
-
 <AUXCOM_DIALOGE_2A_WUT>
 There was the revolt down in the outer ring,
 the so-called {OUTER_RING_NAME}.
@@ -1073,14 +1167,9 @@ The fighting damaged the reactor-ring.
 We don't have time to discuss details.
 I need you to either stabilize the reactor so we can save everyone, or get you safely out of there!
 </AUXCOM_DIALOGE_2A_WUT>
-
-
-
-<!-- Alternate dialouge: If the player for some reason fixed the reactor before making contact -->
 <AUXCOM_DIALOGE_1B_REACTOR_QUEST>
 Ok, {_P}, I need you to stay calm. First off I need to know, was it you who stabilized the reactor?
 </AUXCOM_DIALOGE_1B_REACTOR_QUEST>
-
 <AUXCOM_DIALOGE_1B_PART_1A>
 Well, thanks for that, {_P}. We were starting to sweat bullets up here.
 </AUXCOM_DIALOGE_1B_PART_1A>
@@ -1090,7 +1179,6 @@ you should get in contact with them as soon as possible.
 They would likly be down below you in the outer ring
 also known as the {OUTER_RING_NAME}.
 </AUXCOM_DIALOGE_1B_PART_1B>
-
 <AUXCOM_DIALOGE_1B_PART_2A>
 Thanks for fixing the reactor! {game.FemaleFam.name} told me you were good with machines, {game.PlayerName}. I guess this proves it.
 </AUXCOM_DIALOGE_1B_PART_2A>
@@ -1099,7 +1187,6 @@ It was you who fixed the reactor, wasen't it?
 {game.FemaleFam.name} warned me you were as good a jokesteer as an engineer, {game.PlayerName}.
 Besides, I can tell. Your voice carries some residual effect from someone resently exposed to micro-time loops.
 </AUXCOM_DIALOGE_1B_PART_2B>
-
 <AUXCOM_DIALOGE_1B>
 {_REACT_1}
 Anyways, please hold the line for a bit, I'm gonna get some help.
@@ -1141,11 +1228,9 @@ Yes, really. just 0-0-0-0-0.
 
 Any questions?
 </AUXCOM_DIALOGE_1B>
-
 <AUXCOM_DIALOGE_2B_QUEST>
 How do you respond?
 </AUXCOM_DIALOGE_2B_QUEST>
-
 <AUXCOM_DIALOGE_2B_OPTION_1>
 Why can't you save them?
 </AUXCOM_DIALOGE_2B_OPTION_1>
@@ -1155,7 +1240,6 @@ Why the simple code?
 <AUXCOM_DIALOGE_2B_OPTION_3>
 No. I'm on my way
 </AUXCOM_DIALOGE_2B_OPTION_3>
-
 <AUXCOM_DIALOGE_2B_WHY>
 There is a problem with the doors up here.
 Look, it's complicated. They were designed by aliens after all.
@@ -1172,9 +1256,9 @@ Don't worry about it.
 Good luck.
 (Call disconnected)
 </AUXCOM_DIALOGE_2B_EXIT>
-
-<AUXCOM_DIALOGE_3_QUEST>How do you respond?</AUXCOM_DIALOGE_3_QUEST>
-
+<AUXCOM_DIALOGE_3_QUEST>
+How do you respond?
+</AUXCOM_DIALOGE_3_QUEST>
 <AUXCOM_DIALOGE_3_OPTION_CODE>
 What was that code again?
 </AUXCOM_DIALOGE_3_OPTION_CODE>
@@ -1184,7 +1268,6 @@ Exacly what happened?
 <AUXCOM_DIALOGE_3_OPTION_EXIT>
 Not right now. Bye.
 </AUXCOM_DIALOGE_3_OPTION_EXIT>
-
 <AUXCOM_DIALOGE_3_CODE>
 As we said earlier, the code is 0-0-0-0-0.
 Again, please don't mock us for not changing the factory settings.
@@ -1208,12 +1291,9 @@ they called it the "5 hour world war" back home.
 Clearly spears and ballistas don't do well against tanks and jet-fighters.
 ...
 </AUXCOM_DIALOGE_3_TRUTH>
-
-
 <AUXCOM_DIALOGE_3_INTERRUPT_QUEST>
 Ask for the short story?
 </AUXCOM_DIALOGE_3_INTERRUPT_QUEST>
-
 <AUXCOM_DIALOGE_3_SHORT_STORY>
 Uh? Ok, I will short it down.
 Most of us is kept in stasis chambers between research project.
@@ -1271,49 +1351,43 @@ But the important thing now is to get you and everyone else stuck in the module 
 
 Do you have any more questions?
 </AUXCOM_DIALOGE_3_FULL_STORY>
-
-<!-- Elevator scene. May happen at any ring and the core.
-frags:
-_BUTTONSET - see ELEVATOR_BUTTONSET ( CORE, MID, BUTTOM )
-_DESC -  see ELEVATOR_DESC ( CORE, CORRIDOR )
- -->
 <ELEVATOR_DESC_CORE>
 The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
 The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look.
 </ELEVATOR_DESC_CORE>
-
 <ELEVATOR_DESC_CORRIDOR>
 The elevators breaks up the corridor, as the corridor splits to around a large round column you learn is the elevator shaft,
 the walls around bending outwards giving way for the path around the shaft until they hit flat outer walls.
 </ELEVATOR_DESC_CORRIDOR>
-
 <ELEVATOR_DESC>
 {_DESC}
 You find six elevator doors in pairs of two around the large cylinder.
 You also locate a set of call-buttons for {_BUTTONSET}, whatever that last one means.
 </ELEVATOR_DESC>
-
 <ELEVATOR_BUTTONSET_CORE>
 down and 'cargo'
 </ELEVATOR_BUTTONSET_CORE>
-
 <ELEVATOR_BUTTONSET_MID>
 up, down and 'cargo'
 </ELEVATOR_BUTTONSET_MID>
-
 <ELEVATOR_BUTTONSET_BOTTOM>
 up and 'cargo'
 </ELEVATOR_BUTTONSET_BOTTOM>
-
 <ELEVATOR_QUEST>
 Press a button?
 </ELEVATOR_QUEST>
-
-<ELEVATOR_OPTION_UP>Press UP call button</ELEVATOR_OPTION_UP>
-<ELEVATOR_OPTION_DOWN>Press DOWN call button</ELEVATOR_OPTION_DOWN>
-<ELEVATOR_OPTION_CARGO>Press CARGO call button</ELEVATOR_OPTION_CARGO>
-<ELEVATOR_OPTION_EXIT>Leave the elevators</ELEVATOR_OPTION_EXIT>
-
+<ELEVATOR_OPTION_UP>
+Press UP call button
+</ELEVATOR_OPTION_UP>
+<ELEVATOR_OPTION_DOWN>
+Press DOWN call button
+</ELEVATOR_OPTION_DOWN>
+<ELEVATOR_OPTION_CARGO>
+Press CARGO call button
+</ELEVATOR_OPTION_CARGO>
+<ELEVATOR_OPTION_EXIT>
+Leave the elevators
+</ELEVATOR_OPTION_EXIT>
 <ELEVATOR_PRESS_DEAD>
 You press the button.
 ...
@@ -1340,14 +1414,12 @@ Then you hear a fizzeling sound, and everything stops working
 <ELEVATOR_EXIT>
 You left the elevators alone
 </ELEVATOR_EXIT>
-
 <LADDER_GO_UP>
 You climb upwards, feeling yourself getting a bit lighter
 </LADDER_GO_UP>
 <LADDER_GO_DOWN>
 You climb down, feeling a slight stronger pull downwards
 </LADDER_GO_DOWN>
-
 <LADDER_TO_CORE>
 The ladder-shaft ends in a roof-hatch, you open it and stare into the huge spherical room above
 </LADDER_TO_CORE>
@@ -1360,12 +1432,18 @@ You open the hatch for the middle ring
 <LADDER_TO_OUT>
 You open the hatch for the outer ring
 </LADDER_TO_OUT>
-
-<LADDER_CORE_QUEST>Exit to the Core</LADDER_CORE_QUEST>
-<LADDER_INNER_QUEST>Exit into the inner ring</LADDER_INNER_QUEST>
-<LADDER_MID_QUEST>Exit into the middle ring</LADDER_MID_QUEST>
-<LADDER_OUT_QUEST>Exit into the outer ring</LADDER_OUT_QUEST>
-
+<LADDER_CORE_QUEST>
+Exit to the Core
+</LADDER_CORE_QUEST>
+<LADDER_INNER_QUEST>
+Exit into the inner ring
+</LADDER_INNER_QUEST>
+<LADDER_MID_QUEST>
+Exit into the middle ring
+</LADDER_MID_QUEST>
+<LADDER_OUT_QUEST>
+Exit into the outer ring
+</LADDER_OUT_QUEST>
 <CORE_INTRO_1>
 As you push off from the laddershaft, you fly upwards in the low gravity.
 You reach the center, finding yourself entierly weightless.
@@ -1382,16 +1460,27 @@ You float mindlessly around in the huge sphere untill you get a hold on a spinni
 Soon the pole seemed to stop rotating, and the room started rotating around you.
 As the room spins around you, you take note of the clearly labled entry points around you.
 </CORE_INTRO_2>
-
-<CORE_OPTION_WINDOW>Float to the core window</CORE_OPTION_WINDOW>
-<CORE_OPTION_SEC_A>Float to the section A transport elevator</CORE_OPTION_SEC_A>
-<CORE_OPTION_SEC_B>Float to the section B emergency ladder</CORE_OPTION_SEC_B>
-<CORE_OPTION_SEC_C>Float to the section C transport elevator</CORE_OPTION_SEC_C>
-<CORE_OPTION_SEC_D>Float to the section D emergency ladder</CORE_OPTION_SEC_D>
-<CORE_OPTION_AIRLOCK>Float to the module airlock</CORE_OPTION_AIRLOCK>
-
-<CORE_QUEST>What do you wish to do?</CORE_QUEST>
-
+<CORE_OPTION_WINDOW>
+Float to the core window
+</CORE_OPTION_WINDOW>
+<CORE_OPTION_SEC_A>
+Float to the section A transport elevator
+</CORE_OPTION_SEC_A>
+<CORE_OPTION_SEC_B>
+Float to the section B emergency ladder
+</CORE_OPTION_SEC_B>
+<CORE_OPTION_SEC_C>
+Float to the section C transport elevator
+</CORE_OPTION_SEC_C>
+<CORE_OPTION_SEC_D>
+Float to the section D emergency ladder
+</CORE_OPTION_SEC_D>
+<CORE_OPTION_AIRLOCK>
+Float to the module airlock
+</CORE_OPTION_AIRLOCK>
+<CORE_QUEST>
+What do you wish to do?
+</CORE_QUEST>
 <CORE_WINDOW_1>
 You climb, or rather push and drag your way to the window at one end of the pole.
 The pole connected to a set of handrails, rotating with the wall.
@@ -1424,11 +1513,9 @@ You look back at the window area. The window is closed by the huge metal shutter
 You still hear the occational clang and bang.
 You decide not to get closer, just in case.
 </CORE_WINDOW_2>
-
 <FLOAT_TO_QUEST>
 Float over to it?
 </FLOAT_TO_QUEST>
-
 <CORE_TO_ELE_A>
 You look at the elevator access rotating around.
 A huge A is painted on it.
@@ -1445,7 +1532,6 @@ It has a huge B painted on it.
 You look over to the ladder access rotating around.
 It has a huge D painted on it.
 </CORE_TO_LADDER_D>
-
 <CORE_ELE_C>
 You push off and float to the elevator.
 When you got there, you noticed a flashing electoric board flashing a read light
@@ -1459,7 +1545,6 @@ When you got there, you noticed a flashing electoric board flashing a read light
 BRECH DETECTED! NO ACCESS!
 You took off back to the pole.
 </CORE_LADDER_D>
-
 <CORE_AIRLOCK_1>
 You look "down" towards the huge door "below".
 Taking in the details, you see the pole ending a bit before it, splitting into 4 aches around the doorway.
@@ -1487,10 +1572,6 @@ As you were floating though, you were greeted by someone who suddenly floated in
 For whatever reason, you decide to drag yourself back to the pole.
 As you turned around, you noticed some people float into view on the, with confused looks.
 </CORE_AIRLOCK_3B>
-
-<!--FRAGS:
-
--->
 <CARGOBAY_ENDING>
 As you appreach the innermost door, you hear a muffled barely audiable voice from the other side.
 {_INTRO_PART}
@@ -1511,7 +1592,6 @@ Hey, you must be {_P}!
 <CARGOBAY_INTRO_PART_B>
 What the? A survivor! Quick, let's open the door and get {_P} inside!
 </CARGOBAY_INTRO_PART_B>
-
 <CARGOBAY_REACTION_A>
 Well, you saved a few people, {_NUM_PEOPLE_SAVED} by last count, that would otherwise die.
 I suppose that's something we can be thankfull for. Sad there are still so many more stuck down there.
@@ -1526,7 +1606,6 @@ What happened? You fixed the reactor. Was there something wrong with the stasis 
 <CARGOBAY_REACTION_D>
 Well, at least we got you out of there in time.
 </CARGOBAY_REACTION_D>
-
 <CARGOBAY_FOLLOWUP_A>
 Well, proper congratulations will have to wait.
 You should join the others in the infirmary.
@@ -1538,7 +1617,6 @@ Without that improvised dead-man switch on the other side there, this door is lo
 You best head to the infirmary.
 We need to detach the module before it's too late.
 </CARGOBAY_FOLLOWUP_B>
-
 <CARGOBAY_ENDING_A>
 You push and drag your way following the signs to the infirmary in wheel A section A1
 You try not to think about how maybe you could have saved some of the people stuck in stasis.
@@ -1566,9 +1644,6 @@ you conclude there was no way you could have known.
 ...
 It is of little comfort.
 </CARGOBAY_ENDING_D>
-
-<!--Inner ring section-->
-
 <INNER_INTRO_1>
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
@@ -1577,7 +1652,6 @@ And oof! You just walked streight into a large closed door.
 You close the emergency ladder's hatch.
 You are now at the inner level ring.
 </INNER_INTRO_2>
-
 <INNER_SEC_C_DOOR>
 You stare at the large solid door in front of you.
 There is a painted engraving on the door, it reads
@@ -1592,7 +1666,6 @@ Most of the corridor is blown open to darkness.
 And you see some small faint light far back in the darknes, moving.
 Stars, you realize. Stars flying upwards. You are staring into space!
 </INNER_SEC_C_DOOR>
-
 <INNER_SEC_D_DOOR>
 You stare at the large solid door in front of you.
 There is a painted engraving on the door, it reads
@@ -1606,7 +1679,6 @@ On the other side you see a corridor much like the one you are in
 except, it is littered by dead people, and remains from broken stasis chambers.
 What happened here?
 </INNER_SEC_D_DOOR>
-
 <INNER_TUBES_LOCKED>
 A panel of the door indicates the chamber is closed down by emergency lockdown.
 You would need an override key to open it.
@@ -1614,40 +1686,63 @@ You would need an override key to open it.
 <INNER_TUBES_VISITED>
 You have already cleared this chamber.
 </INNER_TUBES_VISITED>
-
-
 <INNER_NAV_ELE>
 A set of elevators
 </INNER_NAV_ELE>
-
 <INNER_NAV_LADDER>
 Emergency access ladder
 </INNER_NAV_LADDER>
-
-<INNER_NAV_TO_SEC_A>Large open doorway to sector A</INNER_NAV_TO_SEC_A>
-<INNER_NAV_TO_SEC_B>Large open doorway to sector B</INNER_NAV_TO_SEC_B>
-<INNER_NAV_TO_SEC_C>Large closed blastdoor to sector C</INNER_NAV_TO_SEC_C>
-<INNER_NAV_TO_SEC_D>Large closed blastdoor to sector D</INNER_NAV_TO_SEC_D>
-
-<INNER_NAV_ROOM_A>Stasis room A</INNER_NAV_ROOM_A>
-<INNER_NAV_ROOM_B>Stasis room B</INNER_NAV_ROOM_B>
-<INNER_NAV_ROOM_C>Stasis room C</INNER_NAV_ROOM_C>
-
-
-<INNER_NAV_ROOM_D>Stasis room D</INNER_NAV_ROOM_D>
-<INNER_NAV_ROOM_E>Stasis room E</INNER_NAV_ROOM_E>
-<INNER_NAV_ROOM_F>Stasis room F</INNER_NAV_ROOM_F>
-
-<INNER_NAV_ROOM_G>Stasis room G</INNER_NAV_ROOM_G>
-<INNER_NAV_ROOM_H>Stasis room H</INNER_NAV_ROOM_H>
-<INNER_NAV_ROOM_I>Stasis room I</INNER_NAV_ROOM_I>
-
-<INNER_NAV_ROOM_J>Stasis room J</INNER_NAV_ROOM_J>
-<INNER_NAV_ROOM_K>Stasis room K</INNER_NAV_ROOM_K>
-<INNER_NAV_ROOM_L>Stasis room L</INNER_NAV_ROOM_L>
-
-<INNER_TO_ROOM_QUEST>Enter stasis room</INNER_TO_ROOM_QUEST>
-
+<INNER_NAV_TO_SEC_A>
+Large open doorway to sector A
+</INNER_NAV_TO_SEC_A>
+<INNER_NAV_TO_SEC_B>
+Large open doorway to sector B
+</INNER_NAV_TO_SEC_B>
+<INNER_NAV_TO_SEC_C>
+Large closed blastdoor to sector C
+</INNER_NAV_TO_SEC_C>
+<INNER_NAV_TO_SEC_D>
+Large closed blastdoor to sector D
+</INNER_NAV_TO_SEC_D>
+<INNER_NAV_ROOM_A>
+Stasis room A
+</INNER_NAV_ROOM_A>
+<INNER_NAV_ROOM_B>
+Stasis room B
+</INNER_NAV_ROOM_B>
+<INNER_NAV_ROOM_C>
+Stasis room C
+</INNER_NAV_ROOM_C>
+<INNER_NAV_ROOM_D>
+Stasis room D
+</INNER_NAV_ROOM_D>
+<INNER_NAV_ROOM_E>
+Stasis room E
+</INNER_NAV_ROOM_E>
+<INNER_NAV_ROOM_F>
+Stasis room F
+</INNER_NAV_ROOM_F>
+<INNER_NAV_ROOM_G>
+Stasis room G
+</INNER_NAV_ROOM_G>
+<INNER_NAV_ROOM_H>
+Stasis room H
+</INNER_NAV_ROOM_H>
+<INNER_NAV_ROOM_I>
+Stasis room I
+</INNER_NAV_ROOM_I>
+<INNER_NAV_ROOM_J>
+Stasis room J
+</INNER_NAV_ROOM_J>
+<INNER_NAV_ROOM_K>
+Stasis room K
+</INNER_NAV_ROOM_K>
+<INNER_NAV_ROOM_L>
+Stasis room L
+</INNER_NAV_ROOM_L>
+<INNER_TO_ROOM_QUEST>
+Enter stasis room
+</INNER_TO_ROOM_QUEST>
 <INNER_TUBES_1>
 You enter the chamber, checking each of the stasis tubes.
 Most of them are empty. But not all.
@@ -1657,7 +1752,7 @@ Empty, empty, dead,
 empty, empty..
 You were about to give up when one chamber your almost passed as empty had someone inside it.
 You activated the emergency defrost, and resuced a small child.
-You told the kid to evacuate.    
+You told the kid to evacuate.
 </INNER_TUBES_1>
 <INNER_TUBES_2>
 You enter the chamber, checking each of the stasis tubes.
@@ -1699,22 +1794,27 @@ You enter the chamber checking each tube.
 A found a uneasy number of dead people.
 But 12 people were still alive to be revived from stasis.
 </INNER_TUBES_7>
-
-<!--Outer ring section-->
 <OUTER_NAV_ELE>
 A set of elevators
 </OUTER_NAV_ELE>
-
 <OUTER_NAV_LADDER>
 Emergency access ladder
 </OUTER_NAV_LADDER>
-
-<OUTER_NAV_TO_SEC_A>Large open doorway to sector A</OUTER_NAV_TO_SEC_A>
-<OUTER_NAV_TO_SEC_B>Large open doorway to sector B</OUTER_NAV_TO_SEC_B>
-<OUTER_NAV_TO_SEC_C>Large closed blastdoor to sector C</OUTER_NAV_TO_SEC_C>
-<OUTER_NAV_TO_SEC_D>Large closed blastdoor to sector D</OUTER_NAV_TO_SEC_D>
-<OUTER_NAV_TO_NODE>Reactor-ring access node</OUTER_NAV_TO_NODE>
-
+<OUTER_NAV_TO_SEC_A>
+Large open doorway to sector A
+</OUTER_NAV_TO_SEC_A>
+<OUTER_NAV_TO_SEC_B>
+Large open doorway to sector B
+</OUTER_NAV_TO_SEC_B>
+<OUTER_NAV_TO_SEC_C>
+Large closed blastdoor to sector C
+</OUTER_NAV_TO_SEC_C>
+<OUTER_NAV_TO_SEC_D>
+Large closed blastdoor to sector D
+</OUTER_NAV_TO_SEC_D>
+<OUTER_NAV_TO_NODE>
+Reactor-ring access node
+</OUTER_NAV_TO_NODE>
 <OUTER_INTRO_1>
 You have walked around aimlessly for a bit, you don't know for how long
 And oof! You just walked streight into a large closed door.
@@ -1723,7 +1823,6 @@ And oof! You just walked streight into a large closed door.
 You close the emergency ladder's hatch.
 You are now at the outer level ring.
 </OUTER_INTRO_2>
-
 <OUTER_SEC_D_DOOR>
 You stare at the large solid door in front of you.
 There is a painted engraving on the door, it reads
@@ -1753,7 +1852,6 @@ After that, aside from what looks to be some solid tick tube, there is nothing b
 darkness and... lights. moving lights.
 Stars, you realize. Stars flying upwards. You are staring into space!
 </OUTER_SEC_C_DOOR>
-
 <REACTORNODE_1A>
 The door in front of you are full of danger-looking signs.
 You activate the translator, and read the signs as
@@ -1772,15 +1870,9 @@ You catch a brief glimse of yourself operating the control system.
 The reactor may not be entierly stable, but you have done what you could.
 You closed the door so not to disturb yourself.
 </REACTORNODE_1C>
-<REACTORNODE_1_QUEST>Are you sure you want to go inside?</REACTORNODE_1_QUEST>
-
-<!--
-Fragments:
-_P1
-_P3
-_P4
-see GENDERED_ 1, 3 and 4
--->
+<REACTORNODE_1_QUEST>
+Are you sure you want to go inside?
+</REACTORNODE_1_QUEST>
 <REACTORNODE_2>
 Alarms bleeping, lights flashing, plasma leaking, then unleaking, as small pockets of local spacetime loops.
 As you enter the room you instinctivly step aside to let a oddly familiar {_P1} out of the room.
@@ -1798,13 +1890,18 @@ it's gone.
 no, now it's there again.
 ..and it's gone!
 </REACTORNODE_2>
-
-<REACTORNODE_3_OPTION_1>Try to snatch the manual next time it appears</REACTORNODE_3_OPTION_1>
-<REACTORNODE_3_OPTION_2>Randomly enter data into the controls</REACTORNODE_3_OPTION_2>
-<REACTORNODE_3_OPTION_3>Get out of there</REACTORNODE_3_OPTION_3>
-
-<REACTORNODE_3_QUEST>What will you do?</REACTORNODE_3_QUEST>
-
+<REACTORNODE_3_OPTION_1>
+Try to snatch the manual next time it appears
+</REACTORNODE_3_OPTION_1>
+<REACTORNODE_3_OPTION_2>
+Randomly enter data into the controls
+</REACTORNODE_3_OPTION_2>
+<REACTORNODE_3_OPTION_3>
+Get out of there
+</REACTORNODE_3_OPTION_3>
+<REACTORNODE_3_QUEST>
+What will you do?
+</REACTORNODE_3_QUEST>
 <REACTORNODE_3A>
 You hover your hand over where the manual were a secund ago.
 ...
@@ -1819,7 +1916,6 @@ your disenbodied fingers appearing out of nowhere to grab the manual,
 only to dissappear, and reappear.
 You decide to ignore this odd phenomenon, as you focus on your task.
 </REACTORNODE_3A>
-
 <REACTORNODE_TIMELOOP_GAMEOVER>
 You got yourself trapped in a timeloop, forever
 </REACTORNODE_TIMELOOP_GAMEOVER>
@@ -1861,7 +1957,6 @@ but stopped as you felt a sharp pain in your lower torso.
 No, not just pain, absense, you realize, as you suddenly fall to the floor.
 The last thing you see before you black out, is yourself working on the console.
 </REACTORNODE_ESCAPE>
-
 <REACTORNODE_4A>
 You scanned the manual with your translator.
 The hand-written alien script of the manual comes out as plain english.
@@ -1874,17 +1969,9 @@ You find what looks like a set of instructions for emergencies.
 Or that's what it looks like.
 Without anything to translate the alien script, you cannot know for sure.
 </REACTORNODE_4B>
-
-
 <REACTORNODE_5_QUEST>
 What procedure will you attept?
 </REACTORNODE_5_QUEST>
-<!--REACTORNODE_5A and 5B
-are lists seperated by line.
-Do not add or remove a line in this list
-A is the procedures translated.
-B is the procedures best intereted (guessed) by player character
--->
 <REACTORNODE_5A_OPTION_LIST>
 Initiate Emergency cooling system
 Engage emergency particle decelerator
@@ -1907,8 +1994,6 @@ Start red line on black circle procedure
 Start blue line on black squere on red line procedure
 Get out of there
 </REACTORNODE_5B_OPTION_LIST>
-
-<!--COOLDOWN-->
 <REACTORNODE_COOLDOWN_1_A>
 You follow the instructions, and soon the emergency cooling brought the temperature down.
 some of the alarms stops bleeping, and you notice the previusly looping instruction manual disappeard.
@@ -1922,7 +2007,6 @@ unfortunalty, it seems the fire is making it more or less impossible to initiate
 As you were about to start following the instructions,
 you realized you have already done this. There is no need to do it again.
 </REACTORNODE_COOLDOWN_3_A>
-
 <REACTORNODE_COOLDOWN_1_B>
 {REACTORNODE_CLUELESS}
 You notice a dial going down in one direction. some of the alarms stops bleeping, and you notice the previusly looping instruction manual disappeard.
@@ -1936,8 +2020,6 @@ But nothing happend.
 {REACTORNODE_CLUELESS}
 But nothing happend.
 </REACTORNODE_COOLDOWN_3_B>
-
-<!--SLOWDOWN-->
 <REACTORNODE_SLOWDOWN_1_A>
 You followed the instructions to decelerate the accellerator.
 ...
@@ -1954,7 +2036,6 @@ The reactor is no longer critical, but that might change.
 As you were about to start following the instructions,
 you realized you have already done this. There is no need to do it again.
 </REACTORNODE_SLOWDOWN_3_A>
-
 <REACTORNODE_SLOWDOWN_1_B>
 {REACTORNODE_CLUELESS}
 You notice a dial start going slowly in one direction.
@@ -1972,7 +2053,6 @@ It seems the reactor is stable for now.
 {REACTORNODE_CLUELESS}
 But nothing happend.
 </REACTORNODE_SLOWDOWN_3_B>
-
 <REACTORNODE_HURRY_A>
 The instructions for accellerating the accellerator were quite easy to follow.
 you just adjusted that sqiggly thing, increased that varible,
@@ -2015,7 +2095,6 @@ And you soon realied why.
 Aside from your little looping bobble, everything was gone.
 You aren't dead. Not really. But by now, you wish you were.
 </REACTORNODE_HURRY_B>
-
 <REACTORNODE_FIREACC_1_A>
 You followed the quite simple instruction,
 The fire in the accellerator ring went out.
@@ -2030,7 +2109,6 @@ Nothing seems to have happened.
 You have no idea what this did,
 but a number of dials suddenly goes crazy for a short while.
 </REACTORNODE_FIREACC_B>
-
 <REACTORNODE_FIREROOM_A>
 You followed the quite simple instruction, and...
 the entire room just got sprayed by a dense foam, convering every surface.
@@ -2043,13 +2121,17 @@ But there was no fire. 'Why did I do this?' you think to yourself while trying t
 Suddenly, the entire room got sprayed by a dense foam, convering every surface.
 yuck.
 If there acually was a fire, you are convinved the fire would be gone by now.
-But there was no fire. You sigh while trying to get foam out of your hair.                
+But there was no fire. You sigh while trying to get foam out of your hair.
 </REACTORNODE_FIREROOM_B>
-
-
-<REACTORNODE_INFO_TEMP_1>SAFE</REACTORNODE_INFO_TEMP_1>
-<REACTORNODE_INFO_TEMP_2>HIGH!</REACTORNODE_INFO_TEMP_2>
-<REACTORNODE_INFO_TEMP_3>VERY HIGH!!!</REACTORNODE_INFO_TEMP_3>
+<REACTORNODE_INFO_TEMP_1>
+SAFE
+</REACTORNODE_INFO_TEMP_1>
+<REACTORNODE_INFO_TEMP_2>
+HIGH!
+</REACTORNODE_INFO_TEMP_2>
+<REACTORNODE_INFO_TEMP_3>
+VERY HIGH!!!
+</REACTORNODE_INFO_TEMP_3>
 <REACTORNODE_INFO_FIREALERT>
 -       ALERT: FIRE DETECTED IN REACTOR SUBSEGMENT {_SEC}{_NUM}
 </REACTORNODE_INFO_FIREALERT>
@@ -2058,7 +2140,6 @@ It did not take long for you to realize that the 'operator' is you.
 This might explain the anomolies.
 You should be extra careful of what you do here.
 </REACTORNODE_THATSME>
-
 <REACTORNODE_INFO_A>
 You followed the instructions to initiate a diognastic of the reactor.
 ...
@@ -2093,13 +2174,11 @@ You followed the instructions to initiate a diognastic of the reactor.
     WARNING: OPERATOR DETECTED IN COMPROMIZED SUBSECTION B04! EVACUATION IS ADVICED!
 {_THATSME}
 </REACTORNODE_INFO_A>
-
 <REACTORNODE_INFO_B>
 {REACTORNODE_CLUELESS}
 The control system starts displaying a large stream of data.
 You have no idea what it says.
 </REACTORNODE_INFO_B>
-
 <REACTORNODE_OVERLOAD_GAMEOVER>
 You found a way to blow youself up. You are very VERY dead!
 </REACTORNODE_OVERLOAD_GAMEOVER>
@@ -2123,7 +2202,6 @@ To say you were atomized is not entierly accurate,
 but that may be the closest terminology to describe what happened to you.
 At least, there were no pain.
 </REACTORNODE_OVERLOAD_B>
-
 <REACTORNODE_SHUTDOWN_A>
 You followed the instructions to shut down the the tacheon emitter array.
 ...
@@ -2144,7 +2222,6 @@ Trying to just shutting them down just won't work.
 {REACTORNODE_CLUELESS}
 It does not look like that did anything.
 </REACTORNODE_SHUTDOWN_B>
-
 <REACTORNODE_6>
 Leaving the room, you fuss over your hand. You are slowly regaining feeling in it.
 Suddenly you notice something.. someone in front of you.
@@ -2153,50 +2230,76 @@ It took you a bit by surprise, but then you remembered what happened when you fi
 And as before, the other person suddenly disappeared.
 You leave the room content you have done what you could to fix it up.
 </REACTORNODE_6>
-
-<!--Basic terms -->
-<LEAVE>Leave</LEAVE>
-<YES>Yes</YES>
-<NO>No</NO>
-<TRUE>True</TRUE>
-<FALSE>False</FALSE>
-<HUSBAND>husband</HUSBAND>
-<BROTHER>brother</BROTHER>
-<WIFE>wife</WIFE>
-<SISTER>sister</SISTER>
-
-<QWASIT>Was it?</QWASIT>
-
-<GENDERED_1_MALE>mister</GENDERED_1_MALE>
-<GENDERED_1_FEMALE>miss</GENDERED_1_FEMALE>
-
-<GENDERED_2_MALE>man</GENDERED_2_MALE>
-<GENDERED_2_FEMALE>lady</GENDERED_2_FEMALE>
-
-<GENDERED_3_MALE>his</GENDERED_3_MALE>
-<GENDERED_3_FEMALE>her</GENDERED_3_FEMALE>
-
-<GENDERED_4_MALE>he</GENDERED_4_MALE>
-<GENDERED_4_FEMALE>she</GENDERED_4_FEMALE>
-
+<LEAVE>
+Leave
+</LEAVE>
+<YES>
+Yes
+</YES>
+<NO>
+No
+</NO>
+<TRUE>
+True
+</TRUE>
+<FALSE>
+False
+</FALSE>
+<HUSBAND>
+husband
+</HUSBAND>
+<BROTHER>
+brother
+</BROTHER>
+<WIFE>
+wife
+</WIFE>
+<SISTER>
+sister
+</SISTER>
+<QWASIT>
+Was it?
+</QWASIT>
+<GENDERED_1_MALE>
+mister
+</GENDERED_1_MALE>
+<GENDERED_1_FEMALE>
+miss
+</GENDERED_1_FEMALE>
+<GENDERED_2_MALE>
+man
+</GENDERED_2_MALE>
+<GENDERED_2_FEMALE>
+lady
+</GENDERED_2_FEMALE>
+<GENDERED_3_MALE>
+his
+</GENDERED_3_MALE>
+<GENDERED_3_FEMALE>
+her
+</GENDERED_3_FEMALE>
+<GENDERED_4_MALE>
+he
+</GENDERED_4_MALE>
+<GENDERED_4_FEMALE>
+she
+</GENDERED_4_FEMALE>
 <ITEM_TRANSLATOR_ICON>
- translator.gif
+translator.gif
 </ITEM_TRANSLATOR_ICON>
 <ITEM_KEEPSAKE_ICON>
- smallbox.gif
+smallbox.gif
 </ITEM_KEEPSAKE_ICON>
 <ITEM_HEADACHE_ICON>
- headache.gif
+headache.gif
 </ITEM_HEADACHE_ICON>
 <ITEM_ASSHOLE_ICON>
- asshole.gif
+asshole.gif
 </ITEM_ASSHOLE_ICON>
 <ITEM_BROKE_TRANSLATOR_ICON>
- brokentranslator.gif
+brokentranslator.gif
 </ITEM_BROKE_TRANSLATOR_ICON>
 <ITEM_KEYCODE_ICON>
- note.gif
+note.gif
 </ITEM_KEYCODE_ICON>
-
-<!--End of file-->
 </story>
