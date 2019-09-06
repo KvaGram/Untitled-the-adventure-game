@@ -711,13 +711,21 @@ You decide to keep the broken device for now, at least untill you find an intect
 
 </CAFE_LIT_BODY>
 <CAFE_LIT_LAMP>
--- Placeholder text, cylinder is a lamp. room is now lit --
+The tall lit support beam is still standing, and still lighting up the room.
+Looking at it closely, you suspect it might not really support anything. It could just be decorative.
+Not wanting to turn it off, you leave it be.
+
 </CAFE_LIT_LAMP>
 <CAFE_LIT_TABLE>
--- Placeholder text, found nothing of interest --
+The nearby table you saw is part of a dining booth, and is...
+it is full of blood!
+
+
 </CAFE_LIT_TABLE>
 <CAFE_LIT_COUNTER>
--- Placeholder text, found nothing of interest --
+The serving counter is a real mess, plates, food and bowls are scattered all over the place.
+There is nothing worth taking. You return back to the dead alien. 
+
 </CAFE_LIT_COUNTER>
 <CAFE_LIT_EXIT>
 You exit out of the diner.
