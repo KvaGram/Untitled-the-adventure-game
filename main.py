@@ -57,7 +57,7 @@ import outer
 import inner
 
 #version number. Major, minor, hotfix.
-VERSION = [1, 2, 1]
+VERSION = [1, 2, 2]
 #if dev is on, some debug info may be displayed in the game
 DEV = True
 
@@ -186,7 +186,7 @@ def titleMenu(game:Game.Game):
             return
         if r == "ABOUT":
             game.runGeneral("credits")
-            return
+            continue
         if r == "LOADGAME":
             if game.loadgame(fromTitle = True):
                 game_loop(game)

@@ -74,8 +74,8 @@ def LadderAccess(game:Game.Game, goto:callable):
             openText = "{LADDER_ACCESS_ENTER_1}"
         else:
             frags["_INTROPART"] = "{LADDER_ACCESS_INTRO_3}"
-            enterText = "{LADDER_ACCESS_ENTER_2}"
-            openText = "{LADDER_ACCESS_ENTERQUEST_1}"
+            enterText = "{LADDER_ACCESS_ENTERQUEST_1}"
+            openText = "{LADDER_ACCESS_ENTER_2}"
         game.rolltext(text, frags=frags)
         if(game.yesno(openText)):
             if game.getdata(varname) == None:

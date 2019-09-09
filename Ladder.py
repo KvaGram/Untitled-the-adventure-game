@@ -57,6 +57,7 @@ def Start(game:Game.Game):
                 ("_", T("LADDER_OUT_QUEST"), outer),
             ]),
         ]
+    game.rollArt("ladderart", 0.05)
     setupRunner()
     runner.index =  (
         {
