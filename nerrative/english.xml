@@ -639,8 +639,6 @@ It is held in some tini small appendeges, almost like fingers.
 You can't make out what the box is, so you leave it where you found it.
 
 You can't make out much more about the not-human body.
-
-
 </CAFE_DARK_BODY>
 <CAFE_DARK_LAMP>
 The faint cyllindrical outline looks at first to be a support pillar of sorts.
@@ -651,7 +649,6 @@ You accidentally press it. Suddenly a flash of light blind you.
 As you recover, you find the room suddenly lit.
 
 You walk back to where the blue light was, the light now invisible compared to the bright support pillar lamp.
-
 </CAFE_DARK_LAMP>
 <CAFE_DARK_TABLE>
 You funble a few steps in the darkness to the nearby table.
@@ -660,7 +657,6 @@ There is something wet on the table. Someone must have spilled something.
 You find a plate, on it you found a fork stuck in something.
 You accidentally tipped a glass or cup, luckly it seems it was empty.
 You can't make out anything that seems important, so you make your back back to the faint light.
-
 </CAFE_DARK_TABLE>
 <CAFE_DARK_COUNTER>
 You funble around and found what appers to be the serving table. 
@@ -671,14 +667,18 @@ Finding some paper towels, or at lest you hope it's paper towels,
 as you can't tell in the dark, you clean the stew off your hand.
 You find some serving plates, cups, cuttlery. Nothing to make light though.
 You fumble back to the faint blue light.
-
-
 </CAFE_DARK_COUNTER>
 <CAFE_DARK_EXIT>
 You fumble though the darkness out the exit with little difficulty.
 </CAFE_DARK_EXIT>
 <CAFE_TRANS_RACK>
--- placeholder text, you find an intact translator device. --
+You walk over to the rack at the far wall of the diner.
+It is full of tablets. You take one, and examine it.
+There is something written on it, in english.
+"Point this end towards you, aim the other side towards who or what you wish to translate. This device is calibrated for the top 5 terran langauges and the 3 prime dialects of Ziruup"
+Clearly this is a translation device. 
+You decide to keep one with you.
+
 </CAFE_TRANS_RACK>
 <CAFE_LIT_BODY>
 You examine the alien creature.
@@ -707,25 +707,21 @@ The exposed insides seems to be void of electronics.
 All you see are moving gears, tini shafts, and other tini mechanical clockwork parts.
 Some small metal spikes are moving in and out of where the panal would be.
 
-You decide to keep the broken device for now, at least untill you find an intect one.
+You decide to keep the broken device for now, at least untill you find an intact one.
 
 </CAFE_LIT_BODY>
 <CAFE_LIT_LAMP>
 The tall lit support beam is still standing, and still lighting up the room.
 Looking at it closely, you suspect it might not really support anything. It could just be decorative.
 Not wanting to turn it off, you leave it be.
-
 </CAFE_LIT_LAMP>
 <CAFE_LIT_TABLE>
 The nearby table you saw is part of a dining booth, and is...
 it is full of blood!
-
-
 </CAFE_LIT_TABLE>
 <CAFE_LIT_COUNTER>
 The serving counter is a real mess, plates, food and bowls are scattered all over the place.
-There is nothing worth taking. You return back to the dead alien. 
-
+There is nothing worth taking. You return back to the dead alien.
 </CAFE_LIT_COUNTER>
 <CAFE_LIT_EXIT>
 You exit out of the diner.

@@ -185,7 +185,10 @@ class Game:
     def runGeneral(self, call):
         call = self.GeneralList.get(call)
         if call:
-            call()
+            try:
+                call()
+            except TypeError:
+                call(self)
         else:
             NotAddedYet()
 
@@ -436,15 +439,15 @@ class Game:
             return "death"
         return "safe"
     def runCredits(self):
-        f = open("title.txt", 'r', encoding="utf-8")
-        titlecard = f.read()
-        self.rolltext(titlecard, 0.05)
-        f.close()
-        f = open("credits.txt", 'r', encoding="utf-8")
-        creditsText = f.read()
-        self.rolltext(creditsText, 0.1)
-        f.close()
+        self.rollArt("title", 0.05)
+        self.rollArt("credits", 0.1)
     #endregion general_functions
+    def rollArt(self, artname, linepause:float = 0.1):
+        f = open(f"{artname}.txt", 'r', encoding="utf-8")
+        artText = f.read()
+        self.rolltext(artText, linepause)
+        f.close()
+
 
 #Gettexter generates a function T as a shortcut for getting text from game.story.
 #This intended for use by other modules.
