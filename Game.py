@@ -52,9 +52,9 @@ class Game:
         if len (self.savedata) <= 1:
             return self.quit()
         s = TKmsg._show("UNTITLED! The adventure game", "Would you like to save before you quit?", TKmsg.WARNING, TKmsg.YESNOCANCEL)
-        if(s == None):
+        if(s == None or s == 'cancel'):
             return
-        if(s == True):
+        if(s == True or s == 'yes'):
             self.savegame()
         self.quit()
         sys.exit()
