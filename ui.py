@@ -9,8 +9,10 @@ from typing import List
 import ItemDB
 from untitled_const import IMAGE_DIR, FALLBACK_ICON, SAVE_DIR, SAVE_FILETYPE
 
+_INV_BG = "gray80"
 class inventoryItem(TK.Frame):
     def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, **args):
+        args["bg"] = _INV_BG
         super(inventoryItem, self).__init__(master = root, **args)
         if itemtype:
             displayName = itemtype.dName
@@ -25,9 +27,9 @@ class inventoryItem(TK.Frame):
         except Exception as err:
             print(err)
             self.imageData = TK.PhotoImage(file = IMAGE_DIR + FALLBACK_ICON)
-        self.toplabel = TK.Label(master=self, text = displayName)
-        self.midlabel = TK.Label(master=self, image = self.imageData)
-        self.buttomlabel = TK.Label(master=self, text= displayDesc)
+        self.toplabel = TK.Label(master=self, text = displayName, bg = _INV_BG)
+        self.midlabel = TK.Label(master=self, image = self.imageData, bg = _INV_BG)
+        self.buttomlabel = TK.Label(master=self, text= displayDesc, bg = _INV_BG)
         
         self.toplabel.pack()
         self.midlabel.pack()
@@ -43,27 +45,19 @@ class UntitledUI:
         self.root:TK.Tk = root
         self.main = TK.Frame(root)
         self.main.pack(fill = TK.BOTH, expand = True)
-
-        #queue of inputs from player. to be deqeued by main loop.
         self.queue = [] #:List[G.response]
 
-        #container for main display, shows a scrollable textfield. Grid-placed in main, top-left
-        self.display = TK.Frame(master=self.main, background ="#00c4ff")
-        #container for
-        self.actions = TK.Frame(master=self.main, background ="#2200ff")
-        self.inventory = TK.Frame(master=self.main, background ="#209d00")
+        self.display = TK.Frame(master=self.main, background ="grey95")
+        self.navtext = TK.Frame(master=self.main, background ="grey95")
+        self.inventory = TK.Frame(master=self.main, background ="grey95")
+        self.actions = TK.Frame(master=self.main, background ="grey95")
+        self.navkeys = TK.Frame(master=self.main, background ="grey95")
 
-        self.navzone = TK.Frame(master=self.main, background ="#ff0000")
-        self.navtext = TK.Frame(master=self.navzone, background ="#ff8f00")
-        self.navkeys = TK.Frame(master=self.navzone, background ="#ff0000")
-
-        self.display.grid(row=0, column=0, columnspan=1, rowspan=1, sticky="nsew")
-        self.actions.grid(row=1, column=0, columnspan=1, rowspan=1, sticky="nsew")
-        self.inventory.grid(row=0, column=1, columnspan=1, rowspan=1, sticky="nsew")
-        self.navzone.grid(row=1, column=1, columnspan=1, rowspan=1, sticky="nsew")
-
-        self.navtext.pack(side = TK.TOP, fill = TK.BOTH)
-        self.navkeys.pack(side = TK.BOTTOM, fill = TK.BOTH)
+        self.display.grid  (row = 0, column = 0, columnspan = 8, rowspan = 7, sticky = "news")
+        self.navtext.grid  (row = 0, column = 8, columnspan = 2, rowspan = 1, sticky = "new")
+        self.inventory.grid(row = 1, column = 8, columnspan = 2, rowspan = 9, sticky = "news")
+        self.actions.grid  (row = 7, column = 0, columnspan = 6, rowspan = 3, sticky = "news")
+        self.navkeys.grid  (row = 7, column = 6, columnspan = 2, rowspan = 3, sticky = "news")
 
         self.draw_display()
         #self.draw_actions()
@@ -74,11 +68,10 @@ class UntitledUI:
         self.draw_navkeys()
         self.draw_menu(**args)
 
-        self.main.grid_columnconfigure(0, weight=10)
-        self.main.grid_columnconfigure(1, weight=1)
-        self.main.grid_rowconfigure(0, weight=10)
-        self.main.grid_rowconfigure(1, weight=4)
-        self.main.grid_rowconfigure(2, weight=5)
+        for i in range(10):
+            self.main.grid_columnconfigure(index = i, weight = 1)
+            self.main.grid_rowconfigure(index = i, weight = 1)
+
     def quit(self):
         self.root.quit()
         self.root.destroy()
@@ -204,10 +197,10 @@ class UntitledUI:
         self.emptyframe(self.actions)
         self.actions.grid_rowconfigure(0, weight = 1)
         reqFields = args.get("fields", (("Input", ""),))
-        fieldfont = args.get("fieldfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
-        labelfont = args.get("labelfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+        fieldfont = args.get("fieldfont", TKF.Font())
+        labelfont = args.get("labelfont", TKF.Font())
         entertext = args.get("entertext", "ENTER")
-        enterfont = args.get("enterfont", TKF.Font()) #NOTE: if required, use family="helvetica", size=12
+        enterfont = args.get("enterfont", TKF.Font())
         labels = []
         inpFields = []
         length = len(reqFields)
@@ -244,7 +237,7 @@ class UntitledUI:
             self.inventory.grid_columnconfigure(index = column, weight=1)
     def draw_navtext(self, **args):
         self.emptyframe(self.navtext)
-        self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 5)
+        self.navTextDisplay = TK.Text(master = self.navtext, width = 20, height = 8)
         self.navTextDisplay.pack(fill= TK.BOTH)
         self.navTextDisplay.insert(TK.END, "dummy area\ndummy place\ndoing dummy things...")
         self.navTextDisplay.config(state = TK.DISABLED)
@@ -255,6 +248,7 @@ class UntitledUI:
         self.navTextDisplay.config(state = TK.DISABLED)
     def draw_navkeys(self, **args):
         self.emptyframe(self.navkeys)
+        
 
         self.nav_left  = NavButton(master = self.navkeys, command= lambda: self.handleNav("left"))
         self.nav_up    = NavButton(master = self.navkeys, command= lambda: self.handleNav("up"))
@@ -274,6 +268,7 @@ class UntitledUI:
         self.navkeys.grid_rowconfigure(index = 0, weight = 1)
         self.navkeys.grid_rowconfigure(index = 1, weight = 1)
         self.navkeys.grid_rowconfigure(index = 2, weight = 1)
+
         self.conf_navkeys(**args)
     def conf_navkeys(self, **args):
         state_left  = TK.NORMAL if args.get("left",  False) else TK.DISABLED
@@ -281,12 +276,12 @@ class UntitledUI:
         state_right = TK.NORMAL if args.get("right", False) else TK.DISABLED
         state_down  = TK.NORMAL if args.get("down",  False) else TK.DISABLED
 
-        text_left  = args.get("text_left",  u"\u2190")
-        text_up    = args.get("text_up",    u"\u2191")
-        text_right = args.get("text_right", u"\u2192")
-        text_down  = args.get("text_down",  u"\u2193")
-        text_upright = u"\u2197"
-        font       = args.get("font", TKF.Font(family = "Consolas", size=30))
+        text_left  = args.get("text_left",  u"GO LEFT\n\u2190")
+        text_up    = args.get("text_up",    u"GO UP\n\u2191")
+        text_right = args.get("text_right", u"GO RIGHT\n\u2192")
+        text_down  = args.get("text_down",  u"GO DOWN\n\u2193")
+        text_upright = u"GO 45\n\u2197"
+        font       = args.get("font", TKF.Font(family = "Consolas", size=15))
 
         self.nav_left  .config(font = font, text = text_left, state = state_left)
         self.nav_up    .config(font = font, text = text_up, state = state_up)
@@ -373,9 +368,9 @@ class NavButton(TK.Button):
         super().__init__(master, cnf, **kwargs)
     def config(self, cnf=None, **kw):
         if kw.get("state") == TK.NORMAL:
-            kw["bg"] = "green4"
+            kw["bg"] = "white"
         elif kw.get("state") == TK.DISABLED:
-            kw["bg"] = "red4"
+            kw["bg"] = "gray60"
         else:
             kw["bg"] = "gray"
         super().config(cnf, **kw)
