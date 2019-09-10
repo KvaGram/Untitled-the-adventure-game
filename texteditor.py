@@ -372,7 +372,7 @@ class EntryText(TK.Frame):
     def __init__(self, master, TargetEntry:str, lang:str, tosingle:callable, toDel:callable, torename:callable):
         super().__init__(master=master)
         self.label = TK.Label(master=self, text = TargetEntry)
-        self.textfield = TKS.ScrolledText(self, width = 70, height = 3)
+        self.textfield = TKS.ScrolledText(self, width = 70, height = 3, insertbackground = "white")
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.bind('<KeyRelease>', self.updateentry)
         self.lang = lang
@@ -575,7 +575,7 @@ class ItemEntry(TK.Frame):
         self.entry_iconname.grid(column = 2, row = 4)
 
         self.label_desc = TK.Label(master=self, text = "Description")
-        self.text_desc  = TK.Text( master=self, width = 20, height = 3)
+        self.text_desc  = TK.Text( master=self, width = 40, height = 3, insertbackground = "white")
         self.text_desc.bind('<KeyRelease>', self.updateEntry)
 
         self.label_desc.grid(column = 3, row = 1)#.pack(side = TK.TOP)
@@ -895,7 +895,7 @@ class SingleEditor(BaseEditor):
         self.selectors.reset(self.lang, self.entryName, self.Story.keys())
         self.selectors.pack()
 
-        self.textfield = TKS.ScrolledText(self, width = 60)
+        self.textfield = TKS.ScrolledText(self, width = 70, insertbackground = "white")
         self.textfield.configure(bg='black', fg='cyan')
         self.textfield.bind('<KeyRelease>', self.updateentry)
 
