@@ -33,7 +33,7 @@ Proper walkthough
                - First picture you look at will be set as your spauce, secund will be set as your sibling.
      - Leave out the door.
  3. Travel to the bathrooms
-     - Use the navigation-buttons in the buttom right, move to the right untill you find the bathrooms.
+     - Use the navigation-buttons in the buttom center, move to the right untill you find the bathrooms.
  4. Enter either gendered bathroom
      - This will set your character's gender.
  5. Enter the bathroom of your spouse's gender
