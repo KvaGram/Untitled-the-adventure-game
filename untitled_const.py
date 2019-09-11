@@ -24,14 +24,26 @@ DATATERM_NAME = "_NAME"
 DATATERM_DESCRIPTION = "_DESC"
 DATATERM_ICON = "_ICON"
 
-DEFALT_BACK_IMG = os.path.join(IMAGE_DIR, "mapB.png")
-DEFAULT_LIT_IMG  = os.path.join(IMAGE_DIR, "InnerB.png")
-DEFAULT_DOT_IMG = os.path.join(IMAGE_DIR, "dot.png")
-UNKNOWN_IMG = os.path.join(IMAGE_DIR, "mapc.png")
 DEFAULT_MAP_SIZE = (200, 200)
-DEFAULT_DOT_SIZE = (20, 20)
+DEFAULT_DOT_SIZE = (10, 10)
 
 TAU = math.pi * 2
+
+NAV_LIT_CORE     = os.path.join(IMAGE_DIR, "Core.png")
+NAV_LIT_INNER_A  = os.path.join(IMAGE_DIR, "InnerA.png")
+NAV_LIT_INNER_B  = os.path.join(IMAGE_DIR, "InnerB.png")
+NAV_LIT_MIDDLE_A = os.path.join(IMAGE_DIR, "MiddleA.png")
+NAV_LIT_MIDDLE_B = os.path.join(IMAGE_DIR, "MiddleB.png")
+NAV_LIT_OUTER_A  = os.path.join(IMAGE_DIR, "OuterA.png")
+NAV_LIT_OUTER_B  = os.path.join(IMAGE_DIR, "OuterB.png")
+
+NAV_BACK_UNKNOWN = os.path.join(IMAGE_DIR, "mapA.png") 
+NAV_BACK_INTACT  = os.path.join(IMAGE_DIR, "mapB.png") 
+NAV_BACK_BROKEN  = os.path.join(IMAGE_DIR, "mapC.png")
+
+NAV_DOT          = os.path.join(IMAGE_DIR, "dot.png")
+
+
 
 class ReturnToMain(Exception):
     def __init__(self, *args, **kwargs):

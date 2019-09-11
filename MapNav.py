@@ -6,10 +6,9 @@ import time
 
 from untitled_const import(
 IMAGE_DIR,
-DEFALT_BACK_IMG,
-DEFAULT_LIT_IMG,
-DEFAULT_DOT_IMG,
-UNKNOWN_IMG,
+NAV_LIT_CORE,
+NAV_BACK_INTACT,
+NAV_DOT,
 DEFAULT_MAP_SIZE,
 DEFAULT_DOT_SIZE,
 TAU,
@@ -19,9 +18,9 @@ class Mapnav(TK.Frame):
     def __init__(self, master, **kw):
         super().__init__(master = master, **kw)
         self._dotstate = None
-        self._dotimage =  DEFAULT_DOT_IMG       
-        self._backimage =  DEFALT_BACK_IMG       
-        self._litimage =  DEFAULT_LIT_IMG       
+        self._dotimage =  NAV_DOT       
+        self._backimage =  NAV_BACK_INTACT       
+        self._litimage =  NAV_LIT_CORE       
 
         self.image = None   #Image.new("RGBA", _MAP_SIZE, "white")
         self.tkImage = None #ImageTk.PhotoImage(image=self.image)
@@ -39,8 +38,8 @@ class Mapnav(TK.Frame):
         back = Image.open(self._backimage).convert("RGBA").resize(DEFAULT_MAP_SIZE)
         self.image.paste(back, (0,0), back)
 
-        if (self._backimage):
-            high = Image.open(self._backimage).convert("RGBA").resize(DEFAULT_MAP_SIZE)    
+        if (self._litimage):
+            high = Image.open(self._litimage).convert("RGBA").resize(DEFAULT_MAP_SIZE)    
             self.image.paste(high, (0,0), high)
         if (self._dotstate):
             assert(type(self._dotstate) is tuple and len(self._dotstate) == 2)
@@ -51,9 +50,10 @@ class Mapnav(TK.Frame):
 
         self.tkImage = ImageTk.PhotoImage(image=self.image)
         self.mapImage.config(image = self.tkImage)
-    def PlaceDot(radian, radius):
+    def PlaceDot(self, radian, radius):
         x  = math.floor(math.cos(rot) * rad)
         y  = math.floor(math.sin(rot) * rad)
+        self.DotState=(x,y)
     #region setters and getters
     @property
     def DotState(self):
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     maxRad = 100
     radSpeed = 0.5 * 100
 
-    rotspeed = 0.1 * TAU
+    rotspeed = 0.6 * TAU
 
     rad = 0
     rot = 0
@@ -137,10 +137,9 @@ if __name__ == "__main__":
             try:
                 rot = float(rotVar.get())
             except ValueError:
-                rot = 0        
-        x  = math.floor(math.cos(rot) * rad)
-        y  = math.floor(math.sin(rot) * rad)
-        mapnav.DotState = (x, y)
-        info.config(text = f"X {x}, Y {y}")
+                rot = 0
+                
+        mapnav.PlaceDot(rot, rad)
+        info.config(text = f"X, Y {mapnav.DotState}")
         root.update()
         root.update_idletasks()
