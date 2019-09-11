@@ -7,8 +7,7 @@ import time
 import random
 import sys
 import re
-from untitled_const import ReturnToMain
-from untitled_const import ReturnToTitle
+from untitled_const import *
 
 import ItemDB 
 import Storyloader
@@ -133,6 +132,22 @@ class Game:
             return
         n = self.Navdata
         if n.refresh:
+            self.ui.navmap.AreaName = self.Navdata.AreaName
+            #TODO set up the nav
+            knowledge = self.getdata("wheelC:knowledge", 0)
+            if knowledge < 1:
+                self.ui.navmap.BackImage = NAV_BACK_UNKNOWN
+                self.ui.navmap.LitImage = None
+                self.ui.navmap.DotState = None
+            else:
+                if knowledge < 2:
+                    self.ui.navmap.BackImage = NAV_BACK_INTACT
+                else:
+                    self.ui.navmap.BackImage = NAV_BACK_BROKEN
+                self.ui.navmap.LitImage = self.Navdata.LitImage
+
+
+
             self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)

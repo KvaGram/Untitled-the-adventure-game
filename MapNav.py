@@ -24,9 +24,10 @@ class Mapnav(TK.Frame):
 
         self.image = None   #Image.new("RGBA", _MAP_SIZE, "white")
         self.tkImage = None #ImageTk.PhotoImage(image=self.image)
+        self.areaName = TK.StringVar(value = "example")
 
         self.mapImage = TK.Label(master = self)
-        self.nameLabel  = TK.Label(master = self, text = "Example")
+        self.nameLabel  = TK.Label(master = self, textvariable = self.areaName)
 
         self.refresh()
 
@@ -55,6 +56,12 @@ class Mapnav(TK.Frame):
         y  = math.floor(math.sin(rot) * rad)
         self.DotState=(x,y)
     #region setters and getters
+    @property
+    def AreaName(self):
+        return self.areaName.get()
+    @AreaName.setter
+    def AreaName(self, val):
+        self.areaName.set(val)
     @property
     def DotState(self):
         return self._dotstate

@@ -5,7 +5,7 @@ def Start(game:Game.Game):
     navdata:Game.Navdata = game.Navdata
     T = Game.Gettexter(game)
     def newgame():
-        navdata.navtext = T("APT_NAVTEXT_1")
+        navdata.MapRadians .navtext = T("APT_NAVTEXT_1")
         #region NEW GAME
         game.place = "apartment"
         game.setInventory("HEADACHE", True)
