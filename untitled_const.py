@@ -29,6 +29,11 @@ DEFAULT_DOT_SIZE = (10, 10)
 
 TAU = math.pi * 2
 
+NAV_RADIUS_RADIUS = 0
+NAV_INNER_RADIUS = 64
+NAV_MIDDLE_RADIUS = 75
+NAV_OUTER_RADIUS = 88
+
 NAV_LIT_CORE     = os.path.join(IMAGE_DIR, "Core.png")
 NAV_LIT_INNER_A  = os.path.join(IMAGE_DIR, "InnerA.png")
 NAV_LIT_INNER_B  = os.path.join(IMAGE_DIR, "InnerB.png")

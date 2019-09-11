@@ -538,8 +538,10 @@ class Navdata:
         self.text_right = args.get("text_right", u"\u2192")
         self.text_down  = args.get("text_down",  u"\u2193")
         
-        self.__navtext = args.get("navtext", "UNKNOWN\nAREA")
-        
+        #self.__navtext = args.get("navtext", "UNKNOWN\nAREA")
+        self.__areaName = args.get("areaname", "UNKNOWN AREA")
+        self.__mapRadians = args.get("mapradians", 0.0)
+        self.__mapRadius = args.get("mapradius", 50)
         self.cleanxyz()
         self.refresh = True
     
@@ -574,9 +576,18 @@ class Navdata:
     @property
     def closed(self)->bool:
         return self.__closed
+    #@property
+    #def navtext(self)->str:
+    #    return self.__navtext
     @property
-    def navtext(self)->str:
-        return self.__navtext
+    def AreaName(self):
+        return self.__areaName
+    @property
+    def MapRadians(self):
+        return self.__mapRadians
+    @property
+    def MapRadius(self):
+        return self.__mapRadius
     #endregion getters
     #region setters
     @up.setter
@@ -599,10 +610,23 @@ class Navdata:
     def closed(self, val):
         self.__closed = val
         self.refresh = True
-    @navtext.setter
-    def navtext(self, val):
+    #@navtext.setter
+    #def navtext(self, val):
         self.__navtext = val
         self.refresh = True
+    @AreaName.setter
+    def AreaName(self, val):
+        self.__areaName = val
+        self.refresh = True
+    @MapRadians.setter
+    def MapRadians(self, val):
+        self.__mapRadians = val
+        self.refresh = True
+    @MapRadius.setter
+    def MapRadius(self, val):
+        self.__mapRadius = val
+        self.refresh = True
+
     def setdir(self, dir:str, val:bool):
         if dir == "up":
             self.up = val
@@ -746,10 +770,12 @@ class GameMenuInput(DataInput):
         super().__init__(data)
 
 class PlaceNode:
-    def __init__(self, game:Game, _id:str, navtext:str, actions:list):
+    def __init__(self, game:Game, _id:str, areaName:str, navRadius:int, navRadian:float, actions:list):
         self.game = game
         self.id = _id
-        self.navtext = navtext
+        self.areaName = areaName
+        self.navRadius = navRadius
+        self.navRadian = navRadian
         self.actions = actions
 class formatdict(dict):
     def __missing__(self, key):
