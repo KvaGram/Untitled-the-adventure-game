@@ -7,7 +7,7 @@ import tkentrycomplete as TKTC
 import time
 from typing import List
 import ItemDB
-import mapnav
+import MapNav
 from untitled_const import IMAGE_DIR, FALLBACK_ICON, SAVE_DIR, SAVE_FILETYPE
 
 _INV_BG = "gray80"
@@ -50,7 +50,7 @@ class UntitledUI:
 
         self.display = TK.Frame(master=self.main, background ="grey95")
         #self.navtext = TK.Frame(master=self.main, background ="grey95")
-        self.navmap = mapnav.Mapnav(master=self.main)
+        self.navmap = MapNav.Mapnav(master=self.main)
         self.inventory = TK.Frame(master=self.main, background ="grey95")
         self.actions = TK.Frame(master=self.main, background ="grey95")
         self.navkeys = TK.Frame(master=self.main, background ="grey95")

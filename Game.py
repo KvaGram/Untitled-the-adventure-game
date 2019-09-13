@@ -148,7 +148,8 @@ class Game:
 
 
 
-            self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
+            #self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
+            #TODO: replace use of NAV-text. URGENT!
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
