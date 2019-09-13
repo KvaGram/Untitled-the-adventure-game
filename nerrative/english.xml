@@ -169,18 +169,46 @@ a holographic deer just walked past.
 ....
 Time to go.
 </APT_WINDOW_2>
-<APT_GLASS_1>
+
+
+<APT_GLASS_TAKE_1>
 You take the white pills and drink from the glass.
-</APT_GLASS_1>
-<APT_GLASS_2>
+</APT_GLASS_TAKE_1>
+<APT_GLASS_TAKE_2>
+you drank the rest. The glass is now empty.
+</APT_GLASS_TAKE_2>
+
+<APT_GLASS_NOTAKE_1>
 You did not take the pills
-</APT_GLASS_2>
-<APT_GLASS_3>
+</APT_GLASS_NOTAKE_1>
+<APT_GLASS_NOTAKE_2>
+you left the glass alone
+</APT_GLASS_NOTAKE_2>
+
+<APT_GLASS_EX_1>
+The glass is full, and there are som white pills next to it.
+</APT_GLASS_EX_1>
+<APT_GLASS_EX_2>
 The glass is half empty. Or is it half full?
-</APT_GLASS_3>
-<APT_PILLS>
+</APT_GLASS_EX_2>
+<APT_GLASS_EX_3>
+The glass is empty
+</APT_GLASS_EX_3>
+
+<APT_GLASS_FRAG_1>
+a full glass of water
+</APT_GLASS_FRAG_1>
+<APT_GLASS_FRAG_2>
+a half full glass of water
+</APT_GLASS_FRAG_2>
+<APT_GLASS_FRAG_3>
+an empty glass
+</APT_GLASS_FRAG_3>
+
+<APT_PILLS_FRAG>
 , some small white pills
-</APT_PILLS>
+</APT_PILLS_FRAG>
+
 <APT_TABLE>
 You look at the nightstand table.
 You see {_GLASS}{_PILLS}
@@ -208,15 +236,6 @@ Take the pills?
 <APT_GLASS_QUEST_2>
 Drink from the glass?
 </APT_GLASS_QUEST_2>
-<APT_GLASS_4>
-you drank the rest. The glass is now empty.
-</APT_GLASS_4>
-<APT_GLASS_5>
-you left the glass alone
-</APT_GLASS_5>
-<APT_GLASS_6>
-The glass is empty
-</APT_GLASS_6>
 <APT_CYAN_1>
 You stare closely at the man in the cyan framed picture.
 He looks familiar. Very familiar.
