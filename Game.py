@@ -45,6 +45,11 @@ class Game:
             "credits"        : Game.runCredits,
             "onReactorCTime" : Game.onReactorCTime
         }
+    #Enable and disable was added in a hurry, and might need to be improved.
+    def EnableMenu(self):
+        self.ui.root.config(menu = self.ui.menu_root)
+    def DisableMenu(self):
+        self.ui.root.config(menu = TK.Menu())
     def quit(self):
         self.destroyed = True
         self.ui.quit()
@@ -100,6 +105,27 @@ class Game:
             TKmsg.showwarning("Load Game", "This save is FROM THE FUTURE! You should run a newer version of the game instead.")
         else:
             TKmsg.showwarning("Load Game", "The save is OLD! The game may not run correctly with this savefile.")
+        #Checking for serialized objects
+        for key, val in ldata.items():
+            if type(val) == dict and "CLASS" in val.keys():
+                _class = globals().get(val.get("CLASS", None), None)
+                if not _class:
+                    TKmsg.showerror("Error loading save",f"Failed to load {key}.\n Class {val} not found!")
+                    ldata[key] = None
+                    continue
+                try:
+                    params = val.get("PARAMS")
+                    for pkey, pval in params.items():
+                        if pval == "GAME":
+                            params[pkey] = self
+                    newval = _class(**params)
+                except Exception as e:
+                    TKmsg.showerror("Error loading save", f"Failed to recreate object.\n{e}")
+                    ldata[key] = None
+                    continue
+                else:
+                    ldata[key] = newval
+
         self.savedata = ldata
         self.setdata("navdata", Navdata())
         self.ui.draw_inventory(itemlist = self.getAllInventory())
@@ -117,15 +143,30 @@ class Game:
         toSave = {}
         toSave["version"] = self.version
         _filter = ("navdata",)
-        for key, val in self.savedata.items():
-            if key in _filter:
-                continue
-            toSave[key] = val
-        self.setdata("version", self.version)
-        with open(path, "w+") as f:
-            json.dump(toSave, f)
-            f.close()
-        return True
+        try:
+            #For some reason there was a changed over iteration error.
+            #There is no reason that this should occour, nor any big consequences if it did in this case.
+            #To bypass, an iteration of a copy of savedata.keys() is used instead.
+            #for key, val in self.savedata.items():
+            keys = list(self.savedata.keys())
+            for key in keys:
+                val = self.savedata.get(key, None)
+                if key in _filter:
+                    continue
+                #serialize objects
+                ToJSON = getattr(val, "ToJSON", None)
+                if callable(ToJSON):
+                    val = val.ToJSON()
+                toSave[key] = val
+            self.setdata("version", self.version)
+            with open(path, "w+") as f:
+                json.dump(toSave, f)
+                f.close()
+        except Exception as e:
+            TKmsg.showerror("Error savign game", f"ERROR\n{e}")
+            return False
+        else:
+            return True
 
     def update(self):
         if self.destroyed:
@@ -520,6 +561,17 @@ class FamPerson:
     @property
     def RoleCounterpart(self):
         return self.game.roleCounterpart(self.role)
+    def ToJSON(self):
+        return {
+            "CLASS" : "FamPerson",
+            "PARAMS" : {
+                "game"  : "GAME",
+                "gender": self.gender,
+                "name"  : self.name,
+                "role"  : self.role,
+            }
+        }
+
 class Navdata:
     def __init__(self, **args):
         #boolean - enabled or disabled!
