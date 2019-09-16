@@ -1,11 +1,23 @@
 import Game
 import random
+from untitled_const import NAV_LIT_MIDDLE_A
+from untitled_const import NAV_MIDDLE_RADIUS
 
 def Start(game:Game.Game):
+    #Resetting the NAV data module.
     navdata:Game.Navdata = game.Navdata
+    #Getting quick-translate 
     T = Game.Gettexter(game)
+    
+    #Arrow inputs are not used here
+    navdata.closed = True
+    #Setting name, dot-radius and dot-radianrotation
+    navdata.AreaName = T("AREANAME_APARTMENT")
+    navdata.MapRadius = NAV_MIDDLE_RADIUS
+    navdata.MapRadians = 3.8 #where Tau (6.28) is a full rotation.
     def newgame():
-        navdata.MapRadians .navtext = T("APT_NAVTEXT_1")
+        navdata.AreaName = T("AREANAME_UNKNOWN")
+
         #region NEW GAME
         game.place = "apartment"
         game.setInventory("HEADACHE", True)
@@ -25,7 +37,7 @@ def Start(game:Game.Game):
             if game.yesno("{APT_NAME_CONFIRM}"):
                break
             game.showtext(random.choice(nameExcuses))
-        navdata.navtext = T("APT_NAVTEXT_2")
+        navdata.AreaName = T("AREANAME_APARTMENT")
         game.rolltext("{APT_NAME_CONFIRMED}")
         #endregion NEW GAME
     def sink():
@@ -138,8 +150,6 @@ def Start(game:Game.Game):
 
     if(game.getdata("name") == None):
         newgame()
-    navdata.closed = True
-    navdata.navtext = T("APT_NAVTEXT_2")
     choices = (
         ("WINDOW", T("APT_OPTION_WINDOW")),
         ("TABLE", T("APT_OPTION_TABLE")),
