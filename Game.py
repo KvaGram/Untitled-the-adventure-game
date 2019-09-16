@@ -45,6 +45,11 @@ class Game:
             "credits"        : Game.runCredits,
             "onReactorCTime" : Game.onReactorCTime
         }
+    #Enable and disable was added in a hurry, and might need to be improved.
+    def EnableMenu(self):
+        self.ui.root.config(menu = self.ui.menu_root)
+    def DisableMenu(self):
+        self.ui.root.config(menu = TK.Menu())
     def quit(self):
         self.destroyed = True
         self.ui.quit()
