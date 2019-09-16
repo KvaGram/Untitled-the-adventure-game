@@ -3,8 +3,8 @@ import sys
 import os
 import math
 
-ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
-ITEM_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_|[A-Z])*$'
+ENTRY_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_||-|[A-Z])*$'
+ITEM_NAME_PATTERN = r'^[A-Z]+(?:[0-9]|_||-|[A-Z])*$'
 SEPERATOR = "_"
 
 FALLBACK_ICON = "empty.gif"
