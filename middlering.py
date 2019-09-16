@@ -418,44 +418,39 @@ def Start(game:Game.Game):
     #----------------------------
 
     def setupRunner():
-        knowledge = game.getdata("wheelC:knowledge", 0)
-        game.setdata("wheelC:knowledge", knowledge)
-        if knowledge <= 0:
-            base_navtext = T("MIDDLE_NAV_DESC_1")
-        elif knowledge == 1:
-            base_navtext = T("MIDDLE_NAV_DESC_2")
-        else:
-            base_navtext = T("MIDDLE_NAV_DESC_3")
+        from untitled_const import NAV_MIDDLE_RADIUS as r
+        from untitled_const import NAV_LIT_MIDDLE_A as ha
+        from untitled_const import NAV_LIT_MIDDLE_B as hb
         runner.nodes = [
-            Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_D}"), [
+            Game.PlaceNode(game, "TO_SEC_D", T("AREANAME_TO-SEC-D"), r, 0.0, [
                 ("_", T("ACT_READ_SIGN"), sectionDdoor),
             ]),
-            Game.PlaceNode(game, "BATHROOMS",        base_navtext.format("A", "{MIDDLE_NAV_TO_BATH}"), [
+            Game.PlaceNode(game, "BATHROOMS", T("AREANAME_BATHROOMS-DOOR"), r, 0.0, [
                 ("_", T("ACT_ENTER_ROOM"), bathrooms),
             ]),
-            Game.PlaceNode(game, "DOOR_2A68",   base_navtext.format("A", "{MIDDLE_NAV_DOOR_2A68}"), [
+            Game.PlaceNode(game, "DOOR_2A68", T("AREANAME_APARTMENT-DOOR"), r, 3.8, [
                 ("_", T("ACT_ENTER_ROOM"), door_2A68),
                 ("_", T("ACT_READ_SIGN"), Read_door_2A68)
             ]),
-            Game.PlaceNode(game, "ELE",         base_navtext.format("A", "{MIDDLE_NAV_ELE}"), [
+            Game.PlaceNode(game, "ELE", T("AREANAME_ELEVATOR-2A"), r, 3.95, [
                 ("_", T("ACT_USE"), elevator),
             ]),
-            Game.PlaceNode(game, "CAFE",        base_navtext.format("A", "{MIDDLE_NAV_CAFE}"), [
+            Game.PlaceNode(game, "CAFE", T("AREANAME_"), r, 3.15, [
                 ("_", T("ACT_ENTER_ROOM"), cafeteria),
             ]),
-            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format("A", "{MIDDLE_NAV_TO_SEC_B}"), [
+            Game.PlaceNode(game, "TO_SEC_B", T("AREANAME_"), r, 0.0, [
                 ("_", T("ACT_READ_SIGN"), sectionBdoor),
             ]),
-            Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_A}"), [
+            Game.PlaceNode(game, "TO_SEC_A", T("AREANAME_"), r, 0.0, [
                 ("_", T("ACT_READ_SIGN"), sectionAdoor), 
             ]),
-            Game.PlaceNode(game, "AUXCOM",      base_navtext.format("B", "{MIDDLE_NAV_AUXCOM}"), [
+            Game.PlaceNode(game, "AUXCOM", T("AREANAME_"), r, 0.0, [
                 ("_", T("ACT_USE"), auxcom_repair),
             ]),
-            Game.PlaceNode(game, "LADDER",      base_navtext.format("B", "{MIDDLE_NAV_LADDER}"), [
+            Game.PlaceNode(game, "LADDER", T("AREANAME_"), r, 0.0, [
                 ("_", T("ACT_USE"), ladder),
             ]),
-            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format("B", "{MIDDLE_NAV_TO_SEC_C}"), [
+            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME_"), r, 0.0, [
                 ("_", T("ACT_READ_SIGN"), sectionCdoor),
             ])
         ]
