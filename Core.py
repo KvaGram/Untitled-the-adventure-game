@@ -1,8 +1,16 @@
 import Game
 import General
+from untitled_const import NAV_LIT_CORE
 
 def Core(game:Game.Game):
+    navdata:Game.Navdata = game.Navdata
     T = Game.Gettexter(game)
+    navdata.AreaName = T("CORE")
+    navdata.MapRadians = 0
+    navdata.MapRadius = 0
+    navdata.MapLit = NAV_LIT_CORE
+
+
     #importing elevator from General
     elevator = General.elevator(game)
 

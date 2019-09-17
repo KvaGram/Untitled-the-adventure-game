@@ -558,6 +558,7 @@ class Navdata:
         self.__areaName = args.get("areaname", "UNKNOWN AREA")
         self.__mapRadians = args.get("mapradians", 0.0)
         self.__mapRadius = args.get("mapradius", 50)
+        self.__mapLit    = args.get("maplit", None)
         self.cleanxyz()
         self.refresh = True
     
@@ -604,6 +605,10 @@ class Navdata:
     @property
     def MapRadius(self):
         return self.__mapRadius
+    @property
+    def MapLit(self):
+        return self.__mapLit
+    
     #endregion getters
     #region setters
     @up.setter
@@ -641,6 +646,10 @@ class Navdata:
     @MapRadius.setter
     def MapRadius(self, val):
         self.__mapRadius = val
+        self.refresh = True
+    @MapLit.setter
+    def MapLit(self, val):
+        self.__mapLit = val
         self.refresh = True
 
     def setdir(self, dir:str, val:bool):

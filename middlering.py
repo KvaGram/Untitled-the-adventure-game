@@ -3,6 +3,9 @@ import General
 import Game
 from General import Runner_WheelC_Rings as Runner
 
+from untitled_const import NAV_LIT_MIDDLE_A as ha
+from untitled_const import NAV_LIT_MIDDLE_B as hb
+
 class MiddleRunner(Game.PlaceRunner1D):
     def __init__(self, game:Game.Game):
         super().__init__(game, 'x', 'left', 'right')
@@ -391,10 +394,12 @@ def Start(game:Game.Game):
         game.setdata("auxcom:react_thanks", thankedForReactor)
 
     def sectionBdoor_pass():
+        
         game.showtext("{PASS_SECTOR_DOORWAY}")
+        runner.nav.MapLit = NAV_LIT_MIDDLE_B
     def sectionAdoor_pass():
         game.showtext("{PASS_SECTOR_DOORWAY}")
-
+        runner.nav.MapLit = NAV_LIT_MIDDLE_A
     def sectionCdoor():
         game.rolltext("{MIDDLE_SEC_C_DOOR}")
         knowledge = game.getdata("wheelC:knowledge", 0)
@@ -419,8 +424,6 @@ def Start(game:Game.Game):
 
     def setupRunner():
         from untitled_const import NAV_MIDDLE_RADIUS as r
-        from untitled_const import NAV_LIT_MIDDLE_A as ha
-        from untitled_const import NAV_LIT_MIDDLE_B as hb
         from untitled_const import TAU
         runner.nodes = [
             Game.PlaceNode(game, "TO_SEC_D", T("AREANAME_TO-SEC-D"), r, 3/4*TAU-0.05, [
@@ -467,6 +470,10 @@ def Start(game:Game.Game):
             "bathrooms":("BATHROOMS", "{MIDDLE_INTRO_4}"),
             "cafeteria":("CAFE", "{MIDDLE_INTRO_5}"),
         }.get(game.prevPlace, (runner.index, "{MIDDLE_INTRO_5}")))
+        if runner.index > runner.indexofnode("TO_SEC_B"):
+            runner.nav.MapLit = NAV_LIT_MIDDLE_B
+        else:
+            runner.nav.MapLit = NAV_LIT_MIDDLE_A
 
         if game.getdata("apartment:left", False):
             game.setdata("apartment:left", True)
