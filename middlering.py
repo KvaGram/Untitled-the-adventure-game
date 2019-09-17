@@ -436,22 +436,22 @@ def Start(game:Game.Game):
             Game.PlaceNode(game, "ELE", T("AREANAME_ELEVATOR-2A"), r, 5/8 * TAU, [
                 ("_", T("ACT_USE"), elevator),
             ]),
-            Game.PlaceNode(game, "CAFE", T("AREANAME_"), r, 3.16, [
+            Game.PlaceNode(game, "CAFE", T("AREANAME_CAFE-DOOR"), r, 3.16, [
                 ("_", T("ACT_ENTER_ROOM"), cafeteria),
             ]),
-            Game.PlaceNode(game, "TO_SEC_B", T("AREANAME_"), r, 2/4 * TAU+0.05, [
+            Game.PlaceNode(game, "TO_SEC_B", T("AREANAME_TO-SEC-B"), r, 2/4 * TAU+0.05, [
                 ("_", T("ACT_READ_SIGN"), sectionBdoor),
             ]),
-            Game.PlaceNode(game, "TO_SEC_A", T("AREANAME_"), r, 2/4 * TAU-0.05, [
+            Game.PlaceNode(game, "TO_SEC_A", T("AREANAME_TO-SEC-A"), r, 2/4 * TAU-0.05, [
                 ("_", T("ACT_READ_SIGN"), sectionAdoor), 
             ]),
-            Game.PlaceNode(game, "AUXCOM", T("AREANAME_"), r, 2.6, [
+            Game.PlaceNode(game, "AUXCOM", T("AREANAME_AUXCOM"), r, 2.6, [
                 ("_", T("ACT_USE"), auxcom_repair),
             ]),
-            Game.PlaceNode(game, "LADDER", T("AREANAME_"), r, 3/8 * TAU, [
+            Game.PlaceNode(game, "LADDER", T("AREANAME_LADDER"), r, 3/8 * TAU, [
                 ("_", T("ACT_USE"), ladder),
             ]),
-            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME_"), r, 1/4 * TAU+0.05, [
+            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME__TO-AREA_C"), r, 1/4 * TAU+0.05, [
                 ("_", T("ACT_READ_SIGN"), sectionCdoor),
             ])
         ]
