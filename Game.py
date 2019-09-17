@@ -18,7 +18,7 @@ from tkinter import messagebox as TKmsg
 class Game:
     def __init__(self, tkroot:TK.Tk, version:(int,int,int), language:str = "english"):
         T = Gettexter(self)
-        self.ui:ui.UntitledUI = ui.UntitledUI(tkroot, savecall = self.savegame, loadcall = self.loadgame, newcall = self.restartGame)
+        self.ui:ui.UntitledUI = ui.UntitledUI(tkroot, self.GetRetexer(), savecall = self.savegame, loadcall = self.loadgame, newcall = self.restartGame)
         self.tkroot:TK.Tk = tkroot
         self.version = version
         self.langauge = language
@@ -217,6 +217,10 @@ class Game:
             for i in range(len(text)):
                 text[i] = self.retext(text[i], frags)
         return text
+    def GetRetexer(self):
+        def retext(text:str, frags:dict):
+            return self.retext(text, frags)
+        return retext
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
         if data and data.Type == "game":

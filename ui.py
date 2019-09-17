@@ -11,13 +11,14 @@ from untitled_const import IMAGE_DIR, FALLBACK_ICON, SAVE_DIR, SAVE_FILETYPE
 
 _INV_BG = "gray80"
 class inventoryItem(TK.Frame):
-    def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, **args):
+    def __init__(self, root:TK.Tk, itemtype:ItemDB._ItemDB, retext:callable, **args):
         args["bg"] = _INV_BG
+        self.retext = retext
         super(inventoryItem, self).__init__(master = root, **args)
         if itemtype:
-            displayName = itemtype.dName
+            displayName = retext(itemtype.dName, {})
             displayImag = IMAGE_DIR + itemtype.image
-            displayDesc = itemtype.desc
+            displayDesc = retext(itemtype.desc, {})
         else:
             displayName = "((ERROR))"
             displayImag = IMAGE_DIR + FALLBACK_ICON
@@ -36,13 +37,14 @@ class inventoryItem(TK.Frame):
         self.buttomlabel.pack()
 
     def setItem(self, displayName:str, displayImag:str, displayDesc:str):
-        self.toplabel = TK.Label(text = displayName)
+        self.toplabel = TK.Label(text = self.retext(displayName, {}))
         self.imageData.config(file = displayImag)
-        self.buttomlabel = TK.Label(text= displayDesc)
+        self.buttomlabel = TK.Label(text= self.retext(displayDesc, {}))
 class UntitledUI:
-    def __init__(self, root, **args):
+    def __init__(self, root:TK.Tk, retext:callable, **args):
         #main container, packed into parent (normally TK root)
         self.root:TK.Tk = root
+        self.retext = retext
         self.main = TK.Frame(root)
         self.main.pack(fill = TK.BOTH, expand = True)
         self.queue = [] #:List[G.response]
@@ -231,7 +233,7 @@ class UntitledUI:
                 continue
             row = int(i/2)
             column = i%2
-            item = inventoryItem(self.inventory, itemtype = ItemDB.GET(itemtype))
+            item = inventoryItem(self.inventory, ItemDB.GET(itemtype), self.retext)
             item.grid(row = row, column = column, padx = 1, pady = 1, sticky="new")
             self.inventory.grid_rowconfigure(index = row, weight=1)
             self.inventory.grid_columnconfigure(index = column, weight=1)
@@ -381,8 +383,9 @@ class NavButton(TK.Button):
 def testUI():
     tkRoot = TK.Tk(screenName="UNTITLED! The adventure game")
     tkRoot.geometry("1280x720")
-
-    UI:UntitledUI = UntitledUI(tkRoot)
+    def dummyretext(text, *_,**__):
+        return text
+    UI:UntitledUI = UntitledUI(tkRoot, dummyretext)
 
     testoptions = (
         ("op1", "option One"),
