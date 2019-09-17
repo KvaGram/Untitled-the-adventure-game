@@ -101,15 +101,15 @@ def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
 
 def game_loop(game:Game):
     world = {
-        "apartment" : room_apartment.Start,
-        "core"      : Core.Core,
-        "inner"     : inner.Start,
-        "middle"    : middlering.Start,
-        "outer"     : outer.Start,
-        "ladder"    : Ladder.Start,
-        "bathrooms" : Bathrooms.Start,
-        "cargobay"  : Core.Cargobay, 
-        "cafeteria" : Cafeteria.Start
+        "apartment" : room_apartment.Start, 
+        "core"      : Core.Core,            #TODO: implement mapnav
+        "inner"     : inner.Start,          #TODO: implement mapnav
+        "middle"    : middlering.Start,     
+        "outer"     : outer.Start,          #TODO: implement mapnav
+        "ladder"    : Ladder.Start,         #TODO: implement mapnav
+        "bathrooms" : Bathrooms.Start,      #TODO: implement mapnav
+        "cargobay"  : Core.Cargobay,        #TODO: implement mapnav
+        "cafeteria" : Cafeteria.Start       #TODO: implement mapnav
     }
 
     while True:

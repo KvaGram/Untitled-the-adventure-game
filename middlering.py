@@ -451,7 +451,7 @@ def Start(game:Game.Game):
             Game.PlaceNode(game, "LADDER", T("AREANAME_LADDER"), r, 3/8 * TAU, [
                 ("_", T("ACT_USE"), ladder),
             ]),
-            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME__TO-AREA_C"), r, 1/4 * TAU+0.05, [
+            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME_TO-AREA_C"), r, 1/4 * TAU+0.05, [
                 ("_", T("ACT_READ_SIGN"), sectionCdoor),
             ])
         ]
