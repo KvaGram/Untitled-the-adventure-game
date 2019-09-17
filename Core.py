@@ -5,7 +5,7 @@ from untitled_const import NAV_LIT_CORE
 def Core(game:Game.Game):
     navdata:Game.Navdata = game.Navdata
     T = Game.Gettexter(game)
-    navdata.AreaName = T("CORE")
+    navdata.AreaName = T("AREANAME_CORE")
     navdata.MapRadians = 0
     navdata.MapRadius = 0
     navdata.MapLit = NAV_LIT_CORE
@@ -32,6 +32,7 @@ def Core(game:Game.Game):
     )
     running = True
     while running:
+        navdata.AreaName = T("AREANAME_CORE")
         game.choose(choices, T("CORE_QUEST"))
         data:Game.ActDataInput = game.wait()
         if not data or data.Type != "action":
@@ -40,6 +41,7 @@ def Core(game:Game.Game):
             if game.getdata("core:window", False):
                 game.rolltext("{CORE_WINDOW_2}", frags = frags)
             else: #CORE_WINDOW_1
+                navdata.AreaName = T("AREANAME_CORE-WINDOW")
                 if(game.getdata("apartment:window")):
                     frags["_WINDOW_PART"] = "{CORE_WINDOW_1_PART_A}"
                 else:
@@ -47,23 +49,28 @@ def Core(game:Game.Game):
                 game.rolltext("{CORE_WINDOW_1}", frags = frags)
                 game.setdata("core:window", True)
         elif data.tag == "ELEVATOR_SEC_A":
+            navdata.AreaName = T("AREANAME_CORE-ELEVATOR_A")
             game.rolltext("{CORE_TO_ELE_A}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
                 elevator()
         elif data.tag == "ELEVATOR_SEC_C":
+            navdata.AreaName = T("AREANAME_CORE-ELEVATOR_C")
             game.rolltext("{CORE_TO_ELE_C}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
                 game.rolltext("{CORE_ELE_C}")
         elif data.tag == "LADDER_SEC_B":
+            navdata.AreaName = T("AREANAME_CORE-LADDER_B")
             game.rolltext("{CORE_TO_LADDER_B}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
                 game.place = "ladder"
                 running = False
         elif data.tag == "LADDER_SEC_D":
+            navdata.AreaName = T("AREANAME_CORE-LADDER_D")
             game.rolltext("{CORE_TO_LADDER_D}")
             if(game.yesno("{FLOAT_TO_QUEST}")):
                 game.rolltext("{CORE_LADDER_D}")
         elif data.tag == "AIRLOCK":
+            navdata.AreaName = T("AREANAME_CORE-AIRLOCK")
             game.rolltext("{CORE_AIRLOCK_1}")
             if not game.yesno("{CORE_AIRLOCK_1_QUEST}"):
                 continue

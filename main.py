@@ -102,7 +102,7 @@ def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
 def game_loop(game:Game):
     world = {
         "apartment" : room_apartment.Start, 
-        "core"      : Core.Core,            #TODO: implement mapnav
+        "core"      : Core.Core,            
         "inner"     : inner.Start,          #TODO: implement mapnav
         "middle"    : middlering.Start,     
         "outer"     : outer.Start,          #TODO: implement mapnav

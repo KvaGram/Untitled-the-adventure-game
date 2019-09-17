@@ -3,8 +3,8 @@ import General
 import Game
 from General import Runner_WheelC_Rings as Runner
 
-from untitled_const import NAV_LIT_MIDDLE_A as ha
-from untitled_const import NAV_LIT_MIDDLE_B as hb
+from untitled_const import NAV_LIT_MIDDLE_A
+from untitled_const import NAV_LIT_MIDDLE_B
 
 class MiddleRunner(Game.PlaceRunner1D):
     def __init__(self, game:Game.Game):
