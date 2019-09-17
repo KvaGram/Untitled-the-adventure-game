@@ -135,7 +135,7 @@ class Game:
             self.ui.navmap.AreaName = self.Navdata.AreaName
             #TODO set up the nav
             knowledge = self.getdata("wheelC:knowledge", 0)
-            if knowledge < 1:
+            if knowledge < 1 or n.MapForceUnknown:
                 self.ui.navmap.BackImage = NAV_BACK_UNKNOWN
                 self.ui.navmap.LitImage = None
                 self.ui.navmap.DotState = None
@@ -559,6 +559,7 @@ class Navdata:
         self.__mapRadians = args.get("mapradians", 0.0)
         self.__mapRadius = args.get("mapradius", 50)
         self.__mapLit    = args.get("maplit", None)
+        self.__mapForceUnknown = args.get("mapforceunknown", False)
         self.cleanxyz()
         self.refresh = True
     
@@ -608,6 +609,9 @@ class Navdata:
     @property
     def MapLit(self):
         return self.__mapLit
+    @property
+    def MapForceUnknown(self):
+        return self.__mapForceUnknown
     
     #endregion getters
     #region setters
@@ -650,6 +654,10 @@ class Navdata:
     @MapLit.setter
     def MapLit(self, val):
         self.__mapLit = val
+        self.refresh = True
+    @MapForceUnknown.setter
+    def MapForceUnknown(self, val):
+        self.__mapForceUnknown = val
         self.refresh = True
 
     def setdir(self, dir:str, val:bool):

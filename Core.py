@@ -92,6 +92,11 @@ def Core(game:Game.Game):
 def Cargobay(game:Game.Game):
     #TODO: Rewrite needed!
     T = Game.Gettexter(game)
+    navdata = game.Navdata
+    navdata.AreaName = T("AREANAME_CARGOBAY")
+    navdata.MapForceUnknown = True
+    navdata.MapLit = NAV_LIT_CORE
+
     frags = {}
     reactorFixed = game.getdata("reactorC:fixed", False)
     peopleSaved = game.getdata("stasis:peopleSaved", 0)
