@@ -233,7 +233,7 @@ def Start(game:Game.Game):
         runner.nodes = []
 
         runner.nodes += [
-            Game.PlaceNode(game, "TO_SEC_D",    T("OUTER_NAV_TO_SEC_D"), r, 12/16 * TAU + 0.00, [("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
+            Game.PlaceNode(game, "TO_SEC_D",    T("AREANAME_TO-SEC-D"), r, 12/16 * TAU + 0.00, [("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
             Game.PlaceNode(game, "TO_ELEVATOR", T("OUTER_NAV_ELE"),      r, 10/16 * TAU + 0.00, [("_", T("ACT_USE"), elevator)]),
             Game.PlaceNode(game, "TO_SEC_B",    T("OUTER_NAV_TO_SEC_B"), r,  8/16 * TAU + 0.05, [("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
             Game.PlaceNode(game, "TO_SEC_A",    T("OUTER_NAV_TO_SEC_A"), r,  8/16 * TAU - 0.05, [("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),

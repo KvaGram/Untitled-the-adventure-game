@@ -93,21 +93,21 @@ def Start(game:Game.Game):
              Game.PlaceNode(game, "TO_SEC_D", T("INNER_NAV_TO_SEC_D"), r, 12/16*TAU, [
                 ("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
 
-             Game.PlaceNode(game, "TO_ROOM_A", T("INNER_NAV_ROOM_A"), r, 11/16*TAU+0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_A", T("AREANAME_INNER-ROOM-A"), r, 11/16*TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(0))]),
-             Game.PlaceNode(game, "TO_ROOM_B", T("INNER_NAV_ROOM_B"), r, 11/16*TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_B", T("AREANAME_INNER-ROOM-B"), r, 11/16*TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(1))]),
-             Game.PlaceNode(game, "TO_ROOM_C", T("INNER_NAV_ROOM_C"), r, 11/16*TAU-0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_C", T("AREANAME_INNER-ROOM-C"), r, 11/16*TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(2))]),
 
              Game.PlaceNode(game, "TO_ELEVATOR", T("INNER_NAV_ELE"), r, 10/16 * TAU,   [
                 ("_", T("ACT_USE"), elevator)]),
 
-             Game.PlaceNode(game, "TO_ROOM_D", T("INNER_NAV_ROOM_D"), r, 9/16 * TAU+0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_D", T("AREANAME_INNER-ROOM-D"), r, 9/16 * TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(3))]),
-             Game.PlaceNode(game, "TO_ROOM_E", T("INNER_NAV_ROOM_E"), r, 9/16 * TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_E", T("AREANAME_INNER-ROOM-E"), r, 9/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(4))]),
-             Game.PlaceNode(game, "TO_ROOM_F", T("INNER_NAV_ROOM_F"), r, 9/16 * TAU-0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_F", T("AREANAME_INNER-ROOM-F"), r, 9/16 * TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(5))]),
             
             Game.PlaceNode(game, "TO_SEC_B", T("INNER_NAV_TO_SEC_B"), r, 8/16 * TAU+0.05,   [
@@ -116,21 +116,21 @@ def Start(game:Game.Game):
              Game.PlaceNode(game, "TO_SEC_A", T("INNER_NAV_TO_SEC_A"), r, 8/16 * TAU-0.05,   [
                 ("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
 
-             Game.PlaceNode(game, "TO_ROOM_G", T("INNER_NAV_ROOM_G"), r, 7/16 * TAU+0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_G", T("AREANAME_INNER-ROOM-G"), r, 7/16 * TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(6))]),
-             Game.PlaceNode(game, "TO_ROOM_H", T("INNER_NAV_ROOM_H"), r, 7/16 * TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_H", T("AREANAME_INNER-ROOM-H"), r, 7/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(7))]),
-             Game.PlaceNode(game, "TO_ROOM_I", T("INNER_NAV_ROOM_I"), r, 7/16 * TAU-0.05,   [
+             Game.PlaceNode(game, "TO_ROOM_I", T("AREANAME_INNER-ROOM-I"), r, 7/16 * TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(8))]),
 
              Game.PlaceNode(game, "TO_LADDER", T("INNER_NAV_LADDER"), r, 6/16 * TAU,   [
                 ("_", T("ACT_USE"), ladder)]),
 
-             Game.PlaceNode(game, "TO_ROOM_J", T("INNER_NAV_ROOM_J"), r, 5/16 * TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_J", T("AREANAME_INNER-ROOM-J"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(9))]),
-             Game.PlaceNode(game, "TO_ROOM_K", T("INNER_NAV_ROOM_K"), r, 5/16 * TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_K", T("AREANAME_INNER-ROOM-K"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(10))]),
-             Game.PlaceNode(game, "TO_ROOM_L", T("INNER_NAV_ROOM_L"), r, 5/16 * TAU,   [
+             Game.PlaceNode(game, "TO_ROOM_L", T("AREANAME_INNER-ROOM-L"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(11))]),
             
             Game.PlaceNode(game, "TO_SEC_C", T("INNER_NAV_TO_SEC_C"), r, 4/16 * TAU+0.05,   [
