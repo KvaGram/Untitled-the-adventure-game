@@ -103,7 +103,7 @@ def game_loop(game:Game):
     world = {
         "apartment" : room_apartment.Start, 
         "core"      : Core.Core,            
-        "inner"     : inner.Start,          #TODO: implement mapnav
+        "inner"     : inner.Start,          
         "middle"    : middlering.Start,     
         "outer"     : outer.Start,          #TODO: implement mapnav
         "ladder"    : Ladder.Start,         #TODO: implement mapnav

@@ -2,6 +2,8 @@ import Game
 import random
 import General
 from General import Runner_WheelC_Rings as Runner
+from untitled_const import NAV_LIT_INNER_A
+from untitled_const import NAV_LIT_INNER_B
 
 def Start(game:Game.Game):
     T = Game.Gettexter(game)   
@@ -20,9 +22,12 @@ def Start(game:Game.Game):
     ladder = General.LadderAccess(game, goto)
 
     def sectionBdoor_pass():
+        runner.nav.MapLit = NAV_LIT_INNER_B
         game.showtext("{PASS_SECTOR_DOORWAY}")
     def sectionAdoor_pass():
+        runner.nav.MapLit = NAV_LIT_INNER_A
         game.showtext("{PASS_SECTOR_DOORWAY}")
+        
     def sectionBdoor_read():
         game.showtext("PLACEHOLDER")
     def sectionAdoor_read():
@@ -81,56 +86,54 @@ def Start(game:Game.Game):
     #endregion actions and places
     #---------------------------
     def setupRunner():
-        base_navtext = T("NAV_DESC_TEMPLATE")
-        base_frags = {"_WHEEL":"{WHEEL_C_NAME_1}", "_RINGNAME":T("INNER_RING_NAME"), "_SECTORNAME" : T("SECTOR_A_TERM_1")}
+        from untitled_const import NAV_INNER_RADIUS as r
+        from untitled_const import TAU
         runner.nodes = []
         runner.nodes += [
-             Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_D}"), [
+             Game.PlaceNode(game, "TO_SEC_D", T("INNER_NAV_TO_SEC_D"), r, 12/16*TAU, [
                 ("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
 
-             Game.PlaceNode(game, "TO_ROOM_A",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_A}"), [
+             Game.PlaceNode(game, "TO_ROOM_A", T("INNER_NAV_ROOM_A"), r, 11/16*TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(0))]),
-             Game.PlaceNode(game, "TO_ROOM_B",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_B}"), [
+             Game.PlaceNode(game, "TO_ROOM_B", T("INNER_NAV_ROOM_B"), r, 11/16*TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(1))]),
-             Game.PlaceNode(game, "TO_ROOM_C",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_C}"), [
+             Game.PlaceNode(game, "TO_ROOM_C", T("INNER_NAV_ROOM_C"), r, 11/16*TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(2))]),
 
-             Game.PlaceNode(game, "TO_ELEVATOR",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ELE}"), [
+             Game.PlaceNode(game, "TO_ELEVATOR", T("INNER_NAV_ELE"), r, 10/16 * TAU,   [
                 ("_", T("ACT_USE"), elevator)]),
 
-             Game.PlaceNode(game, "TO_ROOM_D",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_D}"), [
+             Game.PlaceNode(game, "TO_ROOM_D", T("INNER_NAV_ROOM_D"), r, 9/16 * TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(3))]),
-             Game.PlaceNode(game, "TO_ROOM_E",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_E}"), [
+             Game.PlaceNode(game, "TO_ROOM_E", T("INNER_NAV_ROOM_E"), r, 9/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(4))]),
-             Game.PlaceNode(game, "TO_ROOM_F",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_F}"), [
+             Game.PlaceNode(game, "TO_ROOM_F", T("INNER_NAV_ROOM_F"), r, 9/16 * TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(5))]),
             
-            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_B}"), [
+            Game.PlaceNode(game, "TO_SEC_B", T("INNER_NAV_TO_SEC_B"), r, 8/16 * TAU+0.05,   [
                 ("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
-        ]
-        base_frags["_SECTORNAME"] = T("SECTOR_B_TERM")
-        runner.nodes += [
-             Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_A}"), [
+        
+             Game.PlaceNode(game, "TO_SEC_A", T("INNER_NAV_TO_SEC_A"), r, 8/16 * TAU-0.05,   [
                 ("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
 
-             Game.PlaceNode(game, "TO_ROOM_G",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_G}"), [
+             Game.PlaceNode(game, "TO_ROOM_G", T("INNER_NAV_ROOM_G"), r, 7/16 * TAU+0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(6))]),
-             Game.PlaceNode(game, "TO_ROOM_H",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_H}"), [
+             Game.PlaceNode(game, "TO_ROOM_H", T("INNER_NAV_ROOM_H"), r, 7/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(7))]),
-             Game.PlaceNode(game, "TO_ROOM_I",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_I}"), [
+             Game.PlaceNode(game, "TO_ROOM_I", T("INNER_NAV_ROOM_I"), r, 7/16 * TAU-0.05,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(8))]),
 
-             Game.PlaceNode(game, "TO_LADDER",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_LADDER}"), [
+             Game.PlaceNode(game, "TO_LADDER", T("INNER_NAV_LADDER"), r, 6/16 * TAU,   [
                 ("_", T("ACT_USE"), ladder)]),
 
-             Game.PlaceNode(game, "TO_ROOM_J",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_J}"), [
+             Game.PlaceNode(game, "TO_ROOM_J", T("INNER_NAV_ROOM_J"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(9))]),
-             Game.PlaceNode(game, "TO_ROOM_K",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_K}"), [
+             Game.PlaceNode(game, "TO_ROOM_K", T("INNER_NAV_ROOM_K"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(10))]),
-             Game.PlaceNode(game, "TO_ROOM_L",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_ROOM_L}"), [
+             Game.PlaceNode(game, "TO_ROOM_L", T("INNER_NAV_ROOM_L"), r, 5/16 * TAU,   [
                 ("_", T("INNER_TO_ROOM_QUEST"), tubes(11))]),
             
-            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format(**base_frags, _LOCAL_NAME = "{INNER_NAV_TO_SEC_C}"), [
+            Game.PlaceNode(game, "TO_SEC_C", T("INNER_NAV_TO_SEC_C"), r, 4/16 * TAU+0.05,   [
                 ("_", T("ACT_READ_SIGN"), sectionCdoor_read )]),
         ]
         
@@ -142,7 +145,11 @@ def Start(game:Game.Game):
         runner.index, intro = {
             "ladder" : ("TO_LADDER","{INNER_INTRO_2}"),
         }.get(game.prevPlace, ("TO_SEC_C", "{INNER_INTRO_1}"))
-
+        
+        if runner.index > runner.indexofnode("TO_SEC_B"):
+            runner.nav.MapLit = NAV_LIT_INNER_B
+        else:
+            runner.nav.MapLit = NAV_LIT_INNER_A
         game.rolltext(intro)
     setupRunner()
     runner.run()

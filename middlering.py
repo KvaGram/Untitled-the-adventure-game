@@ -394,7 +394,6 @@ def Start(game:Game.Game):
         game.setdata("auxcom:react_thanks", thankedForReactor)
 
     def sectionBdoor_pass():
-        
         game.showtext("{PASS_SECTOR_DOORWAY}")
         runner.nav.MapLit = NAV_LIT_MIDDLE_B
     def sectionAdoor_pass():
