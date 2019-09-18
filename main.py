@@ -105,7 +105,7 @@ def game_loop(game:Game):
         "core"      : Core.Core,            
         "inner"     : inner.Start,          
         "middle"    : middlering.Start,     
-        "outer"     : outer.Start,          #TODO: implement mapnav
+        "outer"     : outer.Start,          
         "ladder"    : Ladder.Start,         #TODO: implement mapnav
         "bathrooms" : Bathrooms.Start,      #TODO: implement mapnav
         "cargobay"  : Core.Cargobay,        
@@ -156,10 +156,7 @@ _________________________________________________
     
 def titleMenu(game:Game.Game):
     navdata = game.Navdata
-    navdata.navtext = """TITLE MENU
-    WELCOME TO
-    UNTITLED!
-    the adventure game"""
+    navdata.AreaName = "TITLE MENU"
     navdata.closed = True
     titleroll = "WELCOME TO\n\n"
     f = open("title.txt", 'r', encoding="utf-8")

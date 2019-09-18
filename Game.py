@@ -708,7 +708,9 @@ class PlaceRunner1D(PlaceRunner):
             n:PlaceNode = self.nodes[i]
             self.nav.setdir(self.minusDir, i > 0)
             self.nav.setdir(self.plusDir, i < len(self.nodes)-1)
-            self.nav.navtext = n.navtext
+            self.nav.AreaName = n.areaName
+            self.nav.MapRadians = n.navRadian
+            self.nav.MapRadius = n.navRadius
             if len (n.actions) > 0:
                 self.game.choose(n.actions, "")
             data:ActDataInput = self.game.wait()
