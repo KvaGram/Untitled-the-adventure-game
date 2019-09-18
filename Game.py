@@ -7,7 +7,8 @@ import time
 import random
 import sys
 import re
-from untitled_const import *
+#from untitled_const import *
+from untitled_const import NAV_BACK_UNKNOWN, NAV_BACK_INTACT, NAV_BACK_BROKEN, ReturnToMain, ReturnToTitle
 
 import ItemDB 
 import Storyloader

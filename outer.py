@@ -238,7 +238,7 @@ def Start(game:Game.Game):
             Game.PlaceNode(game, "TO_SEC_B",    T("OUTER_NAV_TO_SEC_B"), r,  8/16 * TAU + 0.05, [("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
             Game.PlaceNode(game, "TO_SEC_A",    T("OUTER_NAV_TO_SEC_A"), r,  8/16 * TAU - 0.05, [("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
             Game.PlaceNode(game, "TO_LADDER",   T("OUTER_NAV_LADDER"),   r,  6/16 * TAU + 0.00, [("_", T("ACT_USE"), ladder)]),
-            Game.PlaceNode(game, "TO_REACTOR",  T("OUTER_NAV_TO_NODE"),  r,  3/16 * TAU + 0.00, [("_", T("ACT_ENTER_ROOM"), ladder)]),
+            Game.PlaceNode(game, "TO_REACTOR",  T("OUTER_NAV_TO_NODE"),  r,  3/16 * TAU + 0.00, [("_", T("ACT_ENTER_ROOM"), reactNode)]),
             Game.PlaceNode(game, "TO_SEC_C",    T("OUTER_NAV_TO_SEC_C"), r,  4/16 * TAU + 0.00, [("_", T("ACT_READ_SIGN"), sectionCdoor_read )]),
         ]
         runner.passActs = [
