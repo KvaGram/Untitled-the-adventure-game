@@ -106,7 +106,7 @@ def game_loop(game:Game):
         "inner"     : inner.Start,          
         "middle"    : middlering.Start,     
         "outer"     : outer.Start,          
-        "ladder"    : Ladder.Start,         #TODO: implement mapnav
+        "ladder"    : Ladder.Start,         
         "bathrooms" : Bathrooms.Start,      #TODO: implement mapnav
         "cargobay"  : Core.Cargobay,        
         "cafeteria" : Cafeteria.Start       #TODO: implement mapnav
