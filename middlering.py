@@ -31,8 +31,8 @@ def Start(game:Game.Game):
     def sectionDdoor():
         game.rolltext("{MIDDLE_SEC_D_DOOR}")
         knowledge = game.getdata("wheelC:knowledge", 0)
-        if knowledge < 1:
-            knowledge = 1
+        if knowledge < 2:
+            knowledge = 2
         game.setdata("wheelC:knowledge", knowledge)
     def bathrooms():
         goto("bathrooms")
@@ -402,8 +402,8 @@ def Start(game:Game.Game):
     def sectionCdoor():
         game.rolltext("{MIDDLE_SEC_C_DOOR}")
         knowledge = game.getdata("wheelC:knowledge", 0)
-        if knowledge < 1:
-            knowledge = 1
+        if knowledge < 2:
+            knowledge = 2
         game.setdata("wheelC:knowledge", knowledge)
 
 
@@ -425,20 +425,20 @@ def Start(game:Game.Game):
         from untitled_const import NAV_MIDDLE_RADIUS as r
         from untitled_const import TAU
         runner.nodes = [
-            Game.PlaceNode(game, "TO_SEC_D", T("AREANAME_TO-SEC-D"), r, 3/4*TAU-0.05, [
+            Game.PlaceNode(game, "TO_SEC_D", T("AREANAME_TO-SEC-D"), r, 3/4*TAU, [
                 ("_", T("ACT_READ_SIGN"), sectionDdoor),
             ]),
-            Game.PlaceNode(game, "BATHROOMS", T("AREANAME_BATHROOMS-DOOR"), r, 4.5, [
+            Game.PlaceNode(game, "BATHROOMS", T("AREANAME_BATHROOMS-DOOR"), r, 3/4*TAU-0.05, [
                 ("_", T("ACT_ENTER_ROOM"), bathrooms),
             ]),
-            Game.PlaceNode(game, "DOOR_2A68", T("AREANAME_APARTMENT-DOOR"), r, 3.8, [
+            Game.PlaceNode(game, "DOOR_2A68", T("AREANAME_APARTMENT-DOOR"), r, 11/16*TAU, [
                 ("_", T("ACT_ENTER_ROOM"), door_2A68),
                 ("_", T("ACT_READ_SIGN"), Read_door_2A68)
             ]),
-            Game.PlaceNode(game, "ELE", T("AREANAME_ELEVATOR-2A"), r, 5/8 * TAU, [
+            Game.PlaceNode(game, "ELE", T("AREANAME_ELEVATOR"), r, 5/8 * TAU, [
                 ("_", T("ACT_USE"), elevator),
             ]),
-            Game.PlaceNode(game, "CAFE", T("AREANAME_CAFE-DOOR"), r, 3.16, [
+            Game.PlaceNode(game, "CAFE", T("AREANAME_CAFE-DOOR"), r, 5/8 * TAU-0.05, [
                 ("_", T("ACT_ENTER_ROOM"), cafeteria),
             ]),
             Game.PlaceNode(game, "TO_SEC_B", T("AREANAME_TO-SEC-B"), r, 2/4 * TAU+0.05, [
@@ -453,7 +453,7 @@ def Start(game:Game.Game):
             Game.PlaceNode(game, "LADDER", T("AREANAME_LADDER"), r, 3/8 * TAU, [
                 ("_", T("ACT_USE"), ladder),
             ]),
-            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME_TO-SEC_C"), r, 1/4 * TAU+0.05, [
+            Game.PlaceNode(game, "TO_SEC_C", T("AREANAME_TO-SEC_C"), r, 1/4 * TAU, [
                 ("_", T("ACT_READ_SIGN"), sectionCdoor),
             ])
         ]

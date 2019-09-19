@@ -265,10 +265,10 @@ class UntitledUI:
         state_right = TK.NORMAL if args.get("right", False) else TK.DISABLED
         state_down  = TK.NORMAL if args.get("down",  False) else TK.DISABLED
 
-        text_left  = args.get("text_left",  u"GO LEFT\n\u2190")
+        text_left  = args.get("text_left",  u"FOLLOW ARROWS\n\u21BB")
         text_up    = args.get("text_up",    u"GO UP\n\u2191")
         text_right = args.get("text_right", u"GO AGAINST ARROWS\n\u21BA")
-        text_down  = args.get("text_down",  u"FOLLOW ARROWS\n\u21BB")
+        text_down  = args.get("text_down",  u"GO DOWN\n\u2193")
         text_upright = u"GO 45\n\u2197"
         font       = args.get("font", TKF.Font(family = "Consolas", size=15))
 

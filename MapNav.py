@@ -52,8 +52,8 @@ class Mapnav(TK.Frame):
         self.tkImage = ImageTk.PhotoImage(image=self.image)
         self.mapImage.config(image = self.tkImage)
     def PlaceDot(self, radian, radius):
-        x  = math.floor(math.cos(rot) * rad)
-        y  = math.floor(math.sin(rot) * rad)
+        x  = math.floor(math.cos(radian) * radius)
+        y  = math.floor(math.sin(radian) * radius)
         self.DotState=(x,y)
     #region setters and getters
     @property
@@ -74,21 +74,21 @@ class Mapnav(TK.Frame):
         return self._dotimage
     @DotImage.setter
     def DotImage(self, val):
-        _dotimage = val
+        self._dotimage = val
         self.refresh()
     @property
     def BackImage(self):
         return self._backimage
     @BackImage.setter
     def BackImage(self, val):
-        _backimage = val
+        self._backimage = val
         self.refresh()
     @property
     def LitImage(self):
         return self._litimage
     @LitImage.setter
     def LitImage(self, val):
-        _litimage = val
+        self._litimage = val
         self.refresh()
     #endregion setters and getters
     

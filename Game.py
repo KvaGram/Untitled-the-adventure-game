@@ -145,7 +145,9 @@ class Game:
                     self.ui.navmap.BackImage = NAV_BACK_INTACT
                 else:
                     self.ui.navmap.BackImage = NAV_BACK_BROKEN
-                self.ui.navmap.LitImage = self.Navdata.LitImage
+                self.ui.navmap.LitImage = self.Navdata.MapLit
+                self.ui.navmap.PlaceDot(self.Navdata.MapRadians, self.Navdata.MapRadius)
+
 
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
@@ -724,6 +726,7 @@ class PlaceRunner1D(PlaceRunner):
         else:
             print("Unhandled call to run " + action[0])
     def onTravel(self, previndex:int):
+        
         pass
     @property
     def index(self):
