@@ -147,10 +147,6 @@ class Game:
                     self.ui.navmap.BackImage = NAV_BACK_BROKEN
                 self.ui.navmap.LitImage = self.Navdata.LitImage
 
-
-
-            #self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
-            #TODO: replace use of NAV-text. URGENT!
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
@@ -555,7 +551,6 @@ class Navdata:
         self.text_right = args.get("text_right", u"\u2192")
         self.text_down  = args.get("text_down",  u"\u2193")
         
-        #self.__navtext = args.get("navtext", "UNKNOWN\nAREA")
         self.__areaName = args.get("areaname", "UNKNOWN AREA")
         self.__mapRadians = args.get("mapradians", 0.0)
         self.__mapRadius = args.get("mapradius", 50)
@@ -595,9 +590,6 @@ class Navdata:
     @property
     def closed(self)->bool:
         return self.__closed
-    #@property
-    #def navtext(self)->str:
-    #    return self.__navtext
     @property
     def AreaName(self):
         return self.__areaName
@@ -635,10 +627,6 @@ class Navdata:
     @closed.setter
     def closed(self, val):
         self.__closed = val
-        self.refresh = True
-    #@navtext.setter
-    #def navtext(self, val):
-        self.__navtext = val
         self.refresh = True
     @AreaName.setter
     def AreaName(self, val):

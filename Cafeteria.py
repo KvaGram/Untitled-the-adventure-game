@@ -5,7 +5,16 @@ import random
 _LIT = "cafeteria:lit"
 
 def Start(game:Game.Game):
+    from untitled_const import NAV_MIDDLE_RADIUS as rad
+    from untitled_const import NAV_LIT_MIDDLE_A
+    rot = 3.16
     T = Game.Gettexter(game)
+    navdata:Game.Navdata = game.Navdata
+    navdata.MapLit = NAV_LIT_MIDDLE_A
+    navdata.MapRadians = rot
+    navdata.MapRadius = rad
+    navdata.AreaName = T("AREANAME_CAFETERIA")
+
     def start():
         if not game.getdata(_LIT, False):
             darkness()

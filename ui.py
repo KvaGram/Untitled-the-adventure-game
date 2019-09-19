@@ -49,14 +49,12 @@ class UntitledUI:
         self.queue = [] #:List[G.response]
 
         self.display = TK.Frame(master=self.main, background ="grey95")
-        #self.navtext = TK.Frame(master=self.main, background ="grey95")
         self.navmap = MapNav.Mapnav(master=self.main)
         self.inventory = TK.Frame(master=self.main, background ="grey95")
         self.actions = TK.Frame(master=self.main, background ="grey95")
         self.navkeys = TK.Frame(master=self.main, background ="grey95")
 
         self.display.grid  (row = 0, column = 0, columnspan = 8, rowspan = 7, sticky = "news")
-        #self.navtext.grid  (row = 0, column = 8, columnspan = 2, rowspan = 1, sticky = "new")
         self.navmap.grid  (row = 0, column = 8, columnspan = 2, rowspan = 1, sticky = "new")
         self.inventory.grid(row = 1, column = 8, columnspan = 2, rowspan = 9, sticky = "news")
         self.actions.grid  (row = 7, column = 0, columnspan = 6, rowspan = 3, sticky = "news")
@@ -67,7 +65,6 @@ class UntitledUI:
         self.draw_noactions
         #self.draw_textinputs()
         self.draw_inventory()
-        #self.draw_navtext()
         self.draw_navkeys()
         self.draw_menu(**args)
 
