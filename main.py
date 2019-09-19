@@ -57,7 +57,7 @@ import outer
 import inner
 
 #version number. Major, minor, hotfix.
-VERSION = [1, 3, 0]
+VERSION = [1, 4, 0]
 #if dev is on, some debug info may be displayed in the game
 DEV = True
 
