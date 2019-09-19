@@ -132,6 +132,7 @@ _________________________________________________
         except:
             place = None
         if(place):
+            game.EnableMenu()
             try:
                 place(game)
             except (ReturnToMain):
@@ -155,6 +156,7 @@ _________________________________________________
 #end game loop function
     
 def titleMenu(game:Game.Game):
+    game.DisableMenu()
     navdata = game.Navdata
     navdata.AreaName = "TITLE MENU"
     navdata.closed = True

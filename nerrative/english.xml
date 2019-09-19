@@ -166,21 +166,49 @@ You enjoy the holographic nature outside the window.
 ...
 ...
 a holographic deer just walked past.
-....
+...
 Time to go.
 </APT_WINDOW_2>
-<APT_GLASS_1>
+
+
+<APT_GLASS_TAKE_1>
 You take the white pills and drink from the glass.
-</APT_GLASS_1>
-<APT_GLASS_2>
+</APT_GLASS_TAKE_1>
+<APT_GLASS_TAKE_2>
+you drank the rest. The glass is now empty.
+</APT_GLASS_TAKE_2>
+
+<APT_GLASS_NOTAKE_1>
 You did not take the pills
-</APT_GLASS_2>
-<APT_GLASS_3>
+</APT_GLASS_NOTAKE_1>
+<APT_GLASS_NOTAKE_2>
+you left the glass alone
+</APT_GLASS_NOTAKE_2>
+
+<APT_GLASS_EX_1>
+The glass is full, and there are som white pills next to it.
+</APT_GLASS_EX_1>
+<APT_GLASS_EX_2>
 The glass is half empty. Or is it half full?
-</APT_GLASS_3>
-<APT_PILLS>
+</APT_GLASS_EX_2>
+<APT_GLASS_EX_3>
+The glass is empty
+</APT_GLASS_EX_3>
+
+<APT_GLASS_FRAG_1>
+a full glass of water
+</APT_GLASS_FRAG_1>
+<APT_GLASS_FRAG_2>
+a half full glass of water
+</APT_GLASS_FRAG_2>
+<APT_GLASS_FRAG_3>
+an empty glass
+</APT_GLASS_FRAG_3>
+
+<APT_PILLS_FRAG>
 , some small white pills
-</APT_PILLS>
+</APT_PILLS_FRAG>
+
 <APT_TABLE>
 You look at the nightstand table.
 You see {_GLASS}{_PILLS}
@@ -208,15 +236,6 @@ Take the pills?
 <APT_GLASS_QUEST_2>
 Drink from the glass?
 </APT_GLASS_QUEST_2>
-<APT_GLASS_4>
-you drank the rest. The glass is now empty.
-</APT_GLASS_4>
-<APT_GLASS_5>
-you left the glass alone
-</APT_GLASS_5>
-<APT_GLASS_6>
-The glass is empty
-</APT_GLASS_6>
 <APT_CYAN_1>
 You stare closely at the man in the cyan framed picture.
 He looks familiar. Very familiar.
@@ -276,13 +295,13 @@ Enter ladies' room
 You enter the Men's room.
 </BATH_MENS_ENTERING>
 <BATH_LADIES_ENTERING>
-You enter the Ladies's room.
+You enter the Ladies' room.
 </BATH_LADIES_ENTERING>
 <BATH_MENS_LEAVING>
 You leave the Men's room.
 </BATH_MENS_LEAVING>
 <BATH_LADIES_LEAVING>
-You leave the Ladies's room.
+You leave the Ladies' room.
 </BATH_LADIES_LEAVING>
 <BATH_MENS_WRONGROOM>
 You're not exacly sure why you went into the men's room, and not the ladies' room.
@@ -294,14 +313,14 @@ But as it is, the ladies is as vacant of people as the rest of this place.
 </BATH_LADIES_WRONGROOM>
 <BATH_MENS_DESCRIPTION>
 What you see is a line of toilet stalls, a large urinal, a few changing rooms, a locker room,
-showers, couple of them private, and a dispenser of hygine products.
+showers, couple of them private, and a dispenser of hygiene products.
 
 Finding yourself in front of the large array of sinks and mirrors.
 Some of the mirrors are broken, but you found one that was relativly intact.
 </BATH_MENS_DESCRIPTION>
 <BATH_LADIES_DESCRIPTION>
 What you see is a line of toilet stalls, a few changing rooms, a looker room, showers, couple of them private
-and a hygine despenser with varius.. products...
+and a hygiene dispenser with various.. products...
 
 Finding yourself in front of the large array of sinks and mirrors.
 Some of the mirrors are broken, but you found one that was relativly intact.
@@ -398,7 +417,7 @@ It feels important.
 You take it with you.
 </BATH_LOCKERS2>
 <BATH_OPTION_SINK>
-Spash water in your face
+Splash water in your face
 </BATH_OPTION_SINK>
 <BATH_OPTION_TOILET>
 Visit a toilet booth
@@ -489,7 +508,7 @@ You pass through the open door separating the two sectors
  - To sector A
 </MIDDLE_NAV_TO_SEC_A>
 <MIDDLE_NAV_AUXCOM>
-- Auxillary communications console
+- Auxiliary communications console
 </MIDDLE_NAV_AUXCOM>
 <MIDDLE_NAV_LADDER>
 - Emergency access ladder
@@ -518,7 +537,7 @@ The door behind you closes, turning to face it, you note there is a number-plate
 There is an uneasy silence.
 </MIDDLE_INTRO_1>
 <MIDDLE_INTRO_2>
-You exit out of your room and behold the large corridor streching as far as you can see in either direction.
+You exit out of your room and behold the large corridor stretching as far as you can see in either direction.
 </MIDDLE_INTRO_2>
 <MIDDLE_INTRO_3>
 You close the emergency ladder's hatch.
@@ -572,7 +591,7 @@ Stars, you realize. Stars flying upwards. You are staring into space!
 </MIDDLE_SEC_C_DOOR>
 <CAFE_DARK_1>
 You entered the door labeled 'Habitat diner'.
-The lights are off. You walk in, fumbeling for a lightswitch or something alike.
+The lights are off. You walk in, fumbling for a lightswitch or something alike.
 You see a faint blue light, and walk towards it.
 
 ...
@@ -589,7 +608,7 @@ The blue light seems attached to the creature.
 You cannot make out much in the dark.
 But you can make out some faint shapes in the dark.
 You can make out a table
-You see a long cyninder, maybe a support column?
+You see a long cylinder, maybe a support column?
 There is a large opening, maybe a diner counter, in the back.
 
 -- (This part of the story is not fully written yet, expect parts of this to be barebones)
@@ -645,8 +664,8 @@ You can't make out what the box is, so you leave it where you found it.
 You can't make out much more about the not-human body.
 </CAFE_DARK_BODY>
 <CAFE_DARK_LAMP>
-The faint cyllindrical outline looks at first to be a support pillar of sorts.
-But as you funble closer to it, you touch it.
+The faint cylindrical outline looks at first to be a support pillar of sorts.
+But as you fumble closer to it, you touch it.
 The texture is smooth and it feels a bit warm.
 Feeling around on it you find something that feels like a button.
 You accidentally press it. Suddenly a flash of light blind you.
@@ -659,7 +678,7 @@ You funble a few steps in the darkness to the nearby table.
 
 There is something wet on the table. Someone must have spilled something.
 You find a plate, on it you found a fork stuck in something.
-You accidentally tipped a glass or cup, luckly it seems it was empty.
+You accidentally tipped a glass or cup, luckily it seems it was empty.
 You can't make out anything that seems important, so you make your back back to the faint light.
 </CAFE_DARK_TABLE>
 <CAFE_DARK_COUNTER>
@@ -669,7 +688,7 @@ It's stew. You hand is now covered in some cold old stew.
 
 Finding some paper towels, or at lest you hope it's paper towels,
 as you can't tell in the dark, you clean the stew off your hand.
-You find some serving plates, cups, cuttlery. Nothing to make light though.
+You find some serving plates, cups, cutlery. Nothing to make light though.
 You fumble back to the faint blue light.
 </CAFE_DARK_COUNTER>
 <CAFE_DARK_EXIT>
@@ -758,7 +777,7 @@ You locate the panel as indicated on the engraving.
 The glass is already broken.
 </LADDER_ACCESS_INTRO_2>
 <LADDER_ACCESS_INTRO_3>
-The glass look thin and you feel an odd temtation to smash it.
+The glass look thin and you feel an odd temptation to smash it.
 Written on the glass is a warning.
     FOR EMERGENCIES ONLY!
     SECURITY WILL BE ALERTED TO MISUSE!
@@ -781,7 +800,7 @@ The hatch opens and you go inside.
 You find a large panel with a screen on wall next to you.
 It has the following text painted and engraved under it
         |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
-        |   AUXILLARY COMS      |
+        |   AUXILIARY COMS      |
         |                       |
         | FOR AUTHORIZED USE    |
         |          ONLY         |
@@ -789,7 +808,7 @@ It has the following text painted and engraved under it
 Under that you find a smaller panel that seem to invite you to push it.
 </AUXCOM_INTRO>
 <AUXCOM_LEAVE_1>
-You leave the auxillary communications panel alone
+You leave the auxiliary communications panel alone
 </AUXCOM_LEAVE_1>
 <AUXCOM_LEAVE_2>
 You decide it is not worth bothering with, close the lower panel, and turn to leave.

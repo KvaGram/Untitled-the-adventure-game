@@ -62,17 +62,17 @@ def Start(game:Game.Game):
         def glassText():
             g = game.getdata("apartment:glass")
             if g == None or g == 2:
-                return "{APT_GLASS_1}"
+                return "{APT_GLASS_FRAG_1}"
             elif g == 1:
-                return "{APT_GLASS_2}"
+                return "{APT_GLASS_FRAG_2}"
             else:
-                return "{APT_GLASS_3}"
+                return "{APT_GLASS_FRAG_3}"
             #end of glass description
         def pillsText():
             if(game.getdata("apartment:pills")):
                 return ""
             else:
-                return "{APT_PILLS}"
+                return "{APT_PILLS_FRAG}"
         #end of pills description
         frags["_GLASS"] = glassText()
         frags["_PILLS"] = pillsText()
@@ -84,22 +84,23 @@ def Start(game:Game.Game):
             g = game.getdata("apartment:glass")
             if g == None or g == 2:
                 game.setdata("apartment:glass", 2)
+                game.showtext ("{APT_GLASS_EX_1}")
                 if(game.yesno("{APT_GLASS_QUEST_1}")):
-                    game.showtext("{APT_GLASS_1}")
+                    game.showtext("{APT_GLASS_TAKE_1}")
                     game.setdata("apartment:pills", True)
                     game.setdata("apartment:glass", 1)
                     game.setInventory("HEADACHE", False)
                 else:
-                    game.showtext("{APT_GLASS_2}")
+                    game.showtext("{APT_GLASS_NOTAKE_1}")
             elif g == 1:
-                game.showtext ("{APT_GLASS_3}")
+                game.showtext ("{APT_GLASS_EX_2}")
                 if(game.yesno("{APT_GLASS_QUEST_2}")):
-                    game.showtext("{APT_GLASS_4}")
+                    game.showtext("{APT_GLASS_TAKE_2}")
                     game.setdata("apartment:glass", 0)
                 else:
-                    game.showtext("{APT_GLASS_5}")
+                    game.showtext("{APT_GLASS_NOTAKE_2}")
             else:
-                game.showtext("{APT_GLASS_6}")
+                game.showtext("{APT_GLASS_EX_3}")
         elif data.tag == "CYAN":
             m = game.getdata("malefam", None)
             f = game.getdata("femalefam", None)

@@ -291,7 +291,10 @@ class UntitledUI:
         gamemenu.add_command(label="Load", command=loadCall)
         gamemenu.add_command(label="New Game", command=newCall)
         
+        
 
+        self.menu_root = rootmenu
+        self.menu_game = gamemenu
         self.root.config(menu = rootmenu)
     def askSaveFile(self, loadMode:bool):
         class AskData:
