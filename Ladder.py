@@ -41,19 +41,23 @@ def Start(game:Game.Game):
         goto("outer")
 
     def setupRunner():
-        base_navtext = T("NAV_DESC_TEMPLATE")
-        frags = {"_WHEEL" : "Habitat wheel C", "_SECTORNAME" : "Sector B"}
+        r0 = 0
+        from untitled_const import NAV_INNER_RADIUS as r1
+        from untitled_const import NAV_MIDDLE_RADIUS as r2
+        from untitled_const import NAV_OUTER_RADIUS as r3
+        from untitled_const import TAU
+        rot = 6/16 * TAU
         runner.nodes = [
-            Game.PlaceNode(game, "TO_CORE",    game.retext(base_navtext, {**frags, "_RINGNAME":"Core", "_LOCAL_NAME":"Exit to core"}),[
+            Game.PlaceNode(game, "TO_CORE",T("AREANAME_TO-CORE"), r0, rot ,[
                 ("_", T("LADDER_CORE_QUEST"), core),
             ]),
-            Game.PlaceNode(game, "TO_INNER",    game.retext(base_navtext, {**frags, "_RINGNAME":"Inner ring", "_LOCAL_NAME":"Exit to inner ring"}),[
+            Game.PlaceNode(game, "TO_INNER",T("AREANAME_TO-INNER"), r1, rot ,[
                 ("_", T("LADDER_INNER_QUEST"), inner),
             ]),
-            Game.PlaceNode(game, "TO_MID",    game.retext(base_navtext, {**frags, "_RINGNAME":"Middle ring", "_LOCAL_NAME":"Exit to middle ring"}),[
+            Game.PlaceNode(game, "TO_MID",T("AREANAME_TO-MIDDLE"), r2, rot ,[
                 ("_", T("LADDER_MID_QUEST"), middle),
             ]),
-            Game.PlaceNode(game, "TO_OUT",    game.retext(base_navtext, {**frags, "_RINGNAME":"Outer ring", "_LOCAL_NAME":"Exit to outer ring"}),[
+            Game.PlaceNode(game, "TO_OUT",T("AREANAME_TO-OUTER"), r3, rot ,[
                 ("_", T("LADDER_OUT_QUEST"), outer),
             ]),
         ]
@@ -66,6 +70,7 @@ def Start(game:Game.Game):
             "middle":"TO_MID",
             "outer":"TO_OUT",
         }.get(game.prevPlace, 0))
+        
     runner.run()
 
 

@@ -2,6 +2,8 @@ import Game
 import random
 import General
 from General import Runner_WheelC_Rings as Runner
+from untitled_const import NAV_LIT_OUTER_A
+from untitled_const import NAV_LIT_OUTER_B
 
 def Start(game:Game.Game):
     runner:Runner = Runner(game)
@@ -20,8 +22,10 @@ def Start(game:Game.Game):
     def sectionDdoor_read():
         game.rolltext("{OUTER_SEC_D_DOOR}")
     def sectionBdoor_pass():
+        runner.nav.MapLit = NAV_LIT_OUTER_B
         game.showtext("{PASS_SECTOR_DOORWAY}")
     def sectionAdoor_pass():
+        runner.nav.MapLit = NAV_LIT_OUTER_A
         game.showtext("{PASS_SECTOR_DOORWAY}")
     def sectionBdoor_read():
         game.showtext("PLACEHOLDER")
@@ -224,35 +228,18 @@ def Start(game:Game.Game):
     #---------------------------
 
     def setupRunner():
-        base_navtext = T("NAV_DESC_TEMPLATE")
-        base_frags = {"_WHEEL":T("WHEEL_C_NAME_1"), "_RINGNAME":T("OUTER_RING_NAME"), "_SECTORNAME" : T("SECTOR_A_TERM_1")}
+        from untitled_const import NAV_MIDDLE_RADIUS as r
+        from untitled_const import TAU
         runner.nodes = []
 
         runner.nodes += [
-            Game.PlaceNode(game, "TO_SEC_D",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_TO_SEC_D}"), [
-                ("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
-
-            Game.PlaceNode(game, "TO_ELEVATOR",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_ELE}"), [
-                ("_", T("ACT_USE"), elevator)]),
-
-            Game.PlaceNode(game, "TO_SEC_B",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_TO_SEC_B}"), [
-                ("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
-        ]
-
-        base_frags["_SECTORNAME"] = T("SECTOR_B_TERM")
-
-        runner.nodes += [
-            Game.PlaceNode(game, "TO_SEC_A",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_TO_SEC_A}"), [
-                ("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
-
-            Game.PlaceNode(game, "TO_LADDER",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_LADDER}"), [
-                ("_", T("ACT_USE"), ladder)]),
-
-            Game.PlaceNode(game, "TO_REACTOR",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_TO_NODE}"), [
-                ("_", T("ACT_ENTER_ROOM"), ladder)]),
-
-            Game.PlaceNode(game, "TO_SEC_C",    base_navtext.format(**base_frags, _LOCAL_NAME = "{OUTER_NAV_TO_SEC_C}"), [
-                ("_", T("ACT_READ_SIGN"), sectionCdoor_read )]),
+            Game.PlaceNode(game, "TO_SEC_D",    T("AREANAME_TO-SEC-D"), r, 12/16 * TAU + 0.00, [("_", T("ACT_READ_SIGN"), sectionDdoor_read)]),
+            Game.PlaceNode(game, "TO_ELEVATOR", T("OUTER_NAV_ELE"),      r, 10/16 * TAU + 0.00, [("_", T("ACT_USE"), elevator)]),
+            Game.PlaceNode(game, "TO_SEC_B",    T("OUTER_NAV_TO_SEC_B"), r,  8/16 * TAU + 0.05, [("_", T("ACT_READ_SIGN"), sectionBdoor_read )]),
+            Game.PlaceNode(game, "TO_SEC_A",    T("OUTER_NAV_TO_SEC_A"), r,  8/16 * TAU - 0.05, [("_", T("ACT_READ_SIGN"), sectionAdoor_read )]),
+            Game.PlaceNode(game, "TO_LADDER",   T("OUTER_NAV_LADDER"),   r,  6/16 * TAU + 0.00, [("_", T("ACT_USE"), ladder)]),
+            Game.PlaceNode(game, "TO_REACTOR",  T("OUTER_NAV_TO_NODE"),  r,  3/16 * TAU + 0.00, [("_", T("ACT_ENTER_ROOM"), reactNode)]),
+            Game.PlaceNode(game, "TO_SEC_C",    T("OUTER_NAV_TO_SEC_C"), r,  4/16 * TAU + 0.00, [("_", T("ACT_READ_SIGN"), sectionCdoor_read )]),
         ]
         runner.passActs = [
             ("TO_SEC_B","TO_SEC_A", sectionBdoor_pass),
@@ -262,6 +249,12 @@ def Start(game:Game.Game):
         runner.index, intro = {
             "ladder" : ("TO_LADDER","{OUTER_INTRO_2}"),
         }.get(game.prevPlace, ("TO_SEC_C", "{OUTER_INTRO_1}"))
+        
+        if runner.index > runner.indexofnode("TO_SEC_B"):
+            runner.nav.MapLit = NAV_LIT_OUTER_B
+        else:
+            runner.nav.MapLit = NAV_LIT_OUTER_A
+        game.rolltext(intro)
     setupRunner()
     runner.run()
     

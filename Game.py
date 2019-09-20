@@ -7,8 +7,8 @@ import time
 import random
 import sys
 import re
-from untitled_const import ReturnToMain
-from untitled_const import ReturnToTitle
+#from untitled_const import *
+from untitled_const import NAV_BACK_UNKNOWN, NAV_BACK_INTACT, NAV_BACK_BROKEN, ReturnToMain, ReturnToTitle
 
 import ItemDB 
 import Storyloader
@@ -63,9 +63,8 @@ class Game:
             self.savegame()
         self.quit()
         sys.exit()
-    def opengamemenu(self):
-        NotAddedYet()
-        #TODO: implement open game menu
+    #def opengamemenu(self):
+    #    NotAddedYet()
     def newgame(self):
         self.savedata = {}
         self.setdata("navdata", Navdata())
@@ -174,7 +173,22 @@ class Game:
             return
         n = self.Navdata
         if n.refresh:
-            self.ui.set_navtext(self.retext(self.Navdata.navtext, {}))
+            self.ui.navmap.AreaName = self.Navdata.AreaName
+            
+            knowledge = self.getdata("wheelC:knowledge", 0)
+            if knowledge < 1 or n.MapForceUnknown:
+                self.ui.navmap.BackImage = NAV_BACK_UNKNOWN
+                self.ui.navmap.LitImage = None
+                self.ui.navmap.DotState = None
+            else:
+                if knowledge < 2:
+                    self.ui.navmap.BackImage = NAV_BACK_INTACT
+                else:
+                    self.ui.navmap.BackImage = NAV_BACK_BROKEN
+                self.ui.navmap.LitImage = self.Navdata.MapLit
+                self.ui.navmap.PlaceDot(self.Navdata.MapRadians, self.Navdata.MapRadius)
+
+
             if n.canmove:
                 self.ui.conf_navkeys(left=n.left, up=n.up, right=n.right, down=n.down)
             else:
@@ -220,7 +234,7 @@ class Game:
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
         if data and data.Type == "game":
-            NotAddedYet() #TODO: handle gamemenu events
+            NotAddedYet()
         return data
     
     def runGeneral(self, call):
@@ -304,7 +318,6 @@ class Game:
 
 
     #region dictionaries
-    #TODO: get terms from some sort of resource file
     def getGenderedRole(self, role:str, gender:str) -> str:
         fallback:str = gender + " " + role
         gendered_role:dict = {
@@ -590,8 +603,11 @@ class Navdata:
         self.text_right = args.get("text_right", u"\u2192")
         self.text_down  = args.get("text_down",  u"\u2193")
         
-        self.__navtext = args.get("navtext", "UNKNOWN\nAREA")
-        
+        self.__areaName = args.get("areaname", "UNKNOWN AREA")
+        self.__mapRadians = args.get("mapradians", 0.0)
+        self.__mapRadius = args.get("mapradius", 50)
+        self.__mapLit    = args.get("maplit", None)
+        self.__mapForceUnknown = args.get("mapforceunknown", False)
         self.cleanxyz()
         self.refresh = True
     
@@ -627,8 +643,21 @@ class Navdata:
     def closed(self)->bool:
         return self.__closed
     @property
-    def navtext(self)->str:
-        return self.__navtext
+    def AreaName(self):
+        return self.__areaName
+    @property
+    def MapRadians(self):
+        return self.__mapRadians
+    @property
+    def MapRadius(self):
+        return self.__mapRadius
+    @property
+    def MapLit(self):
+        return self.__mapLit
+    @property
+    def MapForceUnknown(self):
+        return self.__mapForceUnknown
+    
     #endregion getters
     #region setters
     @up.setter
@@ -651,10 +680,27 @@ class Navdata:
     def closed(self, val):
         self.__closed = val
         self.refresh = True
-    @navtext.setter
-    def navtext(self, val):
-        self.__navtext = val
+    @AreaName.setter
+    def AreaName(self, val):
+        self.__areaName = val
         self.refresh = True
+    @MapRadians.setter
+    def MapRadians(self, val):
+        self.__mapRadians = val
+        self.refresh = True
+    @MapRadius.setter
+    def MapRadius(self, val):
+        self.__mapRadius = val
+        self.refresh = True
+    @MapLit.setter
+    def MapLit(self, val):
+        self.__mapLit = val
+        self.refresh = True
+    @MapForceUnknown.setter
+    def MapForceUnknown(self, val):
+        self.__mapForceUnknown = val
+        self.refresh = True
+
     def setdir(self, dir:str, val:bool):
         if dir == "up":
             self.up = val
@@ -702,7 +748,9 @@ class PlaceRunner1D(PlaceRunner):
             n:PlaceNode = self.nodes[i]
             self.nav.setdir(self.minusDir, i > 0)
             self.nav.setdir(self.plusDir, i < len(self.nodes)-1)
-            self.nav.navtext = n.navtext
+            self.nav.AreaName = n.areaName
+            self.nav.MapRadians = n.navRadian
+            self.nav.MapRadius = n.navRadius
             if len (n.actions) > 0:
                 self.game.choose(n.actions, "")
             data:ActDataInput = self.game.wait()
@@ -728,6 +776,7 @@ class PlaceRunner1D(PlaceRunner):
         else:
             print("Unhandled call to run " + action[0])
     def onTravel(self, previndex:int):
+        
         pass
     @property
     def index(self):
@@ -798,10 +847,12 @@ class GameMenuInput(DataInput):
         super().__init__(data)
 
 class PlaceNode:
-    def __init__(self, game:Game, _id:str, navtext:str, actions:list):
+    def __init__(self, game:Game, _id:str, areaName:str, navRadius:int, navRadian:float, actions:list):
         self.game = game
         self.id = _id
-        self.navtext = navtext
+        self.areaName = areaName
+        self.navRadius = navRadius
+        self.navRadian = navRadian
         self.actions = actions
 class formatdict(dict):
     def __missing__(self, key):

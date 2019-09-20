@@ -5,7 +5,16 @@ import random
 _LIT = "cafeteria:lit"
 
 def Start(game:Game.Game):
+    from untitled_const import NAV_MIDDLE_RADIUS as rad
+    from untitled_const import NAV_LIT_MIDDLE_A
+    rot = 3.16
     T = Game.Gettexter(game)
+    navdata:Game.Navdata = game.Navdata
+    navdata.MapLit = NAV_LIT_MIDDLE_A
+    navdata.MapRadians = rot
+    navdata.MapRadius = rad
+    navdata.AreaName = T("AREANAME_CAFETERIA")
+
     def start():
         if not game.getdata(_LIT, False):
             darkness()
@@ -58,7 +67,6 @@ def Start(game:Game.Game):
     def dark_body():
         game.setInventory("BROKE_TRANSLATOR", True)
         game.rolltext("{CAFE_DARK_BODY}")
-        #TODO:some kind of short story where the translator is examined.
         game.setInventory("BROKE_TRANSLATOR", False)
         return False
     def dark_lamp():
@@ -80,7 +88,6 @@ def Start(game:Game.Game):
     def lit_body():
         game.setInventory("BROKE_TRANSLATOR", True)
         game.rolltext("{CAFE_LIT_BODY}")
-        #TODO:some kind of short story where the translator is examined.
         return False
     def lit_lamp():
         game.rolltext("{CAFE_LIT_LAMP}")
