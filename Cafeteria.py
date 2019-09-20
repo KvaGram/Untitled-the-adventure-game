@@ -67,7 +67,6 @@ def Start(game:Game.Game):
     def dark_body():
         game.setInventory("BROKE_TRANSLATOR", True)
         game.rolltext("{CAFE_DARK_BODY}")
-        #TODO:some kind of short story where the translator is examined.
         game.setInventory("BROKE_TRANSLATOR", False)
         return False
     def dark_lamp():
@@ -89,7 +88,6 @@ def Start(game:Game.Game):
     def lit_body():
         game.setInventory("BROKE_TRANSLATOR", True)
         game.rolltext("{CAFE_LIT_BODY}")
-        #TODO:some kind of short story where the translator is examined.
         return False
     def lit_lamp():
         game.rolltext("{CAFE_LIT_LAMP}")

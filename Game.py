@@ -63,9 +63,8 @@ class Game:
             self.savegame()
         self.quit()
         sys.exit()
-    def opengamemenu(self):
-        NotAddedYet()
-        #TODO: implement open game menu
+    #def opengamemenu(self):
+    #    NotAddedYet()
     def newgame(self):
         self.savedata = {}
         self.setdata("navdata", Navdata())
@@ -175,7 +174,7 @@ class Game:
         n = self.Navdata
         if n.refresh:
             self.ui.navmap.AreaName = self.Navdata.AreaName
-            #TODO set up the nav
+            
             knowledge = self.getdata("wheelC:knowledge", 0)
             if knowledge < 1 or n.MapForceUnknown:
                 self.ui.navmap.BackImage = NAV_BACK_UNKNOWN
@@ -235,7 +234,7 @@ class Game:
     def deqeue(self):
         data = DataInput.Make(self.ui.deqeue())
         if data and data.Type == "game":
-            NotAddedYet() #TODO: handle gamemenu events
+            NotAddedYet()
         return data
     
     def runGeneral(self, call):
@@ -319,7 +318,6 @@ class Game:
 
 
     #region dictionaries
-    #TODO: get terms from some sort of resource file
     def getGenderedRole(self, role:str, gender:str) -> str:
         fallback:str = gender + " " + role
         gendered_role:dict = {
