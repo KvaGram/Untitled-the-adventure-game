@@ -235,6 +235,7 @@ class UntitledUI:
             item.grid(row = row, column = column, padx = 1, pady = 1, sticky="new")
             self.inventory.grid_rowconfigure(index = row, weight=1)
             self.inventory.grid_columnconfigure(index = column, weight=1)
+            self.itemObjects.append(item)
     def draw_navkeys(self, **args):
         self.emptyframe(self.navkeys)
         
