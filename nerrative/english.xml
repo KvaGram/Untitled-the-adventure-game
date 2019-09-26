@@ -37,7 +37,7 @@ Broken device
 </ITEM_BROKE_TRANSLATOR_NAME>
 <ITEM_BROKE_TRANSLATOR_DESC>
 A broken alien device.
-The insides circutry seem to be
+The inside circuitry seems to be
 a mix of electronics
 and clockwork analogues
 </ITEM_BROKE_TRANSLATOR_DESC>
@@ -456,14 +456,14 @@ Mysterius corridor
 Sector B
 </SECTOR_B_TERM>
 <OUTER_RING_NAME>
-Maintenence and disections ring
+Maintenance and dissections ring
 </OUTER_RING_NAME>
 <INNER_RING_NAME>
 Stasis and healthcare ring
 </INNER_RING_NAME>
 <MIDDLE_NAV_DESC_1>
 - Unknown place
- - Mysterius corridor
+ - Mysterious corridor
  {1}
 </MIDDLE_NAV_DESC_1>
 <MIDDLE_NAV_DESC_2>
