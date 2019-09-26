@@ -37,7 +37,7 @@ Broken device
 </ITEM_BROKE_TRANSLATOR_NAME>
 <ITEM_BROKE_TRANSLATOR_DESC>
 A broken alien device.
-The insides circutry seem to be
+The inside circuitry seems to be
 a mix of electronics
 and clockwork analogues
 </ITEM_BROKE_TRANSLATOR_DESC>
@@ -216,7 +216,7 @@ and two framed pictures.
 One with a cyan frame, one with a golden frame.
 </APT_TABLE>
 <APT_TABLE_QUEST>
-What do you wan to do?
+What do you want to do?
 </APT_TABLE_QUEST>
 <APT_TABLE_OPTION_GLASS>
 Examine the glass
@@ -450,20 +450,20 @@ Unknown place
 Sector A
 </SECTOR_A_TERM_1>
 <SECTOR_A_TERM_2>
-Mysterius corridor
+Mysterious corridor
 </SECTOR_A_TERM_2>
 <SECTOR_B_TERM>
 Sector B
 </SECTOR_B_TERM>
 <OUTER_RING_NAME>
-Maintenence and disections ring
+Maintenance and dissections ring
 </OUTER_RING_NAME>
 <INNER_RING_NAME>
 Stasis and healthcare ring
 </INNER_RING_NAME>
 <MIDDLE_NAV_DESC_1>
 - Unknown place
- - Mysterius corridor
+ - Mysterious corridor
  {1}
 </MIDDLE_NAV_DESC_1>
 <MIDDLE_NAV_DESC_2>
@@ -648,7 +648,7 @@ Search the table
 Search the diner counter
 </CAFE_LIT_OPTION_4>
 <CAFE_LIT_OPTION_5>
-Search the mysterius rack
+Search the mysterious rack
 </CAFE_LIT_OPTION_5>
 <CAFE_LIT_OPTION_EXIT>
 Exit the diner
@@ -658,7 +658,7 @@ You fumble around the still cold body on the floor.
 It is clearly not human, based on the general shape you can feel it has.
 You look for where that faint light come from. You make out some kind of small box.
 
-It is held in some tini small appendeges, almost like fingers.
+It is held in some tini small appendages, almost like fingers.
 You can't make out what the box is, so you leave it where you found it.
 
 You can't make out much more about the not-human body.
@@ -668,7 +668,7 @@ The faint cylindrical outline looks at first to be a support pillar of sorts.
 But as you fumble closer to it, you touch it.
 The texture is smooth and it feels a bit warm.
 Feeling around on it you find something that feels like a button.
-You accidentally press it. Suddenly a flash of light blind you.
+You accidentally press it. Suddenly a flash of light blinds you.
 As you recover, you find the room suddenly lit.
 
 You walk back to where the blue light was, the light now invisible compared to the bright support pillar lamp.
@@ -704,18 +704,18 @@ You decide to keep one with you.
 </CAFE_TRANS_RACK>
 <CAFE_LIT_BODY>
 You examine the alien creature.
-It lays leanig, almost sitting, against the wall.
-It seems short right now, but looking at the tose, it looks as it could stretch and fold like an accordion.
+It lays leaning, almost sitting, against the wall.
+It seems short right now, but looking at the torso, it looks as it could stretch and fold like an accordion.
 The creature has six limbs that look almost like tentacles, but with more tentacles branching out in the ends of them.
 You find a small box or maybe a tablet in the "hand" of one of those limbs.
 
 You pick up the thing and examine it.
 
 As you do so, you hear a sudden cackle from it. As you life it further up, the cackle stops.
-Moving it around, you find the sound stongest near a disk-shaped appendege.
+Moving it around, you find the sound strongest near a disk-shaped appendege.
 Moving it closer, you suddenly hear a voice.
 
- - so dark. It is dark.(uintellible cackling noice) Was there an alarm? What is an alarm? (noise) Why is it dark? what... why..
+ - so dark. It is dark.(uintelligible cackling noice) Was there an alarm? What is an alarm? (noise) Why is it dark? what... why..
  - so dark. So very hungry. So very very (more noise) extreme. Extreme soemthing. (more noise)  hurt? Pain?
  - pain. pain. pain. pain. dark. pain dark. dark. dark. pain.
 
@@ -726,7 +726,7 @@ Not knowing what you can do to help the poor thing, you leave it to rest in peac
 examining the small tablet you notice a part of it is broken. The front panel, you suppose.
 You find some text written on it "point this end towards.." the rest it cut off where the panel is broken.
 The exposed insides seems to be void of electronics.
-All you see are moving gears, tini shafts, and other tini mechanical clockwork parts.
+All you see are moving gears, tiny shafts, and other tini mechanical clockwork parts.
 Some small metal spikes are moving in and out of where the panal would be.
 
 You decide to keep the broken device for now, at least untill you find an intact one.
@@ -777,7 +777,7 @@ You locate the panel as indicated on the engraving.
 The glass is already broken.
 </LADDER_ACCESS_INTRO_2>
 <LADDER_ACCESS_INTRO_3>
-The glass look thin and you feel an odd temptation to smash it.
+The glass looks thin and you feel an odd temptation to smash it.
 Written on the glass is a warning.
     FOR EMERGENCIES ONLY!
     SECURITY WILL BE ALERTED TO MISUSE!
@@ -822,7 +822,7 @@ open the panel?
 <AUXCOM_STATUS_1>
 You push the panel. The panel lowers as a latch to reveal a keyboard.
 The screen turns on and displays the text
-        ' AUXILLARY COMS ONLINE. DO YOU WISH TO PLACE A CALL?'
+        ' AUXILLIARY COMS ONLINE. DO YOU WISH TO PLACE A CALL?'
 </AUXCOM_STATUS_1>
 <AUXCOM_STATUS_2>
 You push the panel.  The panel lowers as a latch to reveal a keyboard.
@@ -884,13 +884,13 @@ close panel
 What will you try next?
 </AUXCOM_WIREOPTION_CHOOSE>
 <AUXCOM_WIREACTION_1A>
-You disconnect the think black cable, and plug it into the white socket.
+You disconnect the thick black cable, and plug it into the white socket.
 </AUXCOM_WIREACTION_1A>
 <AUXCOM_WIREACTION_1B>
-At first, this seems to work, as the system seemed to turn back to life. Alas it were not to last.
+At first, this seems to work, as the system seemed to turn back to life. Alas it was not to last.
 </AUXCOM_WIREACTION_1B>
 <AUXCOM_WIREACTION_1C>
-Suddenly there was some sparks in the area aroud the white socket.
+Suddenly there are some sparks in the area around the white socket.
 You hear a faint hum.
 Then hum then turns into a screeching sound that increase in frequency and volume.
 Then a speaker explodes, and the system goes black.
@@ -974,9 +974,9 @@ As you somehow put the cable in your mouth, the world goes black.
 ...
 
 Some time later, your limp lifeless body is found floating around.
-Amung the many dead bodies, yours stuck out as being the only one
+Among the many dead bodies, yours stuck out as being the only one
 with extreme electrical burns in the face.
-When your cause of death were discovered you were post-humerusly given the Darwin Award.
+When your cause of death was discovered you were post-humously given the Darwin Award.
 </AUXCOM_WIREACTION_6>
 <AUXCOM_WIREACTION_6_GAMEOVER>
 You put a live power-cable in your mouth. Yeah, you're dead.
@@ -988,17 +988,17 @@ You decide to undo it, plugging the black cable back in.
 </AUXCOM_WIREACTION_7A>
 <AUXCOM_WIREACTION_7B>
 You unplug the cable in the black slot, and plug in the yellow.
-As you plug in the yellow cable, there was a breif spark, then system shuts down.
+As you plug in the yellow cable, there was a brief spark, then system shuts down.
 You decide to undo it, and never try that again, putting the black cable back in.
 </AUXCOM_WIREACTION_7B>
 <AUXCOM_WIREACTION_8A>
 You decide to try and lick the yellow cable again.
 ...
-Yup, still tingley
+Yup, still tingly
 </AUXCOM_WIREACTION_8A>
 <AUXCOM_WIREACTION_8B>
 On a whim you decided to lick the end of the yellow cable.
-It had kind of a tingely taste to it.
+It had kind of a tingly taste to it.
 </AUXCOM_WIREACTION_8B>
 <AUXCOM_WIREACTION_8C>
 As you lick, you notice the system reboot, and a robotic voice comes the the speakers.
@@ -1035,22 +1035,22 @@ Connect to radiation shelter Two
 Connect to radiation shelter Three
 </AUXCOM2_COMOP_5>
 <AUXCOM2_COMOP_6>
-Connect to radiation shetter Four
+Connect to radiation shelter Four
 </AUXCOM2_COMOP_6>
 <AUXCOM2_COMOP_7>
-Connect to Auxillary coms, wheel One
+Connect to Auxilliary coms, wheel one
 </AUXCOM2_COMOP_7>
 <AUXCOM2_COMOP_8>
-Connect to Auxillary coms, wheel two
+Connect to Auxilliary coms, wheel two
 </AUXCOM2_COMOP_8>
 <AUXCOM2_COMOP_9>
-Connect to Auxillary coms, wheel four
+Connect to Auxilliary coms, wheel four
 </AUXCOM2_COMOP_9>
 <AUXCOM2_COMOP_CARGO>
 Connect to main cargo bay
 </AUXCOM2_COMOP_CARGO>
 <AUXCOM2_COMOP_EXIT>
-Exit the auxillary com system
+Exit the auxilliary com system
 </AUXCOM2_COMOP_EXIT>
 <AUXCOM2_NO_RESP_1>
 You attempt to make your connection.
@@ -1120,7 +1120,7 @@ Ok. {_P}, I need you to stay calm. I'm gonna get some help
 (A man, an engineer by the looks of his attire, takes her place)
 Ok, {_P}. I am not gonna lie, you are in a bit of touble. We are gonna do what we can to help you.
 We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
-The reason why you are having a hard time to remeber anything, is likly due to the stasis-pod.
+The reason why you are having a hard time to remeber anything, is likely due to the stasis-pod.
 Amnesia is a side-effect of the stasis.
 Alright, listen up!
 The reactor onboard is about to explode, so were about to detach the module when you contacted us.
@@ -1201,7 +1201,7 @@ Well, thanks for that, {_P}. We were starting to sweat bullets up here.
 <AUXCOM_DIALOGE_1B_PART_1B>
 No? Well, then there must be more of you awake down there {_P},
 you should get in contact with them as soon as possible.
-They would likly be down below you in the outer ring
+They would likely be down below you in the outer ring
 also known as the {OUTER_RING_NAME}.
 </AUXCOM_DIALOGE_1B_PART_1B>
 <AUXCOM_DIALOGE_1B_PART_2A>
@@ -1222,11 +1222,11 @@ Alright, {_P}, I am not gonna lie. You are in a bit of trouble.
 But thanks to the temporary fix to the reactor, we got some time.
 First of, since we got the time, let me explain what has happened.
 
-The reason why you are having a hard time to remeber anything, is likly due to the stasis-pod.
+The reason why you are having a hard time to remember anything, is likly due to the stasis-pod.
 Amnesia is a side-effect of the stasis.
 Your memories will come back to you slowly over time.
 Quite slowly in fact.
-Last time it took me a year to even remeber the invasion.
+Last time it took me a year to even remember the invasion.
 I suppose I should fill you in. Here's the short.
 
 We are onboard the Ziruupan reseach vessel Tikrosa-al on route from Sol to Proxima Centauri.
@@ -1268,7 +1268,7 @@ No. I'm on my way
 <AUXCOM_DIALOGE_2B_WHY>
 There is a problem with the doors up here.
 Look, it's complicated. They were designed by aliens after all.
-Sufficed to say, we can't go in, but you and anyone you rescue can come out.
+Suffice to say, we can't go in, but you and anyone you rescue can come out.
 I'm not a door technician, I barely understand the problem myself.
 Not sure if we got the time for me to properly explain it.
 </AUXCOM_DIALOGE_2B_WHY>
@@ -1310,7 +1310,7 @@ Their fighterplanes were armed with semi-automatic ballistas.
 And their soldiers were armed with primitive spears.
 They landed worldwide en-masse, and started abucting people.
 That's how we ended up here.
-I seem to remeber you said you were at a tourist spot in America when you were taken.
+I seem to remember you said you were at a tourist spot in America when you were taken.
 Anyways, some of us had radios with us when abducted, and from what we heard,
 they called it the "5 hour world war" back home.
 Clearly spears and ballistas don't do well against tanks and jet-fighters.
@@ -1323,17 +1323,17 @@ Ask for the short story?
 Uh? Ok, I will short it down.
 Most of us is kept in stasis chambers between research project.
 Ziruupan scientists usually just do social studies of us, so most of us cooperate.
-But earlier today, some a more fanatical scientists decided to disect some of us.
+But earlier today, some a more fanatical scientists decided to dissect some of us.
 This is what led to the riot that damaged the reactor.
 
 IS there anything else you want to know?
 </AUXCOM_DIALOGE_3_SHORT_STORY>
 <AUXCOM_DIALOGE_3_FULL_STORY>
 All in all, Ziruup forces abucted 451 people during the retreat.
-Along with several tons of precius metals, equiptment, food supplies from places they raided.
+Along with several tons of precious metals, equiptment, food supplies from places they raided.
 They also raided a dump for some reason, so we got a cargo bay filled with all sort of rubbish.
 
-Well, as we left Earth at a speed faster than anything that could be lauched from Earth, we all soon realized we were trapped.
+Well, as we left Earth at a speed faster than anything that could be launched from Earth, we all soon realized we were trapped.
 There were an attempt to take control of the vessel, but...
 Well, spears and ballistas do well against unarmed people.
 
@@ -1350,7 +1350,7 @@ Over the years we talked our Zirtuupan captors into letting us upgrade our habit
 Installing common comfort from what we could from the raided supplies and equiptment.
 Soon enough, some of our captors started to see us more as accidental ambassadors.
 
-Some that is. Many still belive we should all be slaves for their emperror.
+Some that is. Many still belive we should all be slaves for their emperor.
 One of the more fanatical scientists decided to go ahead with a disection project, and defrosted a group of malcontent abductees from stasis.
 Her reasoning were that since they diden't want to cooperate, they might as well be used to learn our atanomy.
 This did not go well.
@@ -1362,14 +1362,14 @@ Anyways, we started to destroy the laboretories in the outer ring.
 We diden't know about the reactor back then.
 So the thinking was that the worst that could happen were getting vented into space.
 
-We diden't notice at first, but as the lab blew, it pushed the reactor particle accellerator ring out of allignment.
+We diden't notice at first, but as the lab blew, it pushed the reactor particle accelerator ring out of alignment.
 The alarm started as hole-breaches started appearing all over in sector D on all rings. And then later in sector C.
-An Zirtuupan engineer told us what was could happen, and so we started evacuating, or more like panicing.
+An Zirtuupan engineer told us what was could happen, and so we started evacuating, or more like panicking.
 As we started defrosting people en-masse, the already disorderly evacuation turned into an outright stampede.
 
 Just as we got the last group though of paniced folks though, the doors decided to glitch up.
-Then you suddenly contacted us. Good thing you did. We were about to edject the module,
-using the internal atmosphere as thurst. You would have been sucked out into space had we done that.
+Then you suddenly contacted us. Good thing you did. We were about to eject the module,
+using the internal atmosphere as thrust. You would have been sucked out into space had we done that.
 
 Sorry you got left down there.
 But the important thing now is to get you and everyone else stuck in the module out before we blow this thing.
@@ -1377,7 +1377,7 @@ But the important thing now is to get you and everyone else stuck in the module 
 Do you have any more questions?
 </AUXCOM_DIALOGE_3_FULL_STORY>
 <ELEVATOR_DESC_CORE>
-The evevator appears as large cyllinder that smoothly sticks out of the inner sphere of the core.
+The evevator appears as large cylinder that smoothly sticks out of the inner sphere of the core.
 The walls sloping inwards to give way to the elevator doors. You float your way over to have a closer look.
 </ELEVATOR_DESC_CORE>
 <ELEVATOR_DESC_CORRIDOR>
@@ -1424,8 +1424,8 @@ The button flashes.
 ...
 You hear an odd clang
 ...
-One of the elevator doors open in a very slight crack.
-Then you hear a fizzeling sound, and everything stops working
+One of the elevator doors opens in a very slight crack.
+Then you hear a fizzling sound, and everything stops working
 </ELEVATOR_PRESS_NORM>
 <ELEVATOR_PRESS_CARGO>
 You press the button.
@@ -1434,7 +1434,7 @@ The button flashes.
 You hear an odd clang
 ...
 Two of the elevator doors open in a very slight crack.
-Then you hear a fizzeling sound, and everything stops working
+Then you hear a fizzling sound, and everything stops working
 </ELEVATOR_PRESS_CARGO>
 <ELEVATOR_EXIT>
 You left the elevators alone
@@ -1471,7 +1471,7 @@ Exit into the outer ring
 </LADDER_OUT_QUEST>
 <CORE_INTRO_1>
 As you push off from the laddershaft, you fly upwards in the low gravity.
-You reach the center, finding yourself entierly weightless.
+You reach the center, finding yourself entirely weightless.
 You take hold on a rotating pole. Soon the pole seemed to stop rotating, and the room started rotating around you.
 You see the ladder you came out from now no longer as "down", but as part of the wall.
 From your perspective, "up" has become a set of reinforced windows at one end of the sphere.
@@ -1535,7 +1535,7 @@ You take note of the large solid sliding shutters on both sides of the window.
 </CORE_WINDOW_1_PART_B>
 <CORE_WINDOW_2>
 You look back at the window area. The window is closed by the huge metal shutter.
-You still hear the occational clang and bang.
+You still hear the occasional clang and bang.
 You decide not to get closer, just in case.
 </CORE_WINDOW_2>
 <FLOAT_TO_QUEST>
@@ -1559,22 +1559,22 @@ It has a huge D painted on it.
 </CORE_TO_LADDER_D>
 <CORE_ELE_C>
 You push off and float to the elevator.
-When you got there, you noticed a flashing electoric board flashing a read light
+When you got there, you noticed a flashing electronic board flashing a read light
 and text in english and in alien script:
-BRECH DETECTED! NO ACCESS!
+BREACH DETECTED! NO ACCESS!
 You take off back to the pole.
 </CORE_ELE_C>
 <CORE_LADDER_D>
 You push off and float to the ladder.
-When you got there, you noticed a flashing electoric board flashing a read light and the text:
-BRECH DETECTED! NO ACCESS!
+When you got there, you noticed a flashing electronic board flashing a read light and the text:
+BREACH DETECTED! NO ACCESS!
 You took off back to the pole.
 </CORE_LADDER_D>
 <CORE_AIRLOCK_1>
 You look "down" towards the huge door "below".
 Taking in the details, you see the pole ending a bit before it, splitting into 4 aches around the doorway.
 Like the pole itself, the doorway was fixed, and not rotating with the room.
-On a closer look, there is a secund doorway past it, and two more again, with only some small gap of room between them.
+On a closer look, there is a second doorway past it, and two more again, with only some small gap of room between them.
 The inner-most door are closed, but has some large windows where you can see the area past it, clearly.
 </CORE_AIRLOCK_1>
 <CORE_AIRLOCK_1_QUEST>
@@ -1598,7 +1598,7 @@ For whatever reason, you decide to drag yourself back to the pole.
 As you turned around, you noticed some people float into view on the, with confused looks.
 </CORE_AIRLOCK_3B>
 <CARGOBAY_ENDING>
-As you appreach the innermost door, you hear a muffled barely audiable voice from the other side.
+As you appreach the innermost door, you hear a muffled barely audible voice from the other side.
 {_INTRO_PART}
 
 Are you alright there {_P}? The door is a bit broken,
@@ -1659,7 +1659,7 @@ You get told that the wheel A infirmary is full, so you change course to Wheel D
 As if from nowhere, {game.MaleFam.name}, your {game.MaleFam.GenderedRole} pokes you on your shoulder.
 Apperently, he was in the last group, and you had not even noticed.
 Neither had he. Stasis sickness being what it is.
-Passing the computer core on the way, you got reaquiented with your {game.FemaleFam.GenderedRole} {game.FemaleFam.name} too, who pushed out of the room below you and hugged you.
+Passing the computer core on the way, you got reacquainted with your {game.FemaleFam.GenderedRole} {game.FemaleFam.name} too, who pushed out of the room below you and hugged you.
 putting both of you in a real awkward spin in the microgravity, untill she got a hold on the railing, stopping you both.
 </CARGOBAY_ENDING_C>
 <CARGOBAY_ENDING_D>
@@ -1784,18 +1784,18 @@ You enter the chamber, checking each of the stasis tubes.
 Only some of them are empty.
 So many people are dead.
 You found 17 people alive.
-As you retrived them, none of them were in any condition to help you out.
+As you retrieved them, none of them were in any condition to help you out.
 You just told them to evacuate as you hurried on with your business.
 </INNER_TUBES_2>
 <INNER_TUBES_3>
-You enter the chamber, checking each of the statis tubes.
+You enter the chamber, checking each of the stasis tubes.
 All of them are empty!
 Well, that's good news.
 </INNER_TUBES_3>
 <INNER_TUBES_4>
-You enter the chamber, you were about the check the tubes when you stumbed on someone.
+You enter the chamber, you were about the check the tubes when you stumbled on someone.
 A man. He is unconscious, but alive.
-You decide to ingore him for now, to check on the stasis tubes.
+You decide to ignore him for now, to check on the stasis tubes.
 In this chamber, it seems a number of the people died during the evacuation.
 You found 4 people still alive in stasis.
 You brought them out. It took a moment, but you them to help the unconscious man to evacuate.
@@ -1806,10 +1806,10 @@ What you saw almost mad.. scatch that. it did make you puke.
 All of them were dead. All of them.
 </INNER_TUBES_5>
 <INNER_TUBES_6>
-The room is chamber with smoke! You fight your way though taking longer
+The chamber is filled with smoke! You fight your way though taking longer
 than normal to check all the tubes.
 It seems the automatic system that was supposed to wake this group shut itself down
-due to the smoke. This smoke would likly kill anyone coming out of stasis unasisted.
+due to the smoke. This smoke would likely kill anyone coming out of stasis unassisted.
 That might have been a mixed blessing, as you found most of the occupants still alive.
 
 You took care to help everyone out of stasis, and on their way out to evacuate.
@@ -1842,7 +1842,7 @@ Reactor-ring access node
 </OUTER_NAV_TO_NODE>
 <OUTER_INTRO_1>
 You have walked around aimlessly for a bit, you don't know for how long
-And oof! You just walked streight into a large closed door.
+And oof! You just walked straight into a large closed door.
 </OUTER_INTRO_1>
 <OUTER_INTRO_2>
 You close the emergency ladder's hatch.
@@ -1891,8 +1891,8 @@ All the signs are in some alien language. You can't read them.
 </REACTORNODE_1B>
 <REACTORNODE_1C>
 You peek inside.
-You catch a brief glimse of yourself operating the control system.
-The reactor may not be entierly stable, but you have done what you could.
+You catch a brief glimpse of yourself operating the control system.
+The reactor may not be entirely stable, but you have done what you could.
 You closed the door so not to disturb yourself.
 </REACTORNODE_1C>
 <REACTORNODE_1_QUEST>
@@ -1937,7 +1937,7 @@ You got the manual book in your hand, but your fingers are now covered in a layo
 And they feel cold, really cold and numb.
 Looking at the where you picked up the manual, it suddenly flashed in again, despite also being in your hand.
 Moreover, there was now something else.. your fingers!
-your disenbodied fingers appearing out of nowhere to grab the manual,
+your disembodied fingers appearing out of nowhere to grab the manual,
 only to dissappear, and reappear.
 You decide to ignore this odd phenomenon, as you focus on your task.
 </REACTORNODE_3A>
@@ -1946,7 +1946,7 @@ You got yourself trapped in a timeloop, forever
 </REACTORNODE_TIMELOOP_GAMEOVER>
 <REACTORNODE_3B>
 Not knowing what to do, you start hammering on the controls.
-You tried adjesting that sqiggly thing, you tried to increase that number, you tried to stop that ticking..
+You tried adjusting that squiggly thing, you tried to increase that number, you tried to stop that ticking..
 you tried any little thing you could think of..
 then you, without knowing what to do, start hammering on the controls.
 you tried adjusting that sq..
@@ -1954,15 +1954,15 @@ you tried adjusting that sq..
 you realized you were now doing what you did a minute ago. are you stu..
 tried adjusting that little sqiggly..
 
-uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you try adjusting that sqiggly thi..
+uh no, you realize, as you got your thinking straight again.
+you try to undo what you did when.. you try adjusting that squiggly thi..
 
 'shit' you managed to think as you suddenly find yourself trying to adjust that squigg..
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
 From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
-And you soon realied why.
+And you soon realised why.
 
 Aside from your little looping bobble, everything was gone.
 You aren't dead. Not really. But by now, you wish you were.
@@ -1972,8 +1972,8 @@ Your got torn in half by an unstable time-bubble
 </REACTORNODE_ESCAPE_GAMEOVER>
 <REACTORNODE_ESCAPE>
 Coming to realize what you are doing is dangerous, you step away from the console.
-You reach for the door when you feel a tingeling sensation on your hand.
-You move your arm so you can look at it. you brifly see though it.
+You reach for the door when you feel a tingling sensation on your hand.
+You move your arm so you can look at it. you briefly see though it.
 Then the door opens, and a familiar-looking {_P1} walks in.
 The {_P1} looks suprised at seeing you, and steps aside to let you though.
 Realizing who {_P4} is, you tried to shout out a warning,
@@ -2005,28 +2005,28 @@ Engage accellerator fire suppression system
 Engage control room fire suppression system
 Run automatic diagnostics
 Engage emergency overload
-Shutdown tacheon emitter array
+Shutdown tachyon emitter array
 Get out of there
 </REACTORNODE_5A_OPTION_LIST>
 <REACTORNODE_5B_OPTION_LIST>
-Start black squere procedure
-Start white line to black squere procedure
+Start black square procedure
+Start white line to black square procedure
 Start white line to black circle procedure
 Start sparks on red circle procedure
 Start sparks on red triangle procedure
 Start white line on blue triangle procedure
 Start red line on black circle procedure
-Start blue line on black squere on red line procedure
+Start blue line on black square on red line procedure
 Get out of there
 </REACTORNODE_5B_OPTION_LIST>
 <REACTORNODE_COOLDOWN_1_A>
 You follow the instructions, and soon the emergency cooling brought the temperature down.
-some of the alarms stops bleeping, and you notice the previusly looping instruction manual disappeard.
+some of the alarms stops bleeping, and you notice the previously looping instruction manual disappeared.
 Well, your fingers somewhy still remained there, looping as creepy as before, but now they were reaching for nothing.
 </REACTORNODE_COOLDOWN_1_A>
 <REACTORNODE_COOLDOWN_2_A>
 You attempt to follow the instructions for initiating emergency cooling,
-unfortunalty, it seems the fire is making it more or less impossible to initiate the cooling system.
+unfortunately, it seems the fire is making it more or less impossible to initiate the cooling system.
 </REACTORNODE_COOLDOWN_2_A>
 <REACTORNODE_COOLDOWN_3_A>
 As you were about to start following the instructions,
@@ -2039,17 +2039,17 @@ Well, your fingers somewhy still remained there, looping as creepy as before, bu
 </REACTORNODE_COOLDOWN_1_B>
 <REACTORNODE_COOLDOWN_2_B>
 {REACTORNODE_CLUELESS}
-But nothing happend.
+But nothing happened.
 </REACTORNODE_COOLDOWN_2_B>
 <REACTORNODE_COOLDOWN_3_B>
 {REACTORNODE_CLUELESS}
-But nothing happend.
+But nothing happened.
 </REACTORNODE_COOLDOWN_3_B>
 <REACTORNODE_SLOWDOWN_1_A>
-You followed the instructions to decelerate the accellerator.
+You followed the instructions to decelerate the accelerator.
 ...
 It seems to work, for a while. Then suddenly a new alarm starts bleeping.
-Fire. There is a fire in the accellerator now.
+Fire. There is a fire in the accelerator now.
 </REACTORNODE_SLOWDOWN_1_A>
 <REACTORNODE_SLOWDOWN_2_A>
 You typed in the final instructions for decellerating the system.
@@ -2083,47 +2083,47 @@ The instructions for accellerating the accellerator were quite easy to follow.
 you just adjusted that sqiggly thing, increased that varible,
 pressed that confirm button, changed that dial, adjusted that sqiggly thing,
 increased that varia.. wait.. wha
-you adjusted that sqiggly thing, incr..
+you adjusted that squiggly thing, incr..
 you just had a sudden feeling of déjà vu, as you again adjusted that sqiggly thing.
 
 uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you followed instructions to adjust that sqiggly thi..
+you try to undo what you did when.. you followed instructions to adjust that squiggly thi..
 
 'shit' you managed to think as you suddenly find yourself adjusting that squigg..
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
-From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
-And you soon realied why.
+From what you could tell, with the little self awareness you could muster, the intervals were at about 1 second.
+And you soon realised why.
 
 Aside from your little looping bobble, everything was gone.
 You aren't dead. Not really. But by now, you wish you were.
 </REACTORNODE_HURRY_A>
 <REACTORNODE_HURRY_B>
 {REACTORNODE_CLUELESS}
-you just adjusted that sqiggly thing, increased that varible,
-pressed that confirm button, changed that dial, adjusted that sqiggly thing,
+you just adjusted that squiggly thing, increased that varible,
+pressed that confirm button, changed that dial, adjusted that squiggly thing,
 increased that varia.. wait.. wha
 you adjusted that sqiggly thing, incr..
-you just had a sudden feeling of déjà vu, as you again adjusted that sqiggly thing.
+you just had a sudden feeling of déjà vu, as you again adjusted that squiggly thing.
 
 uh no, you realize, as you got your thinking stright again.
-you try to undo what you did when.. you followed instructions to adjust that sqiggly thi..
+you try to undo what you did when.. you followed instructions to adjust that squiggly thi..
 
 'shit' you managed to think as you suddenly find yourself adjusting that squigg..
 and again.. at shorter and shorter intervals.
 
 The after looping for what seemed like forever, with the intervals going shorter and shorter, they suddenly stopped getting shorter.
 From what you could tell, with the little self awareness you could muster, the intervals were at about 1 secund.
-And you soon realied why.
+And you soon realised why.
 
 Aside from your little looping bobble, everything was gone.
 You aren't dead. Not really. But by now, you wish you were.
 </REACTORNODE_HURRY_B>
 <REACTORNODE_FIREACC_1_A>
 You followed the quite simple instruction,
-The fire in the accellerator ring went out.
-Unfortunatly this also made the accellerater accellerate back up.
+The fire in the accelerator ring went out.
+Unfortunatly this also made the accelerator accelerate back up.
 </REACTORNODE_FIREACC_1_A>
 <REACTORNODE_FIREACC_2_A>
 You followed the quite simple instruction,
@@ -2138,14 +2138,14 @@ but a number of dials suddenly goes crazy for a short while.
 You followed the quite simple instruction, and...
 the entire room just got sprayed by a dense foam, convering every surface.
 yuck.
-If there acually was a fire, you are convinved the fire would be gone by now.
+If there acually was a fire, you are convinced the fire would be gone by now.
 But there was no fire. 'Why did I do this?' you think to yourself while trying to get foam out of your hair.
 </REACTORNODE_FIREROOM_A>
 <REACTORNODE_FIREROOM_B>
 {REACTORNODE_CLUELESS}
 Suddenly, the entire room got sprayed by a dense foam, convering every surface.
 yuck.
-If there acually was a fire, you are convinved the fire would be gone by now.
+If there acually was a fire, you are convinced the fire would be gone by now.
 But there was no fire. You sigh while trying to get foam out of your hair.
 </REACTORNODE_FIREROOM_B>
 <REACTORNODE_INFO_TEMP_1>
@@ -2162,41 +2162,41 @@ VERY HIGH!!!
 </REACTORNODE_INFO_FIREALERT>
 <REACTORNODE_THATSME>
 It did not take long for you to realize that the 'operator' is you.
-This might explain the anomolies.
+This might explain the anomalies.
 You should be extra careful of what you do here.
 </REACTORNODE_THATSME>
 <REACTORNODE_INFO_A>
-You followed the instructions to initiate a diognastic of the reactor.
+You followed the instructions to initiate a diagnostic of the reactor.
 ...
     STATUS: CRITICAL
-    TACHEON EMITTERS: ONLINE
-    TACHEON FLOW: IRREGULAR
+    TACHYON EMITTERS: ONLINE
+    TACHYON FLOW: IRREGULAR
     TEMPERATURE: {_TEMP}
-    STRUCTURE INTEGRETY: COMPROMISED!
-    TEMPERAL INTEGRETY: COMPROMISED!
+    STRUCTURE INTEGRITY: COMPROMISED!
+    TEMPERAL INTEGRITY: COMPROMISED!
 
 {_FIRE_ALERTS}
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A06 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A12 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B04 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B08 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B12 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C01 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C02 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C06 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C09 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C11 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D01 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D02 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D03 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D04 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D07 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D08 - POTENTIAL TACHEON LEAK
--       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D09 - POTENTIAL TACHEON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A06 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT A12 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B04 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B08 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT B12 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C01 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C02 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C06 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C09 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT C11 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D01 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D02 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D03 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D04 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D07 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D08 - POTENTIAL TACHYON LEAK
+-       ALERT: UNCONTROLLED TIME LOOP EVENT(S) DETECTED AT SUBSEGMENT D09 - POTENTIAL TACHYON LEAK
 
     WARNING: REACTOR BREACH(ES) DETECTED!
     WARNING: MELTDOWN IMMINENT!
-    WARNING: OPERATOR DETECTED IN COMPROMIZED SUBSECTION B04! EVACUATION IS ADVICED!
+    WARNING: OPERATOR DETECTED IN COMPROMISED SUBSECTION B04! EVACUATION IS ADVICED!
 {_THATSME}
 </REACTORNODE_INFO_A>
 <REACTORNODE_INFO_B>
@@ -2213,7 +2213,7 @@ Right after pressing the confirm key on the screen, you got an odd feeling.
 The reactor started humming. Did you just make a huge mis..
 ...
 You never got to finish that thought. You just ceased to exist.
-To say you were atomized is not entierly accurate,
+To say you were atomized is not entirely accurate,
 but that may be the closest terminology to describe what happened to you.
 At least, there were no pain.
 </REACTORNODE_OVERLOAD_A>
@@ -2228,7 +2228,7 @@ but that may be the closest terminology to describe what happened to you.
 At least, there were no pain.
 </REACTORNODE_OVERLOAD_B>
 <REACTORNODE_SHUTDOWN_A>
-You followed the instructions to shut down the the tacheon emitter array.
+You followed the instructions to shut down the the tachyon emitter array.
 ...
 The system register succesful, then not successful shutdown, then both at the same time.
 {_GOTINFO}
@@ -2238,7 +2238,7 @@ You decide to try something else.
 </REACTORNODE_SHUTDOWN_A>
 <REACTORNODE_SHUTDOWN_INFO>
 It took you a moment to see it, but you now realized why this is.
-Looking over the diagnatic data you retrived earlier,
+Looking over the diagnatic data you retrieved earlier,
 you see most of the emitters are stuck in time-loops.
 They are running perpetually.
 Trying to just shutting them down just won't work.
