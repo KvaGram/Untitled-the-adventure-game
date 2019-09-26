@@ -529,7 +529,11 @@ Use
 <MIDDLE_INTRO_1>
 You may still be a bit dizzy, as you could swear the floor bends a bit upwards both ways.
 The lights flicker, and you see random trash, maybe forgotten items, strewn around the floor.
-As the door closes, you note there is a number-plate on your door.
+On the wall in front of you there is a blue arrow poiting to the left.
+Arrow are drawn every few meters apart along the entire wall as far as you can see.
+All pointing left.
+As you note this, you hear a hiss behind you.
+The door behind you closes, turning to face it, you note there is a number-plate on your door.
 There is an uneasy silence.
 </MIDDLE_INTRO_1>
 <MIDDLE_INTRO_2>
@@ -697,7 +701,6 @@ There is something written on it, in english.
 "Point this end towards you, aim the other side towards who or what you wish to translate. This device is calibrated for the top 5 terran langauges and the 3 prime dialects of Ziruup"
 Clearly this is a translation device. 
 You decide to keep one with you.
-
 </CAFE_TRANS_RACK>
 <CAFE_LIT_BODY>
 You examine the alien creature.
@@ -727,7 +730,6 @@ All you see are moving gears, tini shafts, and other tini mechanical clockwork p
 Some small metal spikes are moving in and out of where the panal would be.
 
 You decide to keep the broken device for now, at least untill you find an intact one.
-
 </CAFE_LIT_BODY>
 <CAFE_LIT_LAMP>
 The tall lit support beam is still standing, and still lighting up the room.
@@ -1727,42 +1729,42 @@ Large closed blastdoor to sector C
 <INNER_NAV_TO_SEC_D>
 Large closed blastdoor to sector D
 </INNER_NAV_TO_SEC_D>
-<INNER_NAV_ROOM_A>
+<AREANAME_INNER-ROOM-A>
 Stasis room A
-</INNER_NAV_ROOM_A>
-<INNER_NAV_ROOM_B>
+</AREANAME_INNER-ROOM-A>
+<AREANAME_INNER-ROOM-B>
 Stasis room B
-</INNER_NAV_ROOM_B>
-<INNER_NAV_ROOM_C>
+</AREANAME_INNER-ROOM-B>
+<AREANAME_INNER-ROOM-C>
 Stasis room C
-</INNER_NAV_ROOM_C>
-<INNER_NAV_ROOM_D>
+</AREANAME_INNER-ROOM-C>
+<AREANAME_INNER-ROOM-D>
 Stasis room D
-</INNER_NAV_ROOM_D>
-<INNER_NAV_ROOM_E>
+</AREANAME_INNER-ROOM-D>
+<AREANAME_INNER-ROOM-E>
 Stasis room E
-</INNER_NAV_ROOM_E>
-<INNER_NAV_ROOM_F>
+</AREANAME_INNER-ROOM-E>
+<AREANAME_INNER-ROOM-F>
 Stasis room F
-</INNER_NAV_ROOM_F>
-<INNER_NAV_ROOM_G>
+</AREANAME_INNER-ROOM-F>
+<AREANAME_INNER-ROOM-G>
 Stasis room G
-</INNER_NAV_ROOM_G>
-<INNER_NAV_ROOM_H>
+</AREANAME_INNER-ROOM-G>
+<AREANAME_INNER-ROOM-H>
 Stasis room H
-</INNER_NAV_ROOM_H>
-<INNER_NAV_ROOM_I>
+</AREANAME_INNER-ROOM-H>
+<AREANAME_INNER-ROOM-I>
 Stasis room I
-</INNER_NAV_ROOM_I>
-<INNER_NAV_ROOM_J>
+</AREANAME_INNER-ROOM-I>
+<AREANAME_INNER-ROOM-J>
 Stasis room J
-</INNER_NAV_ROOM_J>
-<INNER_NAV_ROOM_K>
+</AREANAME_INNER-ROOM-J>
+<AREANAME_INNER-ROOM-K>
 Stasis room K
-</INNER_NAV_ROOM_K>
-<INNER_NAV_ROOM_L>
+</AREANAME_INNER-ROOM-K>
+<AREANAME_INNER-ROOM-L>
 Stasis room L
-</INNER_NAV_ROOM_L>
+</AREANAME_INNER-ROOM-L>
 <INNER_TO_ROOM_QUEST>
 Enter stasis room
 </INNER_TO_ROOM_QUEST>
@@ -1832,9 +1834,9 @@ Large open doorway to sector B
 <OUTER_NAV_TO_SEC_C>
 Large closed blastdoor to sector C
 </OUTER_NAV_TO_SEC_C>
-<OUTER_NAV_TO_SEC_D>
+<AREANAME_TO-SEC-D>
 Large closed blastdoor to sector D
-</OUTER_NAV_TO_SEC_D>
+</AREANAME_TO-SEC-D>
 <OUTER_NAV_TO_NODE>
 Reactor-ring access node
 </OUTER_NAV_TO_NODE>
@@ -2325,4 +2327,89 @@ brokentranslator.gif
 <ITEM_KEYCODE_ICON>
 note.gif
 </ITEM_KEYCODE_ICON>
+<AREANAME_BATHROOMS-DOOR>
+Public bathrooms
+</AREANAME_BATHROOMS-DOOR>
+<AREANAME_BATHROOMS-MENS>
+Men's bathroom
+</AREANAME_BATHROOMS-MENS>
+<AREANAME_BATHROOMS-LADIES>
+Ladies bathroom
+</AREANAME_BATHROOMS-LADIES>
+<AREANAME_CAFETERIA>
+Habitat diner
+</AREANAME_CAFETERIA>
+<AREANAME_CORE>
+Habitat wheel core
+</AREANAME_CORE>
+<AREANAME_CORE-WINDOW>
+Observation window
+</AREANAME_CORE-WINDOW>
+<AREANAME_CORE-ELEVATOR_A>
+Sector A elevator access
+</AREANAME_CORE-ELEVATOR_A>
+<AREANAME_CORE-ELEVATOR_C>
+Sector C elevator access
+</AREANAME_CORE-ELEVATOR_C>
+<AREANAME_CORE-LADDER_B>
+Sector B emergency ladder access
+</AREANAME_CORE-LADDER_B>
+<AREANAME_CORE-LADDER_D>
+ Sector D emergency ladder access
+</AREANAME_CORE-LADDER_D>
+<AREANAME_CORE-AIRLOCK>
+Habitat wheel module primary airlock
+</AREANAME_CORE-AIRLOCK>
+<AREANAME_CARGOBAY>
+Human supplies section - Tikrosa-al Cargo bay 
+</AREANAME_CARGOBAY>
+<AREANAME_TO-CORE>
+Exit-hatch to habitat wheel core
+</AREANAME_TO-CORE>
+<AREANAME_TO-INNER>
+Exit-hatch to inner ring
+</AREANAME_TO-INNER>
+<AREANAME_TO-MIDDLE>
+Exit-hatch to middle ring
+</AREANAME_TO-MIDDLE>
+<AREANAME_TO-OUTER>
+Exit-hatch to outer ring
+</AREANAME_TO-OUTER>
+<AREANAME_BATHROOMS-DOOR>
+Public bathrooms
+</AREANAME_BATHROOMS-DOOR>
+<AREANAME_APARTMENT-DOOR>
+Living quarters room 2A68
+</AREANAME_APARTMENT-DOOR>
+<AREANAME_ELEVATOR>
+Elevators
+</AREANAME_ELEVATOR>
+<AREANAME_CAFE-DOOR>
+Diner entrace
+</AREANAME_CAFE-DOOR>
+<AREANAME_TO-SEC-B>
+Sector opening to sector B
+</AREANAME_TO-SEC-B>
+<AREANAME_TO-SEC-A>
+Sector opening to sector A
+</AREANAME_TO-SEC-A>
+<AREANAME_AUXCOM>
+Auxillary communications console
+</AREANAME_AUXCOM>
+<AREANAME_LADDER>
+Emergency escape ladder
+</AREANAME_LADDER>
+<AREANAME_TO-SEC_C>
+Closed reinforced door
+</AREANAME_TO-SEC_C>
+<AREANAME_TO-SEC-D>
+Closed reinforced door
+</AREANAME_TO-SEC-D>
+<AREANAME_APARTMENT>
+Your apartment living quarters
+</AREANAME_APARTMENT>
+<AREANAME_UNKNOWN>
+Unknown place
+</AREANAME_UNKNOWN>
+
 </story>

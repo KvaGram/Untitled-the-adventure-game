@@ -1,7 +1,20 @@
 import Game
+
 def Start(game:Game.Game):
+    navdata:Game.Navdata = game.Navdata
+    T = Game.Gettexter(game)
+    from untitled_const import NAV_MIDDLE_RADIUS as rad
+    from untitled_const import NAV_LIT_MIDDLE_A
+    rot = 4.5
+    name0 = T("AREANAME_BATHROOMS-DOOR")
+    name1 = T("AREANAME_BATHROOMS-MENS")
+    name2 = T("AREANAME_BATHROOMS-LADIES")
+    navdata.MapLit = NAV_LIT_MIDDLE_A
+    navdata.MapRadians = rot
+    navdata.MapRadius = rad
     def bathrooms1():
         while True:
+            navdata.AreaName = name0
             game.rolltext("{BATH_INTRO}")
             choices = [["MALE", "{BATH_CHOICEMENS}"], ["FEMALE", "{BATH_CHOICELADIES}"], ["EXIT", "{LEAVE}"]]
             game.choose(choices, "{BATH_WHATDOOR}")
@@ -28,6 +41,7 @@ def Start(game:Game.Game):
 
         #This section determines PC's gender if not already set.
         if subroom == "mens":
+            navdata.AreaName = name1
             #if male family is spouse, this unlocks retrival of keepsake in the locker-room
             spouseLocker = (game.MaleFam.role == "spouse")
             introtext += "{BATH_MENS_ENTERING}"
@@ -50,6 +64,7 @@ def Start(game:Game.Game):
                 ["EXIT", "{LEAVE}"]
             ]
         elif subroom == "ladies":
+            navdata.AreaName = name2
             #if female family is spouse, this unlocks retrival of keepsake in the locker-room
             spouseLocker = (game.FemaleFam.role == "spouse")
             introtext += "{BATH_LADIES_ENTERING}"

@@ -256,7 +256,7 @@ def askName(title, message, lang, startText, isGroup = False):
                 askData.run = False
                 askData.ret = ans
             else:
-                askErr.config(text="Group name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK", fg = "red")   
+                askErr.config(text="Group name must\n * Start with a capital letter\n * Contain only capitals, underscore, dash and numbers\n - eg: SPACESHIP_TALK", fg = "red")   
         else:
             if ans in story.keys():
                 askErr.config(text="ERR: An entry with this name already exist.", fg = "orange")
@@ -264,7 +264,7 @@ def askName(title, message, lang, startText, isGroup = False):
                 askData.run = False
                 askData.ret = ans
             else:
-                askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore and numbers\n - eg: SPACESHIP_TALK_8", fg = "red")
+                askErr.config(text="Entry name must\n * Start with a capital letter\n * Contain only capitals, underscore, dash and numbers\n - eg: SPACESHIP_TALK-8", fg = "red")
     def askCANCEL():
         askData.run = False
         askData.ret = False

@@ -60,6 +60,10 @@ def LadderAccess(game:Game.Game, goto:callable):
         "core"   : "WheelCCoreLadder"
     }[game.place]
     def content():
+        knowledge = game.getdata("wheelC:knowledge", 0)
+        if knowledge < 1:
+            knowledge = 1
+        game.setdata("wheelC:knowledge", knowledge)
         counter = game.getCounter("reactorC")
         if not game.getdata("reactorC:fixed", False) and not counter.enabled: #if counter reactorC is not enabled
             game.setCounter("reactorC",  "onReactorCTime", 10) #sets up a new timer, running onReactorCTime every time it is updated.

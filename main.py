@@ -57,7 +57,7 @@ import outer
 import inner
 
 #version number. Major, minor, hotfix.
-VERSION = [1, 2, 2]
+VERSION = [1, 4, 1]
 #if dev is on, some debug info may be displayed in the game
 DEV = True
 
@@ -101,15 +101,15 @@ def _testloop(game:Game, Testcall:callable, Datacall:callable, name:str):
 
 def game_loop(game:Game):
     world = {
-        "apartment" : room_apartment.Start,
-        "core"      : Core.Core,
-        "inner"     : inner.Start,
-        "middle"    : middlering.Start,
-        "outer"     : outer.Start,
-        "ladder"    : Ladder.Start,
-        "bathrooms" : Bathrooms.Start,
-        "cargobay"  : Core.Cargobay, 
-        "cafeteria" : Cafeteria.Start
+        "apartment" : room_apartment.Start, 
+        "core"      : Core.Core,            
+        "inner"     : inner.Start,          
+        "middle"    : middlering.Start,     
+        "outer"     : outer.Start,          
+        "ladder"    : Ladder.Start,         
+        "bathrooms" : Bathrooms.Start,      
+        "cargobay"  : Core.Cargobay,        
+        "cafeteria" : Cafeteria.Start       
     }
 
     while True:
@@ -132,6 +132,7 @@ _________________________________________________
         except:
             place = None
         if(place):
+            game.EnableMenu()
             try:
                 place(game)
             except (ReturnToMain):
@@ -155,11 +156,9 @@ _________________________________________________
 #end game loop function
     
 def titleMenu(game:Game.Game):
+    game.DisableMenu()
     navdata = game.Navdata
-    navdata.navtext = """TITLE MENU
-    WELCOME TO
-    UNTITLED!
-    the adventure game"""
+    navdata.AreaName = "TITLE MENU"
     navdata.closed = True
     titleroll = "WELCOME TO\n\n"
     f = open("title.txt", 'r', encoding="utf-8")
